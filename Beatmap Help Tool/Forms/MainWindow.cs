@@ -10,11 +10,21 @@ using System.Windows.Forms;
 
 namespace Beatmap_Help_Tool
 {
-    public partial class Form1 : Form
+    public partial class mainForm : Form
     {
-        public Form1()
+        public mainForm()
         {
             InitializeComponent();
         }
+
+        #region Mouse focus functions
+        private void processSender(object sender, EventArgs e)
+        {
+            if (sender is Control)
+            {
+                (sender as Control).Focus();
+            }
+        }
+        #endregion
     }
 }
