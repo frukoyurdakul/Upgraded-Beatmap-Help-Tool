@@ -43,7 +43,7 @@ namespace Beatmap_Help_Tool
 
         private void determineInitialProcess()
         {
-            Process[] processes = Process.GetProcessesByName("osu.exe");
+            Process[] processes = Process.GetProcessesByName("osu!");
             if (processes.Length > 0)
             {
                 // The program was opened while osu was running.
@@ -56,7 +56,7 @@ namespace Beatmap_Help_Tool
                     // Osu directory has been successfully found. Prompt the user to
                     // try to see if it can find the difficulty that they are mapping.
                     // This has to be done on UI thread.
-                    Invoke(new Action(() =>
+                    BeginInvoke(new Action(() =>
                     {
                         if (MessageBoxUtils.showQuestionYesNo("osu! seems to be running, would you like to search for current beatmap?") ==
                             DialogResult.Yes)
@@ -68,7 +68,7 @@ namespace Beatmap_Help_Tool
                             runningProcessLabel.Visible = true;
                             runningProcessLabel.Text = "Searching for " + beatmapFileName;
                             ThreadUtils.executeOnBackground(new Action(() =>
-                                searchCurrentOpenBeatmap(windowTitle, directory.FullName + "\\Songs")));
+                                searchCurrentOpenBeatmap(beatmapFileName, directory.FullName + "\\Songs")));
                         }
                         else
                         {
@@ -109,11 +109,17 @@ namespace Beatmap_Help_Tool
             }
             if (!string.IsNullOrWhiteSpace(targetPath))
             {
-
+                // At this point, file path has been found, load the beatmap and
+                // set the data to datagridview.
+                // First, invoke the running process label.
+                BeginInvoke(new Action(() =>
+                {
+                    runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
+                }));
             }
             else
             {
-                Invoke(new Action(() =>
+                BeginInvoke(new Action(() =>
                 {
                     runningProcessLabel.Text = beatmapFileName + " could not be found in Songs folder.";
                 }));
@@ -127,7 +133,7 @@ namespace Beatmap_Help_Tool
             string mapName;
             if (osuWindowTitle.StartsWith("osu!cuttingedge"))
             {
-                mapName = returnMapName(osuWindowTitle, IndexUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
+                mapName = returnMapName(osuWindowTitle, IndexUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
             }
             else if (osuWindowTitle.StartsWith("osu!"))
             {

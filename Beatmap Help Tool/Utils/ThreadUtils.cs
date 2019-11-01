@@ -12,8 +12,8 @@ namespace Beatmap_Help_Tool.Utils
         private static readonly Thread workerThread = new Thread(loop);
         private static bool shouldLoop = true;
         private static readonly object mLock = new object();
-        private static readonly Queue<Runnable> runnableQueue = new Queue<Runnable>();
-
+        private static readonly Queue<Action> runnableQueue = new Queue<Action>();
+        
         static ThreadUtils()
         {
             workerThread.Start();
@@ -27,8 +27,9 @@ namespace Beatmap_Help_Tool.Utils
                 {
                     while (runnableQueue.Count > 0)
                     {
-                        runnableQueue.Dequeue().run();
+                        runnableQueue.Dequeue().Invoke();
                     }
+                    Thread.Sleep(100);
                 }
             }
         }
@@ -38,11 +39,11 @@ namespace Beatmap_Help_Tool.Utils
             shouldLoop = false;
         }
 
-        public static void executeOnBackground(Runnable runnable)
+        public static void executeOnBackground(Action method)
         {
             lock(mLock)
             {
-                runnableQueue.Enqueue(runnable);
+                runnableQueue.Enqueue(method);
             }
         }
     }

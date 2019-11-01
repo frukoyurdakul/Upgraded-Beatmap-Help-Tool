@@ -18,8 +18,8 @@ namespace Beatmap_Help_Tool.Utils
             string substring;
             for (int i = 0; i < text.Length - targetSize; i++)
             {
-                substring = text.Substring(i, i + targetSize);
-                if (substring == text)
+                substring = text.Substring(i, targetSize);
+                if (substring == searchString)
                     countInternal++;
                 if (countInternal == count)
                     return i;
