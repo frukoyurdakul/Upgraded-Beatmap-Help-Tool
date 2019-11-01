@@ -140,11 +140,13 @@
             this.timingPointsButton = new System.Windows.Forms.Button();
             this.allPointsButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.runningProcessLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsPage.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
+            this.panel42.SuspendLayout();
             this.panel41.SuspendLayout();
             this.panel40.SuspendLayout();
             this.panel9.SuspendLayout();
@@ -271,6 +273,7 @@
             // panel42
             // 
             this.panel42.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel42.Controls.Add(this.runningProcessLabel);
             this.panel42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel42.Location = new System.Drawing.Point(660, 0);
             this.panel42.Margin = new System.Windows.Forms.Padding(0);
@@ -1459,6 +1462,16 @@
             this.toolTip1.UseAnimation = false;
             this.toolTip1.UseFading = false;
             // 
+            // runningProcessLabel
+            // 
+            this.runningProcessLabel.AutoSize = true;
+            this.runningProcessLabel.Location = new System.Drawing.Point(3, 8);
+            this.runningProcessLabel.Name = "runningProcessLabel";
+            this.runningProcessLabel.Size = new System.Drawing.Size(73, 17);
+            this.runningProcessLabel.TabIndex = 2;
+            this.runningProcessLabel.Text = "Undefined";
+            this.runningProcessLabel.Visible = false;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1476,6 +1489,8 @@
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
+            this.panel42.ResumeLayout(false);
+            this.panel42.PerformLayout();
             this.panel41.ResumeLayout(false);
             this.panel41.PerformLayout();
             this.panel40.ResumeLayout(false);
@@ -1682,6 +1697,7 @@
         private System.Windows.Forms.Label lastSaveTimeLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox fileNameTextBox;
+        private System.Windows.Forms.Label runningProcessLabel;
     }
 }
 
