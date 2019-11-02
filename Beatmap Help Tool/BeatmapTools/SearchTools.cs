@@ -13,12 +13,12 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private static readonly Dictionary<List<TimingPoint>, bool> sortInfo =
             new Dictionary<List<TimingPoint>, bool>();
 
-        public static void resetSortStatus()
+        public static void ResetSortStatus()
         {
             sortInfo.Clear();
         }
 
-        public static TimingPoint GetClosestActiveInheritedPoint(List<TimingPoint> points, double offset)
+        public static TimingPoint GetClosestInheritedPoint(List<TimingPoint> points, double offset)
         {
             int i = GetClosestPointIndex(points, offset);
             if (i >= 0)
@@ -38,9 +38,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     {
                         // It means there is no inherited point after this red point. Get that red point
                         // and return it as an inherited one by changing the values.
-                        TimingPoint inheritedDummy = new TimingPoint(points[i]);
-                        inheritedDummy.PointValue = -100d;
-                        inheritedDummy.IsInherited = true;
+                        TimingPoint inheritedDummy = new TimingPoint(points[i])
+                        {
+                            PointValue = -100d,
+                            IsInherited = true
+                        };
                         return inheritedDummy;
                     }
                 }

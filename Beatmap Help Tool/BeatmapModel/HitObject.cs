@@ -10,6 +10,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public abstract class IHitObject
     {
+        private const int CIRCLE = 1;
+        private const int SLIDER = 2;
+        private const int SPINNER = 8;
+        private const int MANIA_NOTE = 128;
+        
         public abstract int GetX();
         public abstract int GetY();
         public abstract double GetOffset();
@@ -25,30 +30,90 @@ namespace Beatmap_Help_Tool.BeatmapModel
         static IHitObject ParseLine(Beatmap beatmap, string line)
         {
             string[] elements = line.Trim().Split(',');
+            int type = Convert.ToInt32(elements[3]);
 
             // If elements have 5 size, it is a normal hit object. Parse it as required.
             if (elements.Length == 6)
             {
-                return new HitCircle(Convert.ToInt32(elements[0]),
-                    Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
-                    Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
-                    elements[5]);
+                // Do a type check first.
+                if ((type & CIRCLE) != 0)
+                    return new HitCircle(Convert.ToInt32(elements[0]),
+                        Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
+                        Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
+                        elements[5]);
+                else
+                {
+                    if ((type & MANIA_NOTE) != 0)
+                    {
+                        MessageBoxUtils.showError("Mania is not supported yet.");
+                        return null;
+                    }
+                    else
+                    {
+                        MessageBoxUtils.showError("Type and element information does not match as a circle for line: " +
+                            line + ", aborting note processing.");
+                        return null;
+                    }
+                }
             }
             // If elements have the size of 11, it is a slider. Parse it as required.
             else if (elements.Length == 11)
             {
-                // This requires some additional processing.
-                double offset = Convert.ToDouble(elements[2]);
-                TimingPoint point = SearchTools.GetClosestActiveInheritedPoint(beatmap.TimingPoints, offset);
-                if (point != null)
+                // Always check the type first.
+                if ((type & SLIDER) != 0)
                 {
-                    // We found the timing point, 
+                    MessageBoxUtils.showError("Type and element information does not match as a slider for line: " +
+                        line + ", aborting note processing.");
+                    return null;
                 }
                 else
                 {
-                    MessageBoxUtils.showError("Slider cannot be parsed, there was no relative timing point found.");
+                    // This requires some additional processing.
+                    double offset = Convert.ToDouble(elements[2]);
+                    TimingPoint point = SearchTools.GetClosestTimingPoint(beatmap.TimingPoints, offset);
+                    if (point != null)
+                    {
+                        // We found the timing point, now it is time to construct the object.
+                        double pixelLength = Convert.ToDouble(elements[7]);
+                        double duration = pixelLength / (100.0 * beatmap.SliderMultiplier) * point.PointValue;
+                        string[] hitsoundStrings = elements[8].Split('|');
+                        List<int> edgeHitsounds = new List<int>();
+                        foreach (string hitsound in hitsoundStrings)
+                            edgeHitsounds.Add(Convert.ToInt32(hitsound));
+                        return new HitSlider(Convert.ToInt32(elements[0]),
+                            Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
+                            duration, type, Convert.ToInt32(elements[4]),
+                            elements[5], edgeHitsounds, elements[9] + "," + elements[10]);
+                    }
+                    else
+                    {
+                        MessageBoxUtils.showError("Slider cannot be parsed, there was no relative timing point found at offset " + 
+                            offset.ToString() + ", aborting note processing.");
+                        return null;
+                    }
+                }
+            }
+            else if (elements.Length == 7)
+            {
+                if ((type & SPINNER) != 0)
+                {
+                    double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
+                    return new HitSpinner(Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
+                        Convert.ToDouble(elements[2]), duration, type, Convert.ToInt32(elements[4]),
+                        elements[5]);
+                }
+                else
+                {
+                    MessageBoxUtils.showError("Type and element information does not match as a spinner for line: " +
+                            line + ", aborting note processing.");
                     return null;
                 }
+            }
+            else
+            {
+                MessageBoxUtils.showError("Unsupported element data found for line: " + line + ", aborting note " +
+                    "processing.");
+                return null;
             }
         }
     }
@@ -133,7 +198,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private string SliderInfo, Extras;
         private List<int> EdgeHitsounds;
 
-        HitSlider(int x, int y, double offset, double duration, int type, int hitsound, 
+        public HitSlider(int x, int y, double offset, double duration, int type, int hitsound, 
             string sliderInfo, List<int> edgeHitsounds, string extras)
         {
             X = x;
@@ -211,7 +276,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private double Offset, Duration;
         private string Extras;
 
-        HitSpinner(int x, int y, double offset, double duration, int type, int hitsound, string extras)
+        public HitSpinner(int x, int y, double offset, double duration, int type, int hitsound, string extras)
         {
             X = x;
             Y = y;
