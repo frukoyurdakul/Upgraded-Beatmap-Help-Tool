@@ -8,26 +8,80 @@ using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public abstract class IHitObject
+    public abstract class HitObject : IOffset
     {
         private const int CIRCLE = 1;
         private const int SLIDER = 2;
         private const int SPINNER = 8;
         private const int MANIA_NOTE = 128;
-        
-        public abstract int GetX();
-        public abstract int GetY();
-        public abstract double GetOffset();
-        public abstract double GetDuration();
-        public abstract int GetHitsound();
-        public abstract int GetHitType();
-        public abstract void SetDuration(double duration);
-        public abstract void SetX(int x);
-        public abstract void SetY(int y);
-        public abstract void SetOffset(double offset);
-        public abstract void SetHitsound(int hitsound);
 
-        static IHitObject ParseLine(Beatmap beatmap, string line)
+        private double duration;
+        private List<TimingPoint> timingPoints;
+        private double offset;
+        private double snap = 0;
+        private bool requiresSnapDetection = true;
+
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Type { get; set; }
+        public int Hitsound { get; set; }
+        public double Offset
+        {
+            get
+            {
+                return offset;
+            }
+            set
+            {
+                offset = value;
+                requiresSnapDetection = true;
+            }
+        }
+        public double Duration
+        {
+            get
+            {
+                if (this is HitCircle)
+                    return 0;
+
+                return duration;
+            }
+
+            set
+            {
+                if (!(this is HitCircle))
+                    duration = value;
+            }
+        }
+        public string Extras { get; set; }
+
+        public double GetOffset()
+        {
+            return Offset;
+        }
+
+        public void SetOffset(double offset)
+        {
+            Offset = offset;
+        }
+
+        private HitObject SetTimingPoints(List<TimingPoint> points)
+        {
+            timingPoints = points;
+            return this;
+        }
+
+        public double GetSnap()
+        {
+            if (requiresSnapDetection)
+            {
+                snap = SnapTools.getRelativeSnap(timingPoints, this);
+                requiresSnapDetection = false;
+            }
+            return snap;
+        }
+
+        public static HitObject ParseLine(Beatmap beatmap, string line)
         {
             string[] elements = line.Trim().Split(',');
             int type = Convert.ToInt32(elements[3]);
@@ -40,7 +94,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     return new HitCircle(Convert.ToInt32(elements[0]),
                         Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
                         Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
-                        elements[5]);
+                        elements[5]).SetTimingPoints(beatmap.TimingPoints);
                 else
                 {
                     if ((type & MANIA_NOTE) != 0)
@@ -83,7 +137,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         return new HitSlider(Convert.ToInt32(elements[0]),
                             Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
                             duration, type, Convert.ToInt32(elements[4]),
-                            elements[5], edgeHitsounds, elements[9] + "," + elements[10]);
+                            elements[5], edgeHitsounds, elements[9] + "," + elements[10])
+                            .SetTimingPoints(beatmap.TimingPoints);
                     }
                     else
                     {
@@ -100,7 +155,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
                     return new HitSpinner(Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
                         Convert.ToDouble(elements[2]), duration, type, Convert.ToInt32(elements[4]),
-                        elements[5]);
+                        elements[5])
+                        .SetTimingPoints(beatmap.TimingPoints);
                 }
                 else
                 {
@@ -118,12 +174,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         }
     }
 
-    class HitCircle : IHitObject
+    class HitCircle : HitObject
     {
-        private int X, Y, Type, Hitsound;
-        private double Offset, Duration;
-        private string Extras;
-
         public HitCircle(int x, int y, double offset, double duration, int type, int hitsound, string extras)
         {
             X = x;
@@ -134,68 +186,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Hitsound = hitsound;
             Extras = extras;
         }
-
-        override public double GetDuration()
-        {
-            return Duration;
-        }
-
-        override public int GetHitsound()
-        {
-            return Hitsound;
-        }
-
-        override public double GetOffset()
-        {
-            return Offset;
-        }
-
-        override public int GetX()
-        {
-            return X;
-        }
-
-        override public int GetY()
-        {
-            return Y;
-        }
-
-        override public int GetHitType()
-        {
-            return Type;
-        }
-
-        override public void SetDuration(double duration)
-        {
-            // Hit circle does not have a duration.
-        }
-
-        override public void SetX(int x)
-        {
-            X = x;
-        }
-
-        override public void SetY(int y)
-        {
-            Y = y;
-        }
-
-        override public void SetOffset(double offset)
-        {
-            Offset = offset;
-        }
-
-        override public void SetHitsound(int hitsound)
-        {
-            Hitsound = hitsound;
-        }
     }
 
-    class HitSlider : IHitObject
+    class HitSlider : HitObject
     {
-        private int X, Y, Type, Hitsound;
-        private double Offset, Duration;
-        private string SliderInfo, Extras;
+        private string SliderInfo;
         private List<int> EdgeHitsounds;
 
         public HitSlider(int x, int y, double offset, double duration, int type, int hitsound, 
@@ -212,70 +207,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             // Extras here also includes sample set overrides of the slider (edgeAttributions).
             Extras = extras;
         }
-
-        override public double GetDuration()
-        {
-            return Duration;
-        }
-
-        override public int GetHitsound()
-        {
-            return Hitsound;
-        }
-
-        override public double GetOffset()
-        {
-            return Offset;
-        }
-
-        override public int GetX()
-        {
-            return X;
-        }
-
-        override public int GetY()
-        {
-            return Y;
-        }
-
-        override public int GetHitType()
-        {
-            return Type;
-        }
-
-        override public void SetDuration(double duration)
-        {
-            // TODO Fill this up
-            throw new NotImplementedException();
-        }
-
-        override public void SetX(int x)
-        {
-            X = x;
-        }
-
-        override public void SetY(int y)
-        {
-            Y = y;
-        }
-
-        override public void SetOffset(double offset)
-        {
-            Offset = offset;
-        }
-
-        override public void SetHitsound(int hitsound)
-        {
-            Hitsound = hitsound;
-        }
     }
 
-    class HitSpinner : IHitObject
-    {
-        private int X, Y, Type, Hitsound;
-        private double Offset, Duration;
-        private string Extras;
-
+    class HitSpinner : HitObject
+    { 
         public HitSpinner(int x, int y, double offset, double duration, int type, int hitsound, string extras)
         {
             X = x;
@@ -285,61 +220,6 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Type = type;
             Hitsound = hitsound;
             Extras = extras;
-        }
-
-        override public double GetDuration()
-        {
-            return Duration;
-        }
-
-        override public int GetHitsound()
-        {
-            return Hitsound;
-        }
-
-        override public double GetOffset()
-        {
-            return Offset;
-        }
-
-        override public int GetX()
-        {
-            return X;
-        }
-
-        override public int GetY()
-        {
-            return Y;
-        }
-
-        override public int GetHitType()
-        {
-            return Type;
-        }
-
-        override public void SetDuration(double duration)
-        {
-
-        }
-
-        override public void SetX(int x)
-        {
-            X = x;
-        }
-
-        override public void SetY(int y)
-        {
-            Y = y;
-        }
-
-        override public void SetOffset(double offset)
-        {
-            Offset = offset;
-        }
-
-        override public void SetHitsound(int hitsound)
-        {
-            Hitsound = hitsound;
         }
     }
 }

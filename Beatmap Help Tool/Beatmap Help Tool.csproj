@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="BeatmapModel\Beatmap.cs" />
     <Compile Include="BeatmapModel\HitObject.cs" />
+    <Compile Include="BeatmapModel\IOffset.cs" />
     <Compile Include="BeatmapModel\TimingPoint.cs" />
     <Compile Include="BeatmapTools\SearchTools.cs" />
+    <Compile Include="BeatmapTools\SnapTools.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

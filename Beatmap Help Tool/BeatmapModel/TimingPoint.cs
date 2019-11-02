@@ -7,15 +7,8 @@ using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public class TimingPoint : IComparable
+    public class TimingPoint : IComparable, IOffset
     {
-        private static readonly NumberFormatInfo numberFormatInfo = new NumberFormatInfo();
-
-        static TimingPoint()
-        {
-            numberFormatInfo.NumberDecimalSeparator = ".";
-        }
-
         public double Offset { get; set; }
 
         // This can be either BPM or SV depending on
@@ -85,6 +78,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 throw new ArgumentException("Object is not a TimingPoint.");
             }
+        }
+
+        public double GetOffset()
+        {
+            return Offset;
+        }
+
+        public void SetOffset(double offset)
+        {
+            Offset = offset;
         }
     }
 }

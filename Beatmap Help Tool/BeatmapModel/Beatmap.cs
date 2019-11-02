@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beatmap_Help_Tool.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -66,7 +67,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private string Colors = "";
 
         // Hit objects
-        public List<IHitObject> HitObjects = new List<IHitObject>();
+        public List<HitObject> HitObjects = new List<HitObject>();
 
         // The main constructor. Reads the file and parses every
         // line.
@@ -133,12 +134,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
             // Timing points case. 
             for (; !IsSection(lines[index]) && index < lines.Count; index++)
+            {
                 TimingPoints.Add(TimingPoint.ParseLine(lines[index]));
+                if (TimingPoints[TimingPoints.Count - 1] == null)
+                {
+                    MessageBoxUtils.showError("Process aborted.");
+                    return;
+                }
+            }
 
             // It will break after finding a section, so raise index again.
             index++;
 
             // Hit objects case.
+            for (; index < lines.Count; index++)
+            {
+                HitObjects.Add(HitObject.ParseLine(this, lines[index]));
+                if (HitObjects[HitObjects.Count - 1] == null)
+                {
+                    MessageBoxUtils.showError("Process aborted.");
+                    return;
+                }
+            }
         }
 
         private void AssignValueByKey(string key, string value)
