@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
@@ -14,6 +12,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private const int MODE_TAIKO = 1;
         private const int MODE_MANIA = 2;
         private const int MODE_CTB = 3;
+
+        // File path. Required to write over the file again.
+        private readonly string filePath;
 
         // Osu file format. Currently at v14 or v15.
         public string FileFormat { get; }
@@ -31,7 +32,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // Bookmarks.
         public List<int> Bookmarks { get; } = new List<int>();
-        private int DistanceSpacing = 1;
+        private double DistanceSpacing = 1;
         private int BeatDivisor = 4;
         private int GridSize = 32;
         private double TimelineZoom = 3.79;
@@ -73,6 +74,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // line.
         public Beatmap(string beatmapPath)
         {
+            // Set the beatmap path.
+            filePath = beatmapPath;
+
             // Read the file content (always extract the empty lines)
             List<string> lines = File.ReadAllLines(beatmapPath).ToList();
             for (int i = 0; i < lines.Count; i++)
@@ -122,7 +126,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 }
                 else
                 {
-                    dotIndex = lines.IndexOf(":");
+                    dotIndex = line.IndexOf(":");
                     if (dotIndex >= 0)
                     {
                         splitted = line.Split(':');
@@ -132,10 +136,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 }
             }
 
-            // Timing points case. 
+            // Timing points case.
+            TimingPoint point;
             for (; !IsSection(lines[index]) && index < lines.Count; index++)
             {
-                TimingPoints.Add(TimingPoint.ParseLine(lines[index]));
+                point = TimingPoint.ParseLine(TimingPoints, lines[index]);
+                TimingPoints.Add(point);
+                point.GetSnap();
                 if (TimingPoints[TimingPoints.Count - 1] == null)
                 {
                     MessageBoxUtils.showError("Process aborted.");
@@ -197,7 +204,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         break;
                     }
                 case "DistanceSpacing":
-                    DistanceSpacing = Convert.ToInt32(value.Trim());
+                    DistanceSpacing = Convert.ToDouble(value.Trim());
                     break;
                 case "BeatDivisor":
                     BeatDivisor = Convert.ToInt32(value.Trim());

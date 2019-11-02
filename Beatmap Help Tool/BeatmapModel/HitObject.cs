@@ -2,13 +2,10 @@
 using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public abstract class HitObject : IOffset
+    public abstract class HitObject : IOffset, IComparable
     {
         private const int CIRCLE = 1;
         private const int SLIDER = 2;
@@ -68,6 +65,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private HitObject SetTimingPoints(List<TimingPoint> points)
         {
             timingPoints = points;
+            GetSnap();
             return this;
         }
 
@@ -170,6 +168,19 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 MessageBoxUtils.showError("Unsupported element data found for line: " + line + ", aborting note " +
                     "processing.");
                 return null;
+            }
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is HitObject)
+            {
+                HitObject hitObject = obj as HitObject;
+                return (int) offset - (int) hitObject.offset;
+            }
+            else
+            {
+                throw new ArgumentException("Object is not a HitObject.");
             }
         }
     }

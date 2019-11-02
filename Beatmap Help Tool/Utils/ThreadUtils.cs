@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.Utils
 {
@@ -16,7 +14,7 @@ namespace Beatmap_Help_Tool.Utils
         
         static ThreadUtils()
         {
-            workerThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
+            workerThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
             workerThread.Start();
         }
 
@@ -40,7 +38,7 @@ namespace Beatmap_Help_Tool.Utils
             shouldLoop = false;
         }
 
-        public static void ExecuteOnBackground(Action method)
+        public static void executeOnBackground(Action method)
         {
             lock(mLock)
             {

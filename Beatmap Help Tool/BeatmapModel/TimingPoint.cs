@@ -1,15 +1,28 @@
-﻿using System;
+﻿using Beatmap_Help_Tool.BeatmapTools;
+using Beatmap_Help_Tool.Utils;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
     public class TimingPoint : IComparable, IOffset
     {
-        public double Offset { get; set; }
+        private double offset = 0, snap = 0;
+        private bool requiresSnapDetection = true;
+        private List<TimingPoint> timingPoints;
+
+        public double Offset
+        {
+            get
+            {
+                return offset;
+            }
+            set
+            {
+                offset = value;
+                requiresSnapDetection = true;
+            }
+        }
 
         // This can be either BPM or SV depending on
         // it's an actual point or inherited.
@@ -32,6 +45,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Volume = from.Volume;
             IsInherited = from.IsInherited;
             IsKiaiOpen = from.IsKiaiOpen;
+            timingPoints = from.timingPoints;
+            offset = from.offset;
+            requiresSnapDetection = from.requiresSnapDetection;
+            snap = from.snap;
         }
 
         public TimingPoint(double offset, double pointValue, int meter, int sampleSet, 
@@ -47,21 +64,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
             IsKiaiOpen = isKiaiOpen;
         }
 
-        public static TimingPoint ParseLine(string line)
+        private TimingPoint SetTimingPointsList(List<TimingPoint> points)
+        {
+            timingPoints = points;
+            return this;
+        }
+
+        public static TimingPoint ParseLine(List<TimingPoint> points, string line)
         {
             string[] splitted = line.Trim().Split(',');
             if (splitted.Length == 8)
             {
-                bool isInherited = splitted[6] == "1";
-                double pointValue = isInherited ? (-100d / Convert.ToDouble(splitted[1])) :
-                    (60000d / Convert.ToDouble(splitted[1]));
+                double pointValue = Convert.ToDouble(splitted[1]);
                 return new TimingPoint(Convert.ToDouble(splitted[0]),
                     pointValue, Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[3]),
-                    Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), isInherited,
-                    Convert.ToBoolean(splitted[7]));
+                    Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), splitted[6] == "0",
+                    splitted[7] == "0").SetTimingPointsList(points);
             }
             else
-                throw new ArgumentException("A timing object always has to have 8 fields. Input: " + line.Trim());
+            {
+                MessageBoxUtils.showError("A timing object always has to have 8 fields. Input: " + line.Trim());
+                return null;
+            }
         }
 
         public int CompareTo(object obj)
@@ -88,6 +112,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public void SetOffset(double offset)
         {
             Offset = offset;
+        }
+
+        public double GetSnap()
+        {
+            if (requiresSnapDetection)
+            {
+                snap = SnapTools.getRelativeSnap(timingPoints, this);
+                requiresSnapDetection = false;
+            }
+            return snap;
         }
     }
 }

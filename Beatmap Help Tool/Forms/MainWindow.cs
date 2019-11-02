@@ -1,21 +1,16 @@
-﻿using Beatmap_Help_Tool.Utils;
+﻿using Beatmap_Help_Tool.BeatmapModel;
+using Beatmap_Help_Tool.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Beatmap_Help_Tool
 {
     public partial class mainForm : Form
     {
+        private Beatmap beatmap;
+
         public mainForm()
         {
             InitializeComponent();
@@ -31,16 +26,19 @@ namespace Beatmap_Help_Tool
         }
         #endregion
 
+        #region Form functions
         private void mainForm_Load(object sender, EventArgs e)
         {
-            ThreadUtils.ExecuteOnBackground(new Action(() => determineInitialProcess()));
+            ThreadUtils.executeOnBackground(new Action(() => determineInitialProcess()));
         }
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             ThreadUtils.ExitLooperThread();
         }
+        #endregion
 
+        #region Util functions
         private void determineInitialProcess()
         {
             Process[] processes = Process.GetProcessesByName("osu!");
@@ -49,16 +47,16 @@ namespace Beatmap_Help_Tool
                 // The program was opened while osu was running.
                 Process osuProcess = processes[0];
                 string fileName = osuProcess.MainModule.FileName;
-                string windowTitle = osuProcess.MainWindowTitle;
+                string windowTitle = osuProcess.MainWindowTitle.TrimEnd();
                 DirectoryInfo directory = Directory.GetParent(fileName);
-                if (directory != null)
+                if (directory != null && windowTitle.EndsWith(".osu"))
                 {
                     // Osu directory has been successfully found. Prompt the user to
                     // try to see if it can find the difficulty that they are mapping.
                     // This has to be done on UI thread.
                     BeginInvoke(new Action(() =>
                     {
-                        if (MessageBoxUtils.showQuestionYesNo("osu! seems to be running, would you like to search for current beatmap?") ==
+                        if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to search for the current beatmap?") ==
                             DialogResult.Yes)
                         {
                             // Show the current process on the label and 
@@ -67,7 +65,7 @@ namespace Beatmap_Help_Tool
                             string beatmapFileName = getBeatmapFileName(windowTitle);
                             runningProcessLabel.Visible = true;
                             runningProcessLabel.Text = "Searching for " + beatmapFileName;
-                            ThreadUtils.ExecuteOnBackground(new Action(() =>
+                            ThreadUtils.executeOnBackground(new Action(() =>
                                 searchCurrentOpenBeatmap(beatmapFileName, directory.FullName + "\\Songs")));
                         }
                         else
@@ -116,6 +114,7 @@ namespace Beatmap_Help_Tool
                 {
                     runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
                 }));
+                beatmap = new Beatmap(targetPath);
             }
             else
             {
@@ -165,5 +164,6 @@ namespace Beatmap_Help_Tool
             else
                 return "";
         }
+        #endregion
     }
 }

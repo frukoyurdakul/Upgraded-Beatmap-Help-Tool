@@ -1,10 +1,6 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
@@ -18,7 +14,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             sortInfo.Clear();
         }
 
-        public static TimingPoint GetClosestInheritedPoint(List<TimingPoint> points, double offset)
+        public static TimingPoint getClosestInheritedPoint(List<TimingPoint> points, double offset)
         {
             int i = GetClosestPointIndex(points, offset);
             if (i >= 0)
@@ -137,7 +133,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         private static bool AreTimingsSorted(List<TimingPoint> points)
         {
-            if (sortInfo[points])
+            if (sortInfo.ContainsKey(points) && sortInfo[points])
                 return true;
 
             for (int i = 0; i < points.Count - 1; i++)

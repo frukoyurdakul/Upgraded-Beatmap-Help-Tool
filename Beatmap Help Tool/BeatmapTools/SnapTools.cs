@@ -2,9 +2,6 @@
 using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
@@ -29,6 +26,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // we target for is off smaller than 1 milliseconds which can be
             // caused by rounding errors in the end,
             // we can consider that note as snapped.
+            if (redPoints.Count >= 1 && redPoints[0].GetOffset() == target.GetOffset())
+                return 0;
+
             TimingPoint closestTimingPoint = SearchTools.GetClosestTimingPoint(redPoints, target.GetOffset());
             if (closestTimingPoint != null)
             {
@@ -78,22 +78,22 @@ namespace Beatmap_Help_Tool.BeatmapTools
         {
             double offsetDifference = target2.GetOffset() - target1.GetOffset();
             double snap = (offsetDifference / beatDuration) * BEAT_SNAP_DIVISOR;
-            int snapInt = (int)snap;
+            int snapInt = Convert.ToInt32(snap);
             double fluctuation = Math.Abs(snap - snapInt);
             double targetOffset = target1.GetOffset() + (snapInt / BEAT_SNAP_DIVISOR * beatDuration);
-            if (fluctuation < 0.1d && Math.Abs(target2.GetOffset() - targetOffset) < 1)
+            if (fluctuation < 0.1d || Math.Abs(target2.GetOffset() - targetOffset) < 1)
             {
                 // We can consider this note as snapped in the end.
                 // TODO Determine the behavior here: let the object unsnapped
                 // if it is a hitsound, or show an error message.
-                return snap;
+                return snapInt;
             }
             else
             {
                 // The note is definitely unsnapped.
                 // TODO Either fill this area with an error message
                 // or throw an exception.
-                Console.WriteLine("Detected an unsnapped object with type " + target1.GetType() + ", " +
+                Console.WriteLine("Detected an unsnapped object with type \"" + target1.GetType() + "\", " +
                     "and offset " + target1.GetOffset());
                 return -1;
             }
