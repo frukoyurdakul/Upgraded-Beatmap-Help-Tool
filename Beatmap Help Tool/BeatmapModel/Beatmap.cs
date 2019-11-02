@@ -60,13 +60,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private string Events = "";
 
         // Timing points
-        private List<TimingPoint> TimingPoints = new List<TimingPoint>();
+        public List<TimingPoint> TimingPoints = new List<TimingPoint>();
 
         // Colors
         private string Colors = "";
 
         // Hit objects
-        private List<IHitObject> HitObjects = new List<IHitObject>();
+        public List<IHitObject> HitObjects = new List<IHitObject>();
 
         // The main constructor. Reads the file and parses every
         // line.

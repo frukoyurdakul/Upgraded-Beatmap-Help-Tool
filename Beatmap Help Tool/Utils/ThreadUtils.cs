@@ -9,17 +9,18 @@ namespace Beatmap_Help_Tool.Utils
 {
     public static class ThreadUtils
     {
-        private static readonly Thread workerThread = new Thread(loop);
+        private static readonly Thread workerThread = new Thread(Loop);
         private static bool shouldLoop = true;
         private static readonly object mLock = new object();
         private static readonly Queue<Action> runnableQueue = new Queue<Action>();
         
         static ThreadUtils()
         {
+            workerThread.CurrentCulture.NumberFormat.NumberDecimalSeparator = ".";
             workerThread.Start();
         }
 
-        static void loop()
+        static void Loop()
         {
             while (shouldLoop)
             {
@@ -34,12 +35,12 @@ namespace Beatmap_Help_Tool.Utils
             }
         }
 
-        public static void exitLooperThread()
+        public static void ExitLooperThread()
         {
             shouldLoop = false;
         }
 
-        public static void executeOnBackground(Action method)
+        public static void ExecuteOnBackground(Action method)
         {
             lock(mLock)
             {

@@ -33,12 +33,12 @@ namespace Beatmap_Help_Tool
 
         private void mainForm_Load(object sender, EventArgs e)
         {
-            ThreadUtils.executeOnBackground(new Action(() => determineInitialProcess()));
+            ThreadUtils.ExecuteOnBackground(new Action(() => determineInitialProcess()));
         }
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ThreadUtils.exitLooperThread();
+            ThreadUtils.ExitLooperThread();
         }
 
         private void determineInitialProcess()
@@ -67,7 +67,7 @@ namespace Beatmap_Help_Tool
                             string beatmapFileName = getBeatmapFileName(windowTitle);
                             runningProcessLabel.Visible = true;
                             runningProcessLabel.Text = "Searching for " + beatmapFileName;
-                            ThreadUtils.executeOnBackground(new Action(() =>
+                            ThreadUtils.ExecuteOnBackground(new Action(() =>
                                 searchCurrentOpenBeatmap(beatmapFileName, directory.FullName + "\\Songs")));
                         }
                         else

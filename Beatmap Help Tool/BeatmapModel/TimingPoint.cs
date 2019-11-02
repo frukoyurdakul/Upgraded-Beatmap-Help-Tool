@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public class TimingPoint
+    public class TimingPoint : IComparable
     {
         private static readonly NumberFormatInfo numberFormatInfo = new NumberFormatInfo();
 
@@ -16,7 +16,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             numberFormatInfo.NumberDecimalSeparator = ".";
         }
 
-        public int Offset { get; set; }
+        public double Offset { get; set; }
 
         // This can be either BPM or SV depending on
         // it's an actual point or inherited.
@@ -29,7 +29,19 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public bool IsInherited { get; set; }
         public bool IsKiaiOpen { get; set; }
 
-        private TimingPoint(int offset, double pointValue, int meter, int sampleSet, 
+        public TimingPoint(TimingPoint from)
+        {
+            Offset = from.Offset;
+            PointValue = from.PointValue;
+            Meter = from.Meter;
+            SampleSet = from.SampleSet;
+            SampleIndex = from.SampleIndex;
+            Volume = from.Volume;
+            IsInherited = from.IsInherited;
+            IsKiaiOpen = from.IsKiaiOpen;
+        }
+
+        public TimingPoint(double offset, double pointValue, int meter, int sampleSet, 
             int sampleIndex, int volume, bool isInherited, bool isKiaiOpen)
         {
             Offset = offset;
@@ -50,13 +62,29 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 bool isInherited = splitted[6] == "1";
                 double pointValue = isInherited ? (-100d / Convert.ToDouble(splitted[1])) :
                     (60000d / Convert.ToDouble(splitted[1]));
-                return new TimingPoint(Convert.ToInt32(splitted[0]),
+                return new TimingPoint(Convert.ToDouble(splitted[0]),
                     pointValue, Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[3]),
                     Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), isInherited,
                     Convert.ToBoolean(splitted[7]));
             }
             else
                 throw new ArgumentException("A timing object always has to have 8 fields. Input: " + line.Trim());
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is TimingPoint)
+            {
+                TimingPoint point = obj as TimingPoint;
+                if (point.Offset == Offset)
+                    return IsInherited ? 0 : 1;
+                else
+                    return Convert.ToInt32(Offset - point.Offset);
+            }
+            else
+            {
+                throw new ArgumentException("Object is not a TimingPoint.");
+            }
         }
     }
 }
