@@ -64,6 +64,9 @@
     <Compile Include="Utils\ThreadUtils.cs" />
     <Compile Include="Utils\IndexUtils.cs" />
     <Compile Include="Utils\MessageBoxUtils.cs" />
+    <Compile Include="Views\DoubleBufferGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

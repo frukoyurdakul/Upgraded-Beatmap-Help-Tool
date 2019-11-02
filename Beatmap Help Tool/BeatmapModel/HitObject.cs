@@ -52,6 +52,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         }
         public string Extras { get; set; }
 
+        public abstract string GetAsLine();
+
         public double GetOffset()
         {
             return Offset;
@@ -135,7 +137,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         return new HitSlider(Convert.ToInt32(elements[0]),
                             Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
                             duration, type, Convert.ToInt32(elements[4]),
-                            elements[5], edgeHitsounds, elements[9] + "," + elements[10])
+                            string.Join(",", elements[5], elements[6], elements[7]), 
+                            edgeHitsounds, elements[9] + "," + elements[10])
                             .SetTimingPoints(beatmap.TimingPoints);
                     }
                     else
@@ -197,12 +200,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Hitsound = hitsound;
             Extras = extras;
         }
+
+        override public string GetAsLine()
+        {
+            return string.Join(",", X, Y, Offset, Type, Hitsound, Extras);
+        }
     }
 
     class HitSlider : HitObject
     {
-        private string SliderInfo;
-        private List<int> EdgeHitsounds;
+        private readonly string SliderInfo;
+        private readonly List<int> EdgeHitsounds;
 
         public HitSlider(int x, int y, double offset, double duration, int type, int hitsound, 
             string sliderInfo, List<int> edgeHitsounds, string extras)
@@ -218,6 +226,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             // Extras here also includes sample set overrides of the slider (edgeAttributions).
             Extras = extras;
         }
+
+        override public string GetAsLine()
+        {
+            return string.Join(",", X, Y, Offset, Type, Hitsound, SliderInfo, string.Join("|", EdgeHitsounds), Extras);
+        }
     }
 
     class HitSpinner : HitObject
@@ -231,6 +244,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Type = type;
             Hitsound = hitsound;
             Extras = extras;
+        }
+
+        override public string GetAsLine()
+        {
+            return string.Join(",", X, Y, Offset, Type, Hitsound, (Offset + Duration), Extras);
         }
     }
 }

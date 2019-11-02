@@ -33,7 +33,7 @@ namespace Beatmap_Help_Tool.Utils
             }
         }
 
-        public static void ExitLooperThread()
+        public static void exitLooperThread()
         {
             shouldLoop = false;
         }

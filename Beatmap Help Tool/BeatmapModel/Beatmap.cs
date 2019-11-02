@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
@@ -245,6 +246,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 case "BeatmapSetID":
                     BeatmapSetID = Convert.ToInt32(value.Trim());
                     break;
+            }
+        }
+
+        // Fills the data grid view with related data. Has to be called
+        // from GUI thread otherwise it will throw an exception.
+        public void fillDataGridView(DataGridView dataGridView)
+        {
+            foreach (TimingPoint point in TimingPoints)
+            {
+                dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValue(),
+                    point.getDisplayMeter(), point.getDisplayVolume(), point.getDisplayKiai());
             }
         }
 

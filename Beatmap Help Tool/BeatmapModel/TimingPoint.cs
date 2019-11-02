@@ -123,5 +123,54 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
             return snap;
         }
+
+        public string getDisplayValue()
+        {
+            if (IsInherited)
+                return (-100d / PointValue).ToString("0.000") + "X";
+            else
+                return (60000 / PointValue).ToString();
+        }
+
+        public string getDisplayOffset()
+        {
+            TimeSpan t = TimeSpan.FromMilliseconds(Offset);
+            if (t.Hours > 0)
+            {
+                return Offset.ToString() + " (" + string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D3}",
+                                    t.Hours,
+                                    t.Minutes,
+                                    t.Seconds,
+                                    t.Milliseconds) + ")";
+            }
+            else
+            {
+                return Offset.ToString() + " (" + string.Format("{0:D2}:{1:D2}:{2:D3}",
+                                    t.Minutes,
+                                    t.Seconds,
+                                    t.Milliseconds) + ")";
+            }
+        }
+
+        public string getDisplayMeter()
+        {
+            return Meter + "/4";
+        }
+
+        public string getDisplayVolume()
+        {
+            return Volume + "%";
+        }
+
+        public bool getDisplayKiai()
+        {
+            return IsKiaiOpen;
+        }
+
+        public string GetAsLine()
+        {
+            return string.Join(",", Offset, PointValue, Meter, SampleSet, SampleIndex, 
+                Volume, (IsInherited ? 0 : 1).ToString(), (IsKiaiOpen ? 1 : 0).ToString());
+        }
     }
 }

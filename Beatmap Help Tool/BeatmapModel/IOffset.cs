@@ -5,5 +5,6 @@
         double GetOffset();
         double GetSnap();
         void SetOffset(double offset);
+        string GetAsLine();
     }
 }

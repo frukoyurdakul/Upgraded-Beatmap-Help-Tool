@@ -16,6 +16,17 @@ namespace Beatmap_Help_Tool
             InitializeComponent();
         }
 
+        // Activates double-buffering through the entire form.
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
         #region Mouse focus functions
         private void processSender(object sender, EventArgs e)
         {
@@ -34,7 +45,7 @@ namespace Beatmap_Help_Tool
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ThreadUtils.ExitLooperThread();
+            ThreadUtils.exitLooperThread();
         }
         #endregion
 
@@ -115,6 +126,14 @@ namespace Beatmap_Help_Tool
                     runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
                 }));
                 beatmap = new Beatmap(targetPath);
+                BeginInvoke(new Action(() =>
+                {
+                    beatmap.fillDataGridView(mainDisplayView);
+                    enableTabs();
+                    runningProcessLabel.Text = beatmapFileName + " has been loaded.";
+                    Text = "Beatmap Help Tool - " + beatmapFileName;
+                    filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
+                }));
             }
             else
             {
@@ -163,6 +182,20 @@ namespace Beatmap_Help_Tool
             }
             else
                 return "";
+        }
+
+        private void enableTabs()
+        {
+            (svChangesPage as Control).Enabled = true;
+            (editorFunctionsPage as Control).Enabled = true;
+            (bpmFunctionsPage as Control).Enabled = true;
+        }
+
+        private void disableTabs()
+        {
+            (svChangesPage as Control).Enabled = false;
+            (editorFunctionsPage as Control).Enabled = false;
+            (bpmFunctionsPage as Control).Enabled = false;
         }
         #endregion
     }
