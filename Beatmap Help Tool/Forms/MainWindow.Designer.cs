@@ -32,7 +32,7 @@ namespace Beatmap_Help_Tool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.settingsPage = new System.Windows.Forms.TabPage();
@@ -130,17 +130,17 @@ namespace Beatmap_Help_Tool
             this.button32 = new System.Windows.Forms.Button();
             this.panel39 = new System.Windows.Forms.Panel();
             this.button33 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.inheritedPointsButton = new System.Windows.Forms.Button();
+            this.timingPointsButton = new System.Windows.Forms.Button();
+            this.allPointsButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainDisplayView = new Beatmap_Help_Tool.Views.DoubleBufferGridView();
             this.timeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bpmColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.meterColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kiaiColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.inheritedPointsButton = new System.Windows.Forms.Button();
-            this.timingPointsButton = new System.Windows.Forms.Button();
-            this.allPointsButton = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsPage.SuspendLayout();
@@ -193,8 +193,8 @@ namespace Beatmap_Help_Tool
             this.panel37.SuspendLayout();
             this.panel38.SuspendLayout();
             this.panel39.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -240,7 +240,6 @@ namespace Beatmap_Help_Tool
             this.settingsPage.Text = "Settings";
             this.settingsPage.ToolTipText = "\"Shows general information about the program and the map.\"";
             this.settingsPage.UseVisualStyleBackColor = true;
-            (this.svChangesPage as Control).Enabled = false;
             // 
             // panel7
             // 
@@ -415,10 +414,12 @@ namespace Beatmap_Help_Tool
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(134, 27);
             this.browseButton.TabIndex = 5;
+            this.browseButton.TabStop = false;
             this.browseButton.Text = "Browse...";
             this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
         "ise it will open the last folder.");
             this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // filePathTextBox
             // 
@@ -468,6 +469,7 @@ namespace Beatmap_Help_Tool
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(75, 27);
             this.button13.TabIndex = 2;
+            this.button13.TabStop = false;
             this.button13.Text = "Redo";
             this.toolTip1.SetToolTip(this.button13, "Recovers the last change after an undo.");
             this.button13.UseVisualStyleBackColor = true;
@@ -480,6 +482,7 @@ namespace Beatmap_Help_Tool
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(75, 27);
             this.button12.TabIndex = 1;
+            this.button12.TabStop = false;
             this.button12.Text = "Save";
             this.toolTip1.SetToolTip(this.button12, "Saves the beatmap, although I\'ve never used it before.");
             this.button12.UseVisualStyleBackColor = true;
@@ -492,6 +495,7 @@ namespace Beatmap_Help_Tool
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(75, 27);
             this.button11.TabIndex = 0;
+            this.button11.TabStop = false;
             this.button11.Text = "Undo";
             this.toolTip1.SetToolTip(this.button11, "Loads the last state of the map before any changes from the program.");
             this.button11.UseVisualStyleBackColor = true;
@@ -557,6 +561,7 @@ namespace Beatmap_Help_Tool
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(372, 27);
             this.button5.TabIndex = 3;
+            this.button5.TabStop = false;
             this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
             // 
@@ -579,6 +584,7 @@ namespace Beatmap_Help_Tool
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(372, 27);
             this.button4.TabIndex = 3;
+            this.button4.TabStop = false;
             this.button4.Text = "button4";
             this.button4.UseVisualStyleBackColor = true;
             // 
@@ -601,6 +607,7 @@ namespace Beatmap_Help_Tool
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(372, 27);
             this.button3.TabIndex = 3;
+            this.button3.TabStop = false;
             this.button3.Text = "button3";
             this.button3.UseVisualStyleBackColor = true;
             // 
@@ -623,6 +630,7 @@ namespace Beatmap_Help_Tool
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(372, 27);
             this.button2.TabIndex = 3;
+            this.button2.TabStop = false;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
             // 
@@ -644,6 +652,7 @@ namespace Beatmap_Help_Tool
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(372, 27);
             this.button1.TabIndex = 2;
+            this.button1.TabStop = false;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -681,6 +690,7 @@ namespace Beatmap_Help_Tool
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(373, 27);
             this.button10.TabIndex = 3;
+            this.button10.TabStop = false;
             this.button10.Text = "button10";
             this.button10.UseVisualStyleBackColor = true;
             // 
@@ -703,6 +713,7 @@ namespace Beatmap_Help_Tool
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(373, 27);
             this.button9.TabIndex = 3;
+            this.button9.TabStop = false;
             this.button9.Text = "button9";
             this.button9.UseVisualStyleBackColor = true;
             // 
@@ -725,6 +736,7 @@ namespace Beatmap_Help_Tool
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(373, 27);
             this.button8.TabIndex = 3;
+            this.button8.TabStop = false;
             this.button8.Text = "button8";
             this.button8.UseVisualStyleBackColor = true;
             // 
@@ -747,6 +759,7 @@ namespace Beatmap_Help_Tool
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(373, 27);
             this.button7.TabIndex = 3;
+            this.button7.TabStop = false;
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
             // 
@@ -768,6 +781,7 @@ namespace Beatmap_Help_Tool
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(373, 27);
             this.button6.TabIndex = 3;
+            this.button6.TabStop = false;
             this.button6.Text = "button6";
             this.button6.UseVisualStyleBackColor = true;
             // 
@@ -783,7 +797,6 @@ namespace Beatmap_Help_Tool
             this.editorFunctionsPage.ToolTipText = "Contains functions that are related to editor changes (re-placing notes on screen" +
     " etc.)";
             this.editorFunctionsPage.UseVisualStyleBackColor = true;
-            (this.editorFunctionsPage as Control).Enabled = false;
             // 
             // tableLayoutPanel3
             // 
@@ -834,6 +847,7 @@ namespace Beatmap_Help_Tool
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(372, 27);
             this.button14.TabIndex = 3;
+            this.button14.TabStop = false;
             this.button14.Text = "button14";
             this.button14.UseVisualStyleBackColor = true;
             // 
@@ -856,6 +870,7 @@ namespace Beatmap_Help_Tool
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(372, 27);
             this.button15.TabIndex = 3;
+            this.button15.TabStop = false;
             this.button15.Text = "button15";
             this.button15.UseVisualStyleBackColor = true;
             // 
@@ -878,6 +893,7 @@ namespace Beatmap_Help_Tool
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(372, 27);
             this.button16.TabIndex = 3;
+            this.button16.TabStop = false;
             this.button16.Text = "button16";
             this.button16.UseVisualStyleBackColor = true;
             // 
@@ -900,6 +916,7 @@ namespace Beatmap_Help_Tool
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(372, 27);
             this.button17.TabIndex = 3;
+            this.button17.TabStop = false;
             this.button17.Text = "button17";
             this.button17.UseVisualStyleBackColor = true;
             // 
@@ -921,6 +938,7 @@ namespace Beatmap_Help_Tool
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(372, 27);
             this.button18.TabIndex = 2;
+            this.button18.TabStop = false;
             this.button18.Text = "button18";
             this.button18.UseVisualStyleBackColor = true;
             // 
@@ -958,6 +976,7 @@ namespace Beatmap_Help_Tool
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(373, 27);
             this.button19.TabIndex = 3;
+            this.button19.TabStop = false;
             this.button19.Text = "button19";
             this.button19.UseVisualStyleBackColor = true;
             // 
@@ -980,6 +999,7 @@ namespace Beatmap_Help_Tool
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(373, 27);
             this.button20.TabIndex = 3;
+            this.button20.TabStop = false;
             this.button20.Text = "button20";
             this.button20.UseVisualStyleBackColor = true;
             // 
@@ -1002,6 +1022,7 @@ namespace Beatmap_Help_Tool
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(373, 27);
             this.button21.TabIndex = 3;
+            this.button21.TabStop = false;
             this.button21.Text = "button21";
             this.button21.UseVisualStyleBackColor = true;
             // 
@@ -1024,6 +1045,7 @@ namespace Beatmap_Help_Tool
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(373, 27);
             this.button22.TabIndex = 3;
+            this.button22.TabStop = false;
             this.button22.Text = "button22";
             this.button22.UseVisualStyleBackColor = true;
             // 
@@ -1045,6 +1067,7 @@ namespace Beatmap_Help_Tool
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(373, 27);
             this.button23.TabIndex = 3;
+            this.button23.TabStop = false;
             this.button23.Text = "button23";
             this.button23.UseVisualStyleBackColor = true;
             // 
@@ -1060,7 +1083,6 @@ namespace Beatmap_Help_Tool
             this.bpmFunctionsPage.ToolTipText = "Contains functions that detects snappings, editing BPM of a point and whatsoever." +
     "";
             this.bpmFunctionsPage.UseVisualStyleBackColor = true;
-            (this.bpmFunctionsPage as Control).Enabled = false;
             // 
             // tableLayoutPanel4
             // 
@@ -1111,6 +1133,7 @@ namespace Beatmap_Help_Tool
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(372, 27);
             this.button24.TabIndex = 3;
+            this.button24.TabStop = false;
             this.button24.Text = "button24";
             this.button24.UseVisualStyleBackColor = true;
             // 
@@ -1133,6 +1156,7 @@ namespace Beatmap_Help_Tool
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(372, 27);
             this.button25.TabIndex = 3;
+            this.button25.TabStop = false;
             this.button25.Text = "button25";
             this.button25.UseVisualStyleBackColor = true;
             // 
@@ -1155,6 +1179,7 @@ namespace Beatmap_Help_Tool
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(372, 27);
             this.button26.TabIndex = 3;
+            this.button26.TabStop = false;
             this.button26.Text = "button26";
             this.button26.UseVisualStyleBackColor = true;
             // 
@@ -1177,6 +1202,7 @@ namespace Beatmap_Help_Tool
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(372, 27);
             this.button27.TabIndex = 3;
+            this.button27.TabStop = false;
             this.button27.Text = "button27";
             this.button27.UseVisualStyleBackColor = true;
             // 
@@ -1198,6 +1224,7 @@ namespace Beatmap_Help_Tool
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(372, 27);
             this.button28.TabIndex = 2;
+            this.button28.TabStop = false;
             this.button28.Text = "button28";
             this.button28.UseVisualStyleBackColor = true;
             // 
@@ -1235,6 +1262,7 @@ namespace Beatmap_Help_Tool
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(373, 27);
             this.button29.TabIndex = 3;
+            this.button29.TabStop = false;
             this.button29.Text = "button29";
             this.button29.UseVisualStyleBackColor = true;
             // 
@@ -1257,6 +1285,7 @@ namespace Beatmap_Help_Tool
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(373, 27);
             this.button30.TabIndex = 3;
+            this.button30.TabStop = false;
             this.button30.Text = "button30";
             this.button30.UseVisualStyleBackColor = true;
             // 
@@ -1279,6 +1308,7 @@ namespace Beatmap_Help_Tool
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(373, 27);
             this.button31.TabIndex = 3;
+            this.button31.TabStop = false;
             this.button31.Text = "button31";
             this.button31.UseVisualStyleBackColor = true;
             // 
@@ -1301,6 +1331,7 @@ namespace Beatmap_Help_Tool
             this.button32.Name = "button32";
             this.button32.Size = new System.Drawing.Size(373, 27);
             this.button32.TabIndex = 3;
+            this.button32.TabStop = false;
             this.button32.Text = "button32";
             this.button32.UseVisualStyleBackColor = true;
             // 
@@ -1322,8 +1353,71 @@ namespace Beatmap_Help_Tool
             this.button33.Name = "button33";
             this.button33.Size = new System.Drawing.Size(373, 27);
             this.button33.TabIndex = 3;
+            this.button33.TabStop = false;
             this.button33.Text = "button33";
             this.button33.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
+            this.tableLayoutPanel5.TabIndex = 6;
+            // 
+            // inheritedPointsButton
+            // 
+            this.inheritedPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inheritedPointsButton.Location = new System.Drawing.Point(515, 3);
+            this.inheritedPointsButton.Name = "inheritedPointsButton";
+            this.inheritedPointsButton.Size = new System.Drawing.Size(253, 38);
+            this.inheritedPointsButton.TabIndex = 2;
+            this.inheritedPointsButton.TabStop = false;
+            this.inheritedPointsButton.Text = "Inherited Points";
+            this.toolTip1.SetToolTip(this.inheritedPointsButton, "Shows only inherited (green) points in the data below.");
+            this.inheritedPointsButton.UseVisualStyleBackColor = true;
+            this.inheritedPointsButton.Click += new System.EventHandler(this.inheritedPointsButton_Click);
+            // 
+            // timingPointsButton
+            // 
+            this.timingPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timingPointsButton.Location = new System.Drawing.Point(259, 3);
+            this.timingPointsButton.Name = "timingPointsButton";
+            this.timingPointsButton.Size = new System.Drawing.Size(250, 38);
+            this.timingPointsButton.TabIndex = 1;
+            this.timingPointsButton.TabStop = false;
+            this.timingPointsButton.Text = "Timing Points";
+            this.toolTip1.SetToolTip(this.timingPointsButton, "Shows only timing (red) points in the data below.");
+            this.timingPointsButton.UseVisualStyleBackColor = true;
+            this.timingPointsButton.Click += new System.EventHandler(this.timingPointsButton_Click);
+            // 
+            // allPointsButton
+            // 
+            this.allPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allPointsButton.Location = new System.Drawing.Point(3, 3);
+            this.allPointsButton.Name = "allPointsButton";
+            this.allPointsButton.Size = new System.Drawing.Size(250, 38);
+            this.allPointsButton.TabIndex = 0;
+            this.allPointsButton.TabStop = false;
+            this.allPointsButton.Text = "All Points";
+            this.toolTip1.SetToolTip(this.allPointsButton, "Shows both timing and inherited points in the data below.");
+            this.allPointsButton.UseVisualStyleBackColor = true;
+            this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.UseAnimation = false;
+            this.toolTip1.UseFading = false;
             // 
             // mainDisplayView
             // 
@@ -1331,14 +1425,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToDeleteRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,
@@ -1361,6 +1455,7 @@ namespace Beatmap_Help_Tool
             this.timeColumn.HeaderText = "Offset";
             this.timeColumn.Name = "timeColumn";
             this.timeColumn.ReadOnly = true;
+            this.timeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.timeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.timeColumn.ToolTipText = "Shows where the point is, in milliseconds and formatted.";
             // 
@@ -1369,6 +1464,7 @@ namespace Beatmap_Help_Tool
             this.bpmColumn.HeaderText = "BPM (SV)";
             this.bpmColumn.Name = "bpmColumn";
             this.bpmColumn.ReadOnly = true;
+            this.bpmColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.bpmColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.bpmColumn.ToolTipText = "Shows BPM for timing points and slider velocity for inherited points.";
             // 
@@ -1377,6 +1473,7 @@ namespace Beatmap_Help_Tool
             this.meterColumn.HeaderText = "Meter";
             this.meterColumn.Name = "meterColumn";
             this.meterColumn.ReadOnly = true;
+            this.meterColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.meterColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.meterColumn.ToolTipText = "Shows the measure of the red timing point. Does not contain any data for inherite" +
     "d points.";
@@ -1386,6 +1483,7 @@ namespace Beatmap_Help_Tool
             this.volumeColumn.HeaderText = "Volume";
             this.volumeColumn.Name = "volumeColumn";
             this.volumeColumn.ReadOnly = true;
+            this.volumeColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.volumeColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.volumeColumn.ToolTipText = "Shows volume in percentage for both timing and inherited points.";
             // 
@@ -1394,64 +1492,8 @@ namespace Beatmap_Help_Tool
             this.kiaiColumn.HeaderText = "Kiai";
             this.kiaiColumn.Name = "kiaiColumn";
             this.kiaiColumn.ReadOnly = true;
-            this.kiaiColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.kiaiColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.kiaiColumn.ToolTipText = "Shows whether the point has a kiai or not.";
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 3;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
-            this.tableLayoutPanel5.TabIndex = 6;
-            // 
-            // inheritedPointsButton
-            // 
-            this.inheritedPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inheritedPointsButton.Location = new System.Drawing.Point(515, 3);
-            this.inheritedPointsButton.Name = "inheritedPointsButton";
-            this.inheritedPointsButton.Size = new System.Drawing.Size(253, 38);
-            this.inheritedPointsButton.TabIndex = 2;
-            this.inheritedPointsButton.Text = "Inherited Points";
-            this.toolTip1.SetToolTip(this.inheritedPointsButton, "Shows only inherited (green) points in the data below.");
-            this.inheritedPointsButton.UseVisualStyleBackColor = true;
-            // 
-            // timingPointsButton
-            // 
-            this.timingPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timingPointsButton.Location = new System.Drawing.Point(259, 3);
-            this.timingPointsButton.Name = "timingPointsButton";
-            this.timingPointsButton.Size = new System.Drawing.Size(250, 38);
-            this.timingPointsButton.TabIndex = 1;
-            this.timingPointsButton.Text = "Timing Points";
-            this.toolTip1.SetToolTip(this.timingPointsButton, "Shows only timing (red) points in the data below.");
-            this.timingPointsButton.UseVisualStyleBackColor = true;
-            // 
-            // allPointsButton
-            // 
-            this.allPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allPointsButton.Location = new System.Drawing.Point(3, 3);
-            this.allPointsButton.Name = "allPointsButton";
-            this.allPointsButton.Size = new System.Drawing.Size(250, 38);
-            this.allPointsButton.TabIndex = 0;
-            this.allPointsButton.Text = "All Points";
-            this.toolTip1.SetToolTip(this.allPointsButton, "Shows both timing and inherited points in the data below.");
-            this.allPointsButton.UseVisualStyleBackColor = true;
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.UseAnimation = false;
-            this.toolTip1.UseFading = false;
             // 
             // mainForm
             // 
@@ -1558,8 +1600,8 @@ namespace Beatmap_Help_Tool
             this.panel38.PerformLayout();
             this.panel39.ResumeLayout(false);
             this.panel39.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1597,11 +1639,6 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.TextBox filePathTextBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn timeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bpmColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn meterColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn volumeColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn kiaiColumn;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel14;
@@ -1674,6 +1711,11 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label runningProcessLabel;
         private DoubleBufferGridView mainDisplayView;
+        private DataGridViewTextBoxColumn timeColumn;
+        private DataGridViewTextBoxColumn bpmColumn;
+        private DataGridViewTextBoxColumn meterColumn;
+        private DataGridViewTextBoxColumn volumeColumn;
+        private DataGridViewCheckBoxColumn kiaiColumn;
     }
 }
 

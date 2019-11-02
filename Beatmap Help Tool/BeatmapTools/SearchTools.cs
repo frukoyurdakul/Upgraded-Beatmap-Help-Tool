@@ -62,16 +62,18 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 else
                 {
                     // The search might have been found the inherited point
-                    // instead of the timing point. The point before should be
-                    // the timing point we seek for. If not, an error will be shown.
-                    if (i > 0 && points[i - 1].Offset == offset && !points[i - 1].IsInherited)
-                        return points[i - 1];
-                    else
+                    // instead of the timing point. Loop until the closest timing point
+                    // has been found. If index becomes 0, throw an error.
+                    for (; i >= 0; i--)
                     {
-                        MessageBoxUtils.showError("Somehow an inherited point has been found but there were no " +
-                            "timing points to take reference for. Notes could not be processed.");
-                        return null;
+                        if (points[i].Offset <= offset && !points[i].IsInherited)
+                            return points[i];
                     }
+
+                    // At this point, it is time to throw the error.
+                    MessageBoxUtils.showError("Somehow an inherited point has been found but there were no " +
+                            "timing points to take reference for. Notes could not be processed.");
+                    return null;
                 }
             }
             else

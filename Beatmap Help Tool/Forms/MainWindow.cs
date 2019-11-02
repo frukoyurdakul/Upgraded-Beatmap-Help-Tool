@@ -14,6 +14,7 @@ namespace Beatmap_Help_Tool
         public mainForm()
         {
             InitializeComponent();
+            disableTabs();
         }
 
         // Activates double-buffering through the entire form.
@@ -47,9 +48,67 @@ namespace Beatmap_Help_Tool
         {
             ThreadUtils.exitLooperThread();
         }
+
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            Focus();
+            performBrowse();
+        }
         #endregion
 
         #region Util functions
+        private void performBrowse()
+        {
+            string targetPath;
+            if (beatmap != null)
+                targetPath = beatmap.FilePath;
+            else
+            {
+                targetPath = getSongsPathFromProcess();
+                if (string.IsNullOrWhiteSpace(targetPath))
+                    targetPath = "";
+            }
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.InitialDirectory = targetPath;
+            dialog.Title = "Select .osu file";
+            dialog.Filter = ".osu files|*.osu";
+            if (dialog.ShowDialog() == DialogResult.OK)
+                ThreadUtils.executeOnBackground(new Action(() => 
+                    loadBeatmap(dialog.FileName, dialog.SafeFileName)));
+        }
+
+        private void loadBeatmap(string targetPath, string beatmapFileName)
+        {
+            // At this point, file path has been found, load the beatmap and
+            // set the data to datagridview.
+            // First, invoke the running process label.
+            BeginInvoke(new Action(() =>
+            {
+                runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
+            }));
+            beatmap = new Beatmap(targetPath);
+            BeginInvoke(new Action(() =>
+            {
+                beatmap.fillDataGridView(mainDisplayView);
+                enableTabs();
+                runningProcessLabel.Text = beatmapFileName + " has been loaded.";
+                Text = "Beatmap Help Tool - " + beatmapFileName;
+                filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
+            }));
+        }
+
+        private string getSongsPathFromProcess()
+        {
+            Process[] processes = Process.GetProcessesByName("osu!");
+            if (processes.Length > 0)
+            {
+                DirectoryInfo osuDirectory = Directory.GetParent(processes[0].MainModule.FileName);
+                return osuDirectory.FullName + "\\Songs";
+            }
+            return null;
+        }
+
         private void determineInitialProcess()
         {
             Process[] processes = Process.GetProcessesByName("osu!");
@@ -67,7 +126,7 @@ namespace Beatmap_Help_Tool
                     // This has to be done on UI thread.
                     BeginInvoke(new Action(() =>
                     {
-                        if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to search for the current beatmap?") ==
+                        if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to load the current beatmap?") ==
                             DialogResult.Yes)
                         {
                             // Show the current process on the label and 
@@ -88,12 +147,12 @@ namespace Beatmap_Help_Tool
                 else
                 {
                     // Osu directory somehow cannot be found, refer to old ways or keep
-                    // opening process. Continue with last saved path if exists.
+                    // opening process.
                 }
             }
             else
             {
-                // Osu is not running, continue with last saved path if exists.
+                // Osu is not running, user can browse if they want.
             }
         }
 
@@ -117,24 +176,7 @@ namespace Beatmap_Help_Tool
                 }
             }
             if (!string.IsNullOrWhiteSpace(targetPath))
-            {
-                // At this point, file path has been found, load the beatmap and
-                // set the data to datagridview.
-                // First, invoke the running process label.
-                BeginInvoke(new Action(() =>
-                {
-                    runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
-                }));
-                beatmap = new Beatmap(targetPath);
-                BeginInvoke(new Action(() =>
-                {
-                    beatmap.fillDataGridView(mainDisplayView);
-                    enableTabs();
-                    runningProcessLabel.Text = beatmapFileName + " has been loaded.";
-                    Text = "Beatmap Help Tool - " + beatmapFileName;
-                    filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
-                }));
-            }
+                loadBeatmap(targetPath, beatmapFileName);
             else
             {
                 BeginInvoke(new Action(() =>
@@ -198,5 +240,26 @@ namespace Beatmap_Help_Tool
             (bpmFunctionsPage as Control).Enabled = false;
         }
         #endregion
+
+        private void allPointsButton_Click(object sender, EventArgs e)
+        {
+            Focus();
+            if (beatmap != null)
+                beatmap.showAllPoints(mainDisplayView);
+        }
+
+        private void timingPointsButton_Click(object sender, EventArgs e)
+        {
+            Focus();
+            if (beatmap != null)
+                beatmap.showTimingPointsOnly(mainDisplayView);
+        }
+
+        private void inheritedPointsButton_Click(object sender, EventArgs e)
+        {
+            Focus();
+            if (beatmap != null)
+                beatmap.showInheritedPointsOnly(mainDisplayView);
+        }
     }
 }

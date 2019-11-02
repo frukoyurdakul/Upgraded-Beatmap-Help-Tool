@@ -87,34 +87,26 @@ namespace Beatmap_Help_Tool.BeatmapModel
             int type = Convert.ToInt32(elements[3]);
 
             // If elements have 5 size, it is a normal hit object. Parse it as required.
-            if (elements.Length == 6)
+            if ((type & CIRCLE) != 0)
             {
                 // Do a type check first.
-                if ((type & CIRCLE) != 0)
+                if (elements.Length == 6)
                     return new HitCircle(Convert.ToInt32(elements[0]),
                         Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
                         Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
                         elements[5]).SetTimingPoints(beatmap.TimingPoints);
                 else
                 {
-                    if ((type & MANIA_NOTE) != 0)
-                    {
-                        MessageBoxUtils.showError("Mania is not supported yet.");
-                        return null;
-                    }
-                    else
-                    {
-                        MessageBoxUtils.showError("Type and element information does not match as a circle for line: " +
+                    MessageBoxUtils.showError("Type and element information does not match as a circle for line: " +
                             line + ", aborting note processing.");
-                        return null;
-                    }
+                    return null;
                 }
             }
             // If elements have the size of 11, it is a slider. Parse it as required.
-            else if (elements.Length == 11)
+            else if ((type & SLIDER) != 0)
             {
                 // Always check the type first.
-                if ((type & SLIDER) != 0)
+                if (elements.Length < 8)
                 {
                     MessageBoxUtils.showError("Type and element information does not match as a slider for line: " +
                         line + ", aborting note processing.");
@@ -130,15 +122,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         // We found the timing point, now it is time to construct the object.
                         double pixelLength = Convert.ToDouble(elements[7]);
                         double duration = pixelLength / (100.0 * beatmap.SliderMultiplier) * point.PointValue;
-                        string[] hitsoundStrings = elements[8].Split('|');
+                        string[] hitsoundStrings = elements.Length >= 9 ? elements[8].Split('|') : new string[0];
+                        string extras = (elements.Length >= 10 ? elements[9] : "") + 
+                            (elements.Length >= 11 ? "," + elements[10] : "");
                         List<int> edgeHitsounds = new List<int>();
                         foreach (string hitsound in hitsoundStrings)
                             edgeHitsounds.Add(Convert.ToInt32(hitsound));
                         return new HitSlider(Convert.ToInt32(elements[0]),
                             Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
                             duration, type, Convert.ToInt32(elements[4]),
-                            string.Join(",", elements[5], elements[6], elements[7]), 
-                            edgeHitsounds, elements[9] + "," + elements[10])
+                            string.Join(",", elements[5], elements[6], elements[7]),
+                            edgeHitsounds, extras)
                             .SetTimingPoints(beatmap.TimingPoints);
                     }
                     else
@@ -149,9 +143,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     }
                 }
             }
-            else if (elements.Length == 7)
+            else if ((type & SPINNER) != 0)
             {
-                if ((type & SPINNER) != 0)
+                if (elements.Length == 7)
                 {
                     double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
                     return new HitSpinner(Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
@@ -165,6 +159,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
                             line + ", aborting note processing.");
                     return null;
                 }
+            }
+            else if ((type & MANIA_NOTE) != 0)
+            {
+                MessageBoxUtils.showError("Mania is not supported yet.");
+                return null;
             }
             else
             {

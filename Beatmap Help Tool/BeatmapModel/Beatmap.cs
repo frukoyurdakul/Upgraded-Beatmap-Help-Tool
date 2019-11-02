@@ -9,13 +9,25 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public class Beatmap
     {
+        // Constant integers that helps defining the beatmap mode.
         private const int MODE_STANDARD = 0;
         private const int MODE_TAIKO = 1;
         private const int MODE_MANIA = 2;
         private const int MODE_CTB = 3;
 
+        // Constant integers that what the datagridview is showing
+        // currently. If any change function is called while
+        // the inner value is the same, the data will not
+        // be updated unnecessarily.
+        private const int DISPLAY_MODE_ALL = 0;
+        private const int DISPLAY_MODE_TIMING_ONLY = 1;
+        private const int DISPLAY_MODE_INHERITED_ONLY = 2;
+
         // File path. Required to write over the file again.
-        private readonly string filePath;
+        public string FilePath { get; }
+
+        // Datagridview display mode.
+        private int displayMode = DISPLAY_MODE_ALL;
 
         // Osu file format. Currently at v14 or v15.
         public string FileFormat { get; }
@@ -55,28 +67,27 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private int CircleSize = 0;
         private int OverallDifficulty = 0;
         private int ApproachRate = 10;
-        public int SliderMultiplier { get; }
+        public double SliderMultiplier { get; internal set; }
         private int SliderTickRate = 1;
 
         // Events (basically copied from the beatmap itself, will
         // be printed as a whole string while saving)
-        private string Events = "";
+        private readonly string Events = "";
 
         // Timing points
         public List<TimingPoint> TimingPoints = new List<TimingPoint>();
 
         // Colors
-        private string Colors = "";
+        private readonly string Colors = "";
 
         // Hit objects
         public List<HitObject> HitObjects = new List<HitObject>();
 
-        // The main constructor. Reads the file and parses every
-        // line.
+        // The main constructor. Reads the file and parses every line.
         public Beatmap(string beatmapPath)
         {
             // Set the beatmap path.
-            filePath = beatmapPath;
+            FilePath = beatmapPath;
 
             // Read the file content (always extract the empty lines)
             List<string> lines = File.ReadAllLines(beatmapPath).ToList();
@@ -149,6 +160,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     MessageBoxUtils.showError("Process aborted.");
                     return;
                 }
+            }
+
+            // Check if beatmap has the property "colors". If it does,
+            // just add it and skip to the hit objects.
+            if (lines[index] == "[Colours]")
+            {
+                // Welp, beatmap has colors. Add them to the colors.
+                index++;
+                for (; !IsSection(lines[index]) && index < lines.Count; index++)
+                    Colors += lines[index];
             }
 
             // It will break after finding a section, so raise index again.
@@ -246,6 +267,36 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 case "BeatmapSetID":
                     BeatmapSetID = Convert.ToInt32(value.Trim());
                     break;
+                case "SliderMultiplier":
+                    SliderMultiplier = Convert.ToDouble(value.Trim());
+                    break;
+            }
+        }
+
+        public void showInheritedPointsOnly(DataGridView dataGridView)
+        {
+            if (displayMode != DISPLAY_MODE_INHERITED_ONLY)
+            {
+                insertPoints(dataGridView, TimingPoints.Where(x => x.IsInherited).ToList());
+                displayMode = DISPLAY_MODE_INHERITED_ONLY;
+            }
+        }
+
+        public void showTimingPointsOnly(DataGridView dataGridView)
+        {
+            if (displayMode != DISPLAY_MODE_TIMING_ONLY)
+            {
+                insertPoints(dataGridView, TimingPoints.Where(x => !x.IsInherited).ToList());
+                displayMode = DISPLAY_MODE_TIMING_ONLY;
+            }
+        }
+
+        public void showAllPoints(DataGridView dataGridView)
+        {
+            if (displayMode != DISPLAY_MODE_ALL)
+            {
+                insertPoints(dataGridView, TimingPoints);
+                displayMode = DISPLAY_MODE_ALL;
             }
         }
 
@@ -253,7 +304,14 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // from GUI thread otherwise it will throw an exception.
         public void fillDataGridView(DataGridView dataGridView)
         {
-            foreach (TimingPoint point in TimingPoints)
+            insertPoints(dataGridView, TimingPoints);
+        }
+
+        private void insertPoints(DataGridView dataGridView, List<TimingPoint> points)
+        {
+            if (dataGridView.Rows.Count > 0)
+                dataGridView.Rows.Clear();
+            foreach (TimingPoint point in points)
             {
                 dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValue(),
                     point.getDisplayMeter(), point.getDisplayVolume(), point.getDisplayKiai());
