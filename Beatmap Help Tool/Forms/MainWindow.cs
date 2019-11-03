@@ -1,5 +1,6 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.Utils;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -7,11 +8,11 @@ using System.Windows.Forms;
 
 namespace Beatmap_Help_Tool
 {
-    public partial class mainForm : Form
+    public partial class MainWindow : Form
     {
         private Beatmap beatmap;
 
-        public mainForm()
+        public MainWindow()
         {
             InitializeComponent();
             disableTabs();
@@ -51,8 +52,63 @@ namespace Beatmap_Help_Tool
 
         private void browseButton_Click(object sender, EventArgs e)
         {
-            Focus();
+            mainDisplayView.Focus();
             performBrowse();
+        }
+
+        private void allPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showAllPoints(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void timingPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showTimingPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void inheritedPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showInheritedPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap == null)
+                MessageBoxUtils.showError("No beatmap has been loaded.");
+            else
+            {
+                DialogResult result = (MessageBoxUtils.showQuestionYesNoCancel("Save to beatmap path? Choosing \"No\" will " +
+                    "bring up the file chooser."));
+                if (result == DialogResult.Yes)
+                    saveBeatmap();
+                else if (result == DialogResult.No)
+                {
+                    CommonOpenFileDialog dialog = new CommonOpenFileDialog
+                    {
+                        DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                        IsFolderPicker = true,
+                        Multiselect = false
+                    };
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                        saveBeatmap(dialog.FileName);
+                }
+            }
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
@@ -61,7 +117,7 @@ namespace Beatmap_Help_Tool
         {
             string targetPath;
             if (beatmap != null)
-                targetPath = beatmap.FilePath;
+                targetPath = Directory.GetParent(beatmap.FilePath).FullName;
             else
             {
                 targetPath = getSongsPathFromProcess();
@@ -95,6 +151,40 @@ namespace Beatmap_Help_Tool
                 runningProcessLabel.Text = beatmapFileName + " has been loaded.";
                 Text = "Beatmap Help Tool - " + beatmapFileName;
                 filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
+            }));
+        }
+
+        private void saveBeatmap()
+        {
+            ThreadUtils.executeOnBackground(new Action(() =>
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    runningProcessLabel.Text = "Saving beatmap...";
+                }));
+                beatmap.save();
+                BeginInvoke(new Action(() =>
+                {
+                    runningProcessLabel.Text = "Beatmap has been saved.";
+                    lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
+                }));
+            }));
+        }
+
+        private void saveBeatmap(string path)
+        {
+            ThreadUtils.executeOnBackground(new Action(() =>
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
+                }));
+                beatmap.save(path);
+                BeginInvoke(new Action(() =>
+                {
+                    runningProcessLabel.Text = "Beatmap has been saved.";
+                    lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
+                }));
             }));
         }
 
@@ -242,26 +332,5 @@ namespace Beatmap_Help_Tool
             (bpmFunctionsPage as Control).Enabled = false;
         }
         #endregion
-
-        private void allPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showAllPoints(mainDisplayView);
-            mainDisplayView.Focus();
-        }
-
-        private void timingPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showTimingPointsOnly(mainDisplayView);
-            mainDisplayView.Focus();
-        }
-
-        private void inheritedPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showInheritedPointsOnly(mainDisplayView);
-            mainDisplayView.Focus();
-        }
     }
 }

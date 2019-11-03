@@ -25,6 +25,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // File path. Required to write over the file again.
         public string FilePath { get; }
+        public string FileName { get; protected set; }
 
         // Datagridview display mode.
         private int displayMode = DISPLAY_MODE_ALL;
@@ -44,7 +45,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private int WidescreenStoryboard = 0;
 
         // Bookmarks.
-        public List<int> Bookmarks { get; } = new List<int>();
+        public List<Bookmark> Bookmarks { get; internal set; } = new List<Bookmark>();
+        private string bookmarksString = "";
         private double DistanceSpacing = 1;
         private int BeatDivisor = 4;
         private int GridSize = 32;
@@ -63,12 +65,12 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public int BeatmapSetID { get; set; }
 
         // Difficulty
-        private int HPDrainRate = 0;
-        private int CircleSize = 0;
-        private int OverallDifficulty = 0;
-        private int ApproachRate = 10;
+        private double HPDrainRate = 0;
+        private double CircleSize = 0;
+        private double OverallDifficulty = 0;
+        private double ApproachRate = 10;
         public double SliderMultiplier { get; internal set; }
-        private int SliderTickRate = 1;
+        private double SliderTickRate = 1;
 
         // Events (basically copied from the beatmap itself, will
         // be printed as a whole string while saving)
@@ -88,6 +90,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             // Set the beatmap path.
             FilePath = beatmapPath;
+            FileName = Path.GetFileName(beatmapPath);
 
             // Read the file content (always extract the empty lines)
             List<string> lines = File.ReadAllLines(beatmapPath).ToList();
@@ -154,13 +157,19 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 point = TimingPoint.ParseLine(TimingPoints, lines[index]);
                 TimingPoints.Add(point);
-                if (point != null)
-                    point.GetSnap();
                 if (TimingPoints[TimingPoints.Count - 1] == null)
                 {
                     MessageBoxUtils.showError("Process aborted.");
                     return;
                 }
+            }
+
+            // If there are any bookmarks, after timing points, add them.
+            if (!string.IsNullOrWhiteSpace(bookmarksString))
+            {
+                string[] bookmarksSplitted = bookmarksString.Trim().Split(',');
+                foreach (string offset in bookmarksSplitted)
+                    Bookmarks.Add(new Bookmark(TimingPoints, Convert.ToInt32(offset)));
             }
 
             // Check if beatmap has the property "colors". If it does,
@@ -204,7 +213,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 case "Countdown":
                     Countdown = Convert.ToInt32(value.Trim());
                     break;
-                case "Sampleset":
+                case "SampleSet":
                     SampleSet = value;
                     break;
                 case "StackLeniency":
@@ -221,9 +230,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     break;
                 case "Bookmarks":
                     {
-                        string[] allBookmarks = value.Trim().Split(',');
-                        foreach (string bookmark in allBookmarks)
-                            Bookmarks.Add(Convert.ToInt32(bookmark));
+                        bookmarksString = value.Trim();
                         break;
                     }
                 case "DistanceSpacing":
@@ -268,12 +275,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 case "BeatmapSetID":
                     BeatmapSetID = Convert.ToInt32(value.Trim());
                     break;
+                case "HPDrainRate":
+                    HPDrainRate = Convert.ToDouble(value.Trim());
+                    break;
+                case "CircleSize":
+                    CircleSize = Convert.ToDouble(value.Trim());
+                    break;
+                case "OverallDifficulty":
+                    OverallDifficulty = Convert.ToDouble(value.Trim());
+                    break;
+                case "ApproachRate":
+                    ApproachRate = Convert.ToDouble(value.Trim());
+                    break;
                 case "SliderMultiplier":
                     SliderMultiplier = Convert.ToDouble(value.Trim());
+                    break;
+                case "SliderTickRate":
+                    SliderTickRate = Convert.ToDouble(value.Trim());
                     break;
             }
         }
 
+        // Shows inherited points only.
         public void showInheritedPointsOnly(DataGridView dataGridView)
         {
             if (displayMode != DISPLAY_MODE_INHERITED_ONLY)
@@ -308,11 +331,105 @@ namespace Beatmap_Help_Tool.BeatmapModel
             insertPoints(dataGridView, TimingPoints);
         }
 
+        // Save the beatmap. Uses the beatmap's original file path.
+        // To use another path, use save(string path) instead.
+        public void save()
+        {
+            save(FilePath);
+        }
+
+        // Save the beatmap with the current content.
+        // Save is handled in background so let the worker thread do
+        // the saving and let the foreground thread do the label processing etc...
+        // It is better to call this on the background thread.
+        public void save(string path)
+        {
+            string actualSavePath;
+            if (path.Contains(FileName))
+                actualSavePath = path;
+            else if (Directory.Exists(path))
+                actualSavePath = path + "\\" + FileName;
+            else
+            {
+                // Fallback to desktop. This should not happen at all but we will see.
+                actualSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + FileName;
+                MessageBoxUtils.showWarning("Somehow the save path is invalid, saving to desktop instead.");
+            }
+            using (StreamWriter writer = new StreamWriter(new FileStream(actualSavePath, FileMode.Create)))
+            {
+                writer.WriteLine(FileFormat);
+                writer.WriteLine();
+                writer.WriteLine("[General]");
+                writer.WriteLine("AudioFilename: " + AudioFilename);
+                writer.WriteLine("AudioLeadIn: " + AudioLeadIn);
+                writer.WriteLine("PreviewTime: " + PreviewTime);
+                writer.WriteLine("Countdown: " + Countdown);
+                writer.WriteLine("SampleSet: " + SampleSet);
+                writer.WriteLine("StackLeniency: " + StackLeniency);
+                writer.WriteLine("Mode: " + BeatmapMode);
+                writer.WriteLine("LetterboxInBreaks: " + LetterboxInBreaks);
+                writer.WriteLine("WidescreenStoryboard: " + WidescreenStoryboard);
+                writer.WriteLine();
+                writer.WriteLine("[Editor]");
+                if (Bookmarks.Count > 0)
+                    writer.WriteLine("Bookmarks: " + string.Join(",", Bookmarks));
+                writer.WriteLine("DistanceSpacing: " + DistanceSpacing);
+                writer.WriteLine("BeatDivisor: " + BeatDivisor);
+                writer.WriteLine("GridSize: " + GridSize);
+                writer.WriteLine("TimelineZoom: " + TimelineZoom);
+                writer.WriteLine();
+                writer.WriteLine("[Metadata]");
+                writer.WriteLine("Title:" + Title);
+                writer.WriteLine("TitleUnicode:" + TitleUnicode);
+                writer.WriteLine("Artist:" + Artist);
+                writer.WriteLine("ArtistUnicode:" + ArtistUnicode);
+                writer.WriteLine("Creator:" + Creator);
+                writer.WriteLine("Version:" + Version);
+                writer.WriteLine("Source:" + Source);
+                writer.WriteLine("Tags:" + Tags);
+                writer.WriteLine("BeatmapID:" + BeatmapID);
+                writer.WriteLine("BeatmapSetID:" + BeatmapSetID);
+                writer.WriteLine();
+                writer.WriteLine("[Difficulty]");
+                writer.WriteLine("HPDrainRate:" + HPDrainRate);
+                writer.WriteLine("CircleSize:" + CircleSize);
+                writer.WriteLine("OverallDifficulty:" + OverallDifficulty);
+                writer.WriteLine("ApproachRate:" + ApproachRate);
+                writer.WriteLine("SliderMultiplier:" + SliderMultiplier);
+                writer.WriteLine("SliderTickRate:" + SliderTickRate);
+                writer.WriteLine();
+                writer.WriteLine("[Events]");
+                writer.WriteLine(Events);
+                writer.WriteLine();
+                writer.WriteLine("[TimingPoints]");
+
+                // This has to be guaranteed.
+                TimingPoints.Sort();
+                int count = TimingPoints.Count;
+                for (int i = 0; i < count; i++)
+                    writer.WriteLine(TimingPoints[i]);
+                writer.WriteLine();
+                if (!string.IsNullOrWhiteSpace(Colors))
+                {
+                    writer.WriteLine("[Colors]");
+                    writer.WriteLine(Colors);
+                }
+                writer.WriteLine();
+                writer.WriteLine("[HitObjects]");
+
+                // This also has to be guaranteed.
+                HitObjects.Sort();
+                count = HitObjects.Count;
+                for (int i = 0; i < count; i++)
+                    writer.WriteLine(HitObjects[i]);
+            }
+        }
+
         private void insertPoints(DataGridView dataGridView, List<TimingPoint> points)
         {
             if (dataGridView.Rows.Count > 0)
                 dataGridView.Rows.Clear();
-            TimingPoint point; 
+            TimingPoint point;
             for (int i = 0; i < points.Count; i++)
             {
                 point = points[i];

@@ -5,9 +5,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public abstract class BeatmapElement
     {
-        private double offset = 0, snap = 0, closestSnap = 0;
-        private bool requiresSnapDetection = true;
-        private readonly List<TimingPoint> timingPoints;
+        protected double offset = 0, snap = 0, closestSnap = 0;
+        protected bool requiresSnapDetection = true;
+        protected readonly List<TimingPoint> timingPoints;
 
         public BeatmapElement(List<TimingPoint> timingPoints)
         {
@@ -50,6 +50,12 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 requiresSnapDetection = false;
             }
         }
-        public abstract string GetAsLine();
+
+        public override string ToString()
+        {
+            return GetSaveFormat();
+        }
+
+        public abstract string GetSaveFormat();
     }
 }

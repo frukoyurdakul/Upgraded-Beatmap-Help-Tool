@@ -11,19 +11,24 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         public static double[] getRelativeSnap(List<TimingPoint> timingPoints, BeatmapElement target)
         {
-            double[] result = new double[2];
+            double[] result = new double[2] {0, 0};
             List<TimingPoint> redPoints = new List<TimingPoint>();
             List<TimingPoint> excludedRedPoints = new List<TimingPoint>();
 
+            if (timingPoints.Count == 0)
+                return result;
+
             // Extract all inherited points since they don't mean anything
             // while we are searching for the snap value.
+            TimingPoint point;
             for (int i = 0; i < timingPoints.Count; i++)
             {
-                if (!timingPoints[i].IsInherited)
+                point = timingPoints[i];
+                if (!point.IsInherited)
                 {
-                    redPoints.Add(timingPoints[i]);
-                    if (target != timingPoints[i])
-                        excludedRedPoints.Add(timingPoints[i]);
+                    redPoints.Add(point);
+                    if (target != point)
+                        excludedRedPoints.Add(point);
                 }
             }
 
@@ -76,7 +81,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 // the computation of the final snap adding to the target and last point.
                 if (!checkedActualTarget  && redPoints[redPointsCount - 1] == closestTimingPoint)
                 {
-                    TimingPoint point = redPoints[redPointsCount - 1];
+                    point = redPoints[redPointsCount - 1];
                     snapInBetween = getSnapInBetween(point, target, point.PointValue);
                     if (snapInBetween >= 0)
                         finalSnap += snapInBetween;

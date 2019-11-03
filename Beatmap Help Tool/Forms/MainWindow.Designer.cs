@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Beatmap_Help_Tool
 {
-    partial class mainForm
+    partial class MainWindow
     {
         /// <summary>
         ///Gerekli tasarımcı değişkeni.
@@ -32,7 +32,7 @@ namespace Beatmap_Help_Tool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.settingsPage = new System.Windows.Forms.TabPage();
@@ -55,9 +55,9 @@ namespace Beatmap_Help_Tool
             this.filePathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.redoButton = new System.Windows.Forms.Button();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.undoButton = new System.Windows.Forms.Button();
             this.svChangesPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -450,9 +450,9 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel6.Controls.Add(this.button13, 2, 0);
-            this.tableLayoutPanel6.Controls.Add(this.button12, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.button11, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.redoButton, 2, 0);
+            this.tableLayoutPanel6.Controls.Add(this.saveButton, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.undoButton, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -461,44 +461,47 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel6.Size = new System.Drawing.Size(763, 33);
             this.tableLayoutPanel6.TabIndex = 5;
             // 
-            // button13
+            // redoButton
             // 
-            this.button13.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button13.AutoSize = true;
-            this.button13.Location = new System.Drawing.Point(598, 3);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 27);
-            this.button13.TabIndex = 2;
-            this.button13.TabStop = false;
-            this.button13.Text = "Redo";
-            this.toolTip1.SetToolTip(this.button13, "Recovers the last change after an undo.");
-            this.button13.UseVisualStyleBackColor = true;
+            this.redoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.redoButton.AutoSize = true;
+            this.redoButton.Location = new System.Drawing.Point(598, 3);
+            this.redoButton.Name = "redoButton";
+            this.redoButton.Size = new System.Drawing.Size(75, 27);
+            this.redoButton.TabIndex = 2;
+            this.redoButton.TabStop = false;
+            this.redoButton.Text = "Redo";
+            this.toolTip1.SetToolTip(this.redoButton, "Recovers the last change after an undo.");
+            this.redoButton.UseVisualStyleBackColor = true;
+            this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
             // 
-            // button12
+            // saveButton
             // 
-            this.button12.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button12.AutoSize = true;
-            this.button12.Location = new System.Drawing.Point(343, 3);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 27);
-            this.button12.TabIndex = 1;
-            this.button12.TabStop = false;
-            this.button12.Text = "Save";
-            this.toolTip1.SetToolTip(this.button12, "Saves the beatmap, although I\'ve never used it before.");
-            this.button12.UseVisualStyleBackColor = true;
+            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.saveButton.AutoSize = true;
+            this.saveButton.Location = new System.Drawing.Point(343, 3);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 27);
+            this.saveButton.TabIndex = 1;
+            this.saveButton.TabStop = false;
+            this.saveButton.Text = "Save";
+            this.toolTip1.SetToolTip(this.saveButton, "Saves the beatmap, although I\'ve never used it before.");
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
-            // button11
+            // undoButton
             // 
-            this.button11.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button11.AutoSize = true;
-            this.button11.Location = new System.Drawing.Point(89, 3);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 27);
-            this.button11.TabIndex = 0;
-            this.button11.TabStop = false;
-            this.button11.Text = "Undo";
-            this.toolTip1.SetToolTip(this.button11, "Loads the last state of the map before any changes from the program.");
-            this.button11.UseVisualStyleBackColor = true;
+            this.undoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.undoButton.AutoSize = true;
+            this.undoButton.Location = new System.Drawing.Point(89, 3);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(75, 27);
+            this.undoButton.TabIndex = 0;
+            this.undoButton.TabStop = false;
+            this.undoButton.Text = "Undo";
+            this.toolTip1.SetToolTip(this.undoButton, "Loads the last state of the map before any changes from the program.");
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // svChangesPage
             // 
@@ -1365,14 +1368,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,
@@ -1492,19 +1495,14 @@ namespace Beatmap_Help_Tool
             this.allPointsButton.UseVisualStyleBackColor = true;
             this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
             // 
-            // toolTip1
-            // 
-            this.toolTip1.UseAnimation = false;
-            this.toolTip1.UseFading = false;
-            // 
-            // mainForm
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(777, 553);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(640, 480);
-            this.Name = "mainForm";
+            this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Beatmap Help Tool";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.mainForm_FormClosed);
@@ -1696,9 +1694,9 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel39;
         private System.Windows.Forms.Button button33;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button redoButton;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button undoButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Panel panel42;
         private System.Windows.Forms.Panel panel41;

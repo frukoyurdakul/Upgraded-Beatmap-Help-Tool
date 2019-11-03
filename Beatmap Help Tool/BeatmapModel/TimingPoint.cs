@@ -7,22 +7,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public class TimingPoint : BeatmapElement, IComparable
     {
-        private double offset = 0, snap = 0, closestSnap = 0;
-        private bool requiresSnapDetection = true;
-        private List<TimingPoint> timingPoints;
-
-        public double Offset
-        {
-            get
-            {
-                return offset;
-            }
-            set
-            {
-                offset = value;
-                requiresSnapDetection = true;
-            }
-        }
+        private const int KIAI_BIT = 1;
+        private const int OMIT_BIT = 8;
 
         // This can be either BPM or SV depending on
         // it's an actual point or inherited.
@@ -34,6 +20,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public int Volume { get; set; }
         public bool IsInherited { get; set; }
         public bool IsKiaiOpen { get; set; }
+        public bool IsOmitted { get; set; }
 
         public TimingPoint(TimingPoint from) : base(from.timingPoints)
         {
@@ -45,16 +32,14 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Volume = from.Volume;
             IsInherited = from.IsInherited;
             IsKiaiOpen = from.IsKiaiOpen;
-            timingPoints = from.timingPoints;
             offset = from.offset;
             requiresSnapDetection = from.requiresSnapDetection;
             snap = from.snap;
         }
 
         public TimingPoint(List<TimingPoint> points, double offset, double pointValue, int meter, int sampleSet, 
-            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen) : base(points)
+            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen, bool isOmitted) : base(points)
         {
-            Offset = offset;
             PointValue = pointValue;
             Meter = meter;
             SampleSet = sampleSet;
@@ -62,6 +47,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Volume = volume;
             IsInherited = isInherited;
             IsKiaiOpen = isKiaiOpen;
+            IsOmitted = isOmitted;
+
+            // Offset is set last because the variables up above are used internally on the setter.
+            Offset = offset;
         }
 
         public static TimingPoint ParseLine(List<TimingPoint> points, string line)
@@ -70,10 +59,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             if (splitted.Length == 8)
             {
                 double pointValue = Convert.ToDouble(splitted[1]);
+                int kiaiValue = Convert.ToInt32(splitted[7]);
                 return new TimingPoint(points, Convert.ToDouble(splitted[0]),
                     pointValue, Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[3]),
                     Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), splitted[6] == "0",
-                    splitted[7] == "0");
+                    ((kiaiValue & KIAI_BIT) == KIAI_BIT), ((kiaiValue & OMIT_BIT) == OMIT_BIT));
             }
             else
             {
@@ -96,11 +86,6 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 throw new ArgumentException("Object is not a TimingPoint.");
             }
-        }
-
-        public override string ToString()
-        {
-            return GetAsLine();
         }
 
         public string getDisplayValue()
@@ -146,7 +131,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             return IsKiaiOpen;
         }
 
-        public override string GetAsLine()
+        public override string GetSaveFormat()
         {
             return string.Join(",", Offset, PointValue, Meter, SampleSet, SampleIndex, 
                 Volume, (IsInherited ? 0 : 1).ToString(), (IsKiaiOpen ? 1 : 0).ToString());

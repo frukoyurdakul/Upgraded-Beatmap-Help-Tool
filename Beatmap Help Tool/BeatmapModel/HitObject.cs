@@ -106,7 +106,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
                     return new HitSpinner(beatmap.TimingPoints, Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
                         Convert.ToDouble(elements[2]), duration, type, Convert.ToInt32(elements[4]),
-                        elements[5]);
+                        elements[6]);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Extras = extras;
         }
 
-        override public string GetAsLine()
+        override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, Extras);
         }
@@ -182,7 +182,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Extras = extras;
         }
 
-        override public string GetAsLine()
+        override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, SliderInfo, string.Join("|", EdgeHitsounds), Extras);
         }
@@ -202,7 +202,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Extras = extras;
         }
 
-        override public string GetAsLine()
+        override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, (Offset + Duration), Extras);
         }
