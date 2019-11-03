@@ -130,17 +130,17 @@ namespace Beatmap_Help_Tool
             this.button32 = new System.Windows.Forms.Button();
             this.panel39 = new System.Windows.Forms.Panel();
             this.button33 = new System.Windows.Forms.Button();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.inheritedPointsButton = new System.Windows.Forms.Button();
-            this.timingPointsButton = new System.Windows.Forms.Button();
-            this.allPointsButton = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainDisplayView = new Beatmap_Help_Tool.Views.DoubleBufferGridView();
             this.timeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bpmColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.meterColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kiaiColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.inheritedPointsButton = new System.Windows.Forms.Button();
+            this.timingPointsButton = new System.Windows.Forms.Button();
+            this.allPointsButton = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.settingsPage.SuspendLayout();
@@ -193,8 +193,8 @@ namespace Beatmap_Help_Tool
             this.panel37.SuspendLayout();
             this.panel38.SuspendLayout();
             this.panel39.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -1357,72 +1357,12 @@ namespace Beatmap_Help_Tool
             this.button33.Text = "button33";
             this.button33.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 3;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
-            this.tableLayoutPanel5.TabIndex = 6;
-            // 
-            // inheritedPointsButton
-            // 
-            this.inheritedPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inheritedPointsButton.Location = new System.Drawing.Point(515, 3);
-            this.inheritedPointsButton.Name = "inheritedPointsButton";
-            this.inheritedPointsButton.Size = new System.Drawing.Size(253, 38);
-            this.inheritedPointsButton.TabIndex = 2;
-            this.inheritedPointsButton.TabStop = false;
-            this.inheritedPointsButton.Text = "Inherited Points";
-            this.toolTip1.SetToolTip(this.inheritedPointsButton, "Shows only inherited (green) points in the data below.");
-            this.inheritedPointsButton.UseVisualStyleBackColor = true;
-            this.inheritedPointsButton.Click += new System.EventHandler(this.inheritedPointsButton_Click);
-            // 
-            // timingPointsButton
-            // 
-            this.timingPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timingPointsButton.Location = new System.Drawing.Point(259, 3);
-            this.timingPointsButton.Name = "timingPointsButton";
-            this.timingPointsButton.Size = new System.Drawing.Size(250, 38);
-            this.timingPointsButton.TabIndex = 1;
-            this.timingPointsButton.TabStop = false;
-            this.timingPointsButton.Text = "Timing Points";
-            this.toolTip1.SetToolTip(this.timingPointsButton, "Shows only timing (red) points in the data below.");
-            this.timingPointsButton.UseVisualStyleBackColor = true;
-            this.timingPointsButton.Click += new System.EventHandler(this.timingPointsButton_Click);
-            // 
-            // allPointsButton
-            // 
-            this.allPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.allPointsButton.Location = new System.Drawing.Point(3, 3);
-            this.allPointsButton.Name = "allPointsButton";
-            this.allPointsButton.Size = new System.Drawing.Size(250, 38);
-            this.allPointsButton.TabIndex = 0;
-            this.allPointsButton.TabStop = false;
-            this.allPointsButton.Text = "All Points";
-            this.toolTip1.SetToolTip(this.allPointsButton, "Shows both timing and inherited points in the data below.");
-            this.allPointsButton.UseVisualStyleBackColor = true;
-            this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.UseAnimation = false;
-            this.toolTip1.UseFading = false;
-            // 
             // mainDisplayView
             // 
             this.mainDisplayView.AllowUserToAddRows = false;
             this.mainDisplayView.AllowUserToDeleteRows = false;
+            this.mainDisplayView.AllowUserToResizeColumns = false;
+            this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -1494,6 +1434,68 @@ namespace Beatmap_Help_Tool
             this.kiaiColumn.ReadOnly = true;
             this.kiaiColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.kiaiColumn.ToolTipText = "Shows whether the point has a kiai or not.";
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
+            this.tableLayoutPanel5.TabIndex = 6;
+            // 
+            // inheritedPointsButton
+            // 
+            this.inheritedPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inheritedPointsButton.Location = new System.Drawing.Point(515, 3);
+            this.inheritedPointsButton.Name = "inheritedPointsButton";
+            this.inheritedPointsButton.Size = new System.Drawing.Size(253, 38);
+            this.inheritedPointsButton.TabIndex = 2;
+            this.inheritedPointsButton.TabStop = false;
+            this.inheritedPointsButton.Text = "Inherited Points";
+            this.toolTip1.SetToolTip(this.inheritedPointsButton, "Shows only inherited (green) points in the data below.");
+            this.inheritedPointsButton.UseVisualStyleBackColor = true;
+            this.inheritedPointsButton.Click += new System.EventHandler(this.inheritedPointsButton_Click);
+            // 
+            // timingPointsButton
+            // 
+            this.timingPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timingPointsButton.Location = new System.Drawing.Point(259, 3);
+            this.timingPointsButton.Name = "timingPointsButton";
+            this.timingPointsButton.Size = new System.Drawing.Size(250, 38);
+            this.timingPointsButton.TabIndex = 1;
+            this.timingPointsButton.TabStop = false;
+            this.timingPointsButton.Text = "Timing Points";
+            this.toolTip1.SetToolTip(this.timingPointsButton, "Shows only timing (red) points in the data below.");
+            this.timingPointsButton.UseVisualStyleBackColor = true;
+            this.timingPointsButton.Click += new System.EventHandler(this.timingPointsButton_Click);
+            // 
+            // allPointsButton
+            // 
+            this.allPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.allPointsButton.Location = new System.Drawing.Point(3, 3);
+            this.allPointsButton.Name = "allPointsButton";
+            this.allPointsButton.Size = new System.Drawing.Size(250, 38);
+            this.allPointsButton.TabIndex = 0;
+            this.allPointsButton.TabStop = false;
+            this.allPointsButton.Text = "All Points";
+            this.toolTip1.SetToolTip(this.allPointsButton, "Shows both timing and inherited points in the data below.");
+            this.allPointsButton.UseVisualStyleBackColor = true;
+            this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.UseAnimation = false;
+            this.toolTip1.UseFading = false;
             // 
             // mainForm
             // 
@@ -1600,8 +1602,8 @@ namespace Beatmap_Help_Tool
             this.panel38.PerformLayout();
             this.panel39.ResumeLayout(false);
             this.panel39.PerformLayout();
-            this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -243,23 +243,23 @@ namespace Beatmap_Help_Tool
 
         private void allPointsButton_Click(object sender, EventArgs e)
         {
-            Focus();
             if (beatmap != null)
                 beatmap.showAllPoints(mainDisplayView);
+            mainDisplayView.Focus();
         }
 
         private void timingPointsButton_Click(object sender, EventArgs e)
         {
-            Focus();
             if (beatmap != null)
                 beatmap.showTimingPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
         }
 
         private void inheritedPointsButton_Click(object sender, EventArgs e)
         {
-            Focus();
             if (beatmap != null)
                 beatmap.showInheritedPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
         }
     }
 }

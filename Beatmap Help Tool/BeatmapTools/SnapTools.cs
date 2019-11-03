@@ -12,12 +12,17 @@ namespace Beatmap_Help_Tool.BeatmapTools
         public static double getRelativeSnap(List<TimingPoint> timingPoints, IOffset target)
         {
             List<TimingPoint> redPoints = new List<TimingPoint>();
+            List<TimingPoint> excludedRedPoints = new List<TimingPoint>();
 
             // Extract all inherited points since they don't mean anything
             // while we are searching for the snap value.
             foreach (TimingPoint point in timingPoints)
                 if (!point.IsInherited)
+                {
                     redPoints.Add(point);
+                    if (target != point)
+                        excludedRedPoints.Add(point);
+                }
 
             // Now, the BEAT_SNAP_DIVISOR divides a beat in 48 
             // equal snaps, which covers both 1/12 and 1/16 snaps.
@@ -29,16 +34,18 @@ namespace Beatmap_Help_Tool.BeatmapTools
             if (redPoints.Count >= 1 && redPoints[0].GetOffset() == target.GetOffset())
                 return 0;
 
-            TimingPoint closestTimingPoint = SearchTools.GetClosestTimingPoint(redPoints, target.GetOffset());
+            TimingPoint closestTimingPoint = SearchTools.GetClosestTimingPoint(excludedRedPoints, target.GetOffset());
+            int zeroSnapPointIndex = SearchTools.GetClosestZeroSnapPointIndex(excludedRedPoints);
             if (closestTimingPoint != null)
             {
                 TimingPoint timingPoint1, timingPoint2;
                 IOffset itemInternal;
                 double beatDuration;
                 double finalSnap = 0d;
+                double snapInBetween;
                 bool checkedActualTarget = false;
                 int redPointsCount = redPoints.Count;
-                for (int i = 1; i < redPointsCount - 1; i++)
+                for (int i = zeroSnapPointIndex; i < redPointsCount - 1; i++)
                 {
                     timingPoint1 = redPoints[i];
                     timingPoint2 = redPoints[i + 1];
@@ -51,7 +58,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     else
                         itemInternal = timingPoint2;
 
-                    finalSnap += getSnapInBetween(timingPoint1, itemInternal, beatDuration);
+                    snapInBetween = getSnapInBetween(timingPoint1, itemInternal, beatDuration);
+                    if (snapInBetween >= 0)
+                        finalSnap += snapInBetween;
+                    else
+                        finalSnap = 0d;
                     if (checkedActualTarget)
                         break;
                 }
@@ -59,7 +70,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 // If we did not check the actual target here, that is because the 
                 // object we seek is after the last timing point, which only requires
                 // the computation of the final snap adding to the target and last point.
-                if (!checkedActualTarget && redPoints[redPointsCount - 1] == closestTimingPoint)
+                if (!checkedActualTarget  && redPoints[redPointsCount - 1] == closestTimingPoint)
                 {
                     TimingPoint point = redPoints[redPointsCount - 1];
                     finalSnap += getSnapInBetween(point, target, point.PointValue);
@@ -90,9 +101,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
             else
             {
-                // The note is definitely unsnapped.
+                // The note is definitely unsnapped. Take this note as the 0 snap and
+                // reset the final snap variable.
                 // TODO Either fill this area with an error message
-                // or throw an exception.
+                // or throw an exception, or find another idea to process unsnapped notes.
                 Console.WriteLine("Detected an unsnapped object with type \"" + target1.GetType() + "\", " +
                     "and offset " + target1.GetOffset());
                 return -1;

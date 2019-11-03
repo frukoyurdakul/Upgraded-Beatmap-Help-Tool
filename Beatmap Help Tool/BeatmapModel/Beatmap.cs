@@ -154,7 +154,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 point = TimingPoint.ParseLine(TimingPoints, lines[index]);
                 TimingPoints.Add(point);
-                point.GetSnap();
+                if (point != null)
+                    point.GetSnap();
                 if (TimingPoints[TimingPoints.Count - 1] == null)
                 {
                     MessageBoxUtils.showError("Process aborted.");

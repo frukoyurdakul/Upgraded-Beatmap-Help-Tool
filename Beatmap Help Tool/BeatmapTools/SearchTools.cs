@@ -85,6 +85,20 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)
+        {
+            SortTimingPoints(points);
+            for (int i = points.Count - 1; i > 0; i--)
+            {
+                if (points[i].GetSnap() == 0)
+                    return i;
+            }
+
+            // We return 0 here because 0 is not searched and it always have to be
+            // the 0 snap point.
+            return 0;
+        }
+
         private static int GetClosestPointIndex(List<TimingPoint> points, double offset)
         {
             SortTimingPoints(points);

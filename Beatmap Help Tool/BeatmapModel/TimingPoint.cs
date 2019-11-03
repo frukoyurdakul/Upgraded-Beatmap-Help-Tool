@@ -104,6 +104,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
+        public override string ToString()
+        {
+            return GetAsLine();
+        }
+
         public double GetOffset()
         {
             return Offset;
