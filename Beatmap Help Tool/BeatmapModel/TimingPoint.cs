@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public class TimingPoint : IComparable, IOffset
+    public class TimingPoint : BeatmapElement, IComparable
     {
-        private double offset = 0, snap = 0;
+        private double offset = 0, snap = 0, closestSnap = 0;
         private bool requiresSnapDetection = true;
         private List<TimingPoint> timingPoints;
 
@@ -35,7 +35,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public bool IsInherited { get; set; }
         public bool IsKiaiOpen { get; set; }
 
-        public TimingPoint(TimingPoint from)
+        public TimingPoint(TimingPoint from) : base(from.timingPoints)
         {
             Offset = from.Offset;
             PointValue = from.PointValue;
@@ -51,8 +51,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             snap = from.snap;
         }
 
-        public TimingPoint(double offset, double pointValue, int meter, int sampleSet, 
-            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen)
+        public TimingPoint(List<TimingPoint> points, double offset, double pointValue, int meter, int sampleSet, 
+            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen) : base(points)
         {
             Offset = offset;
             PointValue = pointValue;
@@ -64,22 +64,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
             IsKiaiOpen = isKiaiOpen;
         }
 
-        private TimingPoint SetTimingPointsList(List<TimingPoint> points)
-        {
-            timingPoints = points;
-            return this;
-        }
-
         public static TimingPoint ParseLine(List<TimingPoint> points, string line)
         {
             string[] splitted = line.Trim().Split(',');
             if (splitted.Length == 8)
             {
                 double pointValue = Convert.ToDouble(splitted[1]);
-                return new TimingPoint(Convert.ToDouble(splitted[0]),
+                return new TimingPoint(points, Convert.ToDouble(splitted[0]),
                     pointValue, Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[3]),
                     Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), splitted[6] == "0",
-                    splitted[7] == "0").SetTimingPointsList(points);
+                    splitted[7] == "0");
             }
             else
             {
@@ -107,26 +101,6 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public override string ToString()
         {
             return GetAsLine();
-        }
-
-        public double GetOffset()
-        {
-            return Offset;
-        }
-
-        public void SetOffset(double offset)
-        {
-            Offset = offset;
-        }
-
-        public double GetSnap()
-        {
-            if (requiresSnapDetection)
-            {
-                snap = SnapTools.getRelativeSnap(timingPoints, this);
-                requiresSnapDetection = false;
-            }
-            return snap;
         }
 
         public string getDisplayValue()
@@ -172,7 +146,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             return IsKiaiOpen;
         }
 
-        public string GetAsLine()
+        public override string GetAsLine()
         {
             return string.Join(",", Offset, PointValue, Meter, SampleSet, SampleIndex, 
                 Volume, (IsInherited ? 0 : 1).ToString(), (IsKiaiOpen ? 1 : 0).ToString());

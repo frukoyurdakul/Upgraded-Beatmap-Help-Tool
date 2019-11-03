@@ -161,9 +161,11 @@ namespace Beatmap_Help_Tool
             string[] osuFilesInFolder = Directory.GetFiles(songsPath, "*.osu", SearchOption.AllDirectories);
             string lastPart;
             string targetPath = "";
+            string path;
             int lastSlashIndex;
-            foreach (string path in osuFilesInFolder)
+            for (int i = 0; i < osuFilesInFolder.Length; i++)
             {
+                path = osuFilesInFolder[i];
                 lastSlashIndex = path.LastIndexOf("\\");
                 if (lastSlashIndex >= 0 && path.Length > lastSlashIndex + 1)
                 {

@@ -312,8 +312,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             if (dataGridView.Rows.Count > 0)
                 dataGridView.Rows.Clear();
-            foreach (TimingPoint point in points)
+            TimingPoint point; 
+            for (int i = 0; i < points.Count; i++)
             {
+                point = points[i];
                 dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValue(),
                     point.getDisplayMeter(), point.getDisplayVolume(), point.getDisplayKiai());
             }

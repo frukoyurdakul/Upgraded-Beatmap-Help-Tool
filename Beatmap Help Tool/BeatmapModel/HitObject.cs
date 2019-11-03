@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
-    public abstract class HitObject : IOffset, IComparable
+    public abstract class HitObject : BeatmapElement, IComparable
     {
         private const int CIRCLE = 1;
         private const int SLIDER = 2;
@@ -13,27 +13,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private const int MANIA_NOTE = 128;
 
         private double duration;
-        private List<TimingPoint> timingPoints;
-        private double offset;
-        private double snap = 0;
-        private bool requiresSnapDetection = true;
 
         public int X { get; set; }
         public int Y { get; set; }
         public int Type { get; set; }
         public int Hitsound { get; set; }
-        public double Offset
-        {
-            get
-            {
-                return offset;
-            }
-            set
-            {
-                offset = value;
-                requiresSnapDetection = true;
-            }
-        }
         public double Duration
         {
             get
@@ -52,34 +36,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         }
         public string Extras { get; set; }
 
-        public abstract string GetAsLine();
-
-        public double GetOffset()
-        {
-            return Offset;
-        }
-
-        public void SetOffset(double offset)
-        {
-            Offset = offset;
-        }
-
-        private HitObject SetTimingPoints(List<TimingPoint> points)
-        {
-            timingPoints = points;
-            GetSnap();
-            return this;
-        }
-
-        public double GetSnap()
-        {
-            if (requiresSnapDetection)
-            {
-                snap = SnapTools.getRelativeSnap(timingPoints, this);
-                requiresSnapDetection = false;
-            }
-            return snap;
-        }
+        public HitObject(List<TimingPoint> points) : base(points) { }
 
         public static HitObject ParseLine(Beatmap beatmap, string line)
         {
@@ -91,10 +48,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 // Do a type check first.
                 if (elements.Length == 6)
-                    return new HitCircle(Convert.ToInt32(elements[0]),
+                    return new HitCircle(beatmap.TimingPoints, Convert.ToInt32(elements[0]),
                         Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
                         Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
-                        elements[5]).SetTimingPoints(beatmap.TimingPoints);
+                        elements[5]);
                 else
                 {
                     MessageBoxUtils.showError("Type and element information does not match as a circle for line: " +
@@ -126,14 +83,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         string extras = (elements.Length >= 10 ? elements[9] : "") + 
                             (elements.Length >= 11 ? "," + elements[10] : "");
                         List<int> edgeHitsounds = new List<int>();
-                        foreach (string hitsound in hitsoundStrings)
-                            edgeHitsounds.Add(Convert.ToInt32(hitsound));
-                        return new HitSlider(Convert.ToInt32(elements[0]),
+                        for (int i = 0; i < hitsoundStrings.Length; i++)
+                            edgeHitsounds.Add(Convert.ToInt32(hitsoundStrings[i]));
+                        return new HitSlider(beatmap.TimingPoints, Convert.ToInt32(elements[0]),
                             Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
                             duration, type, Convert.ToInt32(elements[4]),
                             string.Join(",", elements[5], elements[6], elements[7]),
-                            edgeHitsounds, extras)
-                            .SetTimingPoints(beatmap.TimingPoints);
+                            edgeHitsounds, extras);
                     }
                     else
                     {
@@ -148,10 +104,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 if (elements.Length == 7)
                 {
                     double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
-                    return new HitSpinner(Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
+                    return new HitSpinner(beatmap.TimingPoints, Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
                         Convert.ToDouble(elements[2]), duration, type, Convert.ToInt32(elements[4]),
-                        elements[5])
-                        .SetTimingPoints(beatmap.TimingPoints);
+                        elements[5]);
                 }
                 else
                 {
@@ -178,7 +133,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             if (obj is HitObject)
             {
                 HitObject hitObject = obj as HitObject;
-                return (int) offset - (int) hitObject.offset;
+                return (int) Offset - (int) hitObject.Offset;
             }
             else
             {
@@ -189,7 +144,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
     class HitCircle : HitObject
     {
-        public HitCircle(int x, int y, double offset, double duration, int type, int hitsound, string extras)
+        public HitCircle(List<TimingPoint> points,
+            int x, int y, double offset, double duration, int type, int hitsound, string extras) : base(points)
         {
             X = x;
             Y = y;
@@ -211,8 +167,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private readonly string SliderInfo;
         private readonly List<int> EdgeHitsounds;
 
-        public HitSlider(int x, int y, double offset, double duration, int type, int hitsound, 
-            string sliderInfo, List<int> edgeHitsounds, string extras)
+        public HitSlider(List<TimingPoint> points, int x, int y, double offset, double duration, int type, int hitsound, 
+            string sliderInfo, List<int> edgeHitsounds, string extras) : base(points)
         {
             X = x;
             Y = y;
@@ -234,7 +190,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
     class HitSpinner : HitObject
     { 
-        public HitSpinner(int x, int y, double offset, double duration, int type, int hitsound, string extras)
+        public HitSpinner(List<TimingPoint> points, int x, int y, double offset, double duration, 
+            int type, int hitsound, string extras) : base(points)
         {
             X = x;
             Y = y;
