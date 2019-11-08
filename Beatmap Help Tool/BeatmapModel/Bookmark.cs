@@ -13,6 +13,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Offset = offset;
         }
 
+        public Bookmark(Bookmark from) : base(from.timingPoints) { }
+
         public override string GetSaveFormat()
         {
             return Offset.ToString();

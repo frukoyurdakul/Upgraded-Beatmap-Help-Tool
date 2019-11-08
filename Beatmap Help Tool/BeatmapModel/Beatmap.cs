@@ -9,6 +9,64 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public class Beatmap
     {
+        private const int MAX_SAVED_STATE_COUNT = 5;
+
+        private static readonly List<Beatmap> savedStates = new List<Beatmap>();
+        private static int savedStateIndex = 0;
+
+        public static Beatmap getNextSavedState()
+        {
+            if (savedStates.Count == 0)
+                return null;
+            if (savedStateIndex < savedStates.Count - 1)
+                return savedStates[++savedStateIndex];
+            else
+                return savedStates[savedStateIndex];
+        }
+
+        public static Beatmap getPreviousSavedState()
+        {
+            if (savedStates.Count == 0)
+                return null;
+            if (savedStateIndex > 0)
+                return savedStates[--savedStateIndex];
+            else
+                return savedStates[savedStateIndex];
+        }
+
+        public static bool hasNextState()
+        {
+            return savedStates.Count > 0 && 
+                savedStateIndex < savedStates.Count - 1;
+        }
+
+        public static bool hasPreviousState()
+        {
+            return savedStates.Count > 0 &&
+                savedStateIndex > 0;
+        }
+
+        private static void addSavedState(Beatmap copy)
+        {
+            if (savedStates.Count > MAX_SAVED_STATE_COUNT)
+            {
+                int difference = MAX_SAVED_STATE_COUNT - savedStates.Count;
+                for (int i = 0; i < difference; i++)
+                    savedStates.RemoveAt(0);
+            }
+            else if (savedStates.Count == MAX_SAVED_STATE_COUNT)
+                savedStates.RemoveAt(0);
+
+            savedStates.Add(copy);
+            savedStateIndex = savedStates.Count;
+        }
+
+        private static void clearSavedStates()
+        {
+            savedStates.Clear();
+            savedStateIndex = 0;
+        }
+
         // Constant integers that helps defining the beatmap mode.
         private const int MODE_STANDARD = 0;
         private const int MODE_TAIKO = 1;
@@ -24,14 +82,14 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private const int DISPLAY_MODE_INHERITED_ONLY = 2;
 
         // File path. Required to write over the file again.
-        public string FilePath { get; }
-        public string FileName { get; protected set; }
+        public string FilePath { get; internal set; }
+        public string FileName { get; internal set; }
 
-        // Datagridview display mode.
+        // Datagridview display mode. Default is all points.
         private int displayMode = DISPLAY_MODE_ALL;
 
         // Osu file format. Currently at v14 or v15.
-        public string FileFormat { get; }
+        public string FileFormat { get; internal set; }
 
         // Information about beatmap in general.
         public string AudioFilename { get; set; }
@@ -74,13 +132,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // Events (basically copied from the beatmap itself, will
         // be printed as a whole string while saving)
-        private readonly string Events = "";
+        private string Events = "";
 
         // Timing points
         public List<TimingPoint> TimingPoints = new List<TimingPoint>();
 
         // Colors
-        private readonly string Colors = "";
+        private string Colors = "";
 
         // Hit objects
         public List<HitObject> HitObjects = new List<HitObject>();
@@ -197,6 +255,74 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
+        private Beatmap()
+        {
+
+        }
+
+        public Beatmap(Beatmap source)
+        {
+            Beatmap beatmap = new Beatmap
+            {
+                // Add primitive types first and generate lists of objects.
+                ApproachRate = source.ApproachRate,
+                Artist = source.Artist,
+                ArtistUnicode = source.ArtistUnicode,
+                AudioFilename = source.AudioFilename,
+                AudioLeadIn = source.AudioLeadIn,
+                BeatDivisor = source.BeatDivisor,
+                BeatmapID = source.BeatmapID,
+                BeatmapMode = source.BeatmapMode,
+                BeatmapSetID = source.BeatmapSetID,
+                TimingPoints = new List<TimingPoint>(),
+                Bookmarks = new List<Bookmark>(),
+                HitObjects = new List<HitObject>(),
+                bookmarksString = source.bookmarksString,
+                CircleSize = source.CircleSize,
+                Colors = source.Colors,
+                Countdown = source.Countdown,
+                Creator = source.Creator,
+                displayMode = source.displayMode,
+                DistanceSpacing = source.DistanceSpacing,
+                Events = source.Events,
+                FileFormat = source.FileFormat,
+                FileName = source.FileName,
+                FilePath = source.FilePath,
+                GridSize = source.GridSize,
+                HPDrainRate = source.HPDrainRate,
+                LetterboxInBreaks = source.LetterboxInBreaks,
+                OverallDifficulty = source.OverallDifficulty,
+                PreviewTime = source.PreviewTime,
+                SampleSet = source.SampleSet,
+                SliderMultiplier = source.SliderMultiplier,
+                SliderTickRate = source.SliderTickRate,
+                Source = source.Source,
+                StackLeniency = source.StackLeniency,
+                Tags = source.Tags,
+                TimelineZoom = source.TimelineZoom,
+                Title = source.Title,
+                TitleUnicode = source.TitleUnicode,
+                Version = source.Version,
+                WidescreenStoryboard = source.WidescreenStoryboard
+            };
+
+            List<TimingPoint> timingPoints = beatmap.TimingPoints;
+            List<TimingPoint> sourceTimingPoints = source.TimingPoints;
+            int sourceTimingPointsCount = sourceTimingPoints.Count;
+            for (int i = 0; i < sourceTimingPointsCount; i++)
+                timingPoints.Add(new TimingPoint(sourceTimingPoints[i], timingPoints));
+            List<HitObject> hitObjects = beatmap.HitObjects;
+            List<HitObject> sourceHitObjects = source.HitObjects;
+            int sourceHitObjectsCount = sourceHitObjects.Count;
+            for (int i = 0; i < sourceHitObjectsCount; i++)
+                hitObjects.Add(HitObject.deepCopy(sourceHitObjects[i]));
+            List<Bookmark> bookmarks = beatmap.Bookmarks;
+            List<Bookmark> sourceBookmarks = source.Bookmarks;
+            int sourceBookmarksCount = sourceBookmarks.Count;
+            for (int i = 0; i < sourceBookmarksCount; i++)
+                bookmarks.Add(new Bookmark(sourceBookmarks[i]));
+        }
+
         private void AssignValueByKey(string key, string value)
         {
             switch (key)
@@ -296,6 +422,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
+        // Required function to generate file names.
+        // Necessary since metadata can also be changed from this app.
+        private string generateFileName()
+        {
+            return ArtistUnicode + " - " + TitleUnicode + " (" + Creator + ") [" + Version + "].osu";
+        }
+
         // Shows inherited points only.
         public void showInheritedPointsOnly(DataGridView dataGridView)
         {
@@ -345,16 +478,21 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public void save(string path)
         {
             string actualSavePath;
-            if (path.Contains(FileName))
+            string newFileName = generateFileName();
+            bool isEqual = newFileName.Equals(FileName);
+            if (path.Contains(newFileName))
                 actualSavePath = path;
             else if (Directory.Exists(path))
-                actualSavePath = path + "\\" + FileName;
+                actualSavePath = path + "\\" + newFileName;
             else
             {
                 // Fallback to desktop. This should not happen at all but we will see.
                 actualSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + FileName;
                 MessageBoxUtils.showWarning("Somehow the save path is invalid, saving to desktop instead.");
             }
+
+            // If we are saving, we must create a copy first.
+            addSavedState(new Beatmap(this));
             using (StreamWriter writer = new StreamWriter(new FileStream(actualSavePath, FileMode.Create)))
             {
                 writer.WriteLine(FileFormat);

@@ -7,7 +7,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
     {
         protected double offset = 0, snap = 0, closestSnap = 0;
         protected bool requiresSnapDetection = true;
-        protected readonly List<TimingPoint> timingPoints;
+        protected List<TimingPoint> timingPoints;
 
         public BeatmapElement(List<TimingPoint> timingPoints)
         {

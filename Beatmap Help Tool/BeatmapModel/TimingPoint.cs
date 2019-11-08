@@ -22,9 +22,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public bool IsKiaiOpen { get; set; }
         public bool IsOmitted { get; set; }
 
-        public TimingPoint(TimingPoint from) : base(from.timingPoints)
+        public TimingPoint(TimingPoint from, List<TimingPoint> points) : base(points)
         {
-            Offset = from.Offset;
             PointValue = from.PointValue;
             Meter = from.Meter;
             SampleSet = from.SampleSet;

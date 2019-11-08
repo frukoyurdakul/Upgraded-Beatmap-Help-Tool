@@ -28,7 +28,7 @@ namespace Beatmap_Help_Tool.Utils
                     {
                         runnableQueue.Dequeue().Invoke();
                     }
-                    Thread.Sleep(100);
+                    Thread.Sleep(50);
                 }
             }
         }

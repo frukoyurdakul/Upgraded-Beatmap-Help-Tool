@@ -79,7 +79,62 @@ namespace Beatmap_Help_Tool
 
         private void undoButton_Click(object sender, EventArgs e)
         {
+            if (Beatmap.hasPreviousState())
+            {
+                runningProcessLabel.Text = "Undoing...";
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    Beatmap beatmap = Beatmap.getPreviousSavedState();
+                    if (beatmap != null)
+                    {
+                        this.beatmap = beatmap;
+                        BeginInvoke(new Action(() =>
+                        {
+                            beatmap.fillDataGridView(mainDisplayView);
+                            runningProcessLabel.Text = "Previous state loaded.";
+                        }));
+                    }
+                    else
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            runningProcessLabel.Text = "An error occurred while fetching previous state.";
+                        }));
+                    }
+                }));
+            }
+            else
+                runningProcessLabel.Text = "There are no other previous states.";
+        }
 
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            if (Beatmap.hasNextState())
+            {
+                runningProcessLabel.Text = "Redoing...";
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    Beatmap beatmap = Beatmap.getNextSavedState();
+                    if (beatmap != null)
+                    {
+                        this.beatmap = beatmap;
+                        BeginInvoke(new Action(() =>
+                        {
+                            beatmap.fillDataGridView(mainDisplayView);
+                            runningProcessLabel.Text = "Next state loaded.";
+                        }));
+                    }
+                    else
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            runningProcessLabel.Text = "An error occurred while fetching next state.";
+                        }));
+                    }
+                }));
+            }
+            else
+                runningProcessLabel.Text = "There are no other next states.";
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -104,11 +159,6 @@ namespace Beatmap_Help_Tool
                         saveBeatmap(dialog.FileName);
                 }
             }
-        }
-
-        private void redoButton_Click(object sender, EventArgs e)
-        {
-
         }
         #endregion
 
@@ -182,6 +232,7 @@ namespace Beatmap_Help_Tool
                 beatmap.save(path);
                 BeginInvoke(new Action(() =>
                 {
+                    MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                 }));

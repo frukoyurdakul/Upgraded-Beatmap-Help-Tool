@@ -38,6 +38,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         public HitObject(List<TimingPoint> points) : base(points) { }
 
+        public HitObject(HitObject from) : base(from.timingPoints)
+        {
+            X = from.X;
+            Y = from.Y;
+            Type = from.Type;
+            Hitsound = from.Hitsound;
+            duration = from.duration;
+            Extras = from.Extras;
+        }
+
+        public static HitObject deepCopy(HitObject from)
+        {
+            if (from is HitCircle)
+                return new HitCircle(from as HitCircle);
+            else if (from is HitSlider)
+                return new HitSlider(from as HitSlider);
+            else if (from is HitSpinner)
+                return new HitSpinner(from as HitSpinner);
+            else
+                throw new ArgumentException("Unknown object received: " + from.GetType());
+        }
+
         public static HitObject ParseLine(Beatmap beatmap, string line)
         {
             string[] elements = line.Trim().Split(',');
@@ -156,6 +178,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Extras = extras;
         }
 
+        public HitCircle(HitCircle from) : base(from) { }
+
         override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, Extras);
@@ -182,6 +206,12 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Extras = extras;
         }
 
+        public HitSlider(HitSlider from) : base(from)
+        {
+            SliderInfo = from.SliderInfo;
+            EdgeHitsounds = from.EdgeHitsounds;
+        }
+
         override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, SliderInfo, string.Join("|", EdgeHitsounds), Extras);
@@ -201,6 +231,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Hitsound = hitsound;
             Extras = extras;
         }
+
+        public HitSpinner(HitSpinner from) : base(from) { }
 
         override public string GetSaveFormat()
         {
