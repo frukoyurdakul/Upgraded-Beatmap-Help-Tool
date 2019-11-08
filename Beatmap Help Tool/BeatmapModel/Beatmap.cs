@@ -459,9 +459,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // Fills the data grid view with related data. Has to be called
         // from GUI thread otherwise it will throw an exception.
-        public void fillDataGridView(DataGridView dataGridView)
+        public void fillMainDisplayView(DataGridView mainDisplayView)
         {
-            insertPoints(dataGridView, TimingPoints);
+            insertPoints(mainDisplayView, TimingPoints);
         }
 
         // Save the beatmap. Uses the beatmap's original file path.
@@ -565,6 +565,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         private void insertPoints(DataGridView dataGridView, List<TimingPoint> points)
         {
+            displayMode = DISPLAY_MODE_ALL;
             if (dataGridView.Rows.Count > 0)
                 dataGridView.Rows.Clear();
             TimingPoint point;

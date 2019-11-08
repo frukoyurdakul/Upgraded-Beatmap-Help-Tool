@@ -34,7 +34,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     {
                         // It means there is no inherited point after this red point. Get that red point
                         // and return it as an inherited one by changing the values.
-                        TimingPoint inheritedDummy = new TimingPoint(points[i])
+                        TimingPoint inheritedDummy = new TimingPoint(points[i], points)
                         {
                             PointValue = -100d,
                             IsInherited = true

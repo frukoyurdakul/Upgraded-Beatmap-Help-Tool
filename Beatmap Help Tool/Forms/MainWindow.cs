@@ -90,7 +90,7 @@ namespace Beatmap_Help_Tool
                         this.beatmap = beatmap;
                         BeginInvoke(new Action(() =>
                         {
-                            beatmap.fillDataGridView(mainDisplayView);
+                            beatmap.fillMainDisplayView(mainDisplayView);
                             runningProcessLabel.Text = "Previous state loaded.";
                         }));
                     }
@@ -120,7 +120,7 @@ namespace Beatmap_Help_Tool
                         this.beatmap = beatmap;
                         BeginInvoke(new Action(() =>
                         {
-                            beatmap.fillDataGridView(mainDisplayView);
+                            beatmap.fillMainDisplayView(mainDisplayView);
                             runningProcessLabel.Text = "Next state loaded.";
                         }));
                     }
@@ -196,7 +196,7 @@ namespace Beatmap_Help_Tool
             beatmap = new Beatmap(targetPath);
             BeginInvoke(new Action(() =>
             {
-                beatmap.fillDataGridView(mainDisplayView);
+                beatmap.fillMainDisplayView(mainDisplayView);
                 enableTabs();
                 runningProcessLabel.Text = beatmapFileName + " has been loaded.";
                 Text = "Beatmap Help Tool - " + beatmapFileName;
@@ -215,6 +215,7 @@ namespace Beatmap_Help_Tool
                 beatmap.save();
                 BeginInvoke(new Action(() =>
                 {
+                    MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                 }));
@@ -237,6 +238,12 @@ namespace Beatmap_Help_Tool
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                 }));
             }));
+        }
+
+        private void refreshContent()
+        {
+            if (beatmap != null)
+                beatmap.fillMainDisplayView(mainDisplayView);
         }
 
         private string getSongsPathFromProcess()
@@ -336,11 +343,11 @@ namespace Beatmap_Help_Tool
             string mapName;
             if (osuWindowTitle.StartsWith("osu!cuttingedge"))
             {
-                mapName = returnMapName(osuWindowTitle, IndexUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
+                mapName = returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
             }
             else if (osuWindowTitle.StartsWith("osu!"))
             {
-                mapName = returnMapName(osuWindowTitle, IndexUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
+                mapName = returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
             }
             else
             {
@@ -371,15 +378,15 @@ namespace Beatmap_Help_Tool
 
         private void enableTabs()
         {
-            (svChangesPage as Control).Enabled = true;
-            (editorFunctionsPage as Control).Enabled = true;
+            (generalFunctionsPage as Control).Enabled = true;
+            (svFunctionsPage as Control).Enabled = true;
             (bpmFunctionsPage as Control).Enabled = true;
         }
 
         private void disableTabs()
         {
-            (svChangesPage as Control).Enabled = false;
-            (editorFunctionsPage as Control).Enabled = false;
+            (generalFunctionsPage as Control).Enabled = false;
+            (svFunctionsPage as Control).Enabled = false;
             (bpmFunctionsPage as Control).Enabled = false;
         }
         #endregion
