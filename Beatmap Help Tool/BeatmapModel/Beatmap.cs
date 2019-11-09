@@ -12,6 +12,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private const int MAX_SAVED_STATE_COUNT = 5;
 
         private static readonly List<Beatmap> savedStates = new List<Beatmap>();
+        private static readonly List<string> actions = new List<string>();
         private static int savedStateIndex = 0;
 
         public static Beatmap getNextSavedState()
@@ -34,6 +35,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 return savedStates[savedStateIndex];
         }
 
+        public static string getSavedStateAction()
+        {
+            if (savedStateIndex >= actions.Count)
+                return "";
+            return actions[savedStateIndex];
+        }
+
         public static bool hasNextState()
         {
             return savedStates.Count > 0 && 
@@ -46,25 +54,45 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 savedStateIndex > 0;
         }
 
-        private static void addSavedState(Beatmap copy)
+        private static void addSavedState(string action, Beatmap beatmap)
         {
             if (savedStates.Count > MAX_SAVED_STATE_COUNT)
             {
                 int difference = MAX_SAVED_STATE_COUNT - savedStates.Count;
                 for (int i = 0; i < difference; i++)
+                {
                     savedStates.RemoveAt(0);
+                    actions.RemoveAt(0);
+                }
             }
             else if (savedStates.Count == MAX_SAVED_STATE_COUNT)
+            {
                 savedStates.RemoveAt(0);
+                actions.RemoveAt(0);
+            }
 
-            savedStates.Add(copy);
-            savedStateIndex = savedStates.Count;
+            savedStates.Add(beatmap);
+            actions.Add(getNonDuplicateString(actions, action));
+            savedStateIndex = savedStates.Count - 1;
         }
 
         private static void clearSavedStates()
         {
             savedStates.Clear();
             savedStateIndex = 0;
+        }
+
+        private static string getNonDuplicateString(List<string> actions, string action)
+        {
+            if (!actions.Contains(action))
+                return action;
+            else
+            {
+                int startIndex = 1;
+                string format;
+                while (!actions.Contains(format = string.Format("({0})", startIndex++))) ;
+                return format;
+            }
         }
 
         // Constant integers that helps defining the beatmap mode.
@@ -253,6 +281,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     return;
                 }
             }
+            addSavedState("First load", this);
         }
 
         private Beatmap()
@@ -262,65 +291,58 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         public Beatmap(Beatmap source)
         {
-            Beatmap beatmap = new Beatmap
-            {
-                // Add primitive types first and generate lists of objects.
-                ApproachRate = source.ApproachRate,
-                Artist = source.Artist,
-                ArtistUnicode = source.ArtistUnicode,
-                AudioFilename = source.AudioFilename,
-                AudioLeadIn = source.AudioLeadIn,
-                BeatDivisor = source.BeatDivisor,
-                BeatmapID = source.BeatmapID,
-                BeatmapMode = source.BeatmapMode,
-                BeatmapSetID = source.BeatmapSetID,
-                TimingPoints = new List<TimingPoint>(),
-                Bookmarks = new List<Bookmark>(),
-                HitObjects = new List<HitObject>(),
-                bookmarksString = source.bookmarksString,
-                CircleSize = source.CircleSize,
-                Colors = source.Colors,
-                Countdown = source.Countdown,
-                Creator = source.Creator,
-                displayMode = source.displayMode,
-                DistanceSpacing = source.DistanceSpacing,
-                Events = source.Events,
-                FileFormat = source.FileFormat,
-                FileName = source.FileName,
-                FilePath = source.FilePath,
-                GridSize = source.GridSize,
-                HPDrainRate = source.HPDrainRate,
-                LetterboxInBreaks = source.LetterboxInBreaks,
-                OverallDifficulty = source.OverallDifficulty,
-                PreviewTime = source.PreviewTime,
-                SampleSet = source.SampleSet,
-                SliderMultiplier = source.SliderMultiplier,
-                SliderTickRate = source.SliderTickRate,
-                Source = source.Source,
-                StackLeniency = source.StackLeniency,
-                Tags = source.Tags,
-                TimelineZoom = source.TimelineZoom,
-                Title = source.Title,
-                TitleUnicode = source.TitleUnicode,
-                Version = source.Version,
-                WidescreenStoryboard = source.WidescreenStoryboard
-            };
+            TimingPoints = new List<TimingPoint>();
+            Bookmarks = new List<Bookmark>();
+            HitObjects = new List<HitObject>();
+            ApproachRate = source.ApproachRate;
+            Artist = source.Artist;
+            ArtistUnicode = source.ArtistUnicode;
+            AudioFilename = source.AudioFilename;
+            AudioLeadIn = source.AudioLeadIn;
+            BeatDivisor = source.BeatDivisor;
+            BeatmapID = source.BeatmapID;
+            BeatmapMode = source.BeatmapMode;
+            BeatmapSetID = source.BeatmapSetID;
+            bookmarksString = source.bookmarksString;
+            CircleSize = source.CircleSize;
+            Colors = source.Colors;
+            Countdown = source.Countdown;
+            Creator = source.Creator;
+            displayMode = source.displayMode;
+            DistanceSpacing = source.DistanceSpacing;
+            Events = source.Events;
+            FileFormat = source.FileFormat;
+            FileName = source.FileName;
+            FilePath = source.FilePath;
+            GridSize = source.GridSize;
+            HPDrainRate = source.HPDrainRate;
+            LetterboxInBreaks = source.LetterboxInBreaks;
+            OverallDifficulty = source.OverallDifficulty;
+            PreviewTime = source.PreviewTime;
+            SampleSet = source.SampleSet;
+            SliderMultiplier = source.SliderMultiplier;
+            SliderTickRate = source.SliderTickRate;
+            Source = source.Source;
+            StackLeniency = source.StackLeniency;
+            Tags = source.Tags;
+            TimelineZoom = source.TimelineZoom;
+            Title = source.Title;
+            TitleUnicode = source.TitleUnicode;
+            Version = source.Version;
+            WidescreenStoryboard = source.WidescreenStoryboard;
 
-            List<TimingPoint> timingPoints = beatmap.TimingPoints;
             List<TimingPoint> sourceTimingPoints = source.TimingPoints;
             int sourceTimingPointsCount = sourceTimingPoints.Count;
             for (int i = 0; i < sourceTimingPointsCount; i++)
-                timingPoints.Add(new TimingPoint(sourceTimingPoints[i], timingPoints));
-            List<HitObject> hitObjects = beatmap.HitObjects;
+                TimingPoints.Add(new TimingPoint(sourceTimingPoints[i], TimingPoints));
             List<HitObject> sourceHitObjects = source.HitObjects;
             int sourceHitObjectsCount = sourceHitObjects.Count;
             for (int i = 0; i < sourceHitObjectsCount; i++)
-                hitObjects.Add(HitObject.deepCopy(sourceHitObjects[i]));
-            List<Bookmark> bookmarks = beatmap.Bookmarks;
+                HitObjects.Add(HitObject.deepCopy(sourceHitObjects[i]));
             List<Bookmark> sourceBookmarks = source.Bookmarks;
             int sourceBookmarksCount = sourceBookmarks.Count;
             for (int i = 0; i < sourceBookmarksCount; i++)
-                bookmarks.Add(new Bookmark(sourceBookmarks[i]));
+                Bookmarks.Add(new Bookmark(sourceBookmarks[i]));
         }
 
         private void AssignValueByKey(string key, string value)
@@ -466,16 +488,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // Save the beatmap. Uses the beatmap's original file path.
         // To use another path, use save(string path) instead.
-        public void save()
+        public void save(string action)
         {
-            save(FilePath);
+            save(action, FilePath);
         }
 
         // Save the beatmap with the current content.
         // Save is handled in background so let the worker thread do
         // the saving and let the foreground thread do the label processing etc...
         // It is better to call this on the background thread.
-        public void save(string path)
+        public void save(string action, string path)
         {
             string actualSavePath;
             string newFileName = generateFileName();
@@ -492,7 +514,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
 
             // If we are saving, we must create a copy first.
-            addSavedState(new Beatmap(this));
+            addSavedState(action, new Beatmap(this));
             using (StreamWriter writer = new StreamWriter(new FileStream(actualSavePath, FileMode.Create)))
             {
                 writer.WriteLine(FileFormat);

@@ -40,9 +40,14 @@ namespace Beatmap_Help_Tool.Utils
 
         public static void executeOnBackground(Action method)
         {
-            lock(mLock)
+            if (Thread.CurrentThread == workerThread)
+                method.Invoke();
+            else
             {
-                runnableQueue.Enqueue(method);
+                lock (mLock)
+                {
+                    runnableQueue.Enqueue(method);
+                }
             }
         }
     }

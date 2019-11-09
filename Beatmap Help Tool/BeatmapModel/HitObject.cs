@@ -7,10 +7,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public abstract class HitObject : BeatmapElement, IComparable
     {
-        private const int CIRCLE = 1;
-        private const int SLIDER = 2;
-        private const int SPINNER = 8;
-        private const int MANIA_NOTE = 128;
+        // Note types.
+        public const int CIRCLE = 1;
+        public const int SLIDER = 2;
+        public const int SPINNER = 8;
+        public const int MANIA_NOTE = 128;
+
+        // Hitsound types.
+        public const int NORMAL = 1;
+        public const int WHISTLE = 2;
+        public const int FINISHER = 4;
+        public const int CLAP = 8;
 
         private double duration;
 
@@ -84,7 +91,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             // If elements have the size of 11, it is a slider. Parse it as required.
             else if ((type & SLIDER) != 0)
             {
-                // Always check the type first.
+                // Always check the length first.
                 if (elements.Length < 8)
                 {
                     MessageBoxUtils.showError("Type and element information does not match as a slider for line: " +
@@ -101,7 +108,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         // We found the timing point, now it is time to construct the object.
                         double pixelLength = Convert.ToDouble(elements[7]);
                         double duration = pixelLength / (100.0 * beatmap.SliderMultiplier) * point.PointValue;
-                        string[] hitsoundStrings = elements.Length >= 9 ? elements[8].Split('|') : new string[0];
+                        string[] hitsoundStrings = elements.Length >= 9 && !string.IsNullOrWhiteSpace(elements[8]) ?
+                            elements[8].Split('|') : new string[0];
                         string extras = (elements.Length >= 10 ? elements[9] : "") + 
                             (elements.Length >= 11 ? "," + elements[10] : "");
                         List<int> edgeHitsounds = new List<int>();

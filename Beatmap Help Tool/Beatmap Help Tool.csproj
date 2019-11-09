@@ -57,6 +57,7 @@
     <Compile Include="BeatmapModel\HitObject.cs" />
     <Compile Include="BeatmapModel\BeatmapElement.cs" />
     <Compile Include="BeatmapModel\TimingPoint.cs" />
+    <Compile Include="BeatmapTools\NoteTools.cs" />
     <Compile Include="BeatmapTools\SearchTools.cs" />
     <Compile Include="BeatmapTools\SnapTools.cs" />
     <Compile Include="Forms\MainWindow.cs">

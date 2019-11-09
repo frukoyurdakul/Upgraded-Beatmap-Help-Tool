@@ -1,4 +1,5 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
+using Beatmap_Help_Tool.BeatmapTools;
 using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -10,6 +11,8 @@ namespace Beatmap_Help_Tool
 {
     public partial class MainWindow : Form
     {
+        public static string lastAction = "";
+
         private Beatmap beatmap;
 
         public MainWindow()
@@ -29,139 +32,6 @@ namespace Beatmap_Help_Tool
             }
         }
 
-        #region Mouse focus functions
-        private void processSender(object sender, EventArgs e)
-        {
-            if (sender is Control)
-            {
-                (sender as Control).Focus();
-            }
-        }
-        #endregion
-
-        #region Form functions
-        private void mainForm_Load(object sender, EventArgs e)
-        {
-            ThreadUtils.executeOnBackground(new Action(() => determineInitialProcess()));
-        }
-
-        private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            ThreadUtils.exitLooperThread();
-        }
-
-        private void browseButton_Click(object sender, EventArgs e)
-        {
-            mainDisplayView.Focus();
-            performBrowse();
-        }
-
-        private void allPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showAllPoints(mainDisplayView);
-            mainDisplayView.Focus();
-        }
-
-        private void timingPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showTimingPointsOnly(mainDisplayView);
-            mainDisplayView.Focus();
-        }
-
-        private void inheritedPointsButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap != null)
-                beatmap.showInheritedPointsOnly(mainDisplayView);
-            mainDisplayView.Focus();
-        }
-
-        private void undoButton_Click(object sender, EventArgs e)
-        {
-            if (Beatmap.hasPreviousState())
-            {
-                runningProcessLabel.Text = "Undoing...";
-                ThreadUtils.executeOnBackground(new Action(() =>
-                {
-                    Beatmap beatmap = Beatmap.getPreviousSavedState();
-                    if (beatmap != null)
-                    {
-                        this.beatmap = beatmap;
-                        BeginInvoke(new Action(() =>
-                        {
-                            beatmap.fillMainDisplayView(mainDisplayView);
-                            runningProcessLabel.Text = "Previous state loaded.";
-                        }));
-                    }
-                    else
-                    {
-                        BeginInvoke(new Action(() =>
-                        {
-                            runningProcessLabel.Text = "An error occurred while fetching previous state.";
-                        }));
-                    }
-                }));
-            }
-            else
-                runningProcessLabel.Text = "There are no other previous states.";
-        }
-
-        private void redoButton_Click(object sender, EventArgs e)
-        {
-            if (Beatmap.hasNextState())
-            {
-                runningProcessLabel.Text = "Redoing...";
-                ThreadUtils.executeOnBackground(new Action(() =>
-                {
-                    Beatmap beatmap = Beatmap.getNextSavedState();
-                    if (beatmap != null)
-                    {
-                        this.beatmap = beatmap;
-                        BeginInvoke(new Action(() =>
-                        {
-                            beatmap.fillMainDisplayView(mainDisplayView);
-                            runningProcessLabel.Text = "Next state loaded.";
-                        }));
-                    }
-                    else
-                    {
-                        BeginInvoke(new Action(() =>
-                        {
-                            runningProcessLabel.Text = "An error occurred while fetching next state.";
-                        }));
-                    }
-                }));
-            }
-            else
-                runningProcessLabel.Text = "There are no other next states.";
-        }
-
-        private void saveButton_Click(object sender, EventArgs e)
-        {
-            if (beatmap == null)
-                MessageBoxUtils.showError("No beatmap has been loaded.");
-            else
-            {
-                DialogResult result = (MessageBoxUtils.showQuestionYesNoCancel("Save to beatmap path? Choosing \"No\" will " +
-                    "bring up the file chooser."));
-                if (result == DialogResult.Yes)
-                    saveBeatmap();
-                else if (result == DialogResult.No)
-                {
-                    CommonOpenFileDialog dialog = new CommonOpenFileDialog
-                    {
-                        DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                        IsFolderPicker = true,
-                        Multiselect = false
-                    };
-                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                        saveBeatmap(dialog.FileName);
-                }
-            }
-        }
-        #endregion
-
         #region Util functions
         private void performBrowse()
         {
@@ -180,7 +50,7 @@ namespace Beatmap_Help_Tool
             dialog.Title = "Select .osu file";
             dialog.Filter = ".osu files|*.osu";
             if (dialog.ShowDialog() == DialogResult.OK)
-                ThreadUtils.executeOnBackground(new Action(() => 
+                ThreadUtils.executeOnBackground(new Action(() =>
                     loadBeatmap(dialog.FileName, dialog.SafeFileName)));
         }
 
@@ -204,7 +74,7 @@ namespace Beatmap_Help_Tool
             }));
         }
 
-        private void saveBeatmap()
+        private void saveBeatmap(string action)
         {
             ThreadUtils.executeOnBackground(new Action(() =>
             {
@@ -212,7 +82,7 @@ namespace Beatmap_Help_Tool
                 {
                     runningProcessLabel.Text = "Saving beatmap...";
                 }));
-                beatmap.save();
+                beatmap.save(action);
                 BeginInvoke(new Action(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
@@ -222,7 +92,7 @@ namespace Beatmap_Help_Tool
             }));
         }
 
-        private void saveBeatmap(string path)
+        private void saveBeatmap(string action, string path)
         {
             ThreadUtils.executeOnBackground(new Action(() =>
             {
@@ -230,7 +100,7 @@ namespace Beatmap_Help_Tool
                 {
                     runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
                 }));
-                beatmap.save(path);
+                beatmap.save(action, path);
                 BeginInvoke(new Action(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
@@ -388,6 +258,165 @@ namespace Beatmap_Help_Tool
             (generalFunctionsPage as Control).Enabled = false;
             (svFunctionsPage as Control).Enabled = false;
             (bpmFunctionsPage as Control).Enabled = false;
+        }
+        #endregion
+
+        #region Mouse focus functions
+        private void processSender(object sender, EventArgs e)
+        {
+            if (sender is Control)
+            {
+                (sender as Control).Focus();
+            }
+        }
+        #endregion
+
+        #region Form functions
+        private void mainForm_Load(object sender, EventArgs e)
+        {
+            ThreadUtils.executeOnBackground(new Action(() => determineInitialProcess()));
+        }
+
+        private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ThreadUtils.exitLooperThread();
+        }
+
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            mainDisplayView.Focus();
+            performBrowse();
+        }
+
+        private void allPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showAllPoints(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void timingPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showTimingPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void inheritedPointsButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap != null)
+                beatmap.showInheritedPointsOnly(mainDisplayView);
+            mainDisplayView.Focus();
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            if (Beatmap.hasPreviousState())
+            {
+                runningProcessLabel.Text = "Undoing...";
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    Beatmap beatmap = Beatmap.getPreviousSavedState();
+                    if (beatmap != null)
+                    {
+                        this.beatmap = beatmap;
+                        BeginInvoke(new Action(() =>
+                        {
+                            beatmap.fillMainDisplayView(mainDisplayView);
+                            runningProcessLabel.Text = string.Format("Previous state loaded ({0})",
+                                Beatmap.getSavedStateAction());
+                        }));
+                    }
+                    else
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            runningProcessLabel.Text = "An error occurred while fetching previous state.";
+                        }));
+                    }
+                }));
+            }
+            else
+                runningProcessLabel.Text = "There are no other previous states.";
+        }
+
+        private void redoButton_Click(object sender, EventArgs e)
+        {
+            if (Beatmap.hasNextState())
+            {
+                runningProcessLabel.Text = "Redoing...";
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    Beatmap beatmap = Beatmap.getNextSavedState();
+                    if (beatmap != null)
+                    {
+                        this.beatmap = beatmap;
+                        BeginInvoke(new Action(() =>
+                        {
+                            beatmap.fillMainDisplayView(mainDisplayView);
+                            runningProcessLabel.Text = string.Format("Next state loaded ({0})", 
+                                Beatmap.getSavedStateAction());
+                        }));
+                    }
+                    else
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            runningProcessLabel.Text = "An error occurred while fetching next state.";
+                        }));
+                    }
+                }));
+            }
+            else
+                runningProcessLabel.Text = "There are no other next states.";
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap == null)
+                MessageBoxUtils.showError("No beatmap has been loaded.");
+            else
+            {
+                DialogResult result = (MessageBoxUtils.showQuestionYesNoCancel("Save to beatmap path? Choosing \"No\" will " +
+                    "bring up the file chooser."));
+                if (result == DialogResult.Yes)
+                    saveBeatmap("Saved content");
+                else if (result == DialogResult.No)
+                {
+                    CommonOpenFileDialog dialog = new CommonOpenFileDialog
+                    {
+                        DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                        IsFolderPicker = true,
+                        Multiselect = false
+                    };
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                        saveBeatmap(dialog.FileName);
+                }
+            }
+        }
+
+        private void whistleToClapButton_Click(object sender, EventArgs e)
+        {
+            if (beatmap == null)
+            {
+                MessageBoxUtils.showError("No beatmap has been loaded.");
+                return;
+            }
+
+            if (MessageBoxUtils.showQuestionYesNo("Are you sure?") == DialogResult.Yes)
+            {
+                runningProcessLabel.Text = "Converting all hitsounds to claps...";
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    NoteTools.setAllWhistlesToClaps(beatmap);
+                    BeginInvoke(new Action(() =>
+                    {
+                        MessageBoxUtils.show("Converted all hitsounds to claps successfully.");
+                        runningProcessLabel.Text = "Converted all hitsounds to claps.";
+                        saveBeatmap("Converted all hitsounds to claps");
+                    }));
+                }));
+            }
         }
         #endregion
     }

@@ -41,9 +41,7 @@ namespace Beatmap_Help_Tool.Views
         private readonly int minHeight;
         private int wordCount = -1;
         private SizeF textSize;
-        private int textLength;
-        private int length;
-        private string trimmed, flatCopy;
+        private string flatCopy;
         private bool calledInternally = false;
  
         public MultilineButton() : base()
