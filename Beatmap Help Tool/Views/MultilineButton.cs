@@ -18,90 +18,91 @@ namespace Beatmap_Help_Tool.Views
             get => base.Text;
             set
             {
+                if (wordCount == -1 && !string.IsNullOrEmpty(value))
+                {
+                    string[] words = value.Split(' ');
+                    if (words.Length == 1 && string.IsNullOrWhiteSpace(words[0]))
+                        wordCount = 1;
+                    else
+                    {
+                        for (int i = 0; i < words.Length; i++)
+                            if (!string.IsNullOrWhiteSpace(words[i]))
+                                wordCount++;
+                    }
+                }
+                string text = value;
                 base.Text = wrapText(value);
-                updateSizeByText();
+                if (base.Text != text)
+                    updateSizeByText();
             }
         }
 
         private readonly Graphics graphics;
+        private readonly int minHeight;
+        private int wordCount = -1;
         private SizeF textSize;
-        private int textLineCount = 0, textLength, length;
-
-        private string[] words;
-        private string trimmed;
+        private int textLength;
+        private int length;
+        private string trimmed, flatCopy;
         private bool calledInternally = false;
  
         public MultilineButton() : base()
         {
             graphics = CreateGraphics();
-            textLineCount = string.IsNullOrEmpty(Text) ? 0 : 1;
+            minHeight = Size.Height + 4;
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
             if (!calledInternally)
-            {
-                Text = wrapText(Text);
-                updateSizeByText();
-            }
+                Text = Text;
+            calledInternally = false;
         }
 
         private string wrapText(string source)
         {
+            // Do not touch the source if it is empty.
             if (string.IsNullOrEmpty(source))
                 return source;
-
-            // Extract the newLine property from the string itself.
-            source = source.Replace(newLine, "");
-            textSize = graphics.MeasureString(source, Font);
-            if (fits(textSize))
+            
+            // Always short-circuit if word count is 1.
+            if (wordCount == 1)
                 return source;
 
-            // We need to wrap the text. Start dividing the texts and change size if possible.
-            // Be careful about OnSizeChanged call though, prevent recursive calculations.
-            words = source.Split(' ');
-            if (words.Length == 1)
-            {
-                // There is only one word (not really likely but still) so 
-                // we need to wrap the word itself. Start removing characters one by one.
-                return divideTextFully(source);
-            }
-            else if (words.Length > 1)
-            {
-                // There are mulitple words, starting from the last word 
-                // we need to divide the words.
-                return divideTextLineByLine(source);
-            }
-            else
-                throw new ArgumentException("Argument is wrong: \"" + source + "\", word count is: " +
-                    words.Length.ToString());
-        }
+            int index, lastSpaceIndex;
+            bool lastSpaceChanged = false;
+            flatCopy = source;
 
-        private string divideTextFully(string source)
-        {
-            textLength = source.Length;
-            int startIndex = 0;
-            int endIndex = textLength;
-            while (!fits(textSize) && --endIndex >= 0)
+            // First, look for flat string by replacing new lines with 
+            // spaces.
+            while ((index = flatCopy.LastIndexOf(newLine)) >= 0)
             {
-                trimmed = source.Substring(0, endIndex);
-                textSize = graphics.MeasureString(trimmed, Font);
+                lastSpaceIndex = flatCopy.LastIndexOf(' ');
+                if (!lastSpaceChanged && lastSpaceIndex > index)
+                {
+                    flatCopy = flatCopy.Remove(lastSpaceIndex, 1).Insert(lastSpaceIndex, newLine);
+                    lastSpaceChanged = true;
+                }
+                flatCopy = flatCopy.Remove(index, newLine.Length).Insert(index, " ");
+                if (fits(flatCopy))
+                    return flatCopy;
             }
-            if (endIndex == textLength || endIndex < 0)
-            {
-                // Either the text fits, or we couldn't do anything, just keep the original text.
+
+            // Before editing, check if source fits first.
+            if (fits(source))
                 return source;
-            }
-            else
+
+            // Then, do the reverse, as in replace spaces with new lines.
+            while ((index = source.LastIndexOf(' ')) >= 0)
             {
-                // We managed to divide the text, change size, insert a \n on the string and
-                // return it. Also work recursively starting from here because the text might be
-                // multiline bigger than 2.
-                length = endIndex - startIndex;
-                trimmed = source.Substring(startIndex, length) + newLine;
-                return source.Substring(0, length) + divideTextFully(trimmed);
+                source = source.Remove(index, 1).Insert(index, newLine);
+                if (fits(source))
+                    return source;
             }
+
+            // Could not do anything, just return the original.
+            return source;
         }
 
         private string divideTextLineByLine(string source)
@@ -113,12 +114,11 @@ namespace Beatmap_Help_Tool.Views
             // First, trim the source from start and end, and copy to
             // another variable.
             source = source.Trim();
-            string trimmed, joined, joinedTemp = "";
+            string word, joined = "";
             List<string> words = new List<string>();
 
             // From the beginning, add the parts that are divided
             // with space, then check the size.
-            int lastIndex;
             words.AddRange(source.Split(' '));
             for (int i = 0; i < words.Count; i++)
             {
@@ -130,49 +130,34 @@ namespace Beatmap_Help_Tool.Views
             if (words.Count > 0)
             {
                 // If this is the last word remaining, return the string itself.
-                // This cannot be processed anymore.
+                // This cannot be processed anymore as word division.
                 if (words.Count == 1)
-                    return source;
-
-                // Got the words and trimmed. Now it is time to check the sizes
-                // of the words after joining them.
-
-                // Re-create the source string to eliminate multiple spaces between words.
-                source = string.Join(" ", words);
-
-                // Start checking the sizes.
-                joined = words[0];
-                if (!fits(graphics.MeasureString(joined, Font)))
-                    return joined + newLine + divideTextLineByLine(source.Substring(joined.Length - 1));
-                lastIndex = 1;
-                while (lastIndex < words.Count)
                 {
-                    joined += " " + words[lastIndex++];
-                    if (!fits(graphics.MeasureString(joined, Font)))
-                    {
-                        if (joinedTemp == "")
-                            joinedTemp = joined;
-                        break;
-                    }
-                    joinedTemp = joined;
-                }
-
-                // If exited from the loop, it means the text does not fit anymore.
-                // If last index is bigger than 0, it means the check is rather successful.
-                // Otherwise, something went wrong because we already done an early
-                // check on one word issue.
-                if (lastIndex > 0 && joinedTemp.Length > 0)
-                {
-                    // If last index is equal to list size - 1, somehow there is a 
-                    // wrong logic here, but do not mind and return the source.
-                    if (lastIndex == words.Count - 1)
-                        return source;
+                    // Wrap the text again if necessary.
+                    if (!fits(words[0]))
+                        return getDividedWord(words[0]);
                     else
-                        return joinedTemp + newLine + divideTextLineByLine(source.Substring(joinedTemp.Length));
+                        return source;
                 }
-                else
-                    throw new Exception("Somehow the text does not fit and lines are ended. String: " + 
-                        source);
+                
+                // Start checking the words. First, join by word with space,
+                // if at the end it does not fit, change the last part with
+                // a newLine and start checking again.
+                for (int i = 0; i < words.Count; i++)
+                {
+                    word = (i == 0 ? "" : " ") + words[i];
+                    if (!fitsTotal(joined, word))
+                    {
+                        // The word itself may not fit although unlikely.
+                        // Still, check if it has to be wrapped.
+                        if (!fits(word))
+                            word = getDividedWord(word.Trim());
+                        else
+                            word = newLine + word.Trim();
+                    }
+                    joined += word;
+                }
+                return joined;
             }
             else
             {
@@ -181,14 +166,33 @@ namespace Beatmap_Help_Tool.Views
             }
         }
 
+        private string getDividedWord(string source)
+        {
+            string builder = "";
+            for (int i = source.Length - 1; i >= 0; i--)
+            {
+                if (fits(builder))
+                    builder += source[i];
+                else if (builder.Length > 0)
+                {
+                    builder = builder.Remove(builder.Length - 1, 1);
+                    builder += newLine + source[i];
+                }
+            }
+            return builder;
+        }
+
         private void updateSizeByText()
         {
-            textSize = graphics.MeasureString(Text, Font);
             int lineCount = StringUtils.getStringCountInString(Text, newLine) + 1;
-            float targetHeight = textSize.Height * lineCount;
-            if (targetHeight > 0 && lineCount > 1)
-                changeSize(Size.Width, Convert.ToInt32(targetHeight + 
-                    Padding.Top + Padding.Bottom + 30));
+            if (lineCount > 1)
+            {
+                textSize = graphics.MeasureString(Text, Font);
+                float targetHeight = Math.Max(textSize.Height, minHeight);
+                changeSize(Size.Width, Convert.ToInt32(targetHeight + Padding.Top + Padding.Bottom + 15));
+            }
+            else
+                changeSize(Size.Width, minHeight);
         }
 
         private void changeSize(int width, int height)
@@ -197,14 +201,30 @@ namespace Beatmap_Help_Tool.Views
             {
                 calledInternally = true;
                 Size = new Size(width, height);
-                Update();
-                calledInternally = false;
             }
+        }
+
+        private bool fits(string text)
+        {
+            textSize = graphics.MeasureString(text, Font);
+            return fits(textSize);
         }
 
         private bool fits(SizeF size)
         {
-            return size.Width <= Width - Padding.Left - Padding.Right - 30;
+            return size.Width <= getTextMaxWidth();
+        }
+
+        private bool fitsTotal(string joined, string word)
+        {
+            float totalWidth = graphics.MeasureString(joined, Font).Width +
+                graphics.MeasureString(word, Font).Width;
+            return totalWidth <= getTextMaxWidth();
+        }
+
+        private float getTextMaxWidth()
+        {
+            return Width - Padding.Left - Padding.Right - 30;
         }
     }
 }

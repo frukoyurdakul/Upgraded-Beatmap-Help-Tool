@@ -32,7 +32,7 @@ namespace Beatmap_Help_Tool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.settingsPage = new System.Windows.Forms.TabPage();
@@ -410,6 +410,7 @@ namespace Beatmap_Help_Tool
             this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.browseButton.AutoSize = true;
             this.browseButton.Location = new System.Drawing.Point(614, 6);
+            this.browseButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(134, 27);
             this.browseButton.TabIndex = 5;
@@ -465,6 +466,7 @@ namespace Beatmap_Help_Tool
             this.redoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.redoButton.AutoSize = true;
             this.redoButton.Location = new System.Drawing.Point(598, 3);
+            this.redoButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.redoButton.Name = "redoButton";
             this.redoButton.Size = new System.Drawing.Size(75, 27);
             this.redoButton.TabIndex = 2;
@@ -479,6 +481,7 @@ namespace Beatmap_Help_Tool
             this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.saveButton.AutoSize = true;
             this.saveButton.Location = new System.Drawing.Point(343, 3);
+            this.saveButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 27);
             this.saveButton.TabIndex = 1;
@@ -493,6 +496,7 @@ namespace Beatmap_Help_Tool
             this.undoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.undoButton.AutoSize = true;
             this.undoButton.Location = new System.Drawing.Point(89, 3);
+            this.undoButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.undoButton.Name = "undoButton";
             this.undoButton.Size = new System.Drawing.Size(75, 27);
             this.undoButton.TabIndex = 0;
@@ -655,8 +659,10 @@ namespace Beatmap_Help_Tool
             this.whistleToClapButton.Size = new System.Drawing.Size(372, 27);
             this.whistleToClapButton.TabIndex = 2;
             this.whistleToClapButton.TabStop = false;
-            this.whistleToClapButton.Text = "Set all whistle sounds to claps (Recomended)";
-            this.toolTip1.SetToolTip(this.whistleToClapButton, "s");
+            this.whistleToClapButton.Text = "Set whistle sounds to claps";
+            this.toolTip1.SetToolTip(this.whistleToClapButton, "In the beatmap, sets all the whistle sounds to claps, including finishers. \r\nGood" +
+        " for mappers that hate whistle sounds while listening hitsounds in the editor :)" +
+        "");
             this.whistleToClapButton.UseVisualStyleBackColor = true;
             // 
             // panel2
@@ -848,6 +854,7 @@ namespace Beatmap_Help_Tool
             this.button14.Dock = System.Windows.Forms.DockStyle.Top;
             this.button14.Location = new System.Drawing.Point(0, 10);
             this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.MinimumSize = new System.Drawing.Size(0, 23);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(372, 27);
             this.button14.TabIndex = 3;
@@ -872,6 +879,7 @@ namespace Beatmap_Help_Tool
             this.button15.Dock = System.Windows.Forms.DockStyle.Top;
             this.button15.Location = new System.Drawing.Point(0, 10);
             this.button15.Margin = new System.Windows.Forms.Padding(0);
+            this.button15.MinimumSize = new System.Drawing.Size(0, 23);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(372, 27);
             this.button15.TabIndex = 3;
@@ -896,6 +904,7 @@ namespace Beatmap_Help_Tool
             this.button16.Dock = System.Windows.Forms.DockStyle.Top;
             this.button16.Location = new System.Drawing.Point(0, 10);
             this.button16.Margin = new System.Windows.Forms.Padding(0);
+            this.button16.MinimumSize = new System.Drawing.Size(0, 23);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(372, 27);
             this.button16.TabIndex = 3;
@@ -920,6 +929,7 @@ namespace Beatmap_Help_Tool
             this.button17.Dock = System.Windows.Forms.DockStyle.Top;
             this.button17.Location = new System.Drawing.Point(0, 10);
             this.button17.Margin = new System.Windows.Forms.Padding(0);
+            this.button17.MinimumSize = new System.Drawing.Size(0, 23);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(372, 27);
             this.button17.TabIndex = 3;
@@ -943,6 +953,7 @@ namespace Beatmap_Help_Tool
             this.button18.Dock = System.Windows.Forms.DockStyle.Top;
             this.button18.Location = new System.Drawing.Point(0, 0);
             this.button18.Margin = new System.Windows.Forms.Padding(0);
+            this.button18.MinimumSize = new System.Drawing.Size(0, 23);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(372, 27);
             this.button18.TabIndex = 2;
@@ -982,6 +993,7 @@ namespace Beatmap_Help_Tool
             this.button19.Dock = System.Windows.Forms.DockStyle.Top;
             this.button19.Location = new System.Drawing.Point(0, 10);
             this.button19.Margin = new System.Windows.Forms.Padding(0);
+            this.button19.MinimumSize = new System.Drawing.Size(0, 23);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(373, 27);
             this.button19.TabIndex = 3;
@@ -1006,6 +1018,7 @@ namespace Beatmap_Help_Tool
             this.button20.Dock = System.Windows.Forms.DockStyle.Top;
             this.button20.Location = new System.Drawing.Point(0, 10);
             this.button20.Margin = new System.Windows.Forms.Padding(0);
+            this.button20.MinimumSize = new System.Drawing.Size(0, 23);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(373, 27);
             this.button20.TabIndex = 3;
@@ -1030,6 +1043,7 @@ namespace Beatmap_Help_Tool
             this.button21.Dock = System.Windows.Forms.DockStyle.Top;
             this.button21.Location = new System.Drawing.Point(0, 10);
             this.button21.Margin = new System.Windows.Forms.Padding(0);
+            this.button21.MinimumSize = new System.Drawing.Size(0, 23);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(373, 27);
             this.button21.TabIndex = 3;
@@ -1054,6 +1068,7 @@ namespace Beatmap_Help_Tool
             this.button22.Dock = System.Windows.Forms.DockStyle.Top;
             this.button22.Location = new System.Drawing.Point(0, 10);
             this.button22.Margin = new System.Windows.Forms.Padding(0);
+            this.button22.MinimumSize = new System.Drawing.Size(0, 23);
             this.button22.Name = "button22";
             this.button22.Size = new System.Drawing.Size(373, 27);
             this.button22.TabIndex = 3;
@@ -1077,6 +1092,7 @@ namespace Beatmap_Help_Tool
             this.button23.Dock = System.Windows.Forms.DockStyle.Top;
             this.button23.Location = new System.Drawing.Point(0, 0);
             this.button23.Margin = new System.Windows.Forms.Padding(0);
+            this.button23.MinimumSize = new System.Drawing.Size(0, 23);
             this.button23.Name = "button23";
             this.button23.Size = new System.Drawing.Size(373, 27);
             this.button23.TabIndex = 3;
@@ -1144,6 +1160,7 @@ namespace Beatmap_Help_Tool
             this.button24.Dock = System.Windows.Forms.DockStyle.Top;
             this.button24.Location = new System.Drawing.Point(0, 10);
             this.button24.Margin = new System.Windows.Forms.Padding(0);
+            this.button24.MinimumSize = new System.Drawing.Size(0, 23);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(372, 27);
             this.button24.TabIndex = 3;
@@ -1168,6 +1185,7 @@ namespace Beatmap_Help_Tool
             this.button25.Dock = System.Windows.Forms.DockStyle.Top;
             this.button25.Location = new System.Drawing.Point(0, 10);
             this.button25.Margin = new System.Windows.Forms.Padding(0);
+            this.button25.MinimumSize = new System.Drawing.Size(0, 23);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(372, 27);
             this.button25.TabIndex = 3;
@@ -1192,6 +1210,7 @@ namespace Beatmap_Help_Tool
             this.button26.Dock = System.Windows.Forms.DockStyle.Top;
             this.button26.Location = new System.Drawing.Point(0, 10);
             this.button26.Margin = new System.Windows.Forms.Padding(0);
+            this.button26.MinimumSize = new System.Drawing.Size(0, 23);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(372, 27);
             this.button26.TabIndex = 3;
@@ -1216,6 +1235,7 @@ namespace Beatmap_Help_Tool
             this.button27.Dock = System.Windows.Forms.DockStyle.Top;
             this.button27.Location = new System.Drawing.Point(0, 10);
             this.button27.Margin = new System.Windows.Forms.Padding(0);
+            this.button27.MinimumSize = new System.Drawing.Size(0, 23);
             this.button27.Name = "button27";
             this.button27.Size = new System.Drawing.Size(372, 27);
             this.button27.TabIndex = 3;
@@ -1239,6 +1259,7 @@ namespace Beatmap_Help_Tool
             this.button28.Dock = System.Windows.Forms.DockStyle.Top;
             this.button28.Location = new System.Drawing.Point(0, 0);
             this.button28.Margin = new System.Windows.Forms.Padding(0);
+            this.button28.MinimumSize = new System.Drawing.Size(0, 23);
             this.button28.Name = "button28";
             this.button28.Size = new System.Drawing.Size(372, 27);
             this.button28.TabIndex = 2;
@@ -1278,6 +1299,7 @@ namespace Beatmap_Help_Tool
             this.button29.Dock = System.Windows.Forms.DockStyle.Top;
             this.button29.Location = new System.Drawing.Point(0, 10);
             this.button29.Margin = new System.Windows.Forms.Padding(0);
+            this.button29.MinimumSize = new System.Drawing.Size(0, 23);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(373, 27);
             this.button29.TabIndex = 3;
@@ -1302,6 +1324,7 @@ namespace Beatmap_Help_Tool
             this.button30.Dock = System.Windows.Forms.DockStyle.Top;
             this.button30.Location = new System.Drawing.Point(0, 10);
             this.button30.Margin = new System.Windows.Forms.Padding(0);
+            this.button30.MinimumSize = new System.Drawing.Size(0, 23);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(373, 27);
             this.button30.TabIndex = 3;
@@ -1326,6 +1349,7 @@ namespace Beatmap_Help_Tool
             this.button31.Dock = System.Windows.Forms.DockStyle.Top;
             this.button31.Location = new System.Drawing.Point(0, 10);
             this.button31.Margin = new System.Windows.Forms.Padding(0);
+            this.button31.MinimumSize = new System.Drawing.Size(0, 23);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(373, 27);
             this.button31.TabIndex = 3;
@@ -1350,6 +1374,7 @@ namespace Beatmap_Help_Tool
             this.button32.Dock = System.Windows.Forms.DockStyle.Top;
             this.button32.Location = new System.Drawing.Point(0, 10);
             this.button32.Margin = new System.Windows.Forms.Padding(0);
+            this.button32.MinimumSize = new System.Drawing.Size(0, 23);
             this.button32.Name = "button32";
             this.button32.Size = new System.Drawing.Size(373, 27);
             this.button32.TabIndex = 3;
@@ -1373,6 +1398,7 @@ namespace Beatmap_Help_Tool
             this.button33.Dock = System.Windows.Forms.DockStyle.Top;
             this.button33.Location = new System.Drawing.Point(0, 0);
             this.button33.Margin = new System.Windows.Forms.Padding(0);
+            this.button33.MinimumSize = new System.Drawing.Size(0, 23);
             this.button33.Name = "button33";
             this.button33.Size = new System.Drawing.Size(373, 27);
             this.button33.TabIndex = 3;
@@ -1388,14 +1414,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,
@@ -1480,6 +1506,7 @@ namespace Beatmap_Help_Tool
             // 
             this.inheritedPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inheritedPointsButton.Location = new System.Drawing.Point(515, 3);
+            this.inheritedPointsButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.inheritedPointsButton.Name = "inheritedPointsButton";
             this.inheritedPointsButton.Size = new System.Drawing.Size(253, 38);
             this.inheritedPointsButton.TabIndex = 2;
@@ -1493,6 +1520,7 @@ namespace Beatmap_Help_Tool
             // 
             this.timingPointsButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timingPointsButton.Location = new System.Drawing.Point(259, 3);
+            this.timingPointsButton.MinimumSize = new System.Drawing.Size(0, 23);
             this.timingPointsButton.Name = "timingPointsButton";
             this.timingPointsButton.Size = new System.Drawing.Size(250, 38);
             this.timingPointsButton.TabIndex = 1;
