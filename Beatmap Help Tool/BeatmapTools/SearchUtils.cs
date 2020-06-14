@@ -9,9 +9,14 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private static readonly Dictionary<List<TimingPoint>, bool> sortInfo =
             new Dictionary<List<TimingPoint>, bool>();
 
-        public static void ResetSortStatus()
+        public static void resetSortStatus()
         {
             sortInfo.Clear();
+        }
+
+        public static void resetSortStatusForList(List<TimingPoint> points)
+        {
+            sortInfo[points] = false;
         }
 
         public static TimingPoint getClosestInheritedPoint(List<TimingPoint> points, double offset)
@@ -102,8 +107,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private static int GetClosestPointIndex(List<TimingPoint> points, double offset)
         {
             SortTimingPoints(points);
-            // Now that the points are sorted, start the binary search algorithm.
-
             // Check if the searched offset is actually bigger than the last point.
             if (offset >= points[points.Count - 1].Offset)
                 return points.Count - 1;

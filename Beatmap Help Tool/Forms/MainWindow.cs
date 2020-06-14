@@ -1,6 +1,7 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.BeatmapTools;
 using Beatmap_Help_Tool.Forms;
+using Beatmap_Help_Tool.Properties;
 using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -45,14 +46,18 @@ namespace Beatmap_Help_Tool
                 if (string.IsNullOrWhiteSpace(targetPath))
                     targetPath = "";
             }
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
-            dialog.InitialDirectory = targetPath;
-            dialog.Title = "Select .osu file";
-            dialog.Filter = ".osu files|*.osu";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                InitialDirectory = SharedPreferences.get(PreferencesKeys.LAST_BEATMAP_DIR_PATH, ""),
+                Title = "Select .osu file",
+                Filter = ".osu files|*.osu"
+            };
             if (dialog.ShowDialog() == DialogResult.OK)
+            {
                 ThreadUtils.executeOnBackground(new Action(() =>
                     loadBeatmap(dialog.FileName, dialog.SafeFileName)));
+            }
         }
 
         private void loadBeatmap(string targetPath, string beatmapFileName)
@@ -67,11 +72,13 @@ namespace Beatmap_Help_Tool
             beatmap = new Beatmap(targetPath);
             Invoke(new Action(() =>
             {
+                string finalPath = Directory.GetParent(targetPath).FullName;
                 beatmap.fillMainDisplayView(mainDisplayView);
                 enableTabs();
                 runningProcessLabel.Text = beatmapFileName + " has been loaded.";
                 Text = "Beatmap Help Tool - " + beatmapFileName;
-                filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
+                filePathTextBox.Text = finalPath;
+                SharedPreferences.edit().put(PreferencesKeys.LAST_BEATMAP_DIR_PATH, finalPath).apply();
                 tabControl1.SelectedIndex = 0;
             }));
         }
