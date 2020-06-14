@@ -90,7 +90,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 int startIndex = 1;
                 string format;
-                while (!actions.Contains(format = string.Format("({0})", startIndex++))) ;
+                while (actions.Contains(format = string.Format("{0} ({1})", action, startIndex++))) ;
                 return format;
             }
         }
@@ -343,6 +343,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
             int sourceBookmarksCount = sourceBookmarks.Count;
             for (int i = 0; i < sourceBookmarksCount; i++)
                 Bookmarks.Add(new Bookmark(sourceBookmarks[i]));
+        }
+
+        public bool isModeTaiko()
+        {
+            return BeatmapMode == MODE_TAIKO;
         }
 
         private void AssignValueByKey(string key, string value)

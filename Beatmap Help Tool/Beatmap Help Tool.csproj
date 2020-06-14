@@ -57,14 +57,21 @@
     <Compile Include="BeatmapModel\HitObject.cs" />
     <Compile Include="BeatmapModel\BeatmapElement.cs" />
     <Compile Include="BeatmapModel\TimingPoint.cs" />
-    <Compile Include="BeatmapTools\NoteTools.cs" />
-    <Compile Include="BeatmapTools\SearchTools.cs" />
-    <Compile Include="BeatmapTools\SnapTools.cs" />
+    <Compile Include="BeatmapTools\NoteUtils.cs" />
+    <Compile Include="BeatmapTools\SearchUtils.cs" />
+    <Compile Include="BeatmapTools\SnapUtils.cs" />
+    <Compile Include="BeatmapTools\VerifyUtils.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PositionNotesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PositionNotesForm.Designer.cs">
+      <DependentUpon>PositionNotesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
@@ -80,6 +87,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PositionNotesForm.resx">
+      <DependentUpon>PositionNotesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

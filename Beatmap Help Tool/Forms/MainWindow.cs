@@ -1,5 +1,6 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.BeatmapTools;
+using Beatmap_Help_Tool.Forms;
 using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -59,18 +60,19 @@ namespace Beatmap_Help_Tool
             // At this point, file path has been found, load the beatmap and
             // set the data to datagridview.
             // First, invoke the running process label.
-            BeginInvoke(new Action(() =>
+            Invoke(new Action(() =>
             {
                 runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
             }));
             beatmap = new Beatmap(targetPath);
-            BeginInvoke(new Action(() =>
+            Invoke(new Action(() =>
             {
                 beatmap.fillMainDisplayView(mainDisplayView);
                 enableTabs();
                 runningProcessLabel.Text = beatmapFileName + " has been loaded.";
                 Text = "Beatmap Help Tool - " + beatmapFileName;
                 filePathTextBox.Text = Directory.GetParent(targetPath).FullName;
+                tabControl1.SelectedIndex = 0;
             }));
         }
 
@@ -78,12 +80,12 @@ namespace Beatmap_Help_Tool
         {
             ThreadUtils.executeOnBackground(new Action(() =>
             {
-                BeginInvoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     runningProcessLabel.Text = "Saving beatmap...";
                 }));
                 beatmap.save(action);
-                BeginInvoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
@@ -96,12 +98,12 @@ namespace Beatmap_Help_Tool
         {
             ThreadUtils.executeOnBackground(new Action(() =>
             {
-                BeginInvoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
                 }));
                 beatmap.save(action, path);
-                BeginInvoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
@@ -142,7 +144,7 @@ namespace Beatmap_Help_Tool
                     // Osu directory has been successfully found. Prompt the user to
                     // try to see if it can find the difficulty that they are mapping.
                     // This has to be done on UI thread.
-                    BeginInvoke(new Action(() =>
+                    Invoke(new Action(() =>
                     {
                         if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to load the current beatmap?") ==
                             DialogResult.Yes)
@@ -199,7 +201,7 @@ namespace Beatmap_Help_Tool
                 loadBeatmap(targetPath, beatmapFileName);
             else
             {
-                BeginInvoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     runningProcessLabel.Text = beatmapFileName + " could not be found in Songs folder.";
                 }));
@@ -320,7 +322,7 @@ namespace Beatmap_Help_Tool
                     if (beatmap != null)
                     {
                         this.beatmap = beatmap;
-                        BeginInvoke(new Action(() =>
+                        Invoke(new Action(() =>
                         {
                             beatmap.fillMainDisplayView(mainDisplayView);
                             runningProcessLabel.Text = string.Format("Previous state loaded ({0})",
@@ -329,7 +331,7 @@ namespace Beatmap_Help_Tool
                     }
                     else
                     {
-                        BeginInvoke(new Action(() =>
+                        Invoke(new Action(() =>
                         {
                             runningProcessLabel.Text = "An error occurred while fetching previous state.";
                         }));
@@ -351,7 +353,7 @@ namespace Beatmap_Help_Tool
                     if (beatmap != null)
                     {
                         this.beatmap = beatmap;
-                        BeginInvoke(new Action(() =>
+                        Invoke(new Action(() =>
                         {
                             beatmap.fillMainDisplayView(mainDisplayView);
                             runningProcessLabel.Text = string.Format("Next state loaded ({0})", 
@@ -360,7 +362,7 @@ namespace Beatmap_Help_Tool
                     }
                     else
                     {
-                        BeginInvoke(new Action(() =>
+                        Invoke(new Action(() =>
                         {
                             runningProcessLabel.Text = "An error occurred while fetching next state.";
                         }));
@@ -395,27 +397,80 @@ namespace Beatmap_Help_Tool
             }
         }
 
-        private void whistleToClapButton_Click(object sender, EventArgs e)
+        private bool checkBeatmapLoaded()
         {
             if (beatmap == null)
             {
                 MessageBoxUtils.showError("No beatmap has been loaded.");
-                return;
+                return false;
             }
+            return true;
+        }
 
-            if (MessageBoxUtils.showQuestionYesNo("Are you sure?") == DialogResult.Yes)
+        private void showMessageAndSaveBeatmap(string popupMessage, 
+            string runningProcessLabelMessage, string saveBeatmapMessage)
+        {
+            MessageBoxUtils.show(popupMessage);
+            runningProcessLabel.Text = runningProcessLabelMessage;
+            saveBeatmap(saveBeatmapMessage);
+        }
+
+        private void whistleToClapButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
             {
-                runningProcessLabel.Text = "Converting all hitsounds to claps...";
-                ThreadUtils.executeOnBackground(new Action(() =>
+                if (MessageBoxUtils.showQuestionYesNo("Are you sure?") == DialogResult.Yes)
                 {
-                    NoteTools.setAllWhistlesToClaps(beatmap);
-                    BeginInvoke(new Action(() =>
+                    runningProcessLabel.Text = "Converting all hitsounds to claps...";
+                    ThreadUtils.executeOnBackground(new Action(() =>
                     {
-                        MessageBoxUtils.show("Converted all hitsounds to claps successfully.");
-                        runningProcessLabel.Text = "Converted all hitsounds to claps.";
-                        saveBeatmap("Converted all hitsounds to claps");
+                        NoteUtils.setAllWhistlesToClaps(beatmap);
+                        Invoke(new Action(() =>
+                        {
+                            showMessageAndSaveBeatmap("Converted all hitsounds to claps successfully.",
+                                "Converted all hitsounds to claps.",
+                                "Converted all hitsounds to claps");
+                        }));
                     }));
-                }));
+                }
+            }
+        }
+
+        private void positionAllNotesButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                if (beatmap.isModeTaiko())
+                {
+                    // Here, we have a taiko mode beatmap. Positioning the notes
+                    // is fine.
+                    using (PositionNotesForm form = new PositionNotesForm())
+                    {
+                        if (form.ShowDialog() == DialogResult.OK)
+                        {
+                            runningProcessLabel.Text = "Re-positioning notes for taiko mode.";
+                            int[] donPositions = form.donPosition;
+                            int[] katPositions = form.katPosition;
+                            int[] donFinishPositions = form.donFinisherPosition;
+                            int[] katFinishPositions = form.katFinisherPosition;
+                            ThreadUtils.executeOnBackground(new Action(() =>
+                            {
+                                NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
+                                Invoke(new Action(() =>
+                                {
+                                    showMessageAndSaveBeatmap("Re-positioned notes successfully.",
+                                        "Re-positioned notes for Taiko mode successfully.",
+                                        "Re-positioned notes for Taiko mode");
+                                }));
+                            }));
+                        }
+                    }
+                }
+                else
+                {
+                    // Otherwise, warn user about the map not being taiko.
+                    MessageBoxUtils.showError("Beatmap mode is not defined as \"Taiko\".");
+                }
             }
         }
         #endregion

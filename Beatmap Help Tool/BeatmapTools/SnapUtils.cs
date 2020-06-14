@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
-    public static class SnapTools
+    public static class SnapUtils
     {
         private const double BEAT_SNAP_DIVISOR = 48;
 
@@ -42,8 +42,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
             if (redPoints.Count >= 1 && redPoints[0].Offset == target.Offset)
                 return result;
 
-            TimingPoint closestTimingPoint = SearchTools.GetClosestTimingPoint(excludedRedPoints, target.Offset);
-            int zeroSnapPointIndex = SearchTools.GetClosestZeroSnapPointIndex(excludedRedPoints);
+            TimingPoint closestTimingPoint = SearchUtils.GetClosestTimingPoint(excludedRedPoints, target.Offset);
+            int zeroSnapPointIndex = SearchUtils.GetClosestZeroSnapPointIndex(excludedRedPoints);
             if (closestTimingPoint != null)
             {
                 TimingPoint timingPoint1, timingPoint2;

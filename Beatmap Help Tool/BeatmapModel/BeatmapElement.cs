@@ -44,7 +44,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             if (requiresSnapDetection)
             {
-                double[] result = SnapTools.getRelativeSnap(timingPoints, this);
+                double[] result = SnapUtils.getRelativeSnap(timingPoints, this);
                 snap = result[0];
                 closestSnap = result[1];
                 requiresSnapDetection = false;

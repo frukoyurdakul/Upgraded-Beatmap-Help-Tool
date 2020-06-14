@@ -32,9 +32,81 @@ namespace Beatmap_Help_Tool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.generalFunctionsPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.button5 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.button4 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.button3 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.whistleToClapButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.button10 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.button9 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.button8 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.button7 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.button6 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.svFunctionsPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.button14 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel20 = new System.Windows.Forms.Panel();
+            this.button15 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.button16 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel22 = new System.Windows.Forms.Panel();
+            this.button17 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.button18 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel24 = new System.Windows.Forms.Panel();
+            this.panel25 = new System.Windows.Forms.Panel();
+            this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel26 = new System.Windows.Forms.Panel();
+            this.button20 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel27 = new System.Windows.Forms.Panel();
+            this.button21 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel28 = new System.Windows.Forms.Panel();
+            this.button22 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel29 = new System.Windows.Forms.Panel();
+            this.button23 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.bpmFunctionsPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.button24 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.button25 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.button26 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel32 = new System.Windows.Forms.Panel();
+            this.button27 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.button28 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel34 = new System.Windows.Forms.Panel();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.button29 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel36 = new System.Windows.Forms.Panel();
+            this.button30 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel37 = new System.Windows.Forms.Panel();
+            this.button31 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel38 = new System.Windows.Forms.Panel();
+            this.button32 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.panel39 = new System.Windows.Forms.Panel();
+            this.button33 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -51,85 +123,13 @@ namespace Beatmap_Help_Tool
             this.lastSaveTimeLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.browseButton = new MultilineButton();
+            this.browseButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.filePathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.redoButton = new MultilineButton();
-            this.saveButton = new MultilineButton();
-            this.undoButton = new MultilineButton();
-            this.generalFunctionsPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.button5 = new MultilineButton();
-            this.panel13 = new System.Windows.Forms.Panel();
-            this.button4 = new MultilineButton();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.button3 = new MultilineButton();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.button2 = new MultilineButton();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.whistleToClapButton = new MultilineButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.button10 = new MultilineButton();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.button9 = new MultilineButton();
-            this.panel17 = new System.Windows.Forms.Panel();
-            this.button8 = new MultilineButton();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.button7 = new MultilineButton();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.button6 = new MultilineButton();
-            this.svFunctionsPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.button14 = new MultilineButton();
-            this.panel20 = new System.Windows.Forms.Panel();
-            this.button15 = new MultilineButton();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.button16 = new MultilineButton();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.button17 = new MultilineButton();
-            this.panel23 = new System.Windows.Forms.Panel();
-            this.button18 = new MultilineButton();
-            this.panel24 = new System.Windows.Forms.Panel();
-            this.panel25 = new System.Windows.Forms.Panel();
-            this.button19 = new MultilineButton();
-            this.panel26 = new System.Windows.Forms.Panel();
-            this.button20 = new MultilineButton();
-            this.panel27 = new System.Windows.Forms.Panel();
-            this.button21 = new MultilineButton();
-            this.panel28 = new System.Windows.Forms.Panel();
-            this.button22 = new MultilineButton();
-            this.panel29 = new System.Windows.Forms.Panel();
-            this.button23 = new MultilineButton();
-            this.bpmFunctionsPage = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.button24 = new MultilineButton();
-            this.panel30 = new System.Windows.Forms.Panel();
-            this.button25 = new MultilineButton();
-            this.panel31 = new System.Windows.Forms.Panel();
-            this.button26 = new MultilineButton();
-            this.panel32 = new System.Windows.Forms.Panel();
-            this.button27 = new MultilineButton();
-            this.panel33 = new System.Windows.Forms.Panel();
-            this.button28 = new MultilineButton();
-            this.panel34 = new System.Windows.Forms.Panel();
-            this.panel35 = new System.Windows.Forms.Panel();
-            this.button29 = new MultilineButton();
-            this.panel36 = new System.Windows.Forms.Panel();
-            this.button30 = new MultilineButton();
-            this.panel37 = new System.Windows.Forms.Panel();
-            this.button31 = new MultilineButton();
-            this.panel38 = new System.Windows.Forms.Panel();
-            this.button32 = new MultilineButton();
-            this.panel39 = new System.Windows.Forms.Panel();
-            this.button33 = new MultilineButton();
+            this.redoButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.saveButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.undoButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.mainDisplayView = new Beatmap_Help_Tool.Views.DoubleBufferGridView();
             this.timeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bpmColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -137,20 +137,12 @@ namespace Beatmap_Help_Tool
             this.volumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kiaiColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.inheritedPointsButton = new MultilineButton();
-            this.timingPointsButton = new MultilineButton();
-            this.allPointsButton = new MultilineButton();
+            this.inheritedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.timingPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.allPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.settingsPage.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.tableLayoutPanel7.SuspendLayout();
-            this.panel42.SuspendLayout();
-            this.panel41.SuspendLayout();
-            this.panel40.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             this.generalFunctionsPage.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -193,6 +185,14 @@ namespace Beatmap_Help_Tool
             this.panel37.SuspendLayout();
             this.panel38.SuspendLayout();
             this.panel39.SuspendLayout();
+            this.settingsPage.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.tableLayoutPanel7.SuspendLayout();
+            this.panel42.SuspendLayout();
+            this.panel41.SuspendLayout();
+            this.panel40.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
             this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
@@ -218,293 +218,17 @@ namespace Beatmap_Help_Tool
             // tabControl1
             // 
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Bottom;
-            this.tabControl1.Controls.Add(this.settingsPage);
             this.tabControl1.Controls.Add(this.generalFunctionsPage);
             this.tabControl1.Controls.Add(this.svFunctionsPage);
             this.tabControl1.Controls.Add(this.bpmFunctionsPage);
+            this.tabControl1.Controls.Add(this.settingsPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 331);
             this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.SelectedIndex = 3;
             this.tabControl1.ShowToolTips = true;
             this.tabControl1.Size = new System.Drawing.Size(771, 219);
             this.tabControl1.TabIndex = 1;
-            // 
-            // settingsPage
-            // 
-            this.settingsPage.Controls.Add(this.panel7);
-            this.settingsPage.Location = new System.Drawing.Point(4, 4);
-            this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Size = new System.Drawing.Size(763, 190);
-            this.settingsPage.TabIndex = 3;
-            this.settingsPage.Text = "Settings";
-            this.settingsPage.ToolTipText = "\"Shows general information about the program and the map.\"";
-            this.settingsPage.UseVisualStyleBackColor = true;
-            // 
-            // panel7
-            // 
-            this.panel7.AutoScroll = true;
-            this.panel7.Controls.Add(this.tableLayoutPanel7);
-            this.panel7.Controls.Add(this.panel8);
-            this.panel7.Controls.Add(this.tableLayoutPanel6);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(763, 190);
-            this.panel7.TabIndex = 0;
-            // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.AutoSize = true;
-            this.tableLayoutPanel7.ColumnCount = 3;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel7.Controls.Add(this.panel42, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.panel41, 1, 0);
-            this.tableLayoutPanel7.Controls.Add(this.panel40, 0, 0);
-            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 69);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(763, 121);
-            this.tableLayoutPanel7.TabIndex = 8;
-            // 
-            // panel42
-            // 
-            this.panel42.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel42.Controls.Add(this.runningProcessLabel);
-            this.panel42.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel42.Location = new System.Drawing.Point(508, 0);
-            this.panel42.Margin = new System.Windows.Forms.Padding(0);
-            this.panel42.Name = "panel42";
-            this.panel42.Size = new System.Drawing.Size(255, 121);
-            this.panel42.TabIndex = 2;
-            // 
-            // runningProcessLabel
-            // 
-            this.runningProcessLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.runningProcessLabel.Location = new System.Drawing.Point(0, 0);
-            this.runningProcessLabel.Name = "runningProcessLabel";
-            this.runningProcessLabel.Padding = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.runningProcessLabel.Size = new System.Drawing.Size(255, 121);
-            this.runningProcessLabel.TabIndex = 2;
-            // 
-            // panel41
-            // 
-            this.panel41.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel41.Controls.Add(this.label8);
-            this.panel41.Controls.Add(this.label9);
-            this.panel41.Controls.Add(this.label6);
-            this.panel41.Controls.Add(this.label7);
-            this.panel41.Controls.Add(this.label4);
-            this.panel41.Controls.Add(this.label5);
-            this.panel41.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel41.Location = new System.Drawing.Point(254, 0);
-            this.panel41.Margin = new System.Windows.Forms.Padding(0);
-            this.panel41.Name = "panel41";
-            this.panel41.Size = new System.Drawing.Size(254, 121);
-            this.panel41.TabIndex = 1;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(71, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(24, 17);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "F5";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 8);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 17);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "Refresh:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(71, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(54, 17);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Ctrl + Z";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 25);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 17);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Undo:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(71, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 17);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Ctrl + Y";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(46, 17);
-            this.label5.TabIndex = 2;
-            this.label5.Text = "Redo:";
-            // 
-            // panel40
-            // 
-            this.panel40.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel40.Controls.Add(this.lastSaveTimeLabel);
-            this.panel40.Controls.Add(this.label3);
-            this.panel40.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel40.Location = new System.Drawing.Point(0, 0);
-            this.panel40.Margin = new System.Windows.Forms.Padding(0);
-            this.panel40.Name = "panel40";
-            this.panel40.Size = new System.Drawing.Size(254, 121);
-            this.panel40.TabIndex = 0;
-            // 
-            // lastSaveTimeLabel
-            // 
-            this.lastSaveTimeLabel.AutoSize = true;
-            this.lastSaveTimeLabel.Location = new System.Drawing.Point(111, 9);
-            this.lastSaveTimeLabel.Name = "lastSaveTimeLabel";
-            this.lastSaveTimeLabel.Size = new System.Drawing.Size(73, 17);
-            this.lastSaveTimeLabel.TabIndex = 1;
-            this.lastSaveTimeLabel.Text = "Undefined";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1, 8);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(110, 17);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Last Save Time:";
-            // 
-            // panel8
-            // 
-            this.panel8.AutoSize = true;
-            this.panel8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel8.Controls.Add(this.browseButton);
-            this.panel8.Controls.Add(this.filePathTextBox);
-            this.panel8.Controls.Add(this.label1);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(0, 33);
-            this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.panel8.Size = new System.Drawing.Size(763, 36);
-            this.panel8.TabIndex = 6;
-            // 
-            // browseButton
-            // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.AutoSize = true;
-            this.browseButton.Location = new System.Drawing.Point(614, 6);
-            this.browseButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(134, 27);
-            this.browseButton.TabIndex = 5;
-            this.browseButton.TabStop = false;
-            this.browseButton.Text = "Browse...";
-            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
-        "ise it will open the last folder.");
-            this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
-            // 
-            // filePathTextBox
-            // 
-            this.filePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.filePathTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.filePathTextBox.Enabled = false;
-            this.filePathTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.filePathTextBox.Location = new System.Drawing.Point(89, 8);
-            this.filePathTextBox.Name = "filePathTextBox";
-            this.filePathTextBox.ReadOnly = true;
-            this.filePathTextBox.Size = new System.Drawing.Size(509, 22);
-            this.filePathTextBox.TabIndex = 4;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(2, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "File Path: ";
-            // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.AutoSize = true;
-            this.tableLayoutPanel6.ColumnCount = 3;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel6.Controls.Add(this.redoButton, 2, 0);
-            this.tableLayoutPanel6.Controls.Add(this.saveButton, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.undoButton, 0, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(763, 33);
-            this.tableLayoutPanel6.TabIndex = 5;
-            // 
-            // redoButton
-            // 
-            this.redoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.redoButton.AutoSize = true;
-            this.redoButton.Location = new System.Drawing.Point(598, 3);
-            this.redoButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.redoButton.Name = "redoButton";
-            this.redoButton.Size = new System.Drawing.Size(75, 27);
-            this.redoButton.TabIndex = 2;
-            this.redoButton.TabStop = false;
-            this.redoButton.Text = "Redo";
-            this.toolTip1.SetToolTip(this.redoButton, "Recovers the last change after an undo.");
-            this.redoButton.UseVisualStyleBackColor = true;
-            this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
-            // 
-            // saveButton
-            // 
-            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.saveButton.AutoSize = true;
-            this.saveButton.Location = new System.Drawing.Point(343, 3);
-            this.saveButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 27);
-            this.saveButton.TabIndex = 1;
-            this.saveButton.TabStop = false;
-            this.saveButton.Text = "Save";
-            this.toolTip1.SetToolTip(this.saveButton, "Saves the beatmap, although I\'ve never used it before.");
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // undoButton
-            // 
-            this.undoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.undoButton.AutoSize = true;
-            this.undoButton.Location = new System.Drawing.Point(89, 3);
-            this.undoButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.undoButton.Name = "undoButton";
-            this.undoButton.Size = new System.Drawing.Size(75, 27);
-            this.undoButton.TabIndex = 0;
-            this.undoButton.TabStop = false;
-            this.undoButton.Text = "Undo";
-            this.toolTip1.SetToolTip(this.undoButton, "Loads the last state of the map before any changes from the program.");
-            this.undoButton.UseVisualStyleBackColor = true;
-            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
             // 
             // generalFunctionsPage
             // 
@@ -620,7 +344,7 @@ namespace Beatmap_Help_Tool
             // panel11
             // 
             this.panel11.AutoSize = true;
-            this.panel11.Controls.Add(this.button2);
+            this.panel11.Controls.Add(this.positionAllNotesButton);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 27);
             this.panel11.Name = "panel11";
@@ -628,17 +352,18 @@ namespace Beatmap_Help_Tool
             this.panel11.Size = new System.Drawing.Size(372, 37);
             this.panel11.TabIndex = 7;
             // 
-            // button2
+            // positionAllNotesButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.Location = new System.Drawing.Point(0, 10);
-            this.button2.Margin = new System.Windows.Forms.Padding(0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(372, 27);
-            this.button2.TabIndex = 3;
-            this.button2.TabStop = false;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.positionAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.positionAllNotesButton.Location = new System.Drawing.Point(0, 10);
+            this.positionAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
+            this.positionAllNotesButton.Name = "positionAllNotesButton";
+            this.positionAllNotesButton.Size = new System.Drawing.Size(372, 27);
+            this.positionAllNotesButton.TabIndex = 3;
+            this.positionAllNotesButton.TabStop = false;
+            this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
+            this.positionAllNotesButton.UseVisualStyleBackColor = true;
+            this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
             // 
             // panel10
             // 
@@ -1407,6 +1132,282 @@ namespace Beatmap_Help_Tool
             this.button33.Text = "button33";
             this.button33.UseVisualStyleBackColor = true;
             // 
+            // settingsPage
+            // 
+            this.settingsPage.Controls.Add(this.panel7);
+            this.settingsPage.Location = new System.Drawing.Point(4, 4);
+            this.settingsPage.Name = "settingsPage";
+            this.settingsPage.Size = new System.Drawing.Size(763, 190);
+            this.settingsPage.TabIndex = 3;
+            this.settingsPage.Text = "Settings";
+            this.settingsPage.ToolTipText = "\"Shows general information about the program and the map.\"";
+            this.settingsPage.UseVisualStyleBackColor = true;
+            // 
+            // panel7
+            // 
+            this.panel7.AutoScroll = true;
+            this.panel7.Controls.Add(this.tableLayoutPanel7);
+            this.panel7.Controls.Add(this.panel8);
+            this.panel7.Controls.Add(this.tableLayoutPanel6);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(0, 0);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(763, 190);
+            this.panel7.TabIndex = 0;
+            // 
+            // tableLayoutPanel7
+            // 
+            this.tableLayoutPanel7.AutoSize = true;
+            this.tableLayoutPanel7.ColumnCount = 3;
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel7.Controls.Add(this.panel42, 2, 0);
+            this.tableLayoutPanel7.Controls.Add(this.panel41, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.panel40, 0, 0);
+            this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 69);
+            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
+            this.tableLayoutPanel7.RowCount = 1;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(763, 121);
+            this.tableLayoutPanel7.TabIndex = 8;
+            // 
+            // panel42
+            // 
+            this.panel42.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel42.Controls.Add(this.runningProcessLabel);
+            this.panel42.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel42.Location = new System.Drawing.Point(508, 0);
+            this.panel42.Margin = new System.Windows.Forms.Padding(0);
+            this.panel42.Name = "panel42";
+            this.panel42.Size = new System.Drawing.Size(255, 121);
+            this.panel42.TabIndex = 2;
+            // 
+            // runningProcessLabel
+            // 
+            this.runningProcessLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.runningProcessLabel.Location = new System.Drawing.Point(0, 0);
+            this.runningProcessLabel.Name = "runningProcessLabel";
+            this.runningProcessLabel.Padding = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.runningProcessLabel.Size = new System.Drawing.Size(255, 121);
+            this.runningProcessLabel.TabIndex = 2;
+            // 
+            // panel41
+            // 
+            this.panel41.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel41.Controls.Add(this.label8);
+            this.panel41.Controls.Add(this.label9);
+            this.panel41.Controls.Add(this.label6);
+            this.panel41.Controls.Add(this.label7);
+            this.panel41.Controls.Add(this.label4);
+            this.panel41.Controls.Add(this.label5);
+            this.panel41.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel41.Location = new System.Drawing.Point(254, 0);
+            this.panel41.Margin = new System.Windows.Forms.Padding(0);
+            this.panel41.Name = "panel41";
+            this.panel41.Size = new System.Drawing.Size(254, 121);
+            this.panel41.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(71, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(24, 17);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "F5";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 8);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(62, 17);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Refresh:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(71, 26);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 17);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Ctrl + Z";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 25);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 17);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Undo:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(71, 42);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(54, 17);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Ctrl + Y";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 17);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Redo:";
+            // 
+            // panel40
+            // 
+            this.panel40.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel40.Controls.Add(this.lastSaveTimeLabel);
+            this.panel40.Controls.Add(this.label3);
+            this.panel40.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel40.Location = new System.Drawing.Point(0, 0);
+            this.panel40.Margin = new System.Windows.Forms.Padding(0);
+            this.panel40.Name = "panel40";
+            this.panel40.Size = new System.Drawing.Size(254, 121);
+            this.panel40.TabIndex = 0;
+            // 
+            // lastSaveTimeLabel
+            // 
+            this.lastSaveTimeLabel.AutoSize = true;
+            this.lastSaveTimeLabel.Location = new System.Drawing.Point(111, 9);
+            this.lastSaveTimeLabel.Name = "lastSaveTimeLabel";
+            this.lastSaveTimeLabel.Size = new System.Drawing.Size(73, 17);
+            this.lastSaveTimeLabel.TabIndex = 1;
+            this.lastSaveTimeLabel.Text = "Undefined";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(1, 8);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(110, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Last Save Time:";
+            // 
+            // panel8
+            // 
+            this.panel8.AutoSize = true;
+            this.panel8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel8.Controls.Add(this.browseButton);
+            this.panel8.Controls.Add(this.filePathTextBox);
+            this.panel8.Controls.Add(this.label1);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(0, 33);
+            this.panel8.Name = "panel8";
+            this.panel8.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.panel8.Size = new System.Drawing.Size(763, 36);
+            this.panel8.TabIndex = 6;
+            // 
+            // browseButton
+            // 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.AutoSize = true;
+            this.browseButton.Location = new System.Drawing.Point(614, 6);
+            this.browseButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(134, 27);
+            this.browseButton.TabIndex = 5;
+            this.browseButton.TabStop = false;
+            this.browseButton.Text = "Browse...";
+            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
+        "ise it will open the last folder.");
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
+            // filePathTextBox
+            // 
+            this.filePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.filePathTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.filePathTextBox.Enabled = false;
+            this.filePathTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.filePathTextBox.Location = new System.Drawing.Point(89, 8);
+            this.filePathTextBox.Name = "filePathTextBox";
+            this.filePathTextBox.ReadOnly = true;
+            this.filePathTextBox.Size = new System.Drawing.Size(509, 22);
+            this.filePathTextBox.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(2, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 17);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "File Path: ";
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.AutoSize = true;
+            this.tableLayoutPanel6.ColumnCount = 3;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel6.Controls.Add(this.redoButton, 2, 0);
+            this.tableLayoutPanel6.Controls.Add(this.saveButton, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.undoButton, 0, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(763, 33);
+            this.tableLayoutPanel6.TabIndex = 5;
+            // 
+            // redoButton
+            // 
+            this.redoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.redoButton.AutoSize = true;
+            this.redoButton.Location = new System.Drawing.Point(598, 3);
+            this.redoButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.redoButton.Name = "redoButton";
+            this.redoButton.Size = new System.Drawing.Size(75, 27);
+            this.redoButton.TabIndex = 2;
+            this.redoButton.TabStop = false;
+            this.redoButton.Text = "Redo";
+            this.toolTip1.SetToolTip(this.redoButton, "Recovers the last change after an undo.");
+            this.redoButton.UseVisualStyleBackColor = true;
+            this.redoButton.Click += new System.EventHandler(this.redoButton_Click);
+            // 
+            // saveButton
+            // 
+            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.saveButton.AutoSize = true;
+            this.saveButton.Location = new System.Drawing.Point(343, 3);
+            this.saveButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 27);
+            this.saveButton.TabIndex = 1;
+            this.saveButton.TabStop = false;
+            this.saveButton.Text = "Save";
+            this.toolTip1.SetToolTip(this.saveButton, "Saves the beatmap, although I\'ve never used it before.");
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // undoButton
+            // 
+            this.undoButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.undoButton.AutoSize = true;
+            this.undoButton.Location = new System.Drawing.Point(89, 3);
+            this.undoButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(75, 27);
+            this.undoButton.TabIndex = 0;
+            this.undoButton.TabStop = false;
+            this.undoButton.Text = "Undo";
+            this.toolTip1.SetToolTip(this.undoButton, "Loads the last state of the map before any changes from the program.");
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
             // mainDisplayView
             // 
             this.mainDisplayView.AllowUserToAddRows = false;
@@ -1415,14 +1416,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,
@@ -1558,19 +1559,6 @@ namespace Beatmap_Help_Tool
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.settingsPage.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.panel42.ResumeLayout(false);
-            this.panel41.ResumeLayout(false);
-            this.panel41.PerformLayout();
-            this.panel40.ResumeLayout(false);
-            this.panel40.PerformLayout();
-            this.panel8.ResumeLayout(false);
-            this.panel8.PerformLayout();
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.generalFunctionsPage.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -1639,6 +1627,19 @@ namespace Beatmap_Help_Tool
             this.panel38.PerformLayout();
             this.panel39.ResumeLayout(false);
             this.panel39.PerformLayout();
+            this.settingsPage.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.tableLayoutPanel7.ResumeLayout(false);
+            this.panel42.ResumeLayout(false);
+            this.panel41.ResumeLayout(false);
+            this.panel41.PerformLayout();
+            this.panel40.ResumeLayout(false);
+            this.panel40.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1679,7 +1680,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel panel11;
-        private MultilineButton button2;
+        private MultilineButton positionAllNotesButton;
         private System.Windows.Forms.Panel panel14;
         private MultilineButton button5;
         private System.Windows.Forms.Panel panel13;

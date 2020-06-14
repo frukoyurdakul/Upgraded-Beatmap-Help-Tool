@@ -43,6 +43,31 @@ namespace Beatmap_Help_Tool.BeatmapModel
         }
         public string Extras { get; set; }
 
+        public bool isWhistle()
+        {
+            return hasHitsoundFlag(WHISTLE);
+        }
+
+        public bool isNormal()
+        {
+            return hasHitsoundFlag(NORMAL);
+        }
+
+        public bool isClap()
+        {
+            return hasHitsoundFlag(CLAP);
+        }
+
+        public bool isFinish()
+        {
+            return hasHitsoundFlag(FINISHER);
+        }
+
+        private bool hasHitsoundFlag(int flag)
+        {
+            return (Hitsound & flag) == flag;
+        }
+
         public HitObject(List<TimingPoint> points) : base(points) { }
 
         public HitObject(HitObject from) : base(from.timingPoints)
@@ -102,7 +127,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 {
                     // This requires some additional processing.
                     double offset = Convert.ToDouble(elements[2]);
-                    TimingPoint point = SearchTools.GetClosestTimingPoint(beatmap.TimingPoints, offset);
+                    TimingPoint point = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, offset);
                     if (point != null)
                     {
                         // We found the timing point, now it is time to construct the object.

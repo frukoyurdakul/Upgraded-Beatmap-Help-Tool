@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
-    public static class SearchTools
+    public static class SearchUtils
     {
         private static readonly Dictionary<List<TimingPoint>, bool> sortInfo =
             new Dictionary<List<TimingPoint>, bool>();

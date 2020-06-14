@@ -24,18 +24,21 @@ namespace Beatmap_Help_Tool.Utils
             {
                 lock(mLock)
                 {
-                    while (runnableQueue.Count > 0)
-                    {
-                        runnableQueue.Dequeue().Invoke();
-                    }
-                    Thread.Sleep(50);
+                    if (runnableQueue.Count == 0)
+                        Monitor.Wait(mLock);
                 }
+                if (runnableQueue.Count > 0)
+                    runnableQueue.Dequeue().Invoke();
             }
         }
 
         public static void exitLooperThread()
         {
             shouldLoop = false;
+            lock(mLock)
+            {
+                Monitor.PulseAll(mLock);
+            }
         }
 
         public static void executeOnBackground(Action method)
@@ -47,6 +50,7 @@ namespace Beatmap_Help_Tool.Utils
                 lock (mLock)
                 {
                     runnableQueue.Enqueue(method);
+                    Monitor.Pulse(mLock);
                 }
             }
         }
