@@ -32,6 +32,7 @@ namespace Beatmap_Help_Tool
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -71,7 +72,7 @@ namespace Beatmap_Help_Tool
             this.panel22 = new System.Windows.Forms.Panel();
             this.button17 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel23 = new System.Windows.Forms.Panel();
-            this.button18 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.svChangerButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel24 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
             this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
@@ -363,7 +364,7 @@ namespace Beatmap_Help_Tool
             this.positionAllNotesButton.TabStop = false;
             this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
             this.toolTip1.SetToolTip(this.positionAllNotesButton, "Puts the notes by their type. By default, it puts dons are top-left, kats are top" +
-        "-right, don finishers are bottom-left and kat finishers are bottom-right side. Y" +
+        "-right,\ndon finishers are bottom-left and kat finishers are bottom-right side.\nY" +
         "ou can customize the positions, though.");
             this.positionAllNotesButton.UseVisualStyleBackColor = true;
             this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
@@ -669,26 +670,28 @@ namespace Beatmap_Help_Tool
             // panel23
             // 
             this.panel23.AutoSize = true;
-            this.panel23.Controls.Add(this.button18);
+            this.panel23.Controls.Add(this.svChangerButton);
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel23.Location = new System.Drawing.Point(0, 0);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(372, 27);
             this.panel23.TabIndex = 0;
             // 
-            // button18
+            // svChangerButton
             // 
-            this.button18.AutoSize = true;
-            this.button18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button18.Location = new System.Drawing.Point(0, 0);
-            this.button18.Margin = new System.Windows.Forms.Padding(0);
-            this.button18.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(372, 27);
-            this.button18.TabIndex = 2;
-            this.button18.TabStop = false;
-            this.button18.Text = "button18";
-            this.button18.UseVisualStyleBackColor = true;
+            this.svChangerButton.AutoSize = true;
+            this.svChangerButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.svChangerButton.Location = new System.Drawing.Point(0, 0);
+            this.svChangerButton.Margin = new System.Windows.Forms.Padding(0);
+            this.svChangerButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.svChangerButton.Name = "svChangerButton";
+            this.svChangerButton.Size = new System.Drawing.Size(372, 27);
+            this.svChangerButton.TabIndex = 2;
+            this.svChangerButton.TabStop = false;
+            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
+            this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
+            this.svChangerButton.UseVisualStyleBackColor = true;
+            this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);
             // 
             // panel24
             // 
@@ -1701,7 +1704,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel22;
         private MultilineButton button17;
         private System.Windows.Forms.Panel panel23;
-        private MultilineButton button18;
+        private MultilineButton svChangerButton;
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.Panel panel25;
         private MultilineButton button19;

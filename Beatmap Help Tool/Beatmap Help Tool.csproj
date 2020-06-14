@@ -76,6 +76,12 @@
     <Compile Include="Forms\PositionNotesForm.Designer.cs">
       <DependentUpon>PositionNotesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SvChanger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SvChanger.Designer.cs">
+      <DependentUpon>SvChanger.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,11 +96,17 @@
     <Compile Include="Views\MultilineButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Views\PlaceHolderTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Forms\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PositionNotesForm.resx">
       <DependentUpon>PositionNotesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SvChanger.resx">
+      <DependentUpon>SvChanger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -480,6 +480,17 @@ namespace Beatmap_Help_Tool
                 }
             }
         }
+
+        private void svChangerButton_Click(object sender, EventArgs e)
+        {
+            using (SvChanger changer = new SvChanger())
+            {
+                if (changer.ShowDialog() == DialogResult.OK)
+                {
+                    // Do stuff.
+                }
+            }
+        }
         #endregion
     }
 }
