@@ -118,6 +118,71 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label1.Text" xml:space="preserve">
-    <value>In this window, you can add inherited points onto or slightly before the notes, where a SV change can be smoothly applied. This method now supports 3 different ways to do it, either linearly, exponentially, or in a logarithmic way. Existing points will be modified if a point is found on that spot.</value>
+    <value>In this window, you can add inherited points onto or slightly before the notes, where a SV change can be smoothly applied. This method now supports 3 different ways to do it. Hover over here for more details, and hover over other labels for specific explanations.</value>
+  </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="label1.ToolTip" xml:space="preserve">
+    <value>The SV addition is performed in a way where the SV
+increase mode is selected, first and last time is
+copy-pasted first and last SV values are entered.
+The SV increase mode performs operations
+in a deeper level, where if you pick "Exponential"
+it will increase the SV in a way where the final result
+would be "1.00x --&gt; 1.02x --&gt; 1.06x" etc. and
+logarithmic would be "1.00x --&gt; 1.04x --&gt; 1.06x" etc.
+depending on the increase multiplier. Linear is 
+always linear, as in "1.00x --&gt; 1.03x --&gt; 1.06x" etc.</value>
+  </data>
+  <data name="checkBox1.ToolTip" xml:space="preserve">
+    <value>This option enables the time mode, where the change
+can be performed in between 2 different sections
+of the map. If you uncheck this, "Copy last time"
+will convert to "Count" where it will count how many
+changes there will be instead.</value>
+  </data>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>For "Copy last time", basically the first format with the
+other time text box. Cannot be before than the first
+time. For "Count" you can enter a number here
+higher than 0. Anything below is not accepted,
+and the number has to be an integer.</value>
+  </data>
+  <data name="label6.ToolTip" xml:space="preserve">
+    <value>Defines the final BPM in the change area.
+It basically gets the first BPM and adjusts
+the SV values depending on it, but if you
+put this one, it calculates the end SV regarding
+to that.
+
+Example: 160 to 240 BPM SV change, from
+1.00x to 1.20x,  no target BPM:
+
+160 BPM start: 1.00x --&gt; 1.05x --&gt; (200 BPM)
+0.88x --&gt;  0.92x --&gt; (240 BPM) 0.80x.
+
+Example 2: 160 to 240 BPM SV change,
+from 1.00x to 1.20x, target BPM 240:
+
+160 BPM start: 1.00x --&gt; 1.20x --&gt; (200 BPM)
+1.12x --&gt;  1.28x --&gt; (240 BPM) 1.20x.</value>
+  </data>
+  <data name="label7.ToolTip" xml:space="preserve">
+    <value>The grid snap value. Disabled if "Put points
+by note snaps" function is enabled. If
+it is disabled, you can enter any value here,
+unless the 2nd value is 0, in that case the program
+will fail. (Imagine 1/0, that's an exception.)
+
+Format should be only as in "1/4".</value>
+  </data>
+  <data name="putPointsByNotesCheckBox.ToolTip" xml:space="preserve">
+    <value>Allows the tool to perform the changes depending
+on the existing notes, which will ignore the "Grid Snap"
+attribute. Any kind of change is calculated depending
+on the distance of the notes themselves. Be careful
+not having a stacked note, otherwise you might
+end up having a double inherited point.</value>
   </data>
 </root>

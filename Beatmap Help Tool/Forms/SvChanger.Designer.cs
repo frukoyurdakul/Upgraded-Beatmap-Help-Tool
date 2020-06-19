@@ -30,6 +30,7 @@ namespace Beatmap_Help_Tool.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvChanger));
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -54,6 +55,7 @@ namespace Beatmap_Help_Tool.Forms
             this.svOffsetTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.gridSnapTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.targetBpmTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -65,6 +67,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label1.Size = new System.Drawing.Size(435, 90);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
+            this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
             // checkBox1
             // 
@@ -77,6 +80,7 @@ namespace Beatmap_Help_Tool.Forms
             this.checkBox1.Size = new System.Drawing.Size(206, 21);
             this.checkBox1.TabIndex = 1;
             this.checkBox1.Text = "Activate between time mode";
+            this.toolTip1.SetToolTip(this.checkBox1, resources.GetString("checkBox1.ToolTip"));
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBox2
@@ -88,6 +92,8 @@ namespace Beatmap_Help_Tool.Forms
             this.checkBox2.Size = new System.Drawing.Size(323, 21);
             this.checkBox2.TabIndex = 2;
             this.checkBox2.Text = "Remember the values and re-open the window";
+            this.toolTip1.SetToolTip(this.checkBox2, "Remebers the values and re-opens the window after\r\nadding SVs into the map once, " +
+        "with the same values.");
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -98,6 +104,8 @@ namespace Beatmap_Help_Tool.Forms
             this.label2.Size = new System.Drawing.Size(105, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Copy first time: ";
+            this.toolTip1.SetToolTip(this.label2, "The start time of the SV change section. Examples:\r\n01:42:169 - \r\n02:34:223 (10) " +
+        "- \r\n03:54:480");
             // 
             // label3
             // 
@@ -107,6 +115,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label3.Size = new System.Drawing.Size(86, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Set first SV: ";
+            this.toolTip1.SetToolTip(this.label3, "First SV value. Should be obvious.");
             // 
             // label4
             // 
@@ -116,6 +125,8 @@ namespace Beatmap_Help_Tool.Forms
             this.label4.Size = new System.Drawing.Size(85, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Set last SV: ";
+            this.toolTip1.SetToolTip(this.label4, "Last SV value. Can be lower than first SV, or higher than last SV, \r\nor equal if " +
+        "Target BPM is defined.");
             // 
             // label5
             // 
@@ -125,6 +136,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label5.Size = new System.Drawing.Size(104, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Copy last time: ";
+            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // label6
             // 
@@ -134,6 +146,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label6.Size = new System.Drawing.Size(91, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Target BPM: ";
+            this.toolTip1.SetToolTip(this.label6, resources.GetString("label6.ToolTip"));
             // 
             // label7
             // 
@@ -143,6 +156,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label7.Size = new System.Drawing.Size(76, 17);
             this.label7.TabIndex = 13;
             this.label7.Text = "Grid Snap:";
+            this.toolTip1.SetToolTip(this.label7, resources.GetString("label7.ToolTip"));
             // 
             // putPointsByNotesCheckBox
             // 
@@ -155,6 +169,7 @@ namespace Beatmap_Help_Tool.Forms
             this.putPointsByNotesCheckBox.Size = new System.Drawing.Size(186, 21);
             this.putPointsByNotesCheckBox.TabIndex = 15;
             this.putPointsByNotesCheckBox.Text = "Put points by note snaps";
+            this.toolTip1.SetToolTip(this.putPointsByNotesCheckBox, resources.GetString("putPointsByNotesCheckBox.ToolTip"));
             this.putPointsByNotesCheckBox.UseVisualStyleBackColor = true;
             this.putPointsByNotesCheckBox.CheckedChanged += new System.EventHandler(this.putPointsByNotesCheckBox_CheckedChanged);
             // 
@@ -182,6 +197,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label8.Size = new System.Drawing.Size(131, 17);
             this.label8.TabIndex = 17;
             this.label8.Text = "SV increase mode: ";
+            this.toolTip1.SetToolTip(this.label8, "Selects the SV increase mode. Default is linear.");
             // 
             // applyButton
             // 
@@ -203,6 +219,9 @@ namespace Beatmap_Help_Tool.Forms
             this.label9.Size = new System.Drawing.Size(73, 17);
             this.label9.TabIndex = 19;
             this.label9.Text = "SV offset: ";
+            this.toolTip1.SetToolTip(this.label9, "The offsets of the inherited points depending on \r\nthe original change. Values wi" +
+        "ll not be affected,\r\nonly the offsets of them will be changed. Must\r\nbe between " +
+        "-10 and 0 and has to be an integer.");
             // 
             // label10
             // 
@@ -212,6 +231,8 @@ namespace Beatmap_Help_Tool.Forms
             this.label10.Size = new System.Drawing.Size(126, 17);
             this.label10.TabIndex = 25;
             this.label10.Text = "Increase multiplier:";
+            this.toolTip1.SetToolTip(this.label10, "This defines the increase multiplier. Only effective if \"Exponential\" or\r\n\"Logari" +
+        "thmic\" is selected.");
             // 
             // increaseMultiplierTextBox
             // 
@@ -382,5 +403,6 @@ namespace Beatmap_Help_Tool.Forms
         private PlaceHolderTextBox lastTimeTextBox;
         private PlaceHolderTextBox increaseMultiplierTextBox;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
