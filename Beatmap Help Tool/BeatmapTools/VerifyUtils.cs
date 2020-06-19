@@ -247,6 +247,26 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static void performDefaultFormQuestion(Form form)
+        {
+            performQuestionYesNoCancel(form, "Are you sure? (\"No\" will cancel the operation and close the window while \"Cancel\" will return to this window.)");
+        }
+
+        public static void performQuestionYesNoCancel(Form form, string question)
+        {
+            DialogResult result = MessageBoxUtils.showQuestionYesNoCancel(question);
+            if (result == DialogResult.Yes)
+            {
+                form.DialogResult = DialogResult.OK;
+                form.Close();
+            }
+            else if (result == DialogResult.No)
+            {
+                form.DialogResult = DialogResult.Cancel;
+                form.Close();
+            }
+        }
+
         private static void showErrorMessage(string message)
         {
             MessageBoxUtils.showError(message);

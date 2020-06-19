@@ -232,7 +232,7 @@ namespace Beatmap_Help_Tool.Forms
             this.label10.TabIndex = 25;
             this.label10.Text = "Increase multiplier:";
             this.toolTip1.SetToolTip(this.label10, "This defines the increase multiplier. Only effective if \"Exponential\" or\r\n\"Logari" +
-        "thmic\" is selected.");
+        "thmic\" is selected. Value needs to be above than 0.");
             // 
             // increaseMultiplierTextBox
             // 

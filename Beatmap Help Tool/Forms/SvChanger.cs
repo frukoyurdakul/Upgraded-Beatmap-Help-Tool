@@ -15,16 +15,17 @@ namespace Beatmap_Help_Tool.Forms
 {
     public partial class SvChanger : Form
     {
-        public int FirstOffset = 0;
-        public int LastOffset = 0;
-        public double FirstSv = 0;
-        public double LastSv = 0;
+        public int FirstOffset = -1;
+        public int LastOffset = -1;
+        public double FirstSv = -1;
+        public double LastSv = -1;
         public double TargetBpm = -1;
         public double GridSnap = -1;
-        public int SvOffset = 0;
-        public int SvIncreaseMode = 0;
+        public int SvOffset = -1;
+        public int SvIncreaseMode = 0; // default index
         public int Count = -1;
-        public double SvIncreaseMultiplier = 0;
+        public double SvIncreaseMultiplier = 1;
+        public bool PutPointsByNotes = true;
 
         public SvChanger()
         {
@@ -34,9 +35,16 @@ namespace Beatmap_Help_Tool.Forms
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            
+            if (checkValues())
+            {
+                // Ask for user's confirmation about the change and close the dialog
+                // if "Yes" or "No" is pressed. Cancel will return to this form instead.
+                VerifyUtils.performDefaultFormQuestion(this);
+            }
         }
 
+        // Checks the values and sets them on the fly.
+        //
         private bool checkValues()
         {
             bool check = true;
@@ -56,12 +64,15 @@ namespace Beatmap_Help_Tool.Forms
             // Check if grid snap is entered if "Put points by note snaps"
             // is not enabled.
             !putPointsByNotesCheckBox.Checked && !VerifyUtils.verifyTextBoxes(
-                "You need to fill the \"Grid Snap\" value if you don\'t check" +
+                "You need to fill the \"Grid Snap\" value if you don\'t check\n" +
                 "\"Put points by note snaps\" checkbox.");
 
             // If anything was wrong here, don't check the rest.
             if (!check)
                 return false;
+
+            // Set the sv increase mode.
+            SvIncreaseMode = increaseModeComboBox.SelectedIndex;
 
             // Starting from here, check the values themselves.
             // Start with the extracted times.
@@ -71,6 +82,8 @@ namespace Beatmap_Help_Tool.Forms
             if (!check)
                 return false;
 
+            // Check the last time text box if time mode checkbox is checked.
+            // Otherwise, try to parse the integer as count.
             if (activateTimeModeCheckBox.Checked)
             {
                 check = VerifyUtils.verifyOffsetFormat("Last entered time format is wrong.", 
@@ -81,12 +94,44 @@ namespace Beatmap_Help_Tool.Forms
             }
             else
             {
-                check = VerifyUtils.verifyInteger("Count text is wrong", lastTimeTextBox.Text,
-                    out Count);
+                check = VerifyUtils.verifyRangeFromString("Count text is wrong, value must be higher than 0.", lastTimeTextBox.Text,
+                    0, int.MaxValue, out Count);
 
                 if (!check)
                     return false;
             }
+
+            // If "Put points by notes" is not checked,
+            // the grid snap value has to be defined.
+            // Check that there.
+            if (putPointsByNotesCheckBox.Checked)
+            {
+                GridSnap = 0;
+                PutPointsByNotes = true;
+                check = true;
+            }
+            else
+            {
+                check = VerifyUtils.verifyDividedText("Grid snap value is wrong. Example: 1/4", 
+                    gridSnapTextBox.Text, out GridSnap);
+
+                if (!check)
+                    return false;
+            }
+
+            // Check the target BPM and SV offset here. These fields are optional,
+            // so accept blank text, but if it cannot parse, warn the user.
+            check = VerifyUtils.verifyRangeFromString("Target BPM is wrong, example: 200.\nThis field is optional, so you can keep it blank.",
+                targetBpmTextBox.Text, 0, double.MaxValue, out TargetBpm, true);
+
+            if (!check)
+                return false;
+
+            check = VerifyUtils.verifyRangeFromString("SV offset is wrong, it should be between -10 and 0.\nThis field is optional, so you can keep it blank.",
+                svOffsetTextBox.Text, -10, 0, out SvOffset, true);
+
+            // Finally, return true or false if checks are done.
+            return check;
         }
 
         private void increaseModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,6 +146,7 @@ namespace Beatmap_Help_Tool.Forms
                 increaseMultiplierTextBox.Text = "2";
                 increaseMultiplierTextBox.Enabled = true;
             }
+            SvIncreaseMode = increaseModeComboBox.SelectedIndex;
         }
 
         private void putPointsByNotesCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -110,6 +156,7 @@ namespace Beatmap_Help_Tool.Forms
                 gridSnapTextBox.Enabled = false;
                 if (!gridSnapTextBox.PlaceHolderText.Contains("(Optional) "))
                     gridSnapTextBox.PlaceHolderText = "(Optional) " + gridSnapTextBox.PlaceHolderText;
+                gridSnapTextBox.Text = "";
             }
             else
             {

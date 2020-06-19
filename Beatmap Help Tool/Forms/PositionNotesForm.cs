@@ -57,17 +57,7 @@ namespace Beatmap_Help_Tool.Forms
                 {
                     // Ask for user's confirmation about the change and close the dialog
                     // if "Yes" or "No" is pressed. Cancel will return to this form instead.
-                    DialogResult dialogResult = MessageBoxUtils.showQuestionYesNoCancel("Are you sure? (\"No\" will cancel the operation and close the window while \"Cancel\" will return to this window.)");
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        DialogResult = DialogResult.OK;
-                        Close();
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        DialogResult = DialogResult.Cancel;
-                        Close();
-                    }
+                    VerifyUtils.performDefaultFormQuestion(this);
                 }
             }
         }

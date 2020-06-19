@@ -483,12 +483,40 @@ namespace Beatmap_Help_Tool
 
         private void svChangerButton_Click(object sender, EventArgs e)
         {
+            int firstOffset = -1;
+            int lastOffset = -1;
+            double firstSv = -1;
+            double lastSv = -1;
+            double targetBpm = -1;
+            double gridSnap = -1;
+            int svOffset = -1;
+            int svIncreaseMode = 0; // default index
+            int count = -1;
+            double svIncreaseMultiplier = 1;
+            bool putPointsByNotes = true;
+            bool applied = false;
             using (SvChanger changer = new SvChanger())
             {
                 if (changer.ShowDialog() == DialogResult.OK)
                 {
                     // Do stuff.
+                    firstOffset = changer.FirstOffset;
+                    lastOffset = changer.LastOffset;
+                    firstSv = changer.FirstSv;
+                    lastSv = changer.LastSv;
+                    targetBpm = changer.TargetBpm;
+                    gridSnap = changer.GridSnap;
+                    svOffset = changer.SvOffset;
+                    svIncreaseMode = changer.SvIncreaseMode;
+                    count = changer.Count;
+                    svIncreaseMultiplier = changer.SvIncreaseMultiplier;
+                    putPointsByNotes = changer.PutPointsByNotes;
+                    applied = true;
                 }
+            }
+            if (applied)
+            {
+                // Start adding the SVs here.
             }
         }
         #endregion
