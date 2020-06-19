@@ -135,7 +135,7 @@ logarithmic would be "1.00x --&gt; 1.04x --&gt; 1.06x" etc.
 depending on the increase multiplier. Linear is 
 always linear, as in "1.00x --&gt; 1.03x --&gt; 1.06x" etc.</value>
   </data>
-  <data name="checkBox1.ToolTip" xml:space="preserve">
+  <data name="activateTimeModeCheckBox.ToolTip" xml:space="preserve">
     <value>This option enables the time mode, where the change
 can be performed in between 2 different sections
 of the map. If you uncheck this, "Copy last time"

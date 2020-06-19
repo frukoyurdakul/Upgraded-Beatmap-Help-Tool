@@ -33,7 +33,7 @@ namespace Beatmap_Help_Tool.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvChanger));
             this.label1 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.activateTimeModeCheckBox = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,19 +69,19 @@ namespace Beatmap_Help_Tool.Forms
             this.label1.Text = resources.GetString("label1.Text");
             this.toolTip1.SetToolTip(this.label1, resources.GetString("label1.ToolTip"));
             // 
-            // checkBox1
+            // activateTimeModeCheckBox
             // 
-            this.checkBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(119, 108);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(206, 21);
-            this.checkBox1.TabIndex = 1;
-            this.checkBox1.Text = "Activate between time mode";
-            this.toolTip1.SetToolTip(this.checkBox1, resources.GetString("checkBox1.ToolTip"));
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.activateTimeModeCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.activateTimeModeCheckBox.AutoSize = true;
+            this.activateTimeModeCheckBox.Checked = true;
+            this.activateTimeModeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.activateTimeModeCheckBox.Location = new System.Drawing.Point(119, 108);
+            this.activateTimeModeCheckBox.Name = "activateTimeModeCheckBox";
+            this.activateTimeModeCheckBox.Size = new System.Drawing.Size(206, 21);
+            this.activateTimeModeCheckBox.TabIndex = 1;
+            this.activateTimeModeCheckBox.Text = "Activate between time mode";
+            this.toolTip1.SetToolTip(this.activateTimeModeCheckBox, resources.GetString("activateTimeModeCheckBox.ToolTip"));
+            this.activateTimeModeCheckBox.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
@@ -367,7 +367,7 @@ namespace Beatmap_Help_Tool.Forms
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.activateTimeModeCheckBox);
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(478, 551);
             this.Name = "SvChanger";
@@ -381,7 +381,7 @@ namespace Beatmap_Help_Tool.Forms
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox activateTimeModeCheckBox;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
