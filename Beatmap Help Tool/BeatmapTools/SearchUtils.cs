@@ -6,19 +6,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class SearchUtils
     {
-        private static readonly Dictionary<List<TimingPoint>, bool> sortInfo =
-            new Dictionary<List<TimingPoint>, bool>();
-
-        public static void resetSortStatus()
-        {
-            sortInfo.Clear();
-        }
-
-        public static void resetSortStatusForList(List<TimingPoint> points)
-        {
-            sortInfo[points] = false;
-        }
-
         public static TimingPoint getClosestInheritedPoint(List<TimingPoint> points, double offset)
         {
             int i = GetClosestPointIndex(points, offset);
@@ -152,16 +139,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         private static bool AreTimingsSorted(List<TimingPoint> points)
         {
-            if (sortInfo.ContainsKey(points) && sortInfo[points])
-                return true;
-
             for (int i = 0; i < points.Count - 1; i++)
             {
                 if (points[i].Offset > points[i + 1].Offset)
                     return false;
             }
-
-            sortInfo.Add(points, true);
             return true;
         }
     }

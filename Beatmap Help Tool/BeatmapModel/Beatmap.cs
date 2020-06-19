@@ -1,4 +1,5 @@
-﻿using Beatmap_Help_Tool.Utils;
+﻿using Beatmap_Help_Tool.BeatmapTools;
+using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
