@@ -517,6 +517,11 @@ namespace Beatmap_Help_Tool
             if (applied)
             {
                 // Start adding the SVs here.
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    InheritedPointUtils.AddSvChanges(beatmap, firstOffset, lastOffset, firstSv, lastSv,
+                        targetBpm, gridSnap, svOffset, svIncreaseMode, count, svIncreaseMultiplier, putPointsByNotes);
+                }));
             }
         }
         #endregion

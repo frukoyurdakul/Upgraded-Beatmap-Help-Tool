@@ -101,30 +101,53 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 points.Sort();
         }
 
-        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
-            List<TimingPoint> timingPoints, List<HitObject> hitObjects, List<Bookmark> bookmarks)
+        public static void GetStartIndexes(Beatmap beatmap, int startOffset, int endOffset,
+            out int bookmarkStartIndex, out int timingPointStartIndex, out int hitObjectStartIndex)
         {
+            int bookmarkStartIndexInternal = -1;
+            int timingPointStartIndexInternal = -1;
+            int hitObjectStartIndexInternal = -1;
+
             SortBeatmapElements(beatmap.Bookmarks);
             SortBeatmapElements(beatmap.TimingPoints);
             SortBeatmapElements(beatmap.HitObjects);
 
-            foreach (Bookmark element in beatmap.Bookmarks)
+            int currentIndex = 0;
+            foreach (BeatmapElement element in beatmap.Bookmarks)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    bookmarks.Add(element);
+                {
+                    bookmarkStartIndexInternal = currentIndex;
+                    break;
+                }
+                currentIndex++;
             }
 
-            foreach (TimingPoint element in beatmap.TimingPoints)
+            currentIndex = 0;
+            foreach (BeatmapElement element in beatmap.TimingPoints)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    timingPoints.Add(element);
+                {
+                    timingPointStartIndexInternal = currentIndex;
+                    break;
+                }
+                currentIndex++;
             }
 
-            foreach (HitObject element in beatmap.HitObjects)
+            currentIndex = 0;
+            foreach (BeatmapElement element in beatmap.HitObjects)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    hitObjects.Add(element);
+                {
+                    hitObjectStartIndexInternal = currentIndex;
+                    break;
+                }
+                currentIndex++;
             }
+
+            bookmarkStartIndex = bookmarkStartIndexInternal;
+            timingPointStartIndex = timingPointStartIndexInternal;
+            hitObjectStartIndex = hitObjectStartIndexInternal;
         }
 
         public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)

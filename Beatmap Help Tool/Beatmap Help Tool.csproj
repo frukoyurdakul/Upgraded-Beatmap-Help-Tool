@@ -63,6 +63,7 @@
     <Compile Include="BeatmapTools\NoteUtils.cs" />
     <Compile Include="BeatmapTools\SearchUtils.cs" />
     <Compile Include="BeatmapTools\SnapUtils.cs" />
+    <Compile Include="BeatmapTools\InheritedPointUtils.cs" />
     <Compile Include="BeatmapTools\VerifyUtils.cs" />
     <Compile Include="Forms\MainWindow.cs">
       <SubType>Form</SubType>
