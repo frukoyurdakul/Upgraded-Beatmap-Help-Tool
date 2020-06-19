@@ -103,6 +103,16 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static bool verifyRange(int min, int max, int value)
+        {
+            return value >= min && value <= max;
+        }
+
+        public static bool verifyRange(double min, double max, double value)
+        {
+            return value >= min && value <= max;
+        }
+
         public static bool verifyRange(int min, int max, params int[] values)
         {
             foreach (int value in values)

@@ -77,9 +77,59 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static void SortBeatmapElements(List<TimingPoint> points)
+        {
+            if (!AreTimingsSorted(points))
+                points.Sort();
+        }
+
+        public static void SortBeatmapElements(List<HitObject> points)
+        {
+            if (!AreTimingsSorted(points))
+                points.Sort();
+        }
+
+        public static void SortBeatmapElements(List<Bookmark> points)
+        {
+            if (!AreTimingsSorted(points))
+                points.Sort();
+        }
+
+        public static void SortBeatmapElements(List<BeatmapElement> points)
+        {
+            if (!AreTimingsSorted(points))
+                points.Sort();
+        }
+
+        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
+            List<TimingPoint> timingPoints, List<HitObject> hitObjects, List<Bookmark> bookmarks)
+        {
+            SortBeatmapElements(beatmap.Bookmarks);
+            SortBeatmapElements(beatmap.TimingPoints);
+            SortBeatmapElements(beatmap.HitObjects);
+
+            foreach (Bookmark element in beatmap.Bookmarks)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    bookmarks.Add(element);
+            }
+
+            foreach (TimingPoint element in beatmap.TimingPoints)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    timingPoints.Add(element);
+            }
+
+            foreach (HitObject element in beatmap.HitObjects)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    hitObjects.Add(element);
+            }
+        }
+
         public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)
         {
-            SortTimingPoints(points);
+            SortBeatmapElements(points);
             for (int i = points.Count - 1; i > 0; i--)
             {
                 if (points[i].GetSnap() == 0)
@@ -93,7 +143,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         private static int GetClosestPointIndex(List<TimingPoint> points, double offset)
         {
-            SortTimingPoints(points);
+            SortBeatmapElements(points);
             // Check if the searched offset is actually bigger than the last point.
             if (offset >= points[points.Count - 1].Offset)
                 return points.Count - 1;
@@ -131,13 +181,37 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 return mid;
         }
 
-        public static void SortTimingPoints(List<TimingPoint> points)
+        private static bool AreTimingsSorted(List<BeatmapElement> points)
         {
-            if (!AreTimingsSorted(points))
-                points.Sort();
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                if (points[i].Offset > points[i + 1].Offset)
+                    return false;
+            }
+            return true;
+        }
+
+        private static bool AreTimingsSorted(List<Bookmark> points)
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                if (points[i].Offset > points[i + 1].Offset)
+                    return false;
+            }
+            return true;
         }
 
         private static bool AreTimingsSorted(List<TimingPoint> points)
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                if (points[i].Offset > points[i + 1].Offset)
+                    return false;
+            }
+            return true;
+        }
+
+        private static bool AreTimingsSorted(List<HitObject> points)
         {
             for (int i = 0; i < points.Count - 1; i++)
             {
