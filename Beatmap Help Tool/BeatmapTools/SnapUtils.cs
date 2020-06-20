@@ -103,6 +103,50 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static int calculateEndOffset(Beatmap beatmap, double startOffset, double gridSnap, double count)
+        {
+            double step = gridSnap;
+            double totalSnap = step * count;
+            double calculatedSnap = 0;
+            double targetOffset = startOffset;
+
+            double snapOffset = 0;
+
+            while (calculatedSnap < totalSnap)
+            {
+                // This one has to return non-null. If it does, the exception is deserved.
+                TimingPoint closestPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, targetOffset);
+
+                // This can return null. It means we don't need to worry about this point and
+                // calculate the offset directly.
+                TimingPoint nextPoint = SearchUtils.GetClosestNextTimingPoint(beatmap.TimingPoints, closestPoint);
+
+                snapOffset = step * closestPoint.PointValue;
+                targetOffset += snapOffset;
+                calculatedSnap += step;
+
+                // Now, if the target offset temp passed the next point
+                // calculate an estimated snap difference.
+                // This is required for unsnapped timing points and a relative
+                // end offset calculation.
+                if (nextPoint != null && targetOffset > nextPoint.Offset)
+                {
+                    double difference = nextPoint.Offset - targetOffset;
+                    double differenceSnap = difference / nextPoint.PointValue;
+
+                    // Here, we reset the target offset as the next point value
+                    // and reduce the calculated total grid snap. Step value
+                    // is not changed and the next snaps are calculated
+                    // relatively to the next point.
+                    targetOffset = nextPoint.Offset;
+                    calculatedSnap -= differenceSnap;
+                }
+            }
+
+            // And, at the end of the day, return the target offset.
+            return targetOffset;
+        }
+
         private static int getSnapInBetween(BeatmapElement target1, BeatmapElement target2, double beatDuration)
         {
             double offsetDifference = target2.Offset - target1.Offset;

@@ -64,7 +64,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
                     // At this point, it is time to throw the error.
                     MessageBoxUtils.showError("Somehow an inherited point has been found but there were no " +
-                            "timing points to take reference for. Notes could not be processed.");
+                            "timing points to take reference for.");
                     return null;
                 }
             }
@@ -75,6 +75,63 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 MessageBoxUtils.showError("No timing points have been found, notes could not be processed.");
                 return null;
             }
+        }
+
+        public static TimingPoint GetClosestNextTimingPoint(List<TimingPoint> points, TimingPoint point)
+        {
+            for (int i = points.IndexOf(point) + 1; i < points.Count; i++)
+            {
+                if (!points[i].IsInherited)
+                    return points[i];
+            }
+            return null;
+        }
+
+        public static double GetBpmValueInOffset(List<TimingPoint> points, double offset)
+        {
+            TimingPoint point = GetClosestTimingPoint(points, offset);
+            if (point != null)
+                return point.PointValue;
+            else
+                return -1;
+        }
+
+        public static bool IsFirstPointTimingPoint(List<TimingPoint> points)
+        {
+            return points.Count > 0 && !points[0].IsInherited;
+        }
+
+        public static bool ContainsTimingPoint(List<TimingPoint> points)
+        {
+            foreach (TimingPoint point in points)
+                if (!point.IsInherited)
+                    return true;
+            return false;
+        }
+
+        public static bool ContainsInheritedPoint(List<TimingPoint> points)
+        {
+            foreach (TimingPoint point in points)
+                if (point.IsInherited)
+                    return true;
+            return false;
+        }
+
+        public static bool ContainsBpmChanges(List<TimingPoint> points)
+        {
+            ISet<double> bpmValues = new HashSet<double>();
+            foreach(TimingPoint point in points)
+            {
+                if (!point.IsInherited)
+                    bpmValues.Add(point.PointValue);
+
+                // At least 2 points are considered as the list
+                // containing BPM changes. Finding one timing
+                // point is false in this case.
+                if (bpmValues.Count > 1)
+                    return true;
+            }
+            return false;
         }
 
         public static void SortBeatmapElements(List<TimingPoint> points)
@@ -101,53 +158,60 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 points.Sort();
         }
 
-        public static void GetStartIndexes(Beatmap beatmap, int startOffset, int endOffset,
-            out int bookmarkStartIndex, out int timingPointStartIndex, out int hitObjectStartIndex)
+        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
+            out List<TimingPoint> points, out List<HitObject> objects)
         {
-            int bookmarkStartIndexInternal = -1;
-            int timingPointStartIndexInternal = -1;
-            int hitObjectStartIndexInternal = -1;
+            List<TimingPoint> pointsInternal = new List<TimingPoint>();
+            List<HitObject> objectsInternal = new List<HitObject>();
+
+            SortBeatmapElements(beatmap.TimingPoints);
+            SortBeatmapElements(beatmap.HitObjects);
+
+            foreach (TimingPoint element in beatmap.TimingPoints)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    pointsInternal.Add(element);
+            }
+            foreach (HitObject element in beatmap.HitObjects)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    objectsInternal.Add(element);
+            }
+
+            points = pointsInternal;
+            objects = objectsInternal;
+        }
+
+        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
+            out List<Bookmark> bookmarks, out List<TimingPoint> points, out List<HitObject> objects)
+        {
+            List<Bookmark> bookmarksInternal = new List<Bookmark>();
+            List<TimingPoint> pointsInternal = new List<TimingPoint>();
+            List<HitObject> objectsInternal = new List<HitObject>();
 
             SortBeatmapElements(beatmap.Bookmarks);
             SortBeatmapElements(beatmap.TimingPoints);
             SortBeatmapElements(beatmap.HitObjects);
 
-            int currentIndex = 0;
-            foreach (BeatmapElement element in beatmap.Bookmarks)
+            foreach (Bookmark element in beatmap.Bookmarks)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                {
-                    bookmarkStartIndexInternal = currentIndex;
-                    break;
-                }
-                currentIndex++;
+                    bookmarksInternal.Add(element);
             }
-
-            currentIndex = 0;
-            foreach (BeatmapElement element in beatmap.TimingPoints)
+            foreach (TimingPoint element in beatmap.TimingPoints)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                {
-                    timingPointStartIndexInternal = currentIndex;
-                    break;
-                }
-                currentIndex++;
+                    pointsInternal.Add(element);
             }
-
-            currentIndex = 0;
-            foreach (BeatmapElement element in beatmap.HitObjects)
+            foreach (HitObject element in beatmap.HitObjects)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                {
-                    hitObjectStartIndexInternal = currentIndex;
-                    break;
-                }
-                currentIndex++;
+                    objectsInternal.Add(element);
             }
 
-            bookmarkStartIndex = bookmarkStartIndexInternal;
-            timingPointStartIndex = timingPointStartIndexInternal;
-            hitObjectStartIndex = hitObjectStartIndexInternal;
+            bookmarks = bookmarksInternal;
+            points = pointsInternal;
+            objects = objectsInternal;
         }
 
         public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)
@@ -167,6 +231,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private static int GetClosestPointIndex(List<TimingPoint> points, double offset)
         {
             SortBeatmapElements(points);
+
             // Check if the searched offset is actually bigger than the last point.
             if (offset >= points[points.Count - 1].Offset)
                 return points.Count - 1;
@@ -186,11 +251,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     return mid;
             } while (first <= last);
 
-            // The "mid" we found could still be bigger than the one we seek, which is the
-            // first lowest, so if the offset is bigger, keep searching until it is smaller.
-            if (points[mid].Offset > offset)
+            // If we are here, it means there are no points with the exact offset.
+            // Keep searching from the "last" index.
+            if (points[last].Offset > offset)
             {
-                for (int i = mid; i >= 0; i--)
+                for (int i = last; i >= 0; i--)
                 {
                     if (points[i].Offset <= offset)
                         return i;
@@ -201,7 +266,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 return -1;
             }
             else
-                return mid;
+            {
+                // Otherwise, the "first" is already pointing the first object that is earlier
+                // than the offset we seek. Just return that.
+                return first;
+            }
         }
 
         private static bool AreTimingsSorted(List<BeatmapElement> points)
