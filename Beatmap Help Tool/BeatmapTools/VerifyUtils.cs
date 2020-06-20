@@ -14,6 +14,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private const string TIMING_REGEX_STRING = "([0-9][:])?[0-9]{2}[:][0-9]{2}[:][0,9]{3}";
         private static readonly Regex timingRegex = new Regex(TIMING_REGEX_STRING, RegexOptions.Compiled);
 
+        public static T safeGetItemFromList<T> (List<T> items, int index)
+        {
+            if (items != null && index >= 0 && index < items.Count)
+                return items[index];
+            return default(T);
+        }
+
         public static bool verifyTextBoxes(string message, params TextBox[] textBoxes)
         {
             foreach (TextBox textBox in textBoxes)

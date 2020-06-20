@@ -144,7 +144,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
 
             // And, at the end of the day, return the target offset.
-            return targetOffset;
+            return (int) targetOffset;
         }
 
         private static int getSnapInBetween(BeatmapElement target1, BeatmapElement target2, double beatDuration)

@@ -6,7 +6,26 @@ namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class SearchUtils
     {
-        public static TimingPoint getClosestInheritedPoint(List<TimingPoint> points, double offset)
+        public static readonly Dictionary<IEnumerable<BeatmapElement>, bool> sortInfo =
+            new Dictionary<IEnumerable<BeatmapElement>, bool>();
+
+        public static void MarkChangeMade(IEnumerable<BeatmapElement> elements)
+        {
+            if (sortInfo.ContainsKey(elements))
+                sortInfo[elements] = false;
+        }
+
+        public static void MarkSorted(IEnumerable<BeatmapElement> elements)
+        {
+            sortInfo[elements] = true;
+        }
+
+        public static void ClearSortInfo()
+        {
+            sortInfo.Clear();
+        }
+
+        public static TimingPoint GetClosestInheritedPoint(List<TimingPoint> points, double offset)
         {
             int i = GetClosestPointIndex(points, offset);
             if (i >= 0)
@@ -19,9 +38,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     // timing point but at the same time there can be another inherited
                     // point which should be the next element in this list.
                     // Check for that first.
-                    if (i < points.Count - 1 && points[i].Offset == offset && 
+                    if (i < points.Count - 1 && points[i + 1].Offset == offset && 
                         points[i].IsInherited)
-                        return points[i];
+                        return points[i + 1];
                     else
                     {
                         // It means there is no inherited point after this red point. Get that red point
@@ -77,6 +96,73 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static TimingPoint GetClosestPoint(List<TimingPoint> points, double offset, bool preferInherited)
+        {
+            if (preferInherited)
+            {
+                TimingPoint point = GetClosestInheritedPoint(points, offset);
+                if (point != null)
+                    return point;
+                else
+                    return GetClosestTimingPoint(points, offset);
+            }
+            else
+            {
+                TimingPoint point = GetClosestTimingPoint(points, offset);
+                if (point != null)
+                    return point;
+                else
+                    return GetClosestInheritedPoint(points, offset);
+            }
+        }
+
+        public static TimingPoint GetExactTimingPoint(List<TimingPoint> points, double offset)
+        {
+            return VerifyUtils.safeGetItemFromList(points, GetExactPointIndex(points, offset, false));
+        }
+
+        public static TimingPoint GetExactInheritedPoint(List<TimingPoint> points, double offset)
+        {
+            return VerifyUtils.safeGetItemFromList(points, GetExactPointIndex(points, offset, true));
+        }
+
+        public static int GetExactPointIndex(List<TimingPoint> points, double offset, bool isInherited)
+        {
+            // Perform a direct binary search.
+            SortBeatmapElements(points);
+
+            int first = 0;
+            int last = points.Count - 1;
+            int mid = 0;
+            do
+            {
+                mid = first + (last - first) / 2;
+                if (offset > points[mid].Offset)
+                    first = mid + 1;
+                else
+                    last = mid - 1;
+                if (points[mid].Offset == offset)
+                {
+                    // Here, we found a point. If this point is an inherited one and forceInherited is true,
+                    // return the index.
+                    // Otherwise, if it exists, check the next point offset and return that one.
+                    if (isInherited && !points[mid].IsInherited)
+                    {
+                        if (mid < points.Count - 1 && points[mid + 1].IsInherited)
+                            return mid + 1;
+                        else
+                            return -1;
+                    }
+                    else if (!points[mid].IsInherited)
+                        return mid;
+                    else
+                        return -1;
+                }
+            } while (first <= last);
+
+            return -1;
+        }
+
         public static TimingPoint GetClosestNextTimingPoint(List<TimingPoint> points, TimingPoint point)
         {
             for (int i = points.IndexOf(point) + 1; i < points.Count; i++)
@@ -87,11 +173,24 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return null;
         }
 
+        // Returns the original bpm value in milliseconds.
+        // Example, If the BPM is 200, this returns 300.
         public static double GetBpmValueInOffset(List<TimingPoint> points, double offset)
         {
             TimingPoint point = GetClosestTimingPoint(points, offset);
             if (point != null)
                 return point.PointValue;
+            else
+                return -1;
+        }
+
+        // Returns the BPM representation of the milliseconds per beat.
+        // Example, If the BPM is 200, this returns 200.
+        public static double GetBpmInOffset(List<TimingPoint> points, double offset)
+        {
+            TimingPoint point = GetClosestTimingPoint(points, offset);
+            if (point != null)
+                return 60000d / point.PointValue;
             else
                 return -1;
         }
@@ -134,31 +233,76 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return false;
         }
 
+        public static bool TogglesKiai(List<TimingPoint> points, TimingPoint point)
+        {
+            // Always sort the elements.
+            SortBeatmapElements(points);
+
+            double offset = point.Offset;
+            bool isKiaiOpen = point.IsKiaiOpen;
+
+            // Now, here we need to get all points before that offset.
+            // A kiai can be opened by both inherited and timing points,
+            // and it can be closed if timing point has a kiai but inherited
+            // has not. Depending on this, get the previous points, both
+            // inherited and timing. If offsets are changed after
+            // getting the first one, ignore the other point.
+            TimingPoint timingPoint = GetClosestPoint(points, offset, false);
+            TimingPoint inheritedPoint = GetClosestPoint(points, offset, true);
+
+            // The reference point we use to determine previous kiai status.
+            TimingPoint referencePoint;
+
+            // Check which one is closer. If offsets are the same, take the
+            // inherited one.
+            if (timingPoint.Offset == inheritedPoint.Offset)
+                referencePoint = inheritedPoint;
+            else if (timingPoint.Offset > inheritedPoint.Offset)
+                referencePoint = timingPoint;
+            else
+                referencePoint = inheritedPoint;
+
+            // Check the difference and see if it actually toggles.
+            return isKiaiOpen != referencePoint.IsKiaiOpen;
+        }
+
         public static void SortBeatmapElements(List<TimingPoint> points)
         {
             if (!AreTimingsSorted(points))
+            {
                 points.Sort();
+                MarkSorted(points);
+            }
         }
 
         public static void SortBeatmapElements(List<HitObject> points)
         {
             if (!AreTimingsSorted(points))
+            {
                 points.Sort();
+                MarkSorted(points);
+            }
         }
 
         public static void SortBeatmapElements(List<Bookmark> points)
         {
             if (!AreTimingsSorted(points))
+            {
                 points.Sort();
+                MarkSorted(points);
+            }
         }
 
         public static void SortBeatmapElements(List<BeatmapElement> points)
         {
             if (!AreTimingsSorted(points))
+            {
                 points.Sort();
+                MarkSorted(points);
+            }
         }
 
-        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
+        public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<TimingPoint> points, out List<HitObject> objects)
         {
             List<TimingPoint> pointsInternal = new List<TimingPoint>();
@@ -182,7 +326,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             objects = objectsInternal;
         }
 
-        public static void GetObjectsInBetween(Beatmap beatmap, int startOffset, int endOffset,
+        public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<Bookmark> bookmarks, out List<TimingPoint> points, out List<HitObject> objects)
         {
             List<Bookmark> bookmarksInternal = new List<Bookmark>();
@@ -225,6 +369,54 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // We return 0 here because 0 is not searched and it always have to be
             // the 0 snap point.
+            return 0;
+        }
+
+        public static int GetAdditionIndex(List<TimingPoint> points, TimingPoint point)
+        {
+            // Apply a brute-force way as to where the offset is higher
+            // than this point.
+            // TODO Find a better algorithm for this.
+
+            double offset;
+            TimingPoint pointInternal;
+            for (int i = 0; i < points.Count; i++)
+            {
+                pointInternal = points[i];
+                offset = pointInternal.Offset;
+                if (offset > point.Offset)
+                    return i;
+                else if (offset == point.Offset)
+                {
+                    // If the added point is inherited, it should be
+                    // after the timing point.
+                    // If the added point is timing, it should be before
+                    // inherited. Determine the state here.
+                    if (point.IsInherited && !pointInternal.IsInherited)
+                    {
+                        if (i + 1 < points.Count)
+                            return i + 1;
+                        else
+                            return i;
+                    }
+                    else if (!point.IsInherited && pointInternal.IsInherited)
+                    {
+                        if (i - 1 >= 0)
+                            return i - 1;
+                        else
+                            return i;
+                    }
+                    else
+                    {
+                        // We need to enforce an exception here. Offset cannot be the same
+                        // and type cannot be the same if we want to add a point.
+                        MessageBoxUtils.showError("Program will throw an exception\n, a duplicate inherited or timing point is found in the list.");
+                        return -1;
+                    }
+                }
+            }
+
+            // Default return 0 here.
             return 0;
         }
 
@@ -273,42 +465,19 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
-        private static bool AreTimingsSorted(List<BeatmapElement> points)
+        private static bool AreTimingsSorted(IEnumerable<BeatmapElement> elements)
         {
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                if (points[i].Offset > points[i + 1].Offset)
-                    return false;
-            }
-            return true;
-        }
+            if (sortInfo.ContainsKey(elements))
+                return sortInfo[elements];
 
-        private static bool AreTimingsSorted(List<Bookmark> points)
-        {
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                if (points[i].Offset > points[i + 1].Offset)
-                    return false;
-            }
-            return true;
-        }
+            BeatmapElement previous = null;
+            IEnumerator<BeatmapElement> enumerator = elements.GetEnumerator();
 
-        private static bool AreTimingsSorted(List<TimingPoint> points)
-        {
-            for (int i = 0; i < points.Count - 1; i++)
+            while (enumerator.MoveNext())
             {
-                if (points[i].Offset > points[i + 1].Offset)
+                if (previous != null && enumerator.Current != null && previous.Offset > enumerator.Current.Offset)
                     return false;
-            }
-            return true;
-        }
-
-        private static bool AreTimingsSorted(List<HitObject> points)
-        {
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                if (points[i].Offset > points[i + 1].Offset)
-                    return false;
+                previous = enumerator.Current;
             }
             return true;
         }

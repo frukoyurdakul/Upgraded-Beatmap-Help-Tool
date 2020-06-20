@@ -1,4 +1,5 @@
 ﻿using Beatmap_Help_Tool.BeatmapTools;
+using System;
 using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapModel
@@ -57,5 +58,27 @@ namespace Beatmap_Help_Tool.BeatmapModel
         }
 
         public abstract string GetSaveFormat();
+
+        public abstract int GetTypeInt();
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            return (obj as BeatmapElement).offset == offset;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 29 + offset.GetHashCode();
+                return hash;
+            }
+        }
     }
 }
