@@ -7,15 +7,23 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
+using WindowsInput;
 
 namespace Beatmap_Help_Tool
 {
     public partial class MainWindow : Form
     {
         public static string lastAction = "";
+        private readonly InputSimulator inputSimulator = new InputSimulator();
 
         private Beatmap beatmap;
+
+        [DllImport("User32.dll")]
+        static extern int SetForegroundWindow(IntPtr point);
 
         public MainWindow()
         {
@@ -97,6 +105,10 @@ namespace Beatmap_Help_Tool
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
+                    ThreadUtils.executeOnBackground(new Action(() =>
+                    {
+                        reloadBeatmapIfNecessary();
+                    }));
                 }));
             }));
         }
@@ -110,13 +122,41 @@ namespace Beatmap_Help_Tool
                     runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
                 }));
                 beatmap.save(action, path);
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    reloadBeatmapIfNecessary();
+                }));
                 Invoke(new Action(() =>
                 {
+                    beatmap.fillMainDisplayView(mainDisplayView);
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                 }));
             }));
+        }
+
+        private void reloadBeatmapIfNecessary()
+        {
+            if (isSelectedBeatmapOpenInOsuEditor())
+            {
+                
+            }
+
+            Process p = Process.GetProcessesByName("osu!").FirstOrDefault();
+            if (p != null)
+            {
+                IntPtr h = p.MainWindowHandle;
+                SetForegroundWindow(h);
+                inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F5);
+                Thread.Sleep(100);
+                inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F5);
+                Thread.Sleep(500);
+                inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F1);
+                Thread.Sleep(100);
+                inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F1);
+                Thread.Sleep(100);
+            }
         }
 
         private void refreshContent()
@@ -136,7 +176,7 @@ namespace Beatmap_Help_Tool
             return null;
         }
 
-        private void determineInitialProcess()
+        private string getOsuBeatmapNameInEditor()
         {
             Process[] processes = Process.GetProcessesByName("osu!");
             if (processes.Length > 0)
@@ -144,42 +184,50 @@ namespace Beatmap_Help_Tool
                 // The program was opened while osu was running.
                 Process osuProcess = processes[0];
                 string fileName = osuProcess.MainModule.FileName;
-                string windowTitle = osuProcess.MainWindowTitle.TrimEnd();
-                DirectoryInfo directory = Directory.GetParent(fileName);
-                if (directory != null && windowTitle.EndsWith(".osu"))
-                {
-                    // Osu directory has been successfully found. Prompt the user to
-                    // try to see if it can find the difficulty that they are mapping.
-                    // This has to be done on UI thread.
-                    Invoke(new Action(() =>
-                    {
-                        if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to load the current beatmap?") ==
-                            DialogResult.Yes)
-                        {
-                            // Show the current process on the label and 
-                            // start searching for the file. It should be exactly
-                            // the same, otherwise it cannot be found.
-                            string beatmapFileName = getBeatmapFileName(windowTitle);
-                            runningProcessLabel.Visible = true;
-                            runningProcessLabel.Text = "Searching for " + beatmapFileName;
-                            ThreadUtils.executeOnBackground(new Action(() =>
-                                searchCurrentOpenBeatmap(beatmapFileName, directory.FullName + "\\Songs")));
-                        }
-                        else
-                        {
-                            // Continue with last saved path if it exists.
-                        }
-                    }));
-                }
-                else
-                {
-                    // Osu directory somehow cannot be found, refer to old ways or keep
-                    // opening process.
-                }
+                string windowTitle = osuProcess.MainWindowTitle.Trim();
+                return getBeatmapFileName(windowTitle);
             }
             else
+                return "";
+        }
+
+        private bool isAnyMapOpenInOsuEditor()
+        {
+            return getOsuBeatmapNameInEditor().EndsWith(".osu");
+        }
+
+        private bool isSelectedBeatmapOpenInOsuEditor()
+        {
+            return beatmap != null && getOsuBeatmapNameInEditor().Equals(beatmap.FileName);
+        }
+
+        private void determineInitialProcess()
+        {
+            if (isAnyMapOpenInOsuEditor())
             {
-                // Osu is not running, user can browse if they want.
+                // Osu directory has been successfully found. Prompt the user to
+                // try to see if it can find the difficulty that they are mapping.
+                // This has to be done on UI thread.
+                Invoke(new Action(() =>
+                {
+                    if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to load the current beatmap?") ==
+                        DialogResult.Yes)
+                    {
+                        // Show the current process on the label and 
+                        // start searching for the file. It should be exactly
+                        // the same, otherwise it cannot be found.
+                        string beatmapFileName = getOsuBeatmapNameInEditor();
+                        string songsPath = getSongsPathFromProcess();
+                        runningProcessLabel.Visible = true;
+                        runningProcessLabel.Text = "Searching for " + beatmapFileName;
+                        ThreadUtils.executeOnBackground(new Action(() => 
+                            searchCurrentOpenBeatmap(beatmapFileName, songsPath)));
+                    }
+                    else
+                    {
+                        // Continue with last saved path if it exists.
+                    }
+                }));
             }
         }
 
@@ -219,23 +267,22 @@ namespace Beatmap_Help_Tool
         {
             // Title can be either cutting edge or stable. If it is beta, 
             // give a warning about it if it is necessary.
-            string mapName;
             if (osuWindowTitle.StartsWith("osu!cuttingedge"))
             {
-                mapName = returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
+                return returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
             }
             else if (osuWindowTitle.StartsWith("osu!"))
             {
-                mapName = returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
+                return returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
             }
-            else
+            else if (!string.IsNullOrWhiteSpace(osuWindowTitle))
             {
                 throw new InvalidOperationException("Beatmap search is only supported in stable and cutting edge versions.");
             }
 
             // At this point, map name cannot be null. Return the name and display it on label, also
             // start searching on background thread.
-            return mapName;
+            return osuWindowTitle;
         }
 
         private string returnMapName(string osuWindowTitle, int spaceIndex)
@@ -417,9 +464,12 @@ namespace Beatmap_Help_Tool
         private void showMessageAndSaveBeatmap(string popupMessage, 
             string runningProcessLabelMessage, string saveBeatmapMessage)
         {
-            MessageBoxUtils.show(popupMessage);
-            runningProcessLabel.Text = runningProcessLabelMessage;
-            saveBeatmap(saveBeatmapMessage);
+            Invoke(new Action(() =>
+            {
+                MessageBoxUtils.show(popupMessage);
+                runningProcessLabel.Text = runningProcessLabelMessage;
+                saveBeatmap(saveBeatmapMessage);
+            }));
         }
 
         private void whistleToClapButton_Click(object sender, EventArgs e)
@@ -432,12 +482,9 @@ namespace Beatmap_Help_Tool
                     ThreadUtils.executeOnBackground(new Action(() =>
                     {
                         NoteUtils.setAllWhistlesToClaps(beatmap);
-                        Invoke(new Action(() =>
-                        {
-                            showMessageAndSaveBeatmap("Converted all hitsounds to claps successfully.",
+                        showMessageAndSaveBeatmap("Converted all hitsounds to claps successfully.",
                                 "Converted all hitsounds to claps.",
                                 "Converted all hitsounds to claps");
-                        }));
                     }));
                 }
             }
@@ -463,12 +510,9 @@ namespace Beatmap_Help_Tool
                             ThreadUtils.executeOnBackground(new Action(() =>
                             {
                                 NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
-                                Invoke(new Action(() =>
-                                {
-                                    showMessageAndSaveBeatmap("Re-positioned notes successfully.",
+                                showMessageAndSaveBeatmap("Re-positioned notes successfully.",
                                         "Re-positioned notes for Taiko mode successfully.",
                                         "Re-positioned notes for Taiko mode");
-                                }));
                             }));
                         }
                     }
@@ -521,6 +565,9 @@ namespace Beatmap_Help_Tool
                 {
                     InheritedPointUtils.AddSvChanges(this, beatmap, firstOffset, lastOffset, firstSv, lastSv,
                         targetBpm, gridSnap, svOffset, svIncreaseMode, count, svIncreaseMultiplier, putPointsByNotes);
+                    showMessageAndSaveBeatmap("Re-positioned notes successfully.",
+                            "Re-positioned notes for Taiko mode successfully.",
+                            "Re-positioned notes for Taiko mode");
                 }));
             }
         }

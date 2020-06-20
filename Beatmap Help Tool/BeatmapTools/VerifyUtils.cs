@@ -11,7 +11,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class VerifyUtils
     {
-        private const string TIMING_REGEX_STRING = "([0-9][:])?[0-9]{2}[:][0-9]{2}[:][0,9]{3}";
+        private const string TIMING_REGEX_STRING = @"(\d{1}[:])?\d{2}[:]\d{2}[:]\d{3}";
         private static readonly Regex timingRegex = new Regex(TIMING_REGEX_STRING, RegexOptions.Compiled);
 
         public static T safeGetItemFromList<T> (List<T> items, int index)
@@ -83,7 +83,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             {
                 try
                 {
-                    double number = double.Parse(text);
+                    double number = ParseUtils.GetDouble(text);
                     if (verifyRange(min, max, number))
                     {
                         value = number;

@@ -217,6 +217,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, Extras);
         }
+
+        public override int GetTypeInt()
+        {
+            return 29 * 4;
+        }
     }
 
     class HitSlider : HitObject
@@ -249,6 +254,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, SliderInfo, string.Join("|", EdgeHitsounds), Extras);
         }
+
+        public override int GetTypeInt()
+        {
+            return 29 * 5;
+        }
     }
 
     class HitSpinner : HitObject
@@ -270,6 +280,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
         override public string GetSaveFormat()
         {
             return string.Join(",", X, Y, Offset, Type, Hitsound, (Offset + Duration), Extras);
+        }
+
+        public override int GetTypeInt()
+        {
+            return 29 * 6;
         }
     }
 }

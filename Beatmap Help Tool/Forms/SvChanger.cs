@@ -50,11 +50,11 @@ namespace Beatmap_Help_Tool.Forms
             bool check = true;
 
             // Check the SV increase mode first.
-            check = !VerifyUtils.verifyRange("You need to select a SV increase mode.",
+            check = VerifyUtils.verifyRange("You need to select a SV increase mode.",
                 0, increaseModeComboBox.Items.Count, increaseModeComboBox.SelectedIndex) &&
 
             // Check the necessary textboxes afterwards.
-            !VerifyUtils.verifyTextBoxes("You need to fill necessary fields.",
+            VerifyUtils.verifyTextBoxes("You need to fill necessary fields.",
                 increaseMultiplierTextBox,
                 firstTimeTextBox,
                 lastTimeTextBox,
@@ -63,7 +63,7 @@ namespace Beatmap_Help_Tool.Forms
 
             // Check if grid snap is entered if "Put points by note snaps"
             // is not enabled.
-            !putPointsByNotesCheckBox.Checked && !VerifyUtils.verifyTextBoxes(
+            putPointsByNotesCheckBox.Checked || VerifyUtils.verifyTextBoxes(
                 "You need to fill the \"Grid Snap\" value if you don\'t check\n" +
                 "\"Put points by note snaps\" checkbox.");
 
@@ -91,6 +91,11 @@ namespace Beatmap_Help_Tool.Forms
 
                 if (!check)
                     return false;
+                else if (LastOffset <= FirstOffset)
+                {
+                    MessageBoxUtils.showError("You cannot use the last time point before the first time point.");
+                    return false;
+                }
             }
             else
             {
@@ -99,6 +104,20 @@ namespace Beatmap_Help_Tool.Forms
 
                 if (!check)
                     return false;
+            }
+
+            check = ParseUtils.GetDouble(firstSvTextBox.Text, out FirstSv);
+            if (!check)
+            {
+                MessageBoxUtils.showError("Entered first SV value is wrong.");
+                return false;
+            }
+
+            check = ParseUtils.GetDouble(lastSvTextBox.Text, out LastSv);
+            if (!check)
+            {
+                MessageBoxUtils.showError("Entered last SV value is wrong.");
+                return false;
             }
 
             // If "Put points by notes" is not checked,

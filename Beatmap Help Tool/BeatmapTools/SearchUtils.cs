@@ -142,22 +142,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 else
                     last = mid - 1;
                 if (points[mid].Offset == offset)
-                {
-                    // Here, we found a point. If this point is an inherited one and forceInherited is true,
-                    // return the index.
-                    // Otherwise, if it exists, check the next point offset and return that one.
-                    if (isInherited && !points[mid].IsInherited)
-                    {
-                        if (mid < points.Count - 1 && points[mid + 1].IsInherited)
-                            return mid + 1;
-                        else
-                            return -1;
-                    }
-                    else if (!points[mid].IsInherited)
-                        return mid;
-                    else
-                        return -1;
-                }
+                    return mid;
             } while (first <= last);
 
             return -1;

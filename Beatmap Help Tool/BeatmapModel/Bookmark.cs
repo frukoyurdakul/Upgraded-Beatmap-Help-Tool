@@ -19,5 +19,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             return Offset.ToString();
         }
+
+        public override int GetTypeInt()
+        {
+            return 17;
+        }
     }
 }

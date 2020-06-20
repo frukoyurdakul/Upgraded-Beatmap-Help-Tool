@@ -60,6 +60,13 @@ namespace Beatmap_Help_Tool.Views
 
         private string wrapText(string source)
         {
+            // Do not try to re-size the text
+            // if the window is minimized,
+            // in that case the size is smaller than
+            // 5 pixels.
+            if (Width < 5)
+                return source;
+
             // Do not touch the source if it is empty.
             if (string.IsNullOrEmpty(source))
                 return source;

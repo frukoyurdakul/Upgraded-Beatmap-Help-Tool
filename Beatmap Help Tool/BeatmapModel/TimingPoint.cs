@@ -135,5 +135,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             return string.Join(",", Offset, PointValue, Meter, SampleSet, SampleIndex, 
                 Volume, (IsInherited ? 0 : 1).ToString(), (IsKiaiOpen ? 1 : 0).ToString());
         }
+
+        public override int GetTypeInt()
+        {
+            return IsInherited ? 29 * 2 : 29 * 3;
+        }
     }
 }

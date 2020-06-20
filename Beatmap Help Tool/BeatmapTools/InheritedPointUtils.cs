@@ -34,7 +34,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // the start of the list. Account that and add a timing
             // point if the first index is not a timing point already.
             if (!SearchUtils.IsFirstPointTimingPoint(points))
-                points.Add(SearchUtils.GetClosestTimingPoint(actualPoints, firstOffset));
+                points.Insert(0, SearchUtils.GetClosestTimingPoint(actualPoints, firstOffset));
 
             // After this, if we still don't have a timing point, we cannot proceed.
             // A map has to contain at least one timing point before or on the declared offset.
@@ -97,7 +97,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // If "targetBpm" is entered, we need to apply a ratio to the last SV.
             // Apply the logic here and change the last SV value depending on it.
-            if (targetBpm != -1)
+            if (targetBpm != 0)
             {
                 double ratio = targetBpm / SearchUtils.GetBpmInOffset(actualPoints, firstOffset);
                 lastSv *= ratio;
@@ -145,6 +145,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 // a beat is in a total second.
                 double currentBpmValue = SearchUtils.GetBpmValueInOffset(points, targetOffset);
 
+                // The ratio that we need to multiply while calculating the SV.
+                double ratio = startBpmValue / currentBpmValue;
+
                 // Get the closest and exact inherited points (if exists)
                 // Closest point cannot be null (it will return the first timing point
                 // in worst case), but exact point can be null.
@@ -179,11 +182,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
                 // Calculate the target SV. Now, the value should be divided by -100 / target SV
                 // to achieve the osu! representation of this value.
-                targetSv = MathUtils.calculateValueFromPercentage(firstSv, lastSv, targetPowerValue);
+                // Ratio is the BPM ratio between the start and current offset. Should be 1
+                // if the BPMs are the same.
+                targetSv = MathUtils.calculateValueFromPercentage(firstSv, lastSv, targetPowerValue) * ratio;
                 targetSvValue = -100d / targetSv;
 
                 // At this point, we need to either add the point, or
-                // replace the existing one. If the existing one is a kiai opener,
+                // replace the existing one. If the existing one toggles kiai,
                 // and the actualTargetOffset is different from this point's offset,
                 // we need to add a point and change the kiai one too instead. 
                 // Otherwise, we just move the point.
@@ -229,7 +234,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 // At the bottom, calculate the next offset
                 // and continue.
                 if (putPointsByNotes)
+                {
+                    if (hitObjectIndex == objects.Count - 1)
+                        break;
                     targetOffset = objects[++hitObjectIndex].Offset;
+                }
                 else
                     targetOffset += gridSnap / currentBpmValue;
             }
