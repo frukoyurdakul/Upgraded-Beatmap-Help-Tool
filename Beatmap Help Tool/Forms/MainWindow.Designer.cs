@@ -40,44 +40,74 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.button5 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.button4 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.button3 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.whistleToClapButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.button10 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.button9 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel17 = new System.Windows.Forms.Panel();
+            this.button8 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel16 = new System.Windows.Forms.Panel();
+            this.button7 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.button6 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.svFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button14 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel20 = new System.Windows.Forms.Panel();
+            this.button15 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel21 = new System.Windows.Forms.Panel();
+            this.button16 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel22 = new System.Windows.Forms.Panel();
+            this.button17 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.svChangerButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel24 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel26 = new System.Windows.Forms.Panel();
+            this.button20 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel27 = new System.Windows.Forms.Panel();
+            this.button21 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.button22 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel29 = new System.Windows.Forms.Panel();
+            this.button23 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.bpmFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.button24 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel30 = new System.Windows.Forms.Panel();
+            this.button25 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel31 = new System.Windows.Forms.Panel();
+            this.button26 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel32 = new System.Windows.Forms.Panel();
+            this.button27 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel33 = new System.Windows.Forms.Panel();
+            this.button28 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel34 = new System.Windows.Forms.Panel();
             this.panel35 = new System.Windows.Forms.Panel();
+            this.button29 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel36 = new System.Windows.Forms.Panel();
+            this.button30 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel37 = new System.Windows.Forms.Panel();
+            this.button31 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel38 = new System.Windows.Forms.Panel();
+            this.button32 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel39 = new System.Windows.Forms.Panel();
+            this.button33 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -94,42 +124,10 @@ namespace Beatmap_Help_Tool
             this.lastSaveTimeLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.browseButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.filePathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.button5 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button4 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button3 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.whistleToClapButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button10 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button9 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button8 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button7 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button6 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button14 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button15 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button16 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button17 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.svChangerButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button20 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button21 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button22 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button23 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button24 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button25 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button26 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button27 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button28 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button29 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button30 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button31 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button32 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button33 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.browseButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.redoButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.saveButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.undoButton = new Beatmap_Help_Tool.Views.MultilineButton();
@@ -139,9 +137,11 @@ namespace Beatmap_Help_Tool
             this.meterColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kiaiColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.inheritedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.timingPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.allPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.generalFunctionsPage.SuspendLayout();
@@ -194,8 +194,8 @@ namespace Beatmap_Help_Tool
             this.panel40.SuspendLayout();
             this.panel8.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -284,6 +284,20 @@ namespace Beatmap_Help_Tool
             this.panel14.Size = new System.Drawing.Size(372, 37);
             this.panel14.TabIndex = 10;
             // 
+            // button5
+            // 
+            this.button5.AutoSize = true;
+            this.button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button5.Location = new System.Drawing.Point(0, 10);
+            this.button5.Margin = new System.Windows.Forms.Padding(0);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(372, 27);
+            this.button5.TabIndex = 3;
+            this.button5.TabStop = false;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
             // panel13
             // 
             this.panel13.AutoSize = true;
@@ -294,6 +308,20 @@ namespace Beatmap_Help_Tool
             this.panel13.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel13.Size = new System.Drawing.Size(372, 37);
             this.panel13.TabIndex = 9;
+            // 
+            // button4
+            // 
+            this.button4.AutoSize = true;
+            this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button4.Location = new System.Drawing.Point(0, 10);
+            this.button4.Margin = new System.Windows.Forms.Padding(0);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(372, 27);
+            this.button4.TabIndex = 3;
+            this.button4.TabStop = false;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // panel12
             // 
@@ -306,6 +334,20 @@ namespace Beatmap_Help_Tool
             this.panel12.Size = new System.Drawing.Size(372, 37);
             this.panel12.TabIndex = 8;
             // 
+            // button3
+            // 
+            this.button3.AutoSize = true;
+            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button3.Location = new System.Drawing.Point(0, 10);
+            this.button3.Margin = new System.Windows.Forms.Padding(0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(372, 27);
+            this.button3.TabIndex = 3;
+            this.button3.TabStop = false;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // panel11
             // 
             this.panel11.AutoSize = true;
@@ -317,6 +359,24 @@ namespace Beatmap_Help_Tool
             this.panel11.Size = new System.Drawing.Size(372, 37);
             this.panel11.TabIndex = 7;
             // 
+            // positionAllNotesButton
+            // 
+            this.positionAllNotesButton.AutoSize = true;
+            this.positionAllNotesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.positionAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.positionAllNotesButton.Location = new System.Drawing.Point(0, 10);
+            this.positionAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
+            this.positionAllNotesButton.Name = "positionAllNotesButton";
+            this.positionAllNotesButton.Size = new System.Drawing.Size(372, 27);
+            this.positionAllNotesButton.TabIndex = 3;
+            this.positionAllNotesButton.TabStop = false;
+            this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
+            this.toolTip1.SetToolTip(this.positionAllNotesButton, "Puts the notes by their type. By default, it puts dons are top-left, kats are top" +
+        "-right,\ndon finishers are bottom-left and kat finishers are bottom-right side.\nY" +
+        "ou can customize the positions, though.");
+            this.positionAllNotesButton.UseVisualStyleBackColor = true;
+            this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
+            // 
             // panel10
             // 
             this.panel10.AutoSize = true;
@@ -326,6 +386,24 @@ namespace Beatmap_Help_Tool
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(372, 27);
             this.panel10.TabIndex = 0;
+            // 
+            // whistleToClapButton
+            // 
+            this.whistleToClapButton.AutoSize = true;
+            this.whistleToClapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.whistleToClapButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.whistleToClapButton.Location = new System.Drawing.Point(0, 0);
+            this.whistleToClapButton.Margin = new System.Windows.Forms.Padding(0);
+            this.whistleToClapButton.Name = "whistleToClapButton";
+            this.whistleToClapButton.Size = new System.Drawing.Size(372, 27);
+            this.whistleToClapButton.TabIndex = 2;
+            this.whistleToClapButton.TabStop = false;
+            this.whistleToClapButton.Text = "Set whistle sounds to claps";
+            this.toolTip1.SetToolTip(this.whistleToClapButton, "In the beatmap, sets all the whistle sounds to claps, including finishers. \r\nGood" +
+        " for mappers that hate whistle sounds while listening hitsounds in the editor :)" +
+        "");
+            this.whistleToClapButton.UseVisualStyleBackColor = true;
+            this.whistleToClapButton.Click += new System.EventHandler(this.whistleToClapButton_Click);
             // 
             // panel2
             // 
@@ -353,6 +431,20 @@ namespace Beatmap_Help_Tool
             this.panel19.Size = new System.Drawing.Size(373, 37);
             this.panel19.TabIndex = 7;
             // 
+            // button10
+            // 
+            this.button10.AutoSize = true;
+            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button10.Location = new System.Drawing.Point(0, 10);
+            this.button10.Margin = new System.Windows.Forms.Padding(0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(373, 27);
+            this.button10.TabIndex = 3;
+            this.button10.TabStop = false;
+            this.button10.Text = "button10";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
             // panel18
             // 
             this.panel18.AutoSize = true;
@@ -363,6 +455,20 @@ namespace Beatmap_Help_Tool
             this.panel18.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel18.Size = new System.Drawing.Size(373, 37);
             this.panel18.TabIndex = 6;
+            // 
+            // button9
+            // 
+            this.button9.AutoSize = true;
+            this.button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button9.Location = new System.Drawing.Point(0, 10);
+            this.button9.Margin = new System.Windows.Forms.Padding(0);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(373, 27);
+            this.button9.TabIndex = 3;
+            this.button9.TabStop = false;
+            this.button9.Text = "button9";
+            this.button9.UseVisualStyleBackColor = true;
             // 
             // panel17
             // 
@@ -375,6 +481,20 @@ namespace Beatmap_Help_Tool
             this.panel17.Size = new System.Drawing.Size(373, 37);
             this.panel17.TabIndex = 5;
             // 
+            // button8
+            // 
+            this.button8.AutoSize = true;
+            this.button8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button8.Location = new System.Drawing.Point(0, 10);
+            this.button8.Margin = new System.Windows.Forms.Padding(0);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(373, 27);
+            this.button8.TabIndex = 3;
+            this.button8.TabStop = false;
+            this.button8.Text = "button8";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
             // panel16
             // 
             this.panel16.AutoSize = true;
@@ -386,6 +506,20 @@ namespace Beatmap_Help_Tool
             this.panel16.Size = new System.Drawing.Size(373, 37);
             this.panel16.TabIndex = 4;
             // 
+            // button7
+            // 
+            this.button7.AutoSize = true;
+            this.button7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button7.Location = new System.Drawing.Point(0, 10);
+            this.button7.Margin = new System.Windows.Forms.Padding(0);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(373, 27);
+            this.button7.TabIndex = 3;
+            this.button7.TabStop = false;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
             // panel15
             // 
             this.panel15.AutoSize = true;
@@ -395,6 +529,20 @@ namespace Beatmap_Help_Tool
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(373, 27);
             this.panel15.TabIndex = 0;
+            // 
+            // button6
+            // 
+            this.button6.AutoSize = true;
+            this.button6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button6.Location = new System.Drawing.Point(0, 0);
+            this.button6.Margin = new System.Windows.Forms.Padding(0);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(373, 27);
+            this.button6.TabIndex = 3;
+            this.button6.TabStop = false;
+            this.button6.Text = "button6";
+            this.button6.UseVisualStyleBackColor = true;
             // 
             // svFunctionsPage
             // 
@@ -450,6 +598,21 @@ namespace Beatmap_Help_Tool
             this.panel4.Size = new System.Drawing.Size(372, 37);
             this.panel4.TabIndex = 10;
             // 
+            // button14
+            // 
+            this.button14.AutoSize = true;
+            this.button14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button14.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button14.Location = new System.Drawing.Point(0, 10);
+            this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(372, 27);
+            this.button14.TabIndex = 3;
+            this.button14.TabStop = false;
+            this.button14.Text = "button14";
+            this.button14.UseVisualStyleBackColor = true;
+            // 
             // panel20
             // 
             this.panel20.AutoSize = true;
@@ -460,6 +623,21 @@ namespace Beatmap_Help_Tool
             this.panel20.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel20.Size = new System.Drawing.Size(372, 37);
             this.panel20.TabIndex = 9;
+            // 
+            // button15
+            // 
+            this.button15.AutoSize = true;
+            this.button15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button15.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button15.Location = new System.Drawing.Point(0, 10);
+            this.button15.Margin = new System.Windows.Forms.Padding(0);
+            this.button15.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(372, 27);
+            this.button15.TabIndex = 3;
+            this.button15.TabStop = false;
+            this.button15.Text = "button15";
+            this.button15.UseVisualStyleBackColor = true;
             // 
             // panel21
             // 
@@ -472,6 +650,21 @@ namespace Beatmap_Help_Tool
             this.panel21.Size = new System.Drawing.Size(372, 37);
             this.panel21.TabIndex = 8;
             // 
+            // button16
+            // 
+            this.button16.AutoSize = true;
+            this.button16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button16.Location = new System.Drawing.Point(0, 10);
+            this.button16.Margin = new System.Windows.Forms.Padding(0);
+            this.button16.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(372, 27);
+            this.button16.TabIndex = 3;
+            this.button16.TabStop = false;
+            this.button16.Text = "button16";
+            this.button16.UseVisualStyleBackColor = true;
+            // 
             // panel22
             // 
             this.panel22.AutoSize = true;
@@ -483,6 +676,21 @@ namespace Beatmap_Help_Tool
             this.panel22.Size = new System.Drawing.Size(372, 37);
             this.panel22.TabIndex = 7;
             // 
+            // button17
+            // 
+            this.button17.AutoSize = true;
+            this.button17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button17.Location = new System.Drawing.Point(0, 10);
+            this.button17.Margin = new System.Windows.Forms.Padding(0);
+            this.button17.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(372, 27);
+            this.button17.TabIndex = 3;
+            this.button17.TabStop = false;
+            this.button17.Text = "button17";
+            this.button17.UseVisualStyleBackColor = true;
+            // 
             // panel23
             // 
             this.panel23.AutoSize = true;
@@ -493,6 +701,23 @@ namespace Beatmap_Help_Tool
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(372, 27);
             this.panel23.TabIndex = 0;
+            // 
+            // svChangerButton
+            // 
+            this.svChangerButton.AutoSize = true;
+            this.svChangerButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.svChangerButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.svChangerButton.Location = new System.Drawing.Point(0, 0);
+            this.svChangerButton.Margin = new System.Windows.Forms.Padding(0);
+            this.svChangerButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.svChangerButton.Name = "svChangerButton";
+            this.svChangerButton.Size = new System.Drawing.Size(372, 27);
+            this.svChangerButton.TabIndex = 2;
+            this.svChangerButton.TabStop = false;
+            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
+            this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
+            this.svChangerButton.UseVisualStyleBackColor = true;
+            this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);
             // 
             // panel24
             // 
@@ -520,6 +745,21 @@ namespace Beatmap_Help_Tool
             this.panel25.Size = new System.Drawing.Size(373, 37);
             this.panel25.TabIndex = 7;
             // 
+            // button19
+            // 
+            this.button19.AutoSize = true;
+            this.button19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button19.Location = new System.Drawing.Point(0, 10);
+            this.button19.Margin = new System.Windows.Forms.Padding(0);
+            this.button19.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(373, 27);
+            this.button19.TabIndex = 3;
+            this.button19.TabStop = false;
+            this.button19.Text = "button19";
+            this.button19.UseVisualStyleBackColor = true;
+            // 
             // panel26
             // 
             this.panel26.AutoSize = true;
@@ -530,6 +770,21 @@ namespace Beatmap_Help_Tool
             this.panel26.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel26.Size = new System.Drawing.Size(373, 37);
             this.panel26.TabIndex = 6;
+            // 
+            // button20
+            // 
+            this.button20.AutoSize = true;
+            this.button20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button20.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button20.Location = new System.Drawing.Point(0, 10);
+            this.button20.Margin = new System.Windows.Forms.Padding(0);
+            this.button20.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(373, 27);
+            this.button20.TabIndex = 3;
+            this.button20.TabStop = false;
+            this.button20.Text = "button20";
+            this.button20.UseVisualStyleBackColor = true;
             // 
             // panel27
             // 
@@ -542,6 +797,21 @@ namespace Beatmap_Help_Tool
             this.panel27.Size = new System.Drawing.Size(373, 37);
             this.panel27.TabIndex = 5;
             // 
+            // button21
+            // 
+            this.button21.AutoSize = true;
+            this.button21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button21.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button21.Location = new System.Drawing.Point(0, 10);
+            this.button21.Margin = new System.Windows.Forms.Padding(0);
+            this.button21.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(373, 27);
+            this.button21.TabIndex = 3;
+            this.button21.TabStop = false;
+            this.button21.Text = "button21";
+            this.button21.UseVisualStyleBackColor = true;
+            // 
             // panel28
             // 
             this.panel28.AutoSize = true;
@@ -553,6 +823,21 @@ namespace Beatmap_Help_Tool
             this.panel28.Size = new System.Drawing.Size(373, 37);
             this.panel28.TabIndex = 4;
             // 
+            // button22
+            // 
+            this.button22.AutoSize = true;
+            this.button22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button22.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button22.Location = new System.Drawing.Point(0, 10);
+            this.button22.Margin = new System.Windows.Forms.Padding(0);
+            this.button22.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(373, 27);
+            this.button22.TabIndex = 3;
+            this.button22.TabStop = false;
+            this.button22.Text = "button22";
+            this.button22.UseVisualStyleBackColor = true;
+            // 
             // panel29
             // 
             this.panel29.AutoSize = true;
@@ -562,6 +847,21 @@ namespace Beatmap_Help_Tool
             this.panel29.Name = "panel29";
             this.panel29.Size = new System.Drawing.Size(373, 27);
             this.panel29.TabIndex = 0;
+            // 
+            // button23
+            // 
+            this.button23.AutoSize = true;
+            this.button23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button23.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button23.Location = new System.Drawing.Point(0, 0);
+            this.button23.Margin = new System.Windows.Forms.Padding(0);
+            this.button23.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(373, 27);
+            this.button23.TabIndex = 3;
+            this.button23.TabStop = false;
+            this.button23.Text = "button23";
+            this.button23.UseVisualStyleBackColor = true;
             // 
             // bpmFunctionsPage
             // 
@@ -617,6 +917,21 @@ namespace Beatmap_Help_Tool
             this.panel6.Size = new System.Drawing.Size(372, 37);
             this.panel6.TabIndex = 10;
             // 
+            // button24
+            // 
+            this.button24.AutoSize = true;
+            this.button24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button24.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button24.Location = new System.Drawing.Point(0, 10);
+            this.button24.Margin = new System.Windows.Forms.Padding(0);
+            this.button24.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(372, 27);
+            this.button24.TabIndex = 3;
+            this.button24.TabStop = false;
+            this.button24.Text = "button24";
+            this.button24.UseVisualStyleBackColor = true;
+            // 
             // panel30
             // 
             this.panel30.AutoSize = true;
@@ -627,6 +942,21 @@ namespace Beatmap_Help_Tool
             this.panel30.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel30.Size = new System.Drawing.Size(372, 37);
             this.panel30.TabIndex = 9;
+            // 
+            // button25
+            // 
+            this.button25.AutoSize = true;
+            this.button25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button25.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button25.Location = new System.Drawing.Point(0, 10);
+            this.button25.Margin = new System.Windows.Forms.Padding(0);
+            this.button25.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(372, 27);
+            this.button25.TabIndex = 3;
+            this.button25.TabStop = false;
+            this.button25.Text = "button25";
+            this.button25.UseVisualStyleBackColor = true;
             // 
             // panel31
             // 
@@ -639,6 +969,21 @@ namespace Beatmap_Help_Tool
             this.panel31.Size = new System.Drawing.Size(372, 37);
             this.panel31.TabIndex = 8;
             // 
+            // button26
+            // 
+            this.button26.AutoSize = true;
+            this.button26.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button26.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button26.Location = new System.Drawing.Point(0, 10);
+            this.button26.Margin = new System.Windows.Forms.Padding(0);
+            this.button26.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(372, 27);
+            this.button26.TabIndex = 3;
+            this.button26.TabStop = false;
+            this.button26.Text = "button26";
+            this.button26.UseVisualStyleBackColor = true;
+            // 
             // panel32
             // 
             this.panel32.AutoSize = true;
@@ -650,6 +995,21 @@ namespace Beatmap_Help_Tool
             this.panel32.Size = new System.Drawing.Size(372, 37);
             this.panel32.TabIndex = 7;
             // 
+            // button27
+            // 
+            this.button27.AutoSize = true;
+            this.button27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button27.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button27.Location = new System.Drawing.Point(0, 10);
+            this.button27.Margin = new System.Windows.Forms.Padding(0);
+            this.button27.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(372, 27);
+            this.button27.TabIndex = 3;
+            this.button27.TabStop = false;
+            this.button27.Text = "button27";
+            this.button27.UseVisualStyleBackColor = true;
+            // 
             // panel33
             // 
             this.panel33.AutoSize = true;
@@ -659,6 +1019,21 @@ namespace Beatmap_Help_Tool
             this.panel33.Name = "panel33";
             this.panel33.Size = new System.Drawing.Size(372, 27);
             this.panel33.TabIndex = 0;
+            // 
+            // button28
+            // 
+            this.button28.AutoSize = true;
+            this.button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button28.Location = new System.Drawing.Point(0, 0);
+            this.button28.Margin = new System.Windows.Forms.Padding(0);
+            this.button28.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(372, 27);
+            this.button28.TabIndex = 2;
+            this.button28.TabStop = false;
+            this.button28.Text = "button28";
+            this.button28.UseVisualStyleBackColor = true;
             // 
             // panel34
             // 
@@ -686,6 +1061,21 @@ namespace Beatmap_Help_Tool
             this.panel35.Size = new System.Drawing.Size(373, 37);
             this.panel35.TabIndex = 7;
             // 
+            // button29
+            // 
+            this.button29.AutoSize = true;
+            this.button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button29.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button29.Location = new System.Drawing.Point(0, 10);
+            this.button29.Margin = new System.Windows.Forms.Padding(0);
+            this.button29.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(373, 27);
+            this.button29.TabIndex = 3;
+            this.button29.TabStop = false;
+            this.button29.Text = "button29";
+            this.button29.UseVisualStyleBackColor = true;
+            // 
             // panel36
             // 
             this.panel36.AutoSize = true;
@@ -696,6 +1086,21 @@ namespace Beatmap_Help_Tool
             this.panel36.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.panel36.Size = new System.Drawing.Size(373, 37);
             this.panel36.TabIndex = 6;
+            // 
+            // button30
+            // 
+            this.button30.AutoSize = true;
+            this.button30.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button30.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button30.Location = new System.Drawing.Point(0, 10);
+            this.button30.Margin = new System.Windows.Forms.Padding(0);
+            this.button30.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(373, 27);
+            this.button30.TabIndex = 3;
+            this.button30.TabStop = false;
+            this.button30.Text = "button30";
+            this.button30.UseVisualStyleBackColor = true;
             // 
             // panel37
             // 
@@ -708,6 +1113,21 @@ namespace Beatmap_Help_Tool
             this.panel37.Size = new System.Drawing.Size(373, 37);
             this.panel37.TabIndex = 5;
             // 
+            // button31
+            // 
+            this.button31.AutoSize = true;
+            this.button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button31.Location = new System.Drawing.Point(0, 10);
+            this.button31.Margin = new System.Windows.Forms.Padding(0);
+            this.button31.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(373, 27);
+            this.button31.TabIndex = 3;
+            this.button31.TabStop = false;
+            this.button31.Text = "button31";
+            this.button31.UseVisualStyleBackColor = true;
+            // 
             // panel38
             // 
             this.panel38.AutoSize = true;
@@ -719,6 +1139,21 @@ namespace Beatmap_Help_Tool
             this.panel38.Size = new System.Drawing.Size(373, 37);
             this.panel38.TabIndex = 4;
             // 
+            // button32
+            // 
+            this.button32.AutoSize = true;
+            this.button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button32.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button32.Location = new System.Drawing.Point(0, 10);
+            this.button32.Margin = new System.Windows.Forms.Padding(0);
+            this.button32.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(373, 27);
+            this.button32.TabIndex = 3;
+            this.button32.TabStop = false;
+            this.button32.Text = "button32";
+            this.button32.UseVisualStyleBackColor = true;
+            // 
             // panel39
             // 
             this.panel39.AutoSize = true;
@@ -728,6 +1163,21 @@ namespace Beatmap_Help_Tool
             this.panel39.Name = "panel39";
             this.panel39.Size = new System.Drawing.Size(373, 27);
             this.panel39.TabIndex = 0;
+            // 
+            // button33
+            // 
+            this.button33.AutoSize = true;
+            this.button33.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button33.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button33.Location = new System.Drawing.Point(0, 0);
+            this.button33.Margin = new System.Windows.Forms.Padding(0);
+            this.button33.MinimumSize = new System.Drawing.Size(0, 23);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(373, 27);
+            this.button33.TabIndex = 3;
+            this.button33.TabStop = false;
+            this.button33.Text = "button33";
+            this.button33.UseVisualStyleBackColor = true;
             // 
             // settingsPage
             // 
@@ -904,6 +1354,23 @@ namespace Beatmap_Help_Tool
             this.panel8.Size = new System.Drawing.Size(763, 36);
             this.panel8.TabIndex = 6;
             // 
+            // browseButton
+            // 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.AutoSize = true;
+            this.browseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.browseButton.Location = new System.Drawing.Point(672, 6);
+            this.browseButton.MinimumSize = new System.Drawing.Size(0, 23);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(76, 27);
+            this.browseButton.TabIndex = 5;
+            this.browseButton.TabStop = false;
+            this.browseButton.Text = "Browse...";
+            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
+        "ise it will open the last folder.");
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
             // filePathTextBox
             // 
             this.filePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -943,491 +1410,6 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(763, 33);
             this.tableLayoutPanel6.TabIndex = 5;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 3;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
-            this.tableLayoutPanel5.TabIndex = 6;
-            // 
-            // button5
-            // 
-            this.button5.AutoSize = true;
-            this.button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button5.Location = new System.Drawing.Point(0, 10);
-            this.button5.Margin = new System.Windows.Forms.Padding(0);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(372, 27);
-            this.button5.TabIndex = 3;
-            this.button5.TabStop = false;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.AutoSize = true;
-            this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.Location = new System.Drawing.Point(0, 10);
-            this.button4.Margin = new System.Windows.Forms.Padding(0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(372, 27);
-            this.button4.TabIndex = 3;
-            this.button4.TabStop = false;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.AutoSize = true;
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.Location = new System.Drawing.Point(0, 10);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(372, 27);
-            this.button3.TabIndex = 3;
-            this.button3.TabStop = false;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // positionAllNotesButton
-            // 
-            this.positionAllNotesButton.AutoSize = true;
-            this.positionAllNotesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.positionAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.positionAllNotesButton.Location = new System.Drawing.Point(0, 10);
-            this.positionAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
-            this.positionAllNotesButton.Name = "positionAllNotesButton";
-            this.positionAllNotesButton.Size = new System.Drawing.Size(372, 27);
-            this.positionAllNotesButton.TabIndex = 3;
-            this.positionAllNotesButton.TabStop = false;
-            this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
-            this.toolTip1.SetToolTip(this.positionAllNotesButton, "Puts the notes by their type. By default, it puts dons are top-left, kats are top" +
-        "-right,\ndon finishers are bottom-left and kat finishers are bottom-right side.\nY" +
-        "ou can customize the positions, though.");
-            this.positionAllNotesButton.UseVisualStyleBackColor = true;
-            this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
-            // 
-            // whistleToClapButton
-            // 
-            this.whistleToClapButton.AutoSize = true;
-            this.whistleToClapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.whistleToClapButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.whistleToClapButton.Location = new System.Drawing.Point(0, 0);
-            this.whistleToClapButton.Margin = new System.Windows.Forms.Padding(0);
-            this.whistleToClapButton.Name = "whistleToClapButton";
-            this.whistleToClapButton.Size = new System.Drawing.Size(372, 27);
-            this.whistleToClapButton.TabIndex = 2;
-            this.whistleToClapButton.TabStop = false;
-            this.whistleToClapButton.Text = "Set whistle sounds to claps";
-            this.toolTip1.SetToolTip(this.whistleToClapButton, "In the beatmap, sets all the whistle sounds to claps, including finishers. \r\nGood" +
-        " for mappers that hate whistle sounds while listening hitsounds in the editor :)" +
-        "");
-            this.whistleToClapButton.UseVisualStyleBackColor = true;
-            this.whistleToClapButton.Click += new System.EventHandler(this.whistleToClapButton_Click);
-            // 
-            // button10
-            // 
-            this.button10.AutoSize = true;
-            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button10.Location = new System.Drawing.Point(0, 10);
-            this.button10.Margin = new System.Windows.Forms.Padding(0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(373, 27);
-            this.button10.TabIndex = 3;
-            this.button10.TabStop = false;
-            this.button10.Text = "button10";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.AutoSize = true;
-            this.button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button9.Location = new System.Drawing.Point(0, 10);
-            this.button9.Margin = new System.Windows.Forms.Padding(0);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(373, 27);
-            this.button9.TabIndex = 3;
-            this.button9.TabStop = false;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button8
-            // 
-            this.button8.AutoSize = true;
-            this.button8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button8.Location = new System.Drawing.Point(0, 10);
-            this.button8.Margin = new System.Windows.Forms.Padding(0);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(373, 27);
-            this.button8.TabIndex = 3;
-            this.button8.TabStop = false;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.AutoSize = true;
-            this.button7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button7.Location = new System.Drawing.Point(0, 10);
-            this.button7.Margin = new System.Windows.Forms.Padding(0);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(373, 27);
-            this.button7.TabIndex = 3;
-            this.button7.TabStop = false;
-            this.button7.Text = "button7";
-            this.button7.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.AutoSize = true;
-            this.button6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button6.Location = new System.Drawing.Point(0, 0);
-            this.button6.Margin = new System.Windows.Forms.Padding(0);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(373, 27);
-            this.button6.TabIndex = 3;
-            this.button6.TabStop = false;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.AutoSize = true;
-            this.button14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button14.Location = new System.Drawing.Point(0, 10);
-            this.button14.Margin = new System.Windows.Forms.Padding(0);
-            this.button14.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(372, 27);
-            this.button14.TabIndex = 3;
-            this.button14.TabStop = false;
-            this.button14.Text = "button14";
-            this.button14.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.AutoSize = true;
-            this.button15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button15.Location = new System.Drawing.Point(0, 10);
-            this.button15.Margin = new System.Windows.Forms.Padding(0);
-            this.button15.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(372, 27);
-            this.button15.TabIndex = 3;
-            this.button15.TabStop = false;
-            this.button15.Text = "button15";
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            this.button16.AutoSize = true;
-            this.button16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button16.Location = new System.Drawing.Point(0, 10);
-            this.button16.Margin = new System.Windows.Forms.Padding(0);
-            this.button16.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(372, 27);
-            this.button16.TabIndex = 3;
-            this.button16.TabStop = false;
-            this.button16.Text = "button16";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // button17
-            // 
-            this.button17.AutoSize = true;
-            this.button17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button17.Location = new System.Drawing.Point(0, 10);
-            this.button17.Margin = new System.Windows.Forms.Padding(0);
-            this.button17.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(372, 27);
-            this.button17.TabIndex = 3;
-            this.button17.TabStop = false;
-            this.button17.Text = "button17";
-            this.button17.UseVisualStyleBackColor = true;
-            // 
-            // svChangerButton
-            // 
-            this.svChangerButton.AutoSize = true;
-            this.svChangerButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.svChangerButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.svChangerButton.Location = new System.Drawing.Point(0, 0);
-            this.svChangerButton.Margin = new System.Windows.Forms.Padding(0);
-            this.svChangerButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.svChangerButton.Name = "svChangerButton";
-            this.svChangerButton.Size = new System.Drawing.Size(372, 27);
-            this.svChangerButton.TabIndex = 2;
-            this.svChangerButton.TabStop = false;
-            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
-            this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
-            this.svChangerButton.UseVisualStyleBackColor = true;
-            this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);
-            // 
-            // button19
-            // 
-            this.button19.AutoSize = true;
-            this.button19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button19.Location = new System.Drawing.Point(0, 10);
-            this.button19.Margin = new System.Windows.Forms.Padding(0);
-            this.button19.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(373, 27);
-            this.button19.TabIndex = 3;
-            this.button19.TabStop = false;
-            this.button19.Text = "button19";
-            this.button19.UseVisualStyleBackColor = true;
-            // 
-            // button20
-            // 
-            this.button20.AutoSize = true;
-            this.button20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button20.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button20.Location = new System.Drawing.Point(0, 10);
-            this.button20.Margin = new System.Windows.Forms.Padding(0);
-            this.button20.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(373, 27);
-            this.button20.TabIndex = 3;
-            this.button20.TabStop = false;
-            this.button20.Text = "button20";
-            this.button20.UseVisualStyleBackColor = true;
-            // 
-            // button21
-            // 
-            this.button21.AutoSize = true;
-            this.button21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button21.Location = new System.Drawing.Point(0, 10);
-            this.button21.Margin = new System.Windows.Forms.Padding(0);
-            this.button21.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(373, 27);
-            this.button21.TabIndex = 3;
-            this.button21.TabStop = false;
-            this.button21.Text = "button21";
-            this.button21.UseVisualStyleBackColor = true;
-            // 
-            // button22
-            // 
-            this.button22.AutoSize = true;
-            this.button22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button22.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button22.Location = new System.Drawing.Point(0, 10);
-            this.button22.Margin = new System.Windows.Forms.Padding(0);
-            this.button22.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(373, 27);
-            this.button22.TabIndex = 3;
-            this.button22.TabStop = false;
-            this.button22.Text = "button22";
-            this.button22.UseVisualStyleBackColor = true;
-            // 
-            // button23
-            // 
-            this.button23.AutoSize = true;
-            this.button23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button23.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button23.Location = new System.Drawing.Point(0, 0);
-            this.button23.Margin = new System.Windows.Forms.Padding(0);
-            this.button23.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(373, 27);
-            this.button23.TabIndex = 3;
-            this.button23.TabStop = false;
-            this.button23.Text = "button23";
-            this.button23.UseVisualStyleBackColor = true;
-            // 
-            // button24
-            // 
-            this.button24.AutoSize = true;
-            this.button24.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button24.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button24.Location = new System.Drawing.Point(0, 10);
-            this.button24.Margin = new System.Windows.Forms.Padding(0);
-            this.button24.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(372, 27);
-            this.button24.TabIndex = 3;
-            this.button24.TabStop = false;
-            this.button24.Text = "button24";
-            this.button24.UseVisualStyleBackColor = true;
-            // 
-            // button25
-            // 
-            this.button25.AutoSize = true;
-            this.button25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button25.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button25.Location = new System.Drawing.Point(0, 10);
-            this.button25.Margin = new System.Windows.Forms.Padding(0);
-            this.button25.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(372, 27);
-            this.button25.TabIndex = 3;
-            this.button25.TabStop = false;
-            this.button25.Text = "button25";
-            this.button25.UseVisualStyleBackColor = true;
-            // 
-            // button26
-            // 
-            this.button26.AutoSize = true;
-            this.button26.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button26.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button26.Location = new System.Drawing.Point(0, 10);
-            this.button26.Margin = new System.Windows.Forms.Padding(0);
-            this.button26.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(372, 27);
-            this.button26.TabIndex = 3;
-            this.button26.TabStop = false;
-            this.button26.Text = "button26";
-            this.button26.UseVisualStyleBackColor = true;
-            // 
-            // button27
-            // 
-            this.button27.AutoSize = true;
-            this.button27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button27.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button27.Location = new System.Drawing.Point(0, 10);
-            this.button27.Margin = new System.Windows.Forms.Padding(0);
-            this.button27.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(372, 27);
-            this.button27.TabIndex = 3;
-            this.button27.TabStop = false;
-            this.button27.Text = "button27";
-            this.button27.UseVisualStyleBackColor = true;
-            // 
-            // button28
-            // 
-            this.button28.AutoSize = true;
-            this.button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button28.Location = new System.Drawing.Point(0, 0);
-            this.button28.Margin = new System.Windows.Forms.Padding(0);
-            this.button28.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(372, 27);
-            this.button28.TabIndex = 2;
-            this.button28.TabStop = false;
-            this.button28.Text = "button28";
-            this.button28.UseVisualStyleBackColor = true;
-            // 
-            // button29
-            // 
-            this.button29.AutoSize = true;
-            this.button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button29.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button29.Location = new System.Drawing.Point(0, 10);
-            this.button29.Margin = new System.Windows.Forms.Padding(0);
-            this.button29.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(373, 27);
-            this.button29.TabIndex = 3;
-            this.button29.TabStop = false;
-            this.button29.Text = "button29";
-            this.button29.UseVisualStyleBackColor = true;
-            // 
-            // button30
-            // 
-            this.button30.AutoSize = true;
-            this.button30.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button30.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button30.Location = new System.Drawing.Point(0, 10);
-            this.button30.Margin = new System.Windows.Forms.Padding(0);
-            this.button30.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(373, 27);
-            this.button30.TabIndex = 3;
-            this.button30.TabStop = false;
-            this.button30.Text = "button30";
-            this.button30.UseVisualStyleBackColor = true;
-            // 
-            // button31
-            // 
-            this.button31.AutoSize = true;
-            this.button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button31.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button31.Location = new System.Drawing.Point(0, 10);
-            this.button31.Margin = new System.Windows.Forms.Padding(0);
-            this.button31.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(373, 27);
-            this.button31.TabIndex = 3;
-            this.button31.TabStop = false;
-            this.button31.Text = "button31";
-            this.button31.UseVisualStyleBackColor = true;
-            // 
-            // button32
-            // 
-            this.button32.AutoSize = true;
-            this.button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button32.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button32.Location = new System.Drawing.Point(0, 10);
-            this.button32.Margin = new System.Windows.Forms.Padding(0);
-            this.button32.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button32.Name = "button32";
-            this.button32.Size = new System.Drawing.Size(373, 27);
-            this.button32.TabIndex = 3;
-            this.button32.TabStop = false;
-            this.button32.Text = "button32";
-            this.button32.UseVisualStyleBackColor = true;
-            // 
-            // button33
-            // 
-            this.button33.AutoSize = true;
-            this.button33.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button33.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button33.Location = new System.Drawing.Point(0, 0);
-            this.button33.Margin = new System.Windows.Forms.Padding(0);
-            this.button33.MinimumSize = new System.Drawing.Size(0, 23);
-            this.button33.Name = "button33";
-            this.button33.Size = new System.Drawing.Size(373, 27);
-            this.button33.TabIndex = 3;
-            this.button33.TabStop = false;
-            this.button33.Text = "button33";
-            this.button33.UseVisualStyleBackColor = true;
-            // 
-            // browseButton
-            // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.AutoSize = true;
-            this.browseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.browseButton.Location = new System.Drawing.Point(672, 6);
-            this.browseButton.MinimumSize = new System.Drawing.Size(0, 23);
-            this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(76, 27);
-            this.browseButton.TabIndex = 5;
-            this.browseButton.TabStop = false;
-            this.browseButton.Text = "Browse...";
-            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
-        "ise it will open the last folder.");
-            this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // redoButton
             // 
@@ -1555,6 +1537,24 @@ namespace Beatmap_Help_Tool
             this.kiaiColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.kiaiColumn.ToolTipText = "Shows whether the point has a kiai or not.";
             // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(771, 44);
+            this.tableLayoutPanel5.TabIndex = 6;
+            // 
             // inheritedPointsButton
             // 
             this.inheritedPointsButton.AutoSize = true;
@@ -1601,6 +1601,13 @@ namespace Beatmap_Help_Tool
             this.toolTip1.SetToolTip(this.allPointsButton, "Shows both timing and inherited points in the data below.");
             this.allPointsButton.UseVisualStyleBackColor = true;
             this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutomaticDelay = 0;
+            this.toolTip1.AutoPopDelay = 32767;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // MainWindow
             // 
@@ -1707,9 +1714,9 @@ namespace Beatmap_Help_Tool
             this.panel8.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.ResumeLayout(false);
 
         }

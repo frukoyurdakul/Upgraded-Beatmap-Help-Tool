@@ -5,6 +5,7 @@ using Beatmap_Help_Tool.Properties;
 using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -140,22 +141,20 @@ namespace Beatmap_Help_Tool
         {
             if (isSelectedBeatmapOpenInOsuEditor())
             {
-                
-            }
-
-            Process p = Process.GetProcessesByName("osu!").FirstOrDefault();
-            if (p != null)
-            {
-                IntPtr h = p.MainWindowHandle;
-                SetForegroundWindow(h);
-                inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F5);
-                Thread.Sleep(100);
-                inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F5);
-                Thread.Sleep(500);
-                inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F1);
-                Thread.Sleep(100);
-                inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F1);
-                Thread.Sleep(100);
+                Process p = Process.GetProcessesByName("osu!").FirstOrDefault();
+                if (p != null)
+                {
+                    IntPtr h = p.MainWindowHandle;
+                    SetForegroundWindow(h);
+                    inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F5);
+                    Thread.Sleep(100);
+                    inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F5);
+                    Thread.Sleep(1000);
+                    inputSimulator.Keyboard.KeyDown(WindowsInput.Native.VirtualKeyCode.F1);
+                    Thread.Sleep(100);
+                    inputSimulator.Keyboard.KeyUp(WindowsInput.Native.VirtualKeyCode.F1);
+                    Thread.Sleep(100);
+                }
             }
         }
 
@@ -233,6 +232,28 @@ namespace Beatmap_Help_Tool
 
         private void searchCurrentOpenBeatmap(string beatmapFileName, string songsPath)
         {
+            // First, try to search the directory name directly, and if we can find it,
+            // open that folder immediately.
+            // Else, search all files from the scratch.
+
+            string[] directories = Directory.GetDirectories(songsPath);
+            string nameWithoutExtension = beatmapFileName.Replace(".osu", "");
+            nameWithoutExtension = nameWithoutExtension.Substring(0, nameWithoutExtension.IndexOf('(')).Trim();
+
+            List<string> matchedDirectories = new List<string>();
+            foreach (string directory in directories)
+            {
+                if (directory.Contains(nameWithoutExtension))
+                    matchedDirectories.Add(directory);
+            }
+
+            if (matchedDirectories.Count == 1)
+            {
+                string directoryPath = matchedDirectories[0] + "\\" + beatmapFileName;
+                loadBeatmap(directoryPath, beatmapFileName);
+                return;
+            }
+
             string[] osuFilesInFolder = Directory.GetFiles(songsPath, "*.osu", SearchOption.AllDirectories);
             string lastPart;
             string targetPath = "";
@@ -565,9 +586,9 @@ namespace Beatmap_Help_Tool
                 {
                     InheritedPointUtils.AddSvChanges(this, beatmap, firstOffset, lastOffset, firstSv, lastSv,
                         targetBpm, gridSnap, svOffset, svIncreaseMode, count, svIncreaseMultiplier, putPointsByNotes);
-                    showMessageAndSaveBeatmap("Re-positioned notes successfully.",
-                            "Re-positioned notes for Taiko mode successfully.",
-                            "Re-positioned notes for Taiko mode");
+                    showMessageAndSaveBeatmap("Added SV changes successfully.",
+                            "Added SV changes successfully.",
+                            "Added SV changes");
                 }));
             }
         }

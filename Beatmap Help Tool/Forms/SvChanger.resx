@@ -142,7 +142,7 @@ of the map. If you uncheck this, "Copy last time"
 will convert to "Count" where it will count how many
 changes there will be instead.</value>
   </data>
-  <data name="label5.ToolTip" xml:space="preserve">
+  <data name="copyTimeLabel.ToolTip" xml:space="preserve">
     <value>For "Copy last time", basically the first format with the
 other time text box. Cannot be before than the first
 time. For "Count" you can enter a number here

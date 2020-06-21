@@ -19,6 +19,30 @@ namespace Beatmap_Help_Tool.BeatmapTools
             List<TimingPoint> actualPoints = beatmap.TimingPoints;
             List<HitObject> actualObjects = beatmap.HitObjects;
 
+            if (count > 0 && lastOffset <= firstOffset)
+            {
+                if (putPointsByNotes)
+                {
+                    // We need to determine the end offset here from notes
+                    // and note count.
+                    SnapUtils.getEndOffsetFromObjectsByCount(beatmap, firstOffset, count, out lastOffset);
+                }
+                else
+                {
+                    if (gridSnap == 0)
+                    {
+                        showErrorMessageInMainThread(form, "End offset was not defined and grid snap and count values are\n also not defined, hence the end offset\ncould not be calculated. Aborting.");
+                        return false;
+                    }
+                    lastOffset = SnapUtils.calculateEndOffset(beatmap, firstOffset, gridSnap, count);
+                }
+            }
+            else if (lastOffset <= firstOffset)
+            {
+                showErrorMessageInMainThread(form, "End offset could not be calculated,\nnecessary values are missing.");
+                return false;
+            }
+
             SearchUtils.GetObjectsInBetween(beatmap, firstOffset, lastOffset,
                 out List<TimingPoint> points, out List<HitObject> objects);
     
@@ -72,18 +96,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
             {
                 showErrorMessageInMainThread(form, "The sv increase mode and sv increase multiplier has\nresulted in the power value being 0. Aborting.");
                 return false;
-            }
-
-            // If the last offset is not defined,
-            // calculate it with the grid snap value and count value.
-            if (lastOffset < 0)
-            {
-                if (gridSnap == 0 || count == 0)
-                {
-                    showErrorMessageInMainThread(form, "End offset was not defined and grid snap and count values are\n also not defined, hence the end offset\ncould not be calculated. Aborting.");
-                    return false;                        
-                }
-                lastOffset = SnapUtils.calculateEndOffset(beatmap, firstOffset, gridSnap, count);
             }
 
             // If "put points by notes" is selected,

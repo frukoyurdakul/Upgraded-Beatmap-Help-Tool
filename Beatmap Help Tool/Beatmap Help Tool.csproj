@@ -98,6 +98,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveModel\SvChangerModel.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />

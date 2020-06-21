@@ -34,11 +34,11 @@ namespace Beatmap_Help_Tool.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SvChanger));
             this.label1 = new System.Windows.Forms.Label();
             this.activateTimeModeCheckBox = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.rememberCheckBox = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.copyTimeLabel = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.putPointsByNotesCheckBox = new System.Windows.Forms.CheckBox();
@@ -47,6 +47,7 @@ namespace Beatmap_Help_Tool.Forms
             this.applyButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.increaseMultiplierTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.lastTimeTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.lastSvTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
@@ -55,7 +56,6 @@ namespace Beatmap_Help_Tool.Forms
             this.svOffsetTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.gridSnapTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.targetBpmTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -82,19 +82,20 @@ namespace Beatmap_Help_Tool.Forms
             this.activateTimeModeCheckBox.Text = "Activate between time mode";
             this.toolTip1.SetToolTip(this.activateTimeModeCheckBox, resources.GetString("activateTimeModeCheckBox.ToolTip"));
             this.activateTimeModeCheckBox.UseVisualStyleBackColor = true;
+            this.activateTimeModeCheckBox.CheckedChanged += new System.EventHandler(this.activateTimeModeCheckBox_CheckedChanged);
             // 
-            // checkBox2
+            // rememberCheckBox
             // 
-            this.checkBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(61, 139);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(323, 21);
-            this.checkBox2.TabIndex = 2;
-            this.checkBox2.Text = "Remember the values and re-open the window";
-            this.toolTip1.SetToolTip(this.checkBox2, "Remebers the values and re-opens the window after\r\nadding SVs into the map once, " +
+            this.rememberCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.rememberCheckBox.AutoSize = true;
+            this.rememberCheckBox.Location = new System.Drawing.Point(61, 139);
+            this.rememberCheckBox.Name = "rememberCheckBox";
+            this.rememberCheckBox.Size = new System.Drawing.Size(323, 21);
+            this.rememberCheckBox.TabIndex = 2;
+            this.rememberCheckBox.Text = "Remember the values and re-open the window";
+            this.toolTip1.SetToolTip(this.rememberCheckBox, "Remebers the values and re-opens the window after\r\nadding SVs into the map once, " +
         "with the same values.");
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.rememberCheckBox.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -128,15 +129,15 @@ namespace Beatmap_Help_Tool.Forms
             this.toolTip1.SetToolTip(this.label4, "Last SV value. Can be lower than first SV, or higher than last SV, \r\nor equal if " +
         "Target BPM is defined.");
             // 
-            // label5
+            // copyTimeLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 317);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 17);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Copy last time: ";
-            this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
+            this.copyTimeLabel.AutoSize = true;
+            this.copyTimeLabel.Location = new System.Drawing.Point(16, 317);
+            this.copyTimeLabel.Name = "copyTimeLabel";
+            this.copyTimeLabel.Size = new System.Drawing.Size(104, 17);
+            this.copyTimeLabel.TabIndex = 9;
+            this.copyTimeLabel.Text = "Copy last time: ";
+            this.toolTip1.SetToolTip(this.copyTimeLabel, resources.GetString("copyTimeLabel.ToolTip"));
             // 
             // label6
             // 
@@ -233,6 +234,13 @@ namespace Beatmap_Help_Tool.Forms
             this.label10.Text = "Increase multiplier:";
             this.toolTip1.SetToolTip(this.label10, "This defines the increase multiplier. Only effective if \"Exponential\" or\r\n\"Logari" +
         "thmic\" is selected. Value needs to be above than 0.");
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutomaticDelay = 0;
+            this.toolTip1.AutoPopDelay = 32767;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // increaseMultiplierTextBox
             // 
@@ -362,17 +370,18 @@ namespace Beatmap_Help_Tool.Forms
             this.Controls.Add(this.label7);
             this.Controls.Add(this.targetBpmTextBox);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.copyTimeLabel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.rememberCheckBox);
             this.Controls.Add(this.activateTimeModeCheckBox);
             this.Controls.Add(this.label1);
             this.MinimumSize = new System.Drawing.Size(478, 551);
             this.Name = "SvChanger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SV Editor";
+            this.Load += new System.EventHandler(this.SvChanger_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,11 +391,11 @@ namespace Beatmap_Help_Tool.Forms
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox activateTimeModeCheckBox;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox rememberCheckBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label copyTimeLabel;
         private System.Windows.Forms.Label label6;
         private PlaceHolderTextBox targetBpmTextBox;
         private System.Windows.Forms.Label label7;

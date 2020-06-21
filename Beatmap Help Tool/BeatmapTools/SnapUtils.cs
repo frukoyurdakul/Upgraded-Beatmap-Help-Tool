@@ -103,6 +103,31 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static void getEndOffsetFromObjectsByCount(Beatmap beatmap, double startOffset,
+            int count, out double endOffset)
+        {
+            SearchUtils.SortBeatmapElements(beatmap.HitObjects);
+
+            int index = 1;
+            int foundIndex = -1;
+            for (int i = 0; i < beatmap.HitObjects.Count; i++)
+            {
+                if (beatmap.HitObjects[i].Offset >= startOffset)
+                {
+                    while (index < count && i++ < beatmap.HitObjects.Count)
+                    {
+                        index++;
+                    }
+                    foundIndex = i;
+                    break;
+                }
+            }
+            if (foundIndex != -1)
+                endOffset = beatmap.HitObjects[foundIndex].Offset;
+            else
+                endOffset = -1;
+        }
+
         public static int calculateEndOffset(Beatmap beatmap, double startOffset, double gridSnap, double count)
         {
             double step = gridSnap;

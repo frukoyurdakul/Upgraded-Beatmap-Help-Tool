@@ -25,7 +25,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         {
             foreach (TextBox textBox in textBoxes)
             {
-                if (string.IsNullOrEmpty(textBox.Text))
+                if (textBox != null && string.IsNullOrEmpty(textBox.Text))
                 {
                     showErrorMessage(message);
                     return false;

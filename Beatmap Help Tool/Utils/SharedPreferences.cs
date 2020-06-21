@@ -47,12 +47,22 @@ namespace Beatmap_Help_Tool.Utils
         public class Editor
         {
             private static readonly Dictionary<string, object> pendingPairs = new Dictionary<string, object>();
+            private static readonly ISet<string> pendingRemovePairs = new HashSet<string>();
 
             public Editor put<T>(string key, T value)
             {
                 lock (pendingPairs)
                 {
                     pendingPairs[key] = value;
+                }
+                return this;
+            }
+
+            public Editor remove(string key)
+            {
+                lock (pendingRemovePairs)
+                {
+                    pendingRemovePairs.Add(key);
                 }
                 return this;
             }
@@ -65,8 +75,13 @@ namespace Beatmap_Help_Tool.Utils
                     {
                         pairs[entry.Key] = entry.Value;
                     }
+                    foreach (string key in pendingRemovePairs)
+                    {
+                        pairs.Remove(key);
+                    }
                 }
                 pendingPairs.Clear();
+                pendingRemovePairs.Clear();
                 ThreadUtils.executeOnBackground(new Action(() =>
                 {
                     string saveText;

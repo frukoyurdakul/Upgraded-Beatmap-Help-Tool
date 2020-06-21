@@ -21,7 +21,14 @@ namespace Beatmap_Help_Tool.Views
         public new string Text
         {
             get => isPlaceHolder ? string.Empty : base.Text;
-            set => base.Text = value;
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    removePlaceHolder();
+                base.Text = value;
+                if (string.IsNullOrEmpty(value))
+                    setPlaceholder();
+            }
         }
 
         //when the control loses focus, the placeholder is shown

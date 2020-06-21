@@ -1,5 +1,7 @@
 ﻿using Beatmap_Help_Tool.BeatmapTools;
+using Beatmap_Help_Tool.SaveModel;
 using Beatmap_Help_Tool.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,6 +42,14 @@ namespace Beatmap_Help_Tool.Forms
                 // Ask for user's confirmation about the change and close the dialog
                 // if "Yes" or "No" is pressed. Cancel will return to this form instead.
                 VerifyUtils.performDefaultFormQuestion(this);
+                if (rememberCheckBox.Checked)
+                {
+                    new SvChangerModel(firstTimeTextBox.Text, lastTimeTextBox.Text,
+                        firstSvTextBox.Text, lastSvTextBox.Text, targetBpmTextBox.Text, gridSnapTextBox.Text,
+                        svOffsetTextBox.Text, increaseModeComboBox.SelectedIndex, lastTimeTextBox.Text,
+                        increaseMultiplierTextBox.Text, putPointsByNotesCheckBox.Checked,
+                        activateTimeModeCheckBox.Checked).saveToPreferences();
+                }
             }
         }
 
@@ -55,7 +65,7 @@ namespace Beatmap_Help_Tool.Forms
 
             // Check the necessary textboxes afterwards.
             VerifyUtils.verifyTextBoxes("You need to fill necessary fields.",
-                increaseMultiplierTextBox,
+                increaseModeComboBox.SelectedIndex != 0 ? increaseMultiplierTextBox : null,
                 firstTimeTextBox,
                 lastTimeTextBox,
                 firstSvTextBox,
@@ -63,9 +73,9 @@ namespace Beatmap_Help_Tool.Forms
 
             // Check if grid snap is entered if "Put points by note snaps"
             // is not enabled.
-            putPointsByNotesCheckBox.Checked || VerifyUtils.verifyTextBoxes(
+            (putPointsByNotesCheckBox.Checked || VerifyUtils.verifyTextBoxes(
                 "You need to fill the \"Grid Snap\" value if you don\'t check\n" +
-                "\"Put points by note snaps\" checkbox.");
+                "\"Put points by note snaps\" checkbox."));
 
             // If anything was wrong here, don't check the rest.
             if (!check)
@@ -120,6 +130,15 @@ namespace Beatmap_Help_Tool.Forms
                 return false;
             }
 
+            if (SvIncreaseMode != 0)
+            {
+                check = VerifyUtils.verifyRangeFromString("Sv increase multiplier text is wrong, value must be higher than 0.", increaseMultiplierTextBox.Text,
+                    0, int.MaxValue, out SvIncreaseMultiplier);
+
+                if (!check)
+                    return false;
+            }
+
             // If "Put points by notes" is not checked,
             // the grid snap value has to be defined.
             // Check that there.
@@ -156,14 +175,17 @@ namespace Beatmap_Help_Tool.Forms
         private void increaseModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (increaseModeComboBox.SelectedIndex == 0)
-            {
-                increaseMultiplierTextBox.Text = "1";
+            {                
+                increaseMultiplierTextBox.Text = "";
                 increaseMultiplierTextBox.Enabled = false;
+                Focus();
             }
             else
             {
-                increaseMultiplierTextBox.Text = "2";
                 increaseMultiplierTextBox.Enabled = true;
+                increaseMultiplierTextBox.Focus();
+                increaseMultiplierTextBox.Text = "2";
+                increaseMultiplierTextBox.SelectionStart = increaseMultiplierTextBox.Text.Length;
             }
             SvIncreaseMode = increaseModeComboBox.SelectedIndex;
         }
@@ -182,6 +204,42 @@ namespace Beatmap_Help_Tool.Forms
                 gridSnapTextBox.Enabled = true;
                 if (gridSnapTextBox.PlaceHolderText.Contains("(Optional) "))
                     gridSnapTextBox.PlaceHolderText = gridSnapTextBox.PlaceHolderText.Replace("(Optional) ", "");
+            }
+        }
+
+        private void activateTimeModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (activateTimeModeCheckBox.Checked)
+            {
+                copyTimeLabel.Text = "Copy last time:";
+                lastTimeTextBox.PlaceHolderText = "Copy the last point offset.";
+            }
+            else
+            {
+                copyTimeLabel.Text = "Count:";
+                lastTimeTextBox.PlaceHolderText = "Set how many inherited points you want.";
+            }
+        }
+
+        private void SvChanger_Load(object sender, EventArgs e)
+        {
+            SvChangerModel model = JsonConvert.DeserializeObject<SvChangerModel>(SharedPreferences.get<string>(SvChangerModel.KEY, null));
+            if (model != null)
+            {
+                firstTimeTextBox.Text = model.FirstOffsetText;
+                firstSvTextBox.Text = model.FirstSvText;
+                lastSvTextBox.Text = model.LastSvText;
+                increaseModeComboBox.SelectedIndex = model.SvIncreaseMode;
+                increaseMultiplierTextBox.Text = model.SvIncreaseMultiplierText;
+                targetBpmTextBox.Text = model.TargetBpmText;
+                gridSnapTextBox.Text = model.GridSnapText;
+                svOffsetTextBox.Text = model.SvOffsetText;
+                activateTimeModeCheckBox.Checked = model.ActivateBetweenTimeMode;
+                putPointsByNotesCheckBox.Checked = model.PutPointsByNotes;
+                if (model.ActivateBetweenTimeMode)
+                    lastTimeTextBox.Text = model.LastOffsetText;
+                else
+                    lastTimeTextBox.Text = model.CountText;
             }
         }
     }
