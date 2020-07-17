@@ -592,6 +592,24 @@ namespace Beatmap_Help_Tool
                 }));
             }
         }
+
+        private void snapGreenToRedPointsButton_Click(object sender, EventArgs e)
+        {
+            using (TimingRegionSelector selector = new TimingRegionSelector((sender as Control).Text))
+            {
+                if (selector.ShowDialog() == DialogResult.OK)
+                {
+                    ThreadUtils.executeOnBackground(new Action(() =>
+                    {
+                        InheritedPointUtils.SnapInheritedPointsOnClosestTimingPoints(this, beatmap,
+                            selector.FirstOffset, selector.LastOffset);
+                        showMessageAndSaveBeatmap("Snapped the inherited points in the region to the closest timing points.",
+                            "Snapped the inherited points in the region to the closest timing points.",
+                            "Snapped green points to red points");
+                    }));
+                }
+            }
+        }
         #endregion
     }
 }

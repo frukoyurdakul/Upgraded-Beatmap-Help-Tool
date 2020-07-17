@@ -288,6 +288,38 @@ namespace Beatmap_Help_Tool.BeatmapTools
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
+            out List<TimingPoint> points)
+        {
+            List<TimingPoint> pointsInternal = new List<TimingPoint>();
+
+            SortBeatmapElements(beatmap.TimingPoints);
+
+            foreach (TimingPoint element in beatmap.TimingPoints)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    pointsInternal.Add(element);
+            }
+
+            points = pointsInternal;
+        }
+
+        public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
+            out List<HitObject> objects)
+        {
+            List<HitObject> objectsInternal = new List<HitObject>();
+
+            SortBeatmapElements(beatmap.HitObjects);
+
+            foreach (HitObject element in beatmap.HitObjects)
+            {
+                if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
+                    objectsInternal.Add(element);
+            }
+
+            objects = objectsInternal;
+        }
+
+        public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<TimingPoint> points, out List<HitObject> objects)
         {
             List<TimingPoint> pointsInternal = new List<TimingPoint>();

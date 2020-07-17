@@ -44,7 +44,7 @@ namespace Beatmap_Help_Tool
             this.panel13 = new System.Windows.Forms.Panel();
             this.button4 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.button3 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.snapGreenToRedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel11 = new System.Windows.Forms.Panel();
             this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel10 = new System.Windows.Forms.Panel();
@@ -326,7 +326,7 @@ namespace Beatmap_Help_Tool
             // panel12
             // 
             this.panel12.AutoSize = true;
-            this.panel12.Controls.Add(this.button3);
+            this.panel12.Controls.Add(this.snapGreenToRedPointsButton);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 64);
             this.panel12.Name = "panel12";
@@ -334,19 +334,21 @@ namespace Beatmap_Help_Tool
             this.panel12.Size = new System.Drawing.Size(372, 37);
             this.panel12.TabIndex = 8;
             // 
-            // button3
+            // snapGreenToRedPointsButton
             // 
-            this.button3.AutoSize = true;
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button3.Location = new System.Drawing.Point(0, 10);
-            this.button3.Margin = new System.Windows.Forms.Padding(0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(372, 27);
-            this.button3.TabIndex = 3;
-            this.button3.TabStop = false;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.snapGreenToRedPointsButton.AutoSize = true;
+            this.snapGreenToRedPointsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.snapGreenToRedPointsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.snapGreenToRedPointsButton.Location = new System.Drawing.Point(0, 10);
+            this.snapGreenToRedPointsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.snapGreenToRedPointsButton.Name = "snapGreenToRedPointsButton";
+            this.snapGreenToRedPointsButton.Size = new System.Drawing.Size(372, 27);
+            this.snapGreenToRedPointsButton.TabIndex = 3;
+            this.snapGreenToRedPointsButton.TabStop = false;
+            this.snapGreenToRedPointsButton.Text = "Snap green points onto red points in a specific region";
+            this.toolTip1.SetToolTip(this.snapGreenToRedPointsButton, resources.GetString("snapGreenToRedPointsButton.ToolTip"));
+            this.snapGreenToRedPointsButton.UseVisualStyleBackColor = true;
+            this.snapGreenToRedPointsButton.Click += new System.EventHandler(this.snapGreenToRedPointsButton_Click);
             // 
             // panel11
             // 
@@ -1761,7 +1763,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel13;
         private MultilineButton button4;
         private System.Windows.Forms.Panel panel12;
-        private MultilineButton button3;
+        private MultilineButton snapGreenToRedPointsButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;

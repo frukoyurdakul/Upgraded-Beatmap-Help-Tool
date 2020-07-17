@@ -95,6 +95,12 @@
     <Compile Include="Forms\SvChanger.Designer.cs">
       <DependentUpon>SvChanger.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TimingRegionSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TimingRegionSelector.Designer.cs">
+      <DependentUpon>TimingRegionSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SvChanger.resx">
       <DependentUpon>SvChanger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TimingRegionSelector.resx">
+      <DependentUpon>TimingRegionSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -262,6 +262,30 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return true;
         }
 
+        public static void SnapInheritedPointsOnClosestTimingPoints(Form form, Beatmap beatmap,
+            double firstOffset, double lastOffset)
+        {
+            SearchUtils.GetObjectsInBetween(beatmap, firstOffset, lastOffset,
+                out List<TimingPoint> points);
+
+            foreach (TimingPoint point in points)
+            {
+                if (point.IsInherited)
+                {
+                    TimingPoint closestPreviousPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, point.Offset);
+                    TimingPoint closestNextPoint = SearchUtils.GetClosestNextTimingPoint(beatmap.TimingPoints, point);
+
+                    double closestPreviousPointOffset = closestPreviousPoint != null ? closestPreviousPoint.Offset : 0;
+                    double closestNextPointOffset = closestNextPoint != null ? closestNextPoint.Offset : 0;
+
+                    if (point.Offset - closestPreviousPointOffset < closestNextPointOffset - point.Offset)
+                        point.Offset = closestPreviousPointOffset;
+                    else
+                        point.Offset = closestNextPointOffset;
+                }
+            }
+        }
+
         private static void showErrorMessageInMainThread(Form form, string message)
         {
             form.Invoke(new Action(() =>
