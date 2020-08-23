@@ -51,6 +51,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTK, Version=3.2.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTK.3.2\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -105,6 +108,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveModel\SvChangerModel.cs" />
+    <Compile Include="TaikoPlayer\Keys\KeyboardKey.cs" />
+    <Compile Include="TaikoPlayer\Keys\KeyCombination.cs" />
+    <Compile Include="TaikoPlayer\Keys\KeyHandler.cs" />
+    <Compile Include="TaikoPlayer\Keys\SingleKey.cs" />
+    <Compile Include="TaikoPlayer\Keys\KeyProcessor.cs" />
+    <Compile Include="TaikoPlayer\ShaderProcessor\Shader.cs" />
+    <Compile Include="TaikoPlayer\TaikoPlayerWindow.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />
@@ -142,6 +152,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
@@ -156,6 +167,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Utils\ParseUtils.cs" />
+    <None Include="TaikoPlayer\Shaders\shader.frag" />
+    <None Include="TaikoPlayer\Shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

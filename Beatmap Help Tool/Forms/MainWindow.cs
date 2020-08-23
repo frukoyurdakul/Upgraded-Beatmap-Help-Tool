@@ -2,6 +2,7 @@
 using Beatmap_Help_Tool.BeatmapTools;
 using Beatmap_Help_Tool.Forms;
 using Beatmap_Help_Tool.Properties;
+using Beatmap_Help_Tool.TaikoPlayer;
 using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -608,6 +609,14 @@ namespace Beatmap_Help_Tool
                             "Snapped green points to red points");
                     }));
                 }
+            }
+        }
+
+        private void playTaikoDiffsButton_Click(object sender, EventArgs e)
+        {
+            using (TaikoPlayerWindow window = new TaikoPlayerWindow())
+            {
+                window.Run(60.0);
             }
         }
         #endregion

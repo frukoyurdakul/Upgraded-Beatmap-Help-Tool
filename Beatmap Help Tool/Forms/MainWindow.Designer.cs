@@ -33,7 +33,7 @@ namespace Beatmap_Help_Tool
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.generalFunctionsPage = new System.Windows.Forms.TabPage();
@@ -42,7 +42,7 @@ namespace Beatmap_Help_Tool
             this.panel14 = new System.Windows.Forms.Panel();
             this.button5 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.button4 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.playTaikoDiffsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel12 = new System.Windows.Forms.Panel();
             this.snapGreenToRedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -301,7 +301,7 @@ namespace Beatmap_Help_Tool
             // panel13
             // 
             this.panel13.AutoSize = true;
-            this.panel13.Controls.Add(this.button4);
+            this.panel13.Controls.Add(this.playTaikoDiffsButton);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel13.Location = new System.Drawing.Point(0, 101);
             this.panel13.Name = "panel13";
@@ -309,19 +309,23 @@ namespace Beatmap_Help_Tool
             this.panel13.Size = new System.Drawing.Size(372, 37);
             this.panel13.TabIndex = 9;
             // 
-            // button4
+            // playTaikoDiffsButton
             // 
-            this.button4.AutoSize = true;
-            this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button4.Location = new System.Drawing.Point(0, 10);
-            this.button4.Margin = new System.Windows.Forms.Padding(0);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(372, 27);
-            this.button4.TabIndex = 3;
-            this.button4.TabStop = false;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.playTaikoDiffsButton.AutoSize = true;
+            this.playTaikoDiffsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.playTaikoDiffsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.playTaikoDiffsButton.Location = new System.Drawing.Point(0, 10);
+            this.playTaikoDiffsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.playTaikoDiffsButton.Name = "playTaikoDiffsButton";
+            this.playTaikoDiffsButton.Size = new System.Drawing.Size(372, 27);
+            this.playTaikoDiffsButton.TabIndex = 3;
+            this.playTaikoDiffsButton.TabStop = false;
+            this.playTaikoDiffsButton.Text = "Play taiko diffs simultaneously";
+            this.toolTip1.SetToolTip(this.playTaikoDiffsButton, "Opens a window where you can view every diff\r\nsimultaneously while the music is p" +
+        "laying.\r\nCurrently it\'s really primitive but will be improved\r\nas I find the mot" +
+        "ivation.");
+            this.playTaikoDiffsButton.UseVisualStyleBackColor = true;
+            this.playTaikoDiffsButton.Click += new System.EventHandler(this.playTaikoDiffsButton_Click);
             // 
             // panel12
             // 
@@ -1469,14 +1473,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,
@@ -1761,7 +1765,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel14;
         private MultilineButton button5;
         private System.Windows.Forms.Panel panel13;
-        private MultilineButton button4;
+        private MultilineButton playTaikoDiffsButton;
         private System.Windows.Forms.Panel panel12;
         private MultilineButton snapGreenToRedPointsButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
