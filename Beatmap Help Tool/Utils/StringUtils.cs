@@ -1,4 +1,8 @@
-﻿namespace Beatmap_Help_Tool.Utils
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace Beatmap_Help_Tool.Utils
 {
     public static class StringUtils
     {
@@ -33,6 +37,58 @@
                     count++;
             }
             return count;
+        }
+
+        public static void AppendText(this RichTextBox box, string text, Color color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = color;
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+        }
+
+        public static void AppendTextToRichTextBox(this RichTextBox box, string text, int color)
+        {
+            box.SelectionStart = box.TextLength;
+            box.SelectionLength = 0;
+
+            box.SelectionColor = Color.FromArgb(color);
+            box.AppendText(text);
+            box.SelectionColor = box.ForeColor;
+        }
+
+        public static string GetDisplayOffset(double offset)
+        {
+            TimeSpan t = TimeSpan.FromMilliseconds(offset);
+            if (t.Hours > 0)
+            {
+                return offset.ToString() + " (" + string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D3}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds) + ")";
+            }
+            else
+            {
+                return offset.ToString() + " (" + string.Format("{0:D2}:{1:D2}:{2:D3}", t.Minutes, t.Seconds, t.Milliseconds) + ")";
+            }
+        }
+
+        public static string GetSimpleDisplayOffset(double offset)
+        {
+            TimeSpan t = TimeSpan.FromMilliseconds(offset);
+            if (t.Hours > 0)
+            {
+                return string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D3}", t.Hours, t.Minutes, t.Seconds, t.Milliseconds);
+            }
+            else
+            {
+                return string.Format("{0:D2}:{1:D2}:{2:D3}", t.Minutes, t.Seconds, t.Milliseconds);
+            }
+        }
+
+        public static string GetOffsetWithLink(double offset)
+        {
+            string displayOffset = GetSimpleDisplayOffset(offset);
+            return "<a href=\"osu://edit/" + displayOffset + "\">" + displayOffset + "</a>";
         }
     }
 }

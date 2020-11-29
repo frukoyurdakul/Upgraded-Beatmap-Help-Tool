@@ -37,8 +37,8 @@ namespace Beatmap_Help_Tool.Views
             if (string.IsNullOrEmpty(base.Text))
             {
                 base.Text = PlaceHolderText;
-                this.ForeColor = Color.Gray;
-                this.Font = new Font(this.Font, FontStyle.Italic);
+                ForeColor = Color.Gray;
+                Font = new Font(Font, FontStyle.Italic);
                 isPlaceHolder = true;
             }
         }
@@ -46,12 +46,11 @@ namespace Beatmap_Help_Tool.Views
         //when the control is focused, the placeholder is removed
         private void removePlaceHolder()
         {
-
             if (isPlaceHolder)
             {
                 base.Text = "";
-                this.ForeColor = System.Drawing.SystemColors.WindowText;
-                this.Font = new Font(this.Font, FontStyle.Regular);
+                ForeColor = SystemColors.WindowText;
+                Font = new Font(Font, FontStyle.Regular);
                 isPlaceHolder = false;
             }
         }

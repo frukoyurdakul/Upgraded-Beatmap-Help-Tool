@@ -111,6 +111,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private const int DISPLAY_MODE_INHERITED_ONLY = 2;
 
         // File path. Required to write over the file again.
+        public string FolderPath { get; internal set; }
         public string FilePath { get; internal set; }
         public string FileName { get; internal set; }
 
@@ -145,7 +146,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public string Artist { get; set; }
         public string ArtistUnicode { get; set; }
         public string Creator { get; set; }
-        public string Version { get; set; }
+        public string DifficultyName { get; set; }
         public string Source { get; set; }
         public string Tags { get; set; }
         public int BeatmapID { get; set; }
@@ -172,12 +173,18 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // Hit objects
         public List<HitObject> HitObjects = new List<HitObject>();
 
+        public Beatmap(string beatmapPath) : this(beatmapPath, true)
+        {
+            
+        }
+
         // The main constructor. Reads the file and parses every line.
-        public Beatmap(string beatmapPath)
+        public Beatmap(string beatmapPath, bool addFirstState)
         {
             // Set the beatmap path.
             FilePath = beatmapPath;
             FileName = Path.GetFileName(beatmapPath);
+            FolderPath = Path.GetDirectoryName(beatmapPath);
 
             // Read the file content (always extract the empty lines)
             List<string> lines = File.ReadAllLines(beatmapPath).ToList();
@@ -282,7 +289,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     return;
                 }
             }
-            addSavedState("First load", this);
+            if (addFirstState)
+                addSavedState("First load", this);
         }
 
         private Beatmap()
@@ -315,6 +323,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             FileFormat = source.FileFormat;
             FileName = source.FileName;
             FilePath = source.FilePath;
+            FolderPath = source.FolderPath;
             GridSize = source.GridSize;
             HPDrainRate = source.HPDrainRate;
             LetterboxInBreaks = source.LetterboxInBreaks;
@@ -329,7 +338,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             TimelineZoom = source.TimelineZoom;
             Title = source.Title;
             TitleUnicode = source.TitleUnicode;
-            Version = source.Version;
+            DifficultyName = source.DifficultyName;
             WidescreenStoryboard = source.WidescreenStoryboard;
 
             List<TimingPoint> sourceTimingPoints = source.TimingPoints;
@@ -415,7 +424,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                     Creator = value;
                     break;
                 case "Version":
-                    Version = value;
+                    DifficultyName = value;
                     break;
                 case "Source":
                     Source = value;
@@ -454,7 +463,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // Necessary since metadata can also be changed from this app.
         private string generateFileName()
         {
-            return ArtistUnicode + " - " + TitleUnicode + " (" + Creator + ") [" + Version + "].osu";
+            return ArtistUnicode + " - " + TitleUnicode + " (" + Creator + ") [" + DifficultyName + "].osu";
         }
 
         // Shows inherited points only.
@@ -550,7 +559,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 writer.WriteLine("Artist:" + Artist);
                 writer.WriteLine("ArtistUnicode:" + ArtistUnicode);
                 writer.WriteLine("Creator:" + Creator);
-                writer.WriteLine("Version:" + Version);
+                writer.WriteLine("Version:" + DifficultyName);
                 writer.WriteLine("Source:" + Source);
                 writer.WriteLine("Tags:" + Tags);
                 writer.WriteLine("BeatmapID:" + BeatmapID);

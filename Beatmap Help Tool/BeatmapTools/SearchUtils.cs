@@ -444,6 +444,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // Check if the searched offset is actually bigger than the last point.
             if (offset >= points[points.Count - 1].Offset)
                 return points.Count - 1;
+            // Also check if the searched offset is actually smaller than the first point.
+            else if (offset <= points[0].Offset)
+                return 0;
 
             // If not, start the binary search. Totally copied from StackOverflow.
             int first = 0;

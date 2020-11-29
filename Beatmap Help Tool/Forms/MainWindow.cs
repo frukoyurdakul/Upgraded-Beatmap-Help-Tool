@@ -1,6 +1,7 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.BeatmapTools;
 using Beatmap_Help_Tool.Forms;
+using Beatmap_Help_Tool.Models;
 using Beatmap_Help_Tool.Properties;
 using Beatmap_Help_Tool.TaikoPlayer;
 using Beatmap_Help_Tool.Utils;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WindowsInput;
@@ -614,11 +616,274 @@ namespace Beatmap_Help_Tool
 
         private void playTaikoDiffsButton_Click(object sender, EventArgs e)
         {
-            using (TaikoPlayerWindow window = new TaikoPlayerWindow())
+            /*using (TaikoPlayerWindow window = new TaikoPlayerWindow())
             {
                 window.Run(60.0);
-            }
+            }*/
+            MessageBoxUtils.show("This function is under development.");
         }
         #endregion
+
+        private void timingInconsistenciesButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    // Fetch all .osu files using the root folder path,
+                    // including the current open one.
+                    string folderPath = beatmap.FolderPath;
+                    List<Beatmap> beatmapList = new List<Beatmap>();
+                    foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+                        beatmapList.Add(new Beatmap(file, false));
+
+                    if (beatmapList.Count == 1)
+                    {
+                        MessageBoxUtils.showError("This beatmapset only contains 1 beatmap. Aborting.");
+                        return;
+                    }
+
+                    // Create the line list with colors. We need to display it in a text form
+                    // in WebBrowser.
+                    StringBuilder builder = new StringBuilder();
+
+                    builder.Append("<!DOCTYPE html><html><head><style>p{margin:1px},p.warning{margin:1px;color:#e53935}</style></head><body>");
+
+                    // Then, start checking for timing and inherited points.
+
+                    // First, check total of red points in all diffs. If they are inconsistent,
+                    // it means the timing is wrong anyway. We should dump those first.
+                    Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
+                    foreach (Beatmap beatmap in beatmapList)
+                        timingPointsPerBeatmap.Add(beatmap, beatmap.TimingPoints.FindAll(target => !target.IsInherited));
+
+                    // Now that we have all the timing points, check sizes first. If sizes are not equal, we should
+                    // dump the timing point states by eliminating the differences.
+
+                    // Get the elements as list. Order is not important.
+                    List<List<TimingPoint>> allPoints = timingPointsPerBeatmap.Values.ToList();
+
+                    // Now, we need to print inconsistent timing points. If the 
+                    // specified offset exists in the point, we print it with black color.
+                    // Otherwise, we print it with red color.
+                    const string redColor = "#e53935";
+                    string newLine = Environment.NewLine;
+
+                    // First, add all timestamps of points into a sorted set. Then, 
+                    // we will query the point per list and determine whether it exists
+                    // on one beatmap and not on other.
+                    SortedSet<double> pointPositions = new SortedSet<double>();
+                    for (int j = 0; j < allPoints.Count; j++)
+                    {
+                        for (int k = 0; k < allPoints[j].Count; k++)
+                        {
+                            pointPositions.Add(allPoints[j][k].Offset);
+                        }
+                    }
+
+                    bool inconsistentCountFound = false;
+                    for (int i = 0; i < allPoints.Count - 1; i++)
+                    {
+                        // To skip the ones we already checked, apply this logic.
+                        if (i != 0 && i < allPoints.Count - 2)
+                            i++;
+
+                        List<TimingPoint> first = allPoints[i];
+                        List<TimingPoint> second = allPoints[i + 1];
+
+                        // Check all positions exist in point positions list in both of the lists.
+                        bool firstMatchesAll = first.TrueForAll(target => pointPositions.Contains(target.Offset));
+                        bool secondMatchesAll = first.TrueForAll(target => pointPositions.Contains(target.Offset));
+
+                        if (!inconsistentCountFound && (first.Count != second.Count || !firstMatchesAll || !secondMatchesAll))
+                        {
+                            // We already have a difference. Record which timing points exist and which do not.
+                            // For this occasion, the format is like:
+                            /*
+                             * Uninherited point inconsistency found across all difficulties.
+                             * 
+                             * Easy:
+                             * 00:00:000 - exists.
+                             * 00:01:000 - exists.
+                             * 
+                             * Medium:
+                             * 00:00:000 - exists.
+                             * 00:01:000 - does not exist.
+                             */
+
+                            // Start printing inconsistent timing points.
+                            builder.Append("<p>Uninherited point count inconsistency found across all difficulties.</p>");
+                            builder.Append("</br>");
+                            
+                            foreach(KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
+                            {
+                                builder.Append("<p>").Append(pair.Key.DifficultyName).Append(":</p>");
+
+                                // Check every position.
+                                foreach (double position in pointPositions)
+                                {
+                                    // Print the text with proper HTML formatting.
+                                    bool exists = pair.Value.Find(target => target.Offset == position) != null;
+                                    if (exists)
+                                        builder.Append("<p>")
+                                            .Append(StringUtils.GetOffsetWithLink(position))
+                                            .Append(" - exists.")
+                                            .Append("</p>");
+                                    else
+                                        builder.Append("<p class=\"warning")
+                                            .Append("\">")
+                                            .Append(StringUtils.GetOffsetWithLink(position))
+                                            .Append(" - does not exist.")
+                                            .Append("</p>");
+                                }
+                            }
+
+                            // Since we will print an output to the entire of the list here, we do not need to check
+                            // this occasion once we find an inconsistency.
+                            inconsistentCountFound = true;
+                        }
+                    }
+
+                    // If we have found inconsistent timing points, just return.
+                    // That problem is more important anyway.
+                    if (inconsistentCountFound)
+                    {
+                        builder.Append("</body></html>");
+                        Invoke(new Action(() =>
+                        {
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(builder.ToString()))
+                            {
+                                builder.Clear();
+                                form.ShowDialog();
+                                form.Dispose();
+                            }
+                        }));
+                        return;
+                    }
+
+                    // The check above basically ensures that there are points within all offsets anyway,
+                    // so directly check omitted and non-omitted barlines.
+                    // This should give insight as to which ones are inconsistent in which diffs.
+                    bool inconsistencyFound = false;
+                    for (int i = 0; i < allPoints.Count - 1; i++)
+                    {
+                        // To skip the ones we already checked, apply this logic.
+                        if (i != 0 && i < allPoints.Count - 2)
+                            i++;
+
+                        List<TimingPoint> first = allPoints[i];
+                        List<TimingPoint> second = allPoints[i + 1];
+
+                        // Assuming the sizes are the same, cross-reference each index
+                        // with their equal omit values.
+
+                        // First, check if we added the title for this occasion.
+                        bool isOmitTitleAdded = false;
+
+                        // Allocate an array of beatmapset count, hold the values temporarily
+                        // and find the difference per object.
+                        bool[] omitStatus = new bool[timingPointsPerBeatmap.Count];
+                        for (int j = 0; j < first.Count; j++)
+                        {
+                            TimingPoint firstElement = first[j];
+                            TimingPoint secondElement = second[j];
+
+                            if (firstElement.IsOmitted != secondElement.IsOmitted)
+                            {
+                                // Well, we found a mismatched omitted barline.
+                                // Now we should print the differences.
+                                inconsistencyFound = true;
+
+                                if (!isOmitTitleAdded)
+                                {
+                                    builder.Append("<p>Omitted barline inconsistencies found on red points.<p></br>");
+                                    isOmitTitleAdded = true;
+                                }
+
+                                // Work per list item position, a.k.a single offset per beatmap.
+                                for (int pos = 0; pos < first.Count; pos++)
+                                {
+                                    int mapIndex = 0;
+                                    foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
+                                    {
+                                        omitStatus[mapIndex++] = pair.Value[pos].IsOmitted;
+                                    }
+
+                                    int omitStatusTrue = 0;
+                                    int omitStatusFalse = 0;
+                                    foreach (bool val in omitStatus)
+                                    {
+                                        if (val)
+                                            omitStatusTrue++;
+                                        else
+                                            omitStatusFalse++;
+                                    }
+
+                                    // Find the default omit status.
+                                    bool omitStatusDefault = omitStatusTrue >= omitStatusFalse;
+                                    
+                                    // Reset the omit status to re-use.
+                                    for (int k = 0; k < omitStatus.Length; k++) omitStatus[k] = false;
+
+                                    // Now that we know the default omit and not omit states, print the different ones.
+                                    // If we find a value that is different from others, we will print it.
+
+                                    // Check if there is a different one. Technically if both are non-zero, there should be an inconsistent one.
+                                    if (omitStatusTrue != 0 && omitStatusFalse != 0)
+                                    {
+                                        builder.Append("<p>Omit status for uninherited point at ").Append(StringUtils.GetOffsetWithLink(first[pos].Offset)).Append("</p>");
+                                        foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
+                                        {
+                                            Beatmap beatmap = pair.Key;
+                                            List<TimingPoint> points = pair.Value;
+                                            if (pair.Value[pos].IsOmitted != omitStatusDefault)
+                                                builder.Append("<p class=\"warning")
+                                                    .Append("\">")
+                                                    .Append(pair.Key.DifficultyName)
+                                                    .Append(": ")
+                                                    .Append(points[pos].IsOmitted ? "Omitted" : "Not omitted")
+                                                    .Append("</p>");
+                                            else
+                                                builder.Append("<p>")
+                                                    .Append(pair.Key.DifficultyName)
+                                                    .Append(": ")
+                                                    .Append(points[pos].IsOmitted ? "Omitted" : "Not omitted")
+                                                    .Append("</p>");
+                                        }
+                                        builder.Append("</br>");
+                                    }
+                                }
+
+                                // At this point, we are basically done. Exit from the loop.
+                                break;
+                            }
+                        }
+                    }
+
+                    // If we have found an inconsistency, we should open up a new window and show it.
+                    // Otherwise we need to show a success message box.
+                    if (inconsistencyFound)
+                    {
+                        builder.Append("</body></html>");
+                        Invoke(new Action(() =>
+                        {
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(builder.ToString()))
+                            {
+                                builder.Clear();
+                                form.ShowDialog();
+                                form.Dispose();
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            MessageBoxUtils.show("No inconsistencies found in red points on this mapset.");
+                        }));
+                    }
+                }));
+            }
+        }
     }
 }

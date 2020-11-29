@@ -223,7 +223,8 @@ namespace Beatmap_Help_Tool.Forms
 
         private void SvChanger_Load(object sender, EventArgs e)
         {
-            SvChangerModel model = JsonConvert.DeserializeObject<SvChangerModel>(SharedPreferences.get<string>(SvChangerModel.KEY, null));
+            string savedModel = SharedPreferences.get<string>(SvChangerModel.KEY, null);
+            SvChangerModel model = savedModel != null ? JsonConvert.DeserializeObject<SvChangerModel>(savedModel) : null;
             if (model != null)
             {
                 firstTimeTextBox.Text = model.FirstOffsetText;
