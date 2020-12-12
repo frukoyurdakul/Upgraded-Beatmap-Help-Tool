@@ -8,9 +8,11 @@ using Beatmap_Help_Tool.Utils;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -34,6 +36,8 @@ namespace Beatmap_Help_Tool
         {
             InitializeComponent();
             disableTabs();
+            if (LicenseManager.UsageMode != LicenseUsageMode.Designtime)
+                hideButtonsWithNoClickListeners(this);
         }
 
         // Activates double-buffering through the entire form.
@@ -45,6 +49,39 @@ namespace Beatmap_Help_Tool
                 cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
                 return cp;
             }
+        }
+
+        private void hideButtonsWithNoClickListeners(Control control)
+        {
+            foreach (Control child in control.Controls)
+            {
+                if (child is Button)
+                {
+                    if (!HasEventHandler(child, "EventClick"))
+                    {
+                        child.Hide();
+                        child.Parent.Hide();
+                    }
+                }
+                hideButtonsWithNoClickListeners(child);
+            }
+        }
+
+        private bool HasEventHandler(Control control, string eventName)
+        {
+            EventHandlerList events =
+                (EventHandlerList)
+                typeof(Component)
+                 .GetProperty("Events", BindingFlags.NonPublic | BindingFlags.Instance)
+                 .GetValue(control, null);
+
+            object key = typeof(Control)
+                .GetField(eventName, BindingFlags.NonPublic | BindingFlags.Static)
+                .GetValue(null);
+
+            Delegate handlers = events[key];
+
+            return handlers != null && handlers.GetInvocationList().Any();
         }
 
         #region Util functions

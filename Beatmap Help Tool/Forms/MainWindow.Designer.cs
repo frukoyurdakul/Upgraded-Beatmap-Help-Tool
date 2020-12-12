@@ -33,7 +33,7 @@ namespace Beatmap_Help_Tool
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.generalFunctionsPage = new System.Windows.Forms.TabPage();
@@ -533,7 +533,6 @@ namespace Beatmap_Help_Tool
             this.button36.Text = "button8";
             this.toolTip1.SetToolTip(this.button36, resources.GetString("button36.ToolTip"));
             this.button36.UseVisualStyleBackColor = true;
-            this.button36.Click += new System.EventHandler(this.flyingBarlinesButton_Click);
             // 
             // panel16
             // 
@@ -562,7 +561,6 @@ namespace Beatmap_Help_Tool
             this.toolTip1.SetToolTip(this.button37, "Loads the beatmap into the program if any\r\nmaps are open in the editor. If the sa" +
         "me map\r\nis open, it will be re-loaded.");
             this.button37.UseVisualStyleBackColor = true;
-            this.button37.Click += new System.EventHandler(this.loadCurrentBeatmapButton_Click);
             // 
             // panel15
             // 
@@ -589,7 +587,6 @@ namespace Beatmap_Help_Tool
             this.button35.Text = "button6";
             this.toolTip1.SetToolTip(this.button35, resources.GetString("button35.ToolTip"));
             this.button35.UseVisualStyleBackColor = true;
-            this.button35.Click += new System.EventHandler(this.checkDoubleBarlinesButton_Click);
             // 
             // svFunctionsPage
             // 
@@ -1675,14 +1672,14 @@ namespace Beatmap_Help_Tool
             this.mainDisplayView.AllowUserToResizeRows = false;
             this.mainDisplayView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.mainDisplayView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mainDisplayView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.mainDisplayView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mainDisplayView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.timeColumn,

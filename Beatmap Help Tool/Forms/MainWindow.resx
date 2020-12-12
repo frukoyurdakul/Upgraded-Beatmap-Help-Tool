@@ -120,32 +120,12 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="snapGreenToRedPointsButton.ToolTip" xml:space="preserve">
-    <value>If the green points are supposed to be snapped on 
-red points and they are not in the map, this function
-chooses the closest red point for the green point,
-and applies it to every green point in the selected
-region.</value>
-  </data>
-  <data name="flyingBarlinesButton.ToolTip" xml:space="preserve">
+  <data name="button36.ToolTip" xml:space="preserve">
     <value>Detects the flying barlines due to rounding
 errors and shows them in a display if any
 of them are detected. A flying barline
 occasionally occurs if there is a SV change
 on a barline with rounding error on it.</value>
-  </data>
-  <data name="checkDoubleBarlinesButton.ToolTip" xml:space="preserve">
-    <value>This function checks the red points across the 
-mapset, by checking their count, rankable
-values (offset, meter, BPM) and also
-checks double barlines. If inconsistencies
-are detected, it will be shown in a separate
-window, otherwise it means this function
-did not detect anything regarding to its
-function.</value>
   </data>
   <metadata name="timeColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -162,12 +142,15 @@ function.</value>
   <metadata name="kiaiColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <data name="button36.ToolTip" xml:space="preserve">
-    <value>Detects the flying barlines due to rounding
-errors and shows them in a display if any
-of them are detected. A flying barline
-occasionally occurs if there is a SV change
-on a barline with rounding error on it.</value>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="snapGreenToRedPointsButton.ToolTip" xml:space="preserve">
+    <value>If the green points are supposed to be snapped on 
+red points and they are not in the map, this function
+chooses the closest red point for the green point,
+and applies it to every green point in the selected
+region.</value>
   </data>
   <data name="button35.ToolTip" xml:space="preserve">
     <value>This function checks the red points across the 
@@ -187,5 +170,22 @@ probably override them.
 
 You can put an offset to the points, where they can be added 
 before the note instead of on the note itself.</value>
+  </data>
+  <data name="flyingBarlinesButton.ToolTip" xml:space="preserve">
+    <value>Detects the flying barlines due to rounding
+errors and shows them in a display if any
+of them are detected. A flying barline
+occasionally occurs if there is a SV change
+on a barline with rounding error on it.</value>
+  </data>
+  <data name="checkDoubleBarlinesButton.ToolTip" xml:space="preserve">
+    <value>This function checks the red points across the 
+mapset, by checking their count, rankable
+values (offset, meter, BPM) and also
+checks double barlines. If inconsistencies
+are detected, it will be shown in a separate
+window, otherwise it means this function
+did not detect anything regarding to its
+function.</value>
   </data>
 </root>
