@@ -1319,12 +1319,6 @@ namespace Beatmap_Help_Tool
                                 // Get the offset as integer. The added lines are probably integers anyway.
                                 int offsetInt = (int) offset;
 
-                                if (offsetInt == 604841)
-                                {
-                                    int a = 0;
-                                    a++;
-                                }
-
                                 // Get the exact inherited point. It can be null.
                                 TimingPoint exactPoint = SearchUtils.GetExactInheritedPoint(beatmap.TimingPoints, offsetInt);
 
@@ -1337,7 +1331,10 @@ namespace Beatmap_Help_Tool
                                     if (closestPoint.Offset < offsetInt)
                                     {
                                         // We also have a point beforehand. This means we can check for SV changes.
-                                        if (exactPoint.PointValue != closestPoint.PointValue)
+                                        // The SVs apparently can get registered as -99.99999999999 for 1.00x SVs
+                                        // from the editor and also not get fixed for unknown reasons. Ignore the
+                                        // barline if the change is unnoticeably small.
+                                        if (Math.Abs(exactPoint.PointValue - closestPoint.PointValue) > 0.00000000001d)
                                         {
                                             // The values are different. The SV is not applied to this barline. We need to add it.
                                             if (!isFlyingBarlineTitleWritten)
