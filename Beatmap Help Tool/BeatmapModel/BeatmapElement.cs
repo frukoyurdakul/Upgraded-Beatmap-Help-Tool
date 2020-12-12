@@ -1,4 +1,5 @@
 ﻿using Beatmap_Help_Tool.BeatmapTools;
+using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -50,6 +51,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 closestSnap = result[1];
                 requiresSnapDetection = false;
             }
+        }
+
+        public string GetOffsetWithLink()
+        {
+            return StringUtils.GetOffsetWithLink(offset);
         }
 
         public override string ToString()

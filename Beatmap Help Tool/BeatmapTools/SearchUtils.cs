@@ -1,5 +1,6 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.Utils;
+using System;
 using System.Collections.Generic;
 
 namespace Beatmap_Help_Tool.BeatmapTools
@@ -126,6 +127,11 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return VerifyUtils.safeGetItemFromList(points, GetExactPointIndex(points, offset, true));
         }
 
+        public static HitObject GetExactHitObject(List<HitObject> hitObjects, double offset)
+        {
+            return VerifyUtils.safeGetItemFromList(hitObjects, GetExactNoteIndex(hitObjects, offset));
+        }
+
         public static int GetExactPointIndex(List<TimingPoint> points, double offset, bool isInherited)
         {
             // Perform a direct binary search.
@@ -142,6 +148,28 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 else
                     last = mid - 1;
                 if (points[mid].Offset == offset)
+                    return mid;
+            } while (first <= last);
+
+            return -1;
+        }
+
+        public static int GetExactNoteIndex(List<HitObject> hitObjects, double offset)
+        {
+            // Perform a direct binary search.
+            SortBeatmapElements(hitObjects);
+
+            int first = 0;
+            int last = hitObjects.Count - 1;
+            int mid = 0;
+            do
+            {
+                mid = first + (last - first) / 2;
+                if (offset > hitObjects[mid].Offset)
+                    first = mid + 1;
+                else
+                    last = mid - 1;
+                if (hitObjects[mid].Offset == offset)
                     return mid;
             } while (first <= last);
 
@@ -465,6 +493,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // If we are here, it means there are no points with the exact offset.
             // Keep searching from the "last" index.
+            last = Math.Max(first, last);
             if (points[last].Offset > offset)
             {
                 for (int i = last; i >= 0; i--)
@@ -479,9 +508,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
             else
             {
-                // Otherwise, the "first" is already pointing the first object that is earlier
+                // Otherwise, the "mid" is already pointing the first object that is earlier
                 // than the offset we seek. Just return that.
-                return first;
+                return mid;
             }
         }
 

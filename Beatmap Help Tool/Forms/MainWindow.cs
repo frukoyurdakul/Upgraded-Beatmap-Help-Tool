@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WindowsInput;
+using static Beatmap_Help_Tool.Utils.HtmlUtils;
 
 namespace Beatmap_Help_Tool
 {
@@ -215,15 +216,7 @@ namespace Beatmap_Help_Tool
                     if (MessageBoxUtils.showQuestionYesNo("osu! Editor seems to be running, would you like to load the current beatmap?") ==
                         DialogResult.Yes)
                     {
-                        // Show the current process on the label and 
-                        // start searching for the file. It should be exactly
-                        // the same, otherwise it cannot be found.
-                        string beatmapFileName = getOsuBeatmapNameInEditor();
-                        string songsPath = getSongsPathFromProcess();
-                        runningProcessLabel.Visible = true;
-                        runningProcessLabel.Text = "Searching for " + beatmapFileName;
-                        ThreadUtils.executeOnBackground(new Action(() => 
-                            searchCurrentOpenBeatmap(beatmapFileName, songsPath)));
+                        loadCurrentOpenBeatmap();
                     }
                     else
                     {
@@ -231,6 +224,19 @@ namespace Beatmap_Help_Tool
                     }
                 }));
             }
+        }
+
+        private void loadCurrentOpenBeatmap()
+        {
+            // Show the current process on the label and 
+            // start searching for the file. It should be exactly
+            // the same, otherwise it cannot be found.
+            string beatmapFileName = getOsuBeatmapNameInEditor();
+            string songsPath = getSongsPathFromProcess();
+            runningProcessLabel.Visible = true;
+            runningProcessLabel.Text = "Searching for " + beatmapFileName;
+            ThreadUtils.executeOnBackground(new Action(() =>
+                searchCurrentOpenBeatmap(beatmapFileName, songsPath)));
         }
 
         private void searchCurrentOpenBeatmap(string beatmapFileName, string songsPath)
@@ -645,9 +651,7 @@ namespace Beatmap_Help_Tool
 
                     // Create the line list with colors. We need to display it in a text form
                     // in WebBrowser.
-                    StringBuilder builder = new StringBuilder();
-
-                    builder.Append("<!DOCTYPE html><html><head><style>p{margin:1px},p.warning{margin:1px;color:#e53935}</style></head><body>");
+                    HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
 
                     // Then, start checking for timing and inherited points.
 
@@ -666,8 +670,6 @@ namespace Beatmap_Help_Tool
                     // Now, we need to print inconsistent timing points. If the 
                     // specified offset exists in the point, we print it with black color.
                     // Otherwise, we print it with red color.
-                    const string redColor = "#e53935";
-                    string newLine = Environment.NewLine;
 
                     // First, add all timestamps of points into a sorted set. Then, 
                     // we will query the point per list and determine whether it exists
@@ -712,12 +714,11 @@ namespace Beatmap_Help_Tool
                              */
 
                             // Start printing inconsistent timing points.
-                            builder.Append("<p>Uninherited point count inconsistency found across all difficulties.</p>");
-                            builder.Append("</br>");
-                            
-                            foreach(KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
+                            htmlDisplayer.addLineWithBreak("Uninherited point count inconsistency found across all difficulties.");
+
+                            foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
                             {
-                                builder.Append("<p>").Append(pair.Key.DifficultyName).Append(":</p>");
+                                htmlDisplayer.addLine(pair.Key.DifficultyName);
 
                                 // Check every position.
                                 foreach (double position in pointPositions)
@@ -725,16 +726,9 @@ namespace Beatmap_Help_Tool
                                     // Print the text with proper HTML formatting.
                                     bool exists = pair.Value.Find(target => target.Offset == position) != null;
                                     if (exists)
-                                        builder.Append("<p>")
-                                            .Append(StringUtils.GetOffsetWithLink(position))
-                                            .Append(" - exists.")
-                                            .Append("</p>");
+                                        htmlDisplayer.addLine(StringUtils.GetOffsetWithLink(position) + " - exists.");
                                     else
-                                        builder.Append("<p class=\"warning")
-                                            .Append("\">")
-                                            .Append(StringUtils.GetOffsetWithLink(position))
-                                            .Append(" - does not exist.")
-                                            .Append("</p>");
+                                        htmlDisplayer.addLine(StringUtils.GetOffsetWithLink(position) + " - does not exist.");
                                 }
                             }
 
@@ -748,12 +742,11 @@ namespace Beatmap_Help_Tool
                     // That problem is more important anyway.
                     if (inconsistentCountFound)
                     {
-                        builder.Append("</body></html>");
                         Invoke(new Action(() =>
                         {
-                            using (InconsistencyResultForm form = new InconsistencyResultForm(builder.ToString()))
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
-                                builder.Clear();
+                                htmlDisplayer.recycle();
                                 form.ShowDialog();
                                 form.Dispose();
                             }
@@ -796,7 +789,7 @@ namespace Beatmap_Help_Tool
 
                                 if (!isOmitTitleAdded)
                                 {
-                                    builder.Append("<p>Omitted barline inconsistencies found on red points.<p></br>");
+                                    htmlDisplayer.addLineWithBreak("Omitted barline inconsistencies found on red points.");
                                     isOmitTitleAdded = true;
                                 }
 
@@ -831,26 +824,17 @@ namespace Beatmap_Help_Tool
                                     // Check if there is a different one. Technically if both are non-zero, there should be an inconsistent one.
                                     if (omitStatusTrue != 0 && omitStatusFalse != 0)
                                     {
-                                        builder.Append("<p>Omit status for uninherited point at ").Append(StringUtils.GetOffsetWithLink(first[pos].Offset)).Append("</p>");
+                                        htmlDisplayer.addLine("Omit status for uninherited point at " + StringUtils.GetOffsetWithLink(first[pos].Offset));
                                         foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
                                         {
                                             Beatmap beatmap = pair.Key;
                                             List<TimingPoint> points = pair.Value;
                                             if (pair.Value[pos].IsOmitted != omitStatusDefault)
-                                                builder.Append("<p class=\"warning")
-                                                    .Append("\">")
-                                                    .Append(pair.Key.DifficultyName)
-                                                    .Append(": ")
-                                                    .Append(points[pos].IsOmitted ? "Omitted" : "Not omitted")
-                                                    .Append("</p>");
+                                                htmlDisplayer.addWarning(pair.Key.DifficultyName + ": " + (points[pos].IsOmitted ? "Omitted" : "Not omitted"));
                                             else
-                                                builder.Append("<p>")
-                                                    .Append(pair.Key.DifficultyName)
-                                                    .Append(": ")
-                                                    .Append(points[pos].IsOmitted ? "Omitted" : "Not omitted")
-                                                    .Append("</p>");
+                                                htmlDisplayer.addLine(pair.Key.DifficultyName + ": " + (points[pos].IsOmitted ? "Omitted" : "Not omitted"));
                                         }
-                                        builder.Append("</br>");
+                                        htmlDisplayer.addLineBreak();
                                     }
                                 }
 
@@ -864,12 +848,11 @@ namespace Beatmap_Help_Tool
                     // Otherwise we need to show a success message box.
                     if (inconsistencyFound)
                     {
-                        builder.Append("</body></html>");
                         Invoke(new Action(() =>
                         {
-                            using (InconsistencyResultForm form = new InconsistencyResultForm(builder.ToString()))
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
-                                builder.Clear();
+                                htmlDisplayer.recycle();
                                 form.ShowDialog();
                                 form.Dispose();
                             }
@@ -884,6 +867,565 @@ namespace Beatmap_Help_Tool
                     }
                 }));
             }
+        }
+
+        private void checkDoubleBarlinesButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    // Fetch all .osu files using the root folder path,
+                    // including the current open one.
+                    string folderPath = beatmap.FolderPath;
+                    List<Beatmap> beatmapList = new List<Beatmap>();
+                    foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+                        beatmapList.Add(new Beatmap(file, false));
+
+                    // First, check total of red points in all diffs. If they are inconsistent,
+                    // it means the timing is wrong anyway. We should dump those first.
+                    Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
+                    foreach (Beatmap beatmap in beatmapList)
+                        timingPointsPerBeatmap.Add(beatmap, beatmap.TimingPoints.FindAll(target => !target.IsInherited));
+
+                    // Get the elements as list. Order is not important.
+                    List<List<TimingPoint>> allPoints = timingPointsPerBeatmap.Values.ToList();
+
+                    // Now that we have all the timing points, we can start checking for double barlines.
+                    // Target barlines will be found by starting from the first one, checking if they are omitted
+                    // or not, then add lines until the closest timing point changes. If there is only 1 line,
+                    // then the check will be skipped immediately.
+
+                    // Create a html displayer.
+                    HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
+
+                    // Create the list for barlines. Avoid doing this
+                    // in the foreach loop and use clear instead.
+                    List<double> barlines = new List<double>();
+
+                    // If any of them is calculated before, make this as true.
+                    bool isAnyCalculated = false;
+
+                    // If any of them is skipped before, make this as true.
+                    bool isAnySkipped = false;
+
+                    // If the inconsistencies have print, this becomes true. Write
+                    // the inconsistencies only once.
+                    bool isInconsistenciesWritten = false;
+
+                    // If we find any double barlines here, write them down.
+                    // This defines whether a title for double barlines has been
+                    // written down.
+                    bool isDoubleBarlineTitleWritten = false;
+
+                    foreach (List<TimingPoint> redPoints in allPoints)
+                    {
+                        bool isBeatmapDifficultyWritten = false;
+                        bool isFirstLineBreakAdded = false;
+                        if (redPoints.Count == 1)
+                        {
+                            isAnySkipped = true;
+                            if (isAnyCalculated)
+                            {
+                                // There is an inconsistency here. The red points are missing or excessive on
+                                // one of them. Find the differences here.
+                                if (!isInconsistenciesWritten)
+                                {
+                                    if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                        htmlDisplayer.addLineBreak();
+                                    isFirstLineBreakAdded = true;
+                                    TimingPointUtils.addInconsistentTimingPoints(htmlDisplayer, timingPointsPerBeatmap);
+                                    isInconsistenciesWritten = true;
+                                }
+                            }
+                            continue;
+                        }
+
+                        // Now that we know there are at least 2 timing points, get all the barline offsets
+                        // in a list. If any of them are close within each other less than 20 ms, then it is
+                        // considered as a double barline.
+
+                        // This adjusts the double barline value.
+                        const double closestBarlineGapMillis = 20d;
+
+                        // Clear the previous list.
+                        barlines.Clear();
+
+                        // Since these timing points are in order, use them in our advantage.
+                        TimingPoint point;
+
+                        for (int i = 0; i < redPoints.Count; i++)
+                        {
+                            point = redPoints[i];
+                            double nextOffset;
+                            if (i + 1 < redPoints.Count)
+                                nextOffset = redPoints[i + 1].Offset;
+                            else
+                            {
+                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
+                                nextOffset = objects[objects.Count - 1].Offset;
+                            }
+                            double currentOffset = point.Offset;
+                            double barlineValue = point.PointValue * point.Meter;
+
+                            // Starting from the first red point, add barlines.
+                            // Consider it as not omitted.
+                            if (!point.IsOmitted && nextOffset > currentOffset)
+                                barlines.Add(currentOffset);
+
+                            // Until the calculated offset is higher than 2nd point,
+                            // calculate it again and add the point.
+                            currentOffset += barlineValue;
+                            while (currentOffset < nextOffset)
+                            {
+                                barlines.Add(currentOffset);
+                                currentOffset += barlineValue;
+                            }
+                        }
+
+                        // At this point, we know all the barlines. Now, get
+                        // differences on all barlines after making the list distinct.
+                        //
+                        // The distinct process is a bit different: since the calculated
+                        // offsets are in double, there might be an integer offset
+                        // with the same double offset. So, if two of them are closer than
+                        // 1 millisecond, keep the integer one.
+                        for (int i = 0; i < barlines.Count - 1; i++)
+                        {
+                            // Keep the integer one if the next barline is 
+                            // a double but there is another exist in integer form,
+                            // which is probably from the 2nd point.
+                            double firstBarline = barlines[i];
+                            double secondBarline = barlines[i + 1];
+                            if (secondBarline - firstBarline < 1d)
+                                barlines.RemoveAt(i--);
+                            // Actual check for double barlines is here. We need to
+                            // determine whether the next point is too close (a.k.a 
+                            // value of closestBarlineGapMillis variable).
+                            else if (secondBarline - firstBarline <= closestBarlineGapMillis)
+                            {
+                                // Fetch the beatmap from the list we have.
+                                Beatmap key = timingPointsPerBeatmap.FirstOrDefault(pair => pair.Value == redPoints).Key;
+
+                                // If title is not written, then write it down.
+                                if (!isDoubleBarlineTitleWritten)
+                                {
+                                    if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                        htmlDisplayer.addLineBreak();
+                                    isFirstLineBreakAdded = true;
+                                    htmlDisplayer.addSection("Double barlines detected.");
+                                    isDoubleBarlineTitleWritten = true;
+                                }
+
+                                // Add the beatmap difficulty with a line break and add the warning text.
+                                if (!isBeatmapDifficultyWritten)
+                                {
+                                    if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                        htmlDisplayer.addLineBreak();
+                                    isFirstLineBreakAdded = true;
+                                    htmlDisplayer.addSubsection("Beatmap difficulty: " + key.DifficultyName);
+                                    isBeatmapDifficultyWritten = true;
+                                }
+                                if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                    htmlDisplayer.addLineBreak();
+                                isFirstLineBreakAdded = true;
+                                htmlDisplayer.addLine("At " + StringUtils.GetOffsetWithLink((double)firstBarline) + " and " + StringUtils.GetOffsetWithLink((double)secondBarline));
+                            }
+                        }
+
+                        isAnyCalculated = true;
+                        if (isAnySkipped)
+                        {
+                            // There is an inconsistency here. The red points are missing or excessive on
+                            // one of them. Find the differences here.
+                            if (!isInconsistenciesWritten)
+                            {
+                                TimingPointUtils.addInconsistentTimingPoints(htmlDisplayer, timingPointsPerBeatmap);
+                                isInconsistenciesWritten = true;
+                            }
+                        }
+                    }
+
+                    // At this point, either we have a window to display, or everything is correct
+                    // with this mapset. We can understand that if we have added any lines
+                    // to the html displayer.
+                    if (htmlDisplayer.containsElements())
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                            {
+                                htmlDisplayer.recycle();
+                                form.ShowDialog();
+                                form.Dispose();
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            MessageBoxUtils.show("No double barlines found in this mapset.");
+                        }));
+                    }
+                }));
+            }
+        }
+
+        private void loadCurrentBeatmapButton_Click(object sender, EventArgs e)
+        {
+            if (isAnyMapOpenInOsuEditor())
+                loadCurrentOpenBeatmap();
+        }
+
+        private void flyingBarlinesButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    // Fetch all .osu files using the root folder path,
+                    // including the current open one.
+                    string folderPath = beatmap.FolderPath;
+                    List<Beatmap> beatmapList = new List<Beatmap>();
+                    foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+                        beatmapList.Add(new Beatmap(file, false));
+
+                    // First, check total of red points in all diffs. If they are inconsistent,
+                    // it means the timing is wrong anyway. We should dump those first.
+                    Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
+                    foreach (Beatmap beatmap in beatmapList)
+                        timingPointsPerBeatmap.Add(beatmap, beatmap.TimingPoints.FindAll(target => !target.IsInherited));
+
+                    // Get the elements as list. Order is not important.
+                    List<List<TimingPoint>> allPoints = timingPointsPerBeatmap.Values.ToList();
+
+                    // Now that we have all the timing points, we can start checking for double barlines.
+                    // Target barlines will be found by starting from the first one, checking if they are omitted
+                    // or not, then add lines until the closest timing point changes. If there is only 1 line,
+                    // then the check will be skipped immediately.
+
+                    // Create a html displayer.
+                    HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
+
+                    // Create the list for barlines. Avoid doing this
+                    // in the foreach loop and use clear instead.
+                    List<decimal> barlines = new List<decimal>();
+
+                    // Also create a double version of the list above.
+                    // The flying barlines should be detected with this approach.
+                    List<double> barlinesDouble = new List<double>();
+
+                    // There should be a margin for this approach. And, that is,
+                    // to get the inherited point that is closest to the 1/36 snap.
+                    // If there is a point with the SV change, it might have been put
+                    // mistakenly. We should point those out as well.
+                    double snapDivisor = 36;
+
+                    // If any of them is calculated before, make this as true.
+                    bool isAnyCalculated = false;
+
+                    // If any of them is skipped before, make this as true.
+                    bool isAnySkipped = false;
+
+                    // If the inconsistencies have print, this becomes true. Write
+                    // the inconsistencies only once.
+                    bool isInconsistenciesWritten = false;
+
+                    // If we find any double barlines here, write them down.
+                    // This defines whether a title for double barlines has been
+                    // written down.
+                    bool isFlyingBarlineTitleWritten = false;
+
+                    // This is the core dictionary to add the elements if we ever find any.
+                    Dictionary<Beatmap, List<TimingPoint>> mistakenInheritedPointsDict = new Dictionary<Beatmap, List<TimingPoint>>();
+
+                    foreach (List<TimingPoint> redPoints in allPoints)
+                    {
+                        bool isBeatmapDifficultyWritten = false;
+                        bool isFirstLineBreakAdded = false;
+                        if (redPoints.Count == 1)
+                        {
+                            isAnySkipped = true;
+                            if (isAnyCalculated)
+                            {
+                                // There is an inconsistency here. The red points are missing or excessive on
+                                // one of them. Find the differences here.
+                                if (!isInconsistenciesWritten)
+                                {
+                                    if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                        htmlDisplayer.addLineBreak();
+                                    isFirstLineBreakAdded = true;
+                                    TimingPointUtils.addInconsistentTimingPoints(htmlDisplayer, timingPointsPerBeatmap);
+                                    isInconsistenciesWritten = true;
+                                }
+                            }
+                            continue;
+                        }
+
+                        // Now that we know there are at least 2 timing points, get all the barline offsets
+                        // in a list. If any of them are close within each other less than 20 ms, then it is
+                        // considered as a double barline.
+
+                        // Clear the previous lists.
+                        barlines.Clear();
+                        barlinesDouble.Clear();
+
+                        // Since these timing points are in order, use them in our advantage.
+                        TimingPoint point;
+
+                        // Calculate the barlines using decimal. The drawn
+                        // barlines are double, and the drawn ones in the
+                        // editor are calculated with decimal.
+                        for (int i = 0; i < redPoints.Count; i++)
+                        {
+                            point = redPoints[i];
+                            decimal nextOffset;
+                            if (i + 1 < redPoints.Count)
+                                nextOffset = (decimal)redPoints[i + 1].Offset;
+                            else
+                            {
+                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
+                                nextOffset = (decimal)objects[objects.Count - 1].Offset;
+                            }
+                            decimal currentOffset = (decimal)point.Offset;
+                            decimal barlineValue = (decimal)(point.PointValue * point.Meter);
+
+                            // Starting from the first red point, add barlines.
+                            // Consider it as not omitted.
+                            if (!point.IsOmitted && nextOffset > currentOffset)
+                                barlines.Add(currentOffset);
+
+                            // Until the calculated offset is higher than 2nd point,
+                            // calculate it again and add the point.
+                            currentOffset += barlineValue;
+                            while (currentOffset < nextOffset)
+                            {
+                                barlines.Add(currentOffset);
+                                currentOffset += barlineValue;
+                            }
+                        }
+
+                        // Now, calculate the same snappings and barlines using double
+                        // and calculate the rounding errors.
+                        for (int i = 0; i < redPoints.Count; i++)
+                        {
+                            point = redPoints[i];
+                            double nextOffset;
+                            if (i + 1 < redPoints.Count)
+                                nextOffset = redPoints[i + 1].Offset;
+                            else
+                            {
+                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
+                                nextOffset = objects[objects.Count - 1].Offset;
+                            }
+                            double currentOffset = point.Offset;
+                            double barlineValue = point.PointValue * point.Meter;
+
+                            // Starting from the first red point, add barlines.
+                            // Consider it as not omitted.
+                            if (!point.IsOmitted && nextOffset > currentOffset)
+                                barlinesDouble.Add(currentOffset);
+
+                            // Until the calculated offset is higher than 2nd point,
+                            // calculate it again and add the point.
+                            currentOffset += barlineValue;
+                            while (currentOffset < nextOffset)
+                            {
+                                barlinesDouble.Add(currentOffset);
+                                currentOffset += barlineValue;
+                            }
+                        }
+
+                        // After that, find the dangerous barlines. They are 
+                        // basically barlines which have rounding errors on them.
+                        // If there are 0, that means there can't be flying
+                        // barlines on this map.
+                        List<decimal> dangerousBarlines = new List<decimal>();
+                        for (int i = 0; i < barlines.Count; i++)
+                        {
+                            double barlineDouble = barlinesDouble[i];
+                            decimal barlineDecimal = barlines[i];
+
+                            if ((int)barlineDecimal > (int)barlineDouble)
+                                dangerousBarlines.Add(barlineDecimal);
+                        }
+
+                        if (dangerousBarlines.Count > 0)
+                        {
+                            // Now we know that there are dangerous barlines. Let's see
+                            // if any of them have SVs changed compared to the previous section
+                            // at the exact same spot.
+
+                            // This is the list for inherited points who are set
+                            // a bit further of the dangerous barlines, which might have
+                            // been put to change SV but failed to do so because
+                            // of the gap.
+                            List<TimingPoint> mistakenInheritedPoints = new List<TimingPoint>();
+
+                            // Fetch the beatmap.
+                            Beatmap beatmap = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key;
+
+                            foreach (double offset in dangerousBarlines)
+                            {
+                                // Get the offset as integer. The added lines are probably integers anyway.
+                                int offsetInt = (int) offset;
+
+                                if (offsetInt == 604841)
+                                {
+                                    int a = 0;
+                                    a++;
+                                }
+
+                                // Get the exact inherited point. It can be null.
+                                TimingPoint exactPoint = SearchUtils.GetExactInheritedPoint(beatmap.TimingPoints, offsetInt);
+
+                                // If the closest inherited point has the same offset, then it means we've found it.
+                                if (exactPoint != null && exactPoint.Offset == offsetInt)
+                                {
+                                    // Now, if it exists, find the previous one. We need to determine if there is a SV change here.
+                                    TimingPoint closestPoint = SearchUtils.GetClosestInheritedPoint(beatmap.TimingPoints, offsetInt - 1);
+
+                                    if (closestPoint.Offset < offsetInt)
+                                    {
+                                        // We also have a point beforehand. This means we can check for SV changes.
+                                        if (exactPoint.PointValue != closestPoint.PointValue)
+                                        {
+                                            // The values are different. The SV is not applied to this barline. We need to add it.
+                                            if (!isFlyingBarlineTitleWritten)
+                                            {
+                                                if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                                    htmlDisplayer.addLineBreak();
+                                                isFirstLineBreakAdded = true;
+                                                htmlDisplayer.addSection("Flying barlines detected.");
+                                                isFlyingBarlineTitleWritten = true;
+                                            }
+
+                                            if (!isBeatmapDifficultyWritten)
+                                            {
+                                                if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                                    htmlDisplayer.addLineBreak();
+                                                isFirstLineBreakAdded = true;
+                                                htmlDisplayer.addSubsection("Beatmap difficulty: " + beatmap.DifficultyName);
+                                                isBeatmapDifficultyWritten = true;
+                                            }
+
+                                            if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
+                                                htmlDisplayer.addLineBreak();
+                                            isFirstLineBreakAdded = true;
+                                            htmlDisplayer.addLine(StringUtils.GetOffsetWithLink(offsetInt));
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // I don't really know what this means yet. We may discover it at some point.
+                                        // Currently don't do anything.
+                                    }
+                                }
+                                else
+                                {
+                                    // If there is a inherited point with 1/24 snap margin to the right of this
+                                    // barline, find it and record it as a different section.
+
+                                    // Find the closest timing point.
+                                    TimingPoint closestTimingPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, offsetInt);
+
+                                    // Find the beat snap value and search an inherited point and timing point closest to it.
+                                    int offsetIntWithMargin = offsetInt + Convert.ToInt32(closestTimingPoint.PointValue / snapDivisor);
+
+                                    // Find the closest next point. If the point is different, then do not even bother checking the
+                                    // next inherited point.
+                                    TimingPoint closestNextTimingPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, offsetIntWithMargin);
+
+                                    // If the timing point above is not equal to the closest timing point, assign this as null.
+                                    // Otherwise, search for it and check for equality. If they are different, that means
+                                    // either the next point does not exist, or it does exist and does not affect the barline.
+                                    TimingPoint closestNextInheritedPoint = closestNextTimingPoint == closestTimingPoint
+                                        ? SearchUtils.GetClosestInheritedPoint(beatmap.TimingPoints, offsetIntWithMargin)
+                                        : null;
+
+                                    // If we have found a point within this margin, then add this to the list. We will add these points at the end of the
+                                    // html displayer.
+                                    if (closestNextInheritedPoint != null && VerifyUtils.verifyRange(offsetInt, offsetIntWithMargin, closestNextInheritedPoint.Offset))
+                                        mistakenInheritedPoints.Add(closestNextInheritedPoint);
+                                }
+                            }
+
+                            // If we reached here, it means we have finished checking the exact points,
+                            // but a the list of mistaken inherited points
+                            // may have been waiting for us to put and display on the html displayer.
+                            if (mistakenInheritedPoints.Count > 0)
+                                mistakenInheritedPointsDict.Add(beatmap, mistakenInheritedPoints);
+                        }
+                        else
+                        {
+                            // There can't be flying barlines on this map. Move onto the next
+                            // one if it exists.
+                        }
+                        isAnyCalculated = true;
+                        if (isAnySkipped)
+                        {
+                            // There is an inconsistency here. The red points are missing or excessive on
+                            // one of them. Find the differences here.
+                            if (!isInconsistenciesWritten)
+                            {
+                                TimingPointUtils.addInconsistentTimingPoints(htmlDisplayer, timingPointsPerBeatmap);
+                                isInconsistenciesWritten = true;
+                            }
+                        }
+                    }
+
+                    // Here, only one last remaining task exists, and that is to check
+                    // mistaken inherited points per beatmap. If they exist, then
+                    // we should add them into the html displayer.
+                    if (mistakenInheritedPointsDict.Count > 0)
+                    {
+                        if (htmlDisplayer.containsElements())
+                            htmlDisplayer.addLineBreak();
+
+                        htmlDisplayer.addSection("Mistaken inherited points detected. These might have been put intentionally, but they do not affect to the previous barline. Fix them if necessary.");
+
+                        foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in mistakenInheritedPointsDict)
+                        {
+                            Beatmap key = pair.Key;
+                            List<TimingPoint> values = pair.Value;
+
+                            htmlDisplayer.addSubsection("Beatmap difficulty: " + key.DifficultyName);
+                            foreach (TimingPoint point in values)
+                                htmlDisplayer.addLine(point.GetOffsetWithLink());
+                            htmlDisplayer.addLineBreak();
+                        }
+                    }
+
+                    // At this point, either we have a window to display, or everything is correct
+                    // with this mapset. We can understand that if we have added any lines
+                    // to the html displayer.
+                    if (htmlDisplayer.containsElements())
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                            {
+                                htmlDisplayer.recycle();
+                                form.ShowDialog();
+                                form.Dispose();
+                            }
+                        }));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            MessageBoxUtils.show("No flying barlines found in this mapset.");
+                        }));
+                    }
+                }));
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

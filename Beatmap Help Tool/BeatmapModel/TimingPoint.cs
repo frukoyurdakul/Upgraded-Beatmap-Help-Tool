@@ -2,6 +2,7 @@
 using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
+using static Beatmap_Help_Tool.Utils.HtmlUtils;
 
 namespace Beatmap_Help_Tool.BeatmapModel
 {
@@ -128,6 +129,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public bool getDisplayKiai()
         {
             return IsKiaiOpen;
+        }
+
+        public bool ContentEquals(TimingPoint other)
+        {
+            if (other == null)
+                return false;
+
+            return offset == other.offset
+                && PointValue == other.PointValue
+                && Meter == other.Meter
+                && IsInherited == other.IsInherited;
         }
 
         public override string GetSaveFormat()

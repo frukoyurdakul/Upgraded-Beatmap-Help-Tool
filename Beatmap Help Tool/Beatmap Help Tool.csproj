@@ -79,6 +79,7 @@
     <Compile Include="BeatmapTools\SearchUtils.cs" />
     <Compile Include="BeatmapTools\SnapUtils.cs" />
     <Compile Include="BeatmapTools\InheritedPointUtils.cs" />
+    <Compile Include="BeatmapTools\TimingPointUtils.cs" />
     <Compile Include="BeatmapTools\VerifyUtils.cs" />
     <Compile Include="Forms\InconsistencyResultForm.cs">
       <SubType>Form</SubType>
@@ -122,6 +123,7 @@
     <Compile Include="TaikoPlayer\Keys\KeyProcessor.cs" />
     <Compile Include="TaikoPlayer\ShaderProcessor\Shader.cs" />
     <Compile Include="TaikoPlayer\TaikoPlayerWindow.cs" />
+    <Compile Include="Utils\HtmlUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />
