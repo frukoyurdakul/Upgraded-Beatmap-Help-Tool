@@ -149,6 +149,11 @@ namespace Beatmap_Help_Tool
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                     ThreadUtils.executeOnBackground(new Action(() =>
                     {
+                        beatmap.reload();
+                        Invoke(new Action(() =>
+                        {
+                            beatmap.fillMainDisplayView(mainDisplayView);
+                        }));
                         reloadBeatmapIfNecessary();
                     }));
                 }));
@@ -164,16 +169,20 @@ namespace Beatmap_Help_Tool
                     runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
                 }));
                 beatmap.save(action, path);
-                ThreadUtils.executeOnBackground(new Action(() =>
-                {
-                    reloadBeatmapIfNecessary();
-                }));
                 Invoke(new Action(() =>
                 {
-                    beatmap.fillMainDisplayView(mainDisplayView);
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
+                }));
+                ThreadUtils.executeOnBackground(new Action(() =>
+                {
+                    beatmap.reload();
+                    Invoke(new Action(() =>
+                    {
+                        beatmap.fillMainDisplayView(mainDisplayView);
+                    }));
+                    reloadBeatmapIfNecessary();
                 }));
             }));
         }
@@ -682,7 +691,7 @@ namespace Beatmap_Help_Tool
 
                     if (beatmapList.Count == 1)
                     {
-                        MessageBoxUtils.showError("This beatmapset only contains 1 beatmap. Aborting.");
+                        MessageBoxUtils.showWarning("This beatmapset only contains 1 beatmap. The function only works for beatmapsets which contains more than 2 maps. Aborting.");
                         return;
                     }
 
@@ -1113,6 +1122,8 @@ namespace Beatmap_Help_Tool
         {
             if (isAnyMapOpenInOsuEditor())
                 loadCurrentOpenBeatmap();
+            else
+                MessageBoxUtils.showError("No beatmaps are currently open inside osu!, skipping load attempt.");
         }
 
         private void flyingBarlinesButton_Click(object sender, EventArgs e)

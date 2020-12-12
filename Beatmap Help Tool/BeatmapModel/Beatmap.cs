@@ -181,6 +181,73 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // The main constructor. Reads the file and parses every line.
         public Beatmap(string beatmapPath, bool addFirstState)
         {
+            load(beatmapPath, addFirstState);
+        }
+
+        private Beatmap()
+        {
+
+        }
+
+        public Beatmap(Beatmap source)
+        {
+            TimingPoints = new List<TimingPoint>();
+            Bookmarks = new List<Bookmark>();
+            HitObjects = new List<HitObject>();
+            ApproachRate = source.ApproachRate;
+            Artist = source.Artist;
+            ArtistUnicode = source.ArtistUnicode;
+            AudioFilename = source.AudioFilename;
+            AudioLeadIn = source.AudioLeadIn;
+            BeatDivisor = source.BeatDivisor;
+            BeatmapID = source.BeatmapID;
+            BeatmapMode = source.BeatmapMode;
+            BeatmapSetID = source.BeatmapSetID;
+            bookmarksString = source.bookmarksString;
+            CircleSize = source.CircleSize;
+            Colors = source.Colors;
+            Countdown = source.Countdown;
+            Creator = source.Creator;
+            displayMode = source.displayMode;
+            DistanceSpacing = source.DistanceSpacing;
+            Events = source.Events;
+            FileFormat = source.FileFormat;
+            FileName = source.FileName;
+            FilePath = source.FilePath;
+            FolderPath = source.FolderPath;
+            GridSize = source.GridSize;
+            HPDrainRate = source.HPDrainRate;
+            LetterboxInBreaks = source.LetterboxInBreaks;
+            OverallDifficulty = source.OverallDifficulty;
+            PreviewTime = source.PreviewTime;
+            SampleSet = source.SampleSet;
+            SliderMultiplier = source.SliderMultiplier;
+            SliderTickRate = source.SliderTickRate;
+            Source = source.Source;
+            StackLeniency = source.StackLeniency;
+            Tags = source.Tags;
+            TimelineZoom = source.TimelineZoom;
+            Title = source.Title;
+            TitleUnicode = source.TitleUnicode;
+            DifficultyName = source.DifficultyName;
+            WidescreenStoryboard = source.WidescreenStoryboard;
+
+            List<TimingPoint> sourceTimingPoints = source.TimingPoints;
+            int sourceTimingPointsCount = sourceTimingPoints.Count;
+            for (int i = 0; i < sourceTimingPointsCount; i++)
+                TimingPoints.Add(new TimingPoint(sourceTimingPoints[i], TimingPoints));
+            List<HitObject> sourceHitObjects = source.HitObjects;
+            int sourceHitObjectsCount = sourceHitObjects.Count;
+            for (int i = 0; i < sourceHitObjectsCount; i++)
+                HitObjects.Add(HitObject.deepCopy(sourceHitObjects[i]));
+            List<Bookmark> sourceBookmarks = source.Bookmarks;
+            int sourceBookmarksCount = sourceBookmarks.Count;
+            for (int i = 0; i < sourceBookmarksCount; i++)
+                Bookmarks.Add(new Bookmark(sourceBookmarks[i]));
+        }
+
+        private void load(string beatmapPath, bool addFirstState)
+        {
             // Set the beatmap path.
             FilePath = beatmapPath;
             FileName = Path.GetFileName(beatmapPath);
@@ -292,69 +359,14 @@ namespace Beatmap_Help_Tool.BeatmapModel
             if (addFirstState)
                 addSavedState("First load", this);
         }
-
-        private Beatmap()
+        
+        public void reload()
         {
-
-        }
-
-        public Beatmap(Beatmap source)
-        {
-            TimingPoints = new List<TimingPoint>();
             Bookmarks = new List<Bookmark>();
+            TimingPoints = new List<TimingPoint>();
             HitObjects = new List<HitObject>();
-            ApproachRate = source.ApproachRate;
-            Artist = source.Artist;
-            ArtistUnicode = source.ArtistUnicode;
-            AudioFilename = source.AudioFilename;
-            AudioLeadIn = source.AudioLeadIn;
-            BeatDivisor = source.BeatDivisor;
-            BeatmapID = source.BeatmapID;
-            BeatmapMode = source.BeatmapMode;
-            BeatmapSetID = source.BeatmapSetID;
-            bookmarksString = source.bookmarksString;
-            CircleSize = source.CircleSize;
-            Colors = source.Colors;
-            Countdown = source.Countdown;
-            Creator = source.Creator;
-            displayMode = source.displayMode;
-            DistanceSpacing = source.DistanceSpacing;
-            Events = source.Events;
-            FileFormat = source.FileFormat;
-            FileName = source.FileName;
-            FilePath = source.FilePath;
-            FolderPath = source.FolderPath;
-            GridSize = source.GridSize;
-            HPDrainRate = source.HPDrainRate;
-            LetterboxInBreaks = source.LetterboxInBreaks;
-            OverallDifficulty = source.OverallDifficulty;
-            PreviewTime = source.PreviewTime;
-            SampleSet = source.SampleSet;
-            SliderMultiplier = source.SliderMultiplier;
-            SliderTickRate = source.SliderTickRate;
-            Source = source.Source;
-            StackLeniency = source.StackLeniency;
-            Tags = source.Tags;
-            TimelineZoom = source.TimelineZoom;
-            Title = source.Title;
-            TitleUnicode = source.TitleUnicode;
-            DifficultyName = source.DifficultyName;
-            WidescreenStoryboard = source.WidescreenStoryboard;
-
-            List<TimingPoint> sourceTimingPoints = source.TimingPoints;
-            int sourceTimingPointsCount = sourceTimingPoints.Count;
-            for (int i = 0; i < sourceTimingPointsCount; i++)
-                TimingPoints.Add(new TimingPoint(sourceTimingPoints[i], TimingPoints));
-            List<HitObject> sourceHitObjects = source.HitObjects;
-            int sourceHitObjectsCount = sourceHitObjects.Count;
-            for (int i = 0; i < sourceHitObjectsCount; i++)
-                HitObjects.Add(HitObject.deepCopy(sourceHitObjects[i]));
-            List<Bookmark> sourceBookmarks = source.Bookmarks;
-            int sourceBookmarksCount = sourceBookmarks.Count;
-            for (int i = 0; i < sourceBookmarksCount; i++)
-                Bookmarks.Add(new Bookmark(sourceBookmarks[i]));
+            load(FilePath, true);
         }
-
         public bool isModeTaiko()
         {
             return BeatmapMode == MODE_TAIKO;
