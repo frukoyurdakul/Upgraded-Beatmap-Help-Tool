@@ -16,6 +16,9 @@ namespace Beatmap_Help_Tool.Forms
         public double FirstOffset { get; internal set; }
         public double LastOffset { get; internal set; }
 
+        private int firstOffset;
+        private int lastOffset;
+
         public TimingRegionSelector(string functionName)
         {
             InitializeComponent();
@@ -33,18 +36,20 @@ namespace Beatmap_Help_Tool.Forms
             if (!check)
                 return;
 
-            check &= VerifyUtils.verifyOffsetFormat("Offset format is wrong on first offset field..",
-                firstTimeTextBox.Text, out int firstOffset);
+            check &= VerifyUtils.verifyOffsetFormat("Offset format is wrong on first offset field.",
+                firstTimeTextBox.Text, out firstOffset);
 
             if (!check)
                 return;
 
             check &= VerifyUtils.verifyOffsetFormat("Offset format is wrong on second offset field.",
-                lastTimeTextBox.Text, out int lastOffset);
+                lastTimeTextBox.Text, out lastOffset);
 
             if (!check)
                 return;
 
+            FirstOffset = firstOffset;
+            LastOffset = lastOffset;
             VerifyUtils.performDefaultFormQuestion(this);
         }
     }

@@ -262,12 +262,14 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return true;
         }
 
-        public static void SnapInheritedPointsOnClosestTimingPoints(Form form, Beatmap beatmap,
+        public static bool SnapInheritedPointsOnClosestTimingPoints(Form form, Beatmap beatmap,
             double firstOffset, double lastOffset)
         {
             SearchUtils.GetObjectsInBetween(beatmap, firstOffset, lastOffset,
                 out List<TimingPoint> points);
 
+            Dictionary<TimingPoint, double> newOffsets = new Dictionary<TimingPoint, double>();
+            bool isHighRangeDetectedAndVerified = false;
             foreach (TimingPoint point in points)
             {
                 if (point.IsInherited)
@@ -278,12 +280,31 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     double closestPreviousPointOffset = closestPreviousPoint != null ? closestPreviousPoint.Offset : 0;
                     double closestNextPointOffset = closestNextPoint != null ? closestNextPoint.Offset : 0;
 
+                    double firstDifference = point.Offset - closestPreviousPointOffset;
+                    double secondDifference = closestNextPointOffset - point.Offset;
+
+                    if (!isHighRangeDetectedAndVerified && !VerifyUtils.verifyRangeAny(-400, 400, firstDifference, secondDifference))
+                    {
+                        if (MessageBoxUtils.showQuestionYesNo("Inherited points with more than 400 milliseconds gap between closest timing points detected. This might result in inherited points getting completely losing their purpose.".AddLines(2) + "Are you sure you want to continue?") == DialogResult.Yes)
+                            isHighRangeDetectedAndVerified = true;
+                        else
+                            return false;
+                    }
+
+                    double targetOffset;
                     if (point.Offset - closestPreviousPointOffset < closestNextPointOffset - point.Offset)
-                        point.Offset = closestPreviousPointOffset;
+                        targetOffset = closestPreviousPointOffset;
                     else
-                        point.Offset = closestNextPointOffset;
+                        targetOffset = closestNextPointOffset;
+                    newOffsets.Add(point, targetOffset);
                 }
             }
+            newOffsets.ForEach((key, value) =>
+            {
+                key.Offset = value;
+            });
+            newOffsets.Clear();
+            return true;
         }
 
         private static void showErrorMessageInMainThread(Form form, string message)

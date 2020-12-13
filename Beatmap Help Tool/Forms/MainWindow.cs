@@ -51,6 +51,8 @@ namespace Beatmap_Help_Tool
             }
         }
 
+        #region Util functions
+
         private void hideButtonsWithNoClickListeners(Control control)
         {
             foreach (Control child in control.Controls)
@@ -84,7 +86,6 @@ namespace Beatmap_Help_Tool
             return handlers != null && handlers.GetInvocationList().Any();
         }
 
-        #region Util functions
         private void performBrowse()
         {
             string targetPath;
@@ -105,6 +106,31 @@ namespace Beatmap_Help_Tool
             };
             if (dialog.ShowDialog() == DialogResult.OK)
                 ThreadUtils.executeOnBackground(() => loadBeatmap(dialog.FileName, dialog.SafeFileName));
+        }
+        private bool checkBeatmapLoaded()
+        {
+            if (beatmap == null)
+            {
+                MessageBoxUtils.showError("No beatmap has been loaded.");
+                return false;
+            }
+            return true;
+        }
+
+        private void showMessageAndSaveBeatmap(string popupMessage,
+            string runningProcessLabelMessage, string saveBeatmapMessage)
+        {
+            this.Invoke(() =>
+            {
+                MessageBoxUtils.show(popupMessage);
+                runningProcessLabel.Text = runningProcessLabelMessage;
+                saveBeatmap(saveBeatmapMessage);
+            });
+        }
+
+        private void showFailureMessage(string popupMessage)
+        {
+            this.Invoke(() => MessageBoxUtils.showWarning(popupMessage));
         }
 
         private void loadBeatmap(string targetPath, string beatmapFileName)
@@ -327,11 +353,11 @@ namespace Beatmap_Help_Tool
             // give a warning about it if it is necessary.
             if (osuWindowTitle.StartsWith("osu!cuttingedge"))
             {
-                return returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 3));
+                return returnMapName(osuWindowTitle, StringUtils.GetIndexOfWithCount(osuWindowTitle, " ", 3));
             }
             else if (osuWindowTitle.StartsWith("osu!"))
             {
-                return returnMapName(osuWindowTitle, StringUtils.getIndexOfWithCount(osuWindowTitle, " ", 2));
+                return returnMapName(osuWindowTitle, StringUtils.GetIndexOfWithCount(osuWindowTitle, " ", 2));
             }
             else if (!string.IsNullOrWhiteSpace(osuWindowTitle))
             {
@@ -365,6 +391,7 @@ namespace Beatmap_Help_Tool
             (generalFunctionsPage as Control).Enabled = true;
             (svFunctionsPage as Control).Enabled = true;
             (bpmFunctionsPage as Control).Enabled = true;
+            (nominationFunctionsPage as Control).Enabled = true;
         }
 
         private void disableTabs()
@@ -372,6 +399,7 @@ namespace Beatmap_Help_Tool
             (generalFunctionsPage as Control).Enabled = false;
             (svFunctionsPage as Control).Enabled = false;
             (bpmFunctionsPage as Control).Enabled = false;
+            (nominationFunctionsPage as Control).Enabled = false;
         }
         #endregion
 
@@ -503,27 +531,6 @@ namespace Beatmap_Help_Tool
             }
         }
 
-        private bool checkBeatmapLoaded()
-        {
-            if (beatmap == null)
-            {
-                MessageBoxUtils.showError("No beatmap has been loaded.");
-                return false;
-            }
-            return true;
-        }
-
-        private void showMessageAndSaveBeatmap(string popupMessage, 
-            string runningProcessLabelMessage, string saveBeatmapMessage)
-        {
-            this.Invoke(() =>
-            {
-                MessageBoxUtils.show(popupMessage);
-                runningProcessLabel.Text = runningProcessLabelMessage;
-                saveBeatmap(saveBeatmapMessage);
-            });
-        }
-
         private void whistleToClapButton_Click(object sender, EventArgs e)
         {
             if (checkBeatmapLoaded())
@@ -626,18 +633,22 @@ namespace Beatmap_Help_Tool
 
         private void snapGreenToRedPointsButton_Click(object sender, EventArgs e)
         {
-            using (TimingRegionSelector selector = new TimingRegionSelector((sender as Control).Text))
+            using (TimingRegionSelector selector = new TimingRegionSelector((sender as Control).Text.ReplaceNewLinesWithSpaces()))
             {
                 if (selector.ShowDialog() == DialogResult.OK)
                 {
-                    ThreadUtils.executeOnBackground(new Action(() =>
+                    ThreadUtils.executeOnBackground(() =>
                     {
-                        InheritedPointUtils.SnapInheritedPointsOnClosestTimingPoints(this, beatmap,
-                            selector.FirstOffset, selector.LastOffset);
-                        showMessageAndSaveBeatmap("Snapped the inherited points in the region to the closest timing points.",
-                            "Snapped the inherited points in the region to the closest timing points.",
-                            "Snapped green points to red points");
-                    }));
+                        if (InheritedPointUtils.SnapInheritedPointsOnClosestTimingPoints(this, beatmap,
+                            selector.FirstOffset, selector.LastOffset))
+                        {
+                            showMessageAndSaveBeatmap("Snapped the inherited points in the region to the closest timing points.",
+                           "Snapped the inherited points in the region to the closest timing points.",
+                           "Snapped green points to red points");
+                        }
+                        else
+                            showFailureMessage("Process aborted.");
+                    });
                 }
             }
         }
@@ -1005,7 +1016,7 @@ namespace Beatmap_Help_Tool
             if (isAnyMapOpenInOsuEditor())
                 loadCurrentOpenBeatmap();
             else
-                MessageBoxUtils.showError("No beatmaps are currently open inside osu!, skipping load attempt.");
+                MessageBoxUtils.showError("No beatmaps are currently open inside osu!, skipping load attempt." + Environment.NewLine + Environment.NewLine + "If you have loaded any beatmaps with this tool, click \"Browse\" button to open last loaded beatmap folder.");
         }
 
         private void flyingBarlinesButton_Click(object sender, EventArgs e)

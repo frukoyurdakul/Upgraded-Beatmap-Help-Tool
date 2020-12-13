@@ -6,7 +6,7 @@ namespace Beatmap_Help_Tool.Utils
 {
     public static class StringUtils
     {
-        public static int getIndexOfWithCount(string text, string searchText, int count)
+        public static int GetIndexOfWithCount(string text, string searchText, int count)
         {
             if (count == 1)
                 return text.IndexOf(searchText);
@@ -23,7 +23,7 @@ namespace Beatmap_Help_Tool.Utils
             return -1;
         }
 
-        public static int getStringCountInString(string text, string searchText)
+        public static int GetStringCountInString(string text, string searchText)
         {
             if (text.Length < searchText.Length)
                 return 0;
@@ -37,6 +37,11 @@ namespace Beatmap_Help_Tool.Utils
                     count++;
             }
             return count;
+        }
+
+        public static string ReplaceNewLinesWithSpaces(this string text)
+        {
+            return text.Replace(Environment.NewLine, " ");
         }
 
         public static void AppendText(this RichTextBox box, string text, Color color)

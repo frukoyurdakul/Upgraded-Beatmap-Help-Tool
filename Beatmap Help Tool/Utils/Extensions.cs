@@ -21,5 +21,12 @@ namespace Beatmap_Help_Tool.Utils
                 action.Invoke(pair.Key, pair.Value);
             }
         }
+
+        public static string AddLines(this string text, int lines)
+        {
+            for (int i = 0; i < lines; i++)
+                text += Environment.NewLine;
+            return text;
+        }
     }
 }

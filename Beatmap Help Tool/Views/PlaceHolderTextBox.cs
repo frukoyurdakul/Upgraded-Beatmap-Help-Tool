@@ -37,8 +37,8 @@ namespace Beatmap_Help_Tool.Views
             if (string.IsNullOrEmpty(base.Text))
             {
                 base.Text = PlaceHolderText;
-                ForeColor = Color.Gray;
-                Font = new Font(Font, FontStyle.Italic);
+                ForeColor = Color.FromArgb(80, 80, 80);
+                Font = new Font(Font, FontStyle.Regular);
                 isPlaceHolder = true;
             }
         }

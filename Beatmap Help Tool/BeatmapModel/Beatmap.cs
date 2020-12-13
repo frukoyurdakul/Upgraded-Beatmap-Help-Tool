@@ -526,19 +526,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         // It is better to call this on the background thread.
         public void save(string action, string path)
         {
-            string actualSavePath;
-            string newFileName = generateFileName();
-            bool isEqual = newFileName.Equals(FileName);
-            if (path.Contains(newFileName))
-                actualSavePath = path;
-            else if (Directory.Exists(path))
-                actualSavePath = path + "\\" + newFileName;
-            else
-            {
-                // Fallback to desktop. This should not happen at all but we will see.
-                actualSavePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + FileName;
-                MessageBoxUtils.showWarning("Somehow the save path is invalid, saving to desktop instead.");
-            }
+            string actualSavePath = FilePath;
 
             // If we are saving, we must create a copy first.
             addSavedState(action, new Beatmap(this));

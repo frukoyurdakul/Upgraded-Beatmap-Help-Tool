@@ -189,7 +189,7 @@ namespace Beatmap_Help_Tool.Views
 
         private void updateSizeByText()
         {
-            int lineCount = StringUtils.getStringCountInString(Text, newLine) + 1;
+            int lineCount = StringUtils.GetStringCountInString(Text, newLine) + 1;
             if (lineCount > 1)
             {
                 textSize = graphics.MeasureString(Text, Font);
