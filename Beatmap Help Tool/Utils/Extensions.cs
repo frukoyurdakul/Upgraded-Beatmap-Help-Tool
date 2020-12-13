@@ -13,5 +13,13 @@ namespace Beatmap_Help_Tool.Utils
         {
             control.Invoke(action);
         }
+
+        public static void ForEach<TKey, TValue>(this Dictionary<TKey, TValue> dict, Action<TKey, TValue> action)
+        {
+            foreach (KeyValuePair<TKey, TValue> pair in dict)
+            {
+                action.Invoke(pair.Key, pair.Value);
+            }
+        }
     }
 }

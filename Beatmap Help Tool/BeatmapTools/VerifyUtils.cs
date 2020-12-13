@@ -130,6 +130,46 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return true;
         }
 
+        public static bool verifyRangeAny(int min, int max, params int[] values)
+        {
+            foreach (int value in values)
+            {
+                if (value >= min && value <= max)
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool verifyRangeAny(double min, double max, params double[] values)
+        {
+            foreach (int value in values)
+            {
+                if (value >= min && value <= max)
+                    return true;
+            }
+            return false;
+        }
+
+        public static int getValueInRangeBetween(int min, int max, params int[] values)
+        {
+            foreach (int value in values)
+            {
+                if (value >= min && value <= max)
+                    return value;
+            }
+            return int.MinValue;
+        }
+
+        public static double getValueInRangeBetween(double min, double max, params double[] values)
+        {
+            foreach (int value in values)
+            {
+                if (value >= min && value <= max)
+                    return value;
+            }
+            return double.MinValue;
+        }
+
         public static bool verifyRange(double min, double max, params double[] values)
         {
             foreach (int value in values)

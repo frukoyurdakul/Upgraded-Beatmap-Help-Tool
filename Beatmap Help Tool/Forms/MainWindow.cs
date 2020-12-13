@@ -853,22 +853,7 @@ namespace Beatmap_Help_Tool
 
                     // If we have found an inconsistency, we should open up a new window and show it.
                     // Otherwise we need to show a success message box.
-                    if (inconsistencyFound)
-                    {
-                        this.Invoke(() =>
-                        {
-                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
-                            {
-                                htmlDisplayer.recycle();
-                                form.ShowDialog();
-                                form.Dispose();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        this.Invoke(() => MessageBoxUtils.show("No inconsistencies found in red points on this mapset."));
-                    }
+                    handleHtmlDisplayer(htmlDisplayer, "No inconsistencies found in red points on this mapset.");
                 });
             }
         }
@@ -1010,22 +995,7 @@ namespace Beatmap_Help_Tool
                     // At this point, either we have a window to display, or everything is correct
                     // with this mapset. We can understand that if we have added any lines
                     // to the html displayer.
-                    if (htmlDisplayer.containsElements())
-                    {
-                        this.Invoke(() =>
-                        {
-                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
-                            {
-                                htmlDisplayer.recycle();
-                                form.ShowDialog();
-                                form.Dispose();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        this.Invoke(() => MessageBoxUtils.show("No double barlines found in this mapset."));
-                    }
+                    handleHtmlDisplayer(htmlDisplayer, "No double barlines found in this mapset.");
                 });
             }
         }
@@ -1269,24 +1239,27 @@ namespace Beatmap_Help_Tool
                     // At this point, either we have a window to display, or everything is correct
                     // with this mapset. We can understand that if we have added any lines
                     // to the html displayer.
-                    if (htmlDisplayer.containsElements())
+                    handleHtmlDisplayer(htmlDisplayer, "No flying barlines found in this mapset.");
+                });
+            }
+        }
+
+        private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
+        {
+            if (htmlDisplayer.containsElements())
+            {
+                this.Invoke(() =>
+                {
+                    using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                     {
-                        this.Invoke(() =>
-                        {
-                            using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
-                            {
-                                htmlDisplayer.recycle();
-                                form.ShowDialog();
-                                form.Dispose();
-                            }
-                        });
-                    }
-                    else
-                    {
-                        this.Invoke(() => showSuccessMessage("No flying barlines found in this mapset."));
+                        htmlDisplayer.recycle();
+                        form.ShowDialog();
+                        form.Dispose();
                     }
                 });
             }
+            else
+                this.Invoke(() => showSuccessMessage(successMessage));
         }
 
         private void showSuccessMessage(string text)
@@ -1311,7 +1284,11 @@ namespace Beatmap_Help_Tool
 
                     // The note shift margin, declared as 10 milliseconds. Anything else above 10 milliseconds
                     // should be really visible to the eye.
-                    const double noteShiftMargin = 10d;
+                    const int noteShiftMarginMaximum = 10;
+
+                    // The note shift margin bare minimum, to skip detections for minimum snapping errors.
+                    // Currently set to 4ms, may be increased more in the future.
+                    const int noteShiftMarginMinimum = 4;
 
                     // Loop through all beatmaps.
                     foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
@@ -1323,13 +1300,61 @@ namespace Beatmap_Help_Tool
                         // Now that we have all the hitobjects, check if any of them align with barlines and dangerous barlines.
                         // The gap is between 1 to 10 milliseconds. If the difference is 0 milliseconds, consider the note
                         // as snapped.
-                        hitObjects.FindAll(x =>
+
+                        // Create a dictionary object for each object that we find how much is off. We will
+                        // display the off zones with millis values, coloring the ones that will be
+                        // marked dangerously according to "noteShiftMarginMinimum". The others
+                        // will remain as black colored.
+                        Dictionary<HitObject, int> hitObjectBarlineDifferences = new Dictionary<HitObject, int>();
+                        hitObjects.ForEach(x =>
                         {
-                            List<HitObject> objectsInternal = new List<HitObject>();
-                            decimal closestHigherBarline = SearchUtils.GetClosestHigherValue(barlines, (decimal)x.Offset);
-                            decimal closestLowerBarline = SearchUtils.GetClosestLowerValue(barlines, (decimal)x.Offset);
+                            decimal offset = (decimal) x.Offset;
+                            decimal closestHigherBarline = SearchUtils.GetClosestHigherValue(barlines, offset + 1);
+                            decimal closestLowerBarline = SearchUtils.GetClosestLowerValue(barlines, offset - 1);
+                            decimal exactBarline = (int) barlines.Find(y => (int)y == (int)offset);
+
+                            // If condition does not match, that means this note is exactly snapped. 
+                            // It should not be included in the final list.
+                            if (offset != exactBarline)
+                            {
+                                // There is not an exact barline for this note. We should consider the 
+                                // closest higher and lower barlines for this approach.
+                                int lowerDifference = Math.Abs((int)(offset - closestLowerBarline));
+                                int higherDifference = Math.Abs((int)(offset - closestHigherBarline));
+                                bool isUnsnapped = VerifyUtils.verifyRangeAny(1, noteShiftMarginMaximum, lowerDifference, higherDifference);
+                                if (isUnsnapped)
+                                {
+                                    int marginBetween = VerifyUtils.getValueInRangeBetween(1, noteShiftMarginMinimum, lowerDifference, higherDifference);
+                                    hitObjectBarlineDifferences.Add(x, marginBetween);
+                                }
+                            }
                         });
+
+                        // If we have found any dangerous objects, then we need to print them out since they are
+                        // not snapped to the barline.
+                        if (hitObjectBarlineDifferences.Count > 0)
+                        {
+                            if (!isSectionCreated)
+                            {
+                                htmlDisplayer.addSection("Unsnapped objects on barlines are detected.");
+                                isSectionCreated = true;
+                            }
+
+                            htmlDisplayer.addSubsection("Beatmap difficulty: " + beatmap.DifficultyName);
+                            hitObjectBarlineDifferences.ForEach((key, value) =>
+                            {
+                                string text = key.GetOffsetWithLink() + " - " + value + " ms.";
+                                if (value >= noteShiftMarginMinimum)
+                                    htmlDisplayer.addWarning(text);
+                                else
+                                    htmlDisplayer.addLine(text);
+                            });
+                            htmlDisplayer.addLineBreak();
+                        }
                     }
+
+                    // If there is content in the displayer, show it or show the success message.
+                    handleHtmlDisplayer(htmlDisplayer, "No unsnapped objects on barlines are found in this mapset.");
                 });
             }
         }

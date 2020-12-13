@@ -225,10 +225,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // If the searched value is already higher than last, return that first.
             // Or, if it's reversed, return the first element.
-            if (list[0].CompareTo(searched) < 0)
+            if (list[list.Count - 1].CompareTo(searched) < 0)
                 return default;
-            else if (list[list.Count - 1].CompareTo(searched) > 0)
-                return list[list.Count - 1];
 
             int first = 0;
             int last = list.Count - 1;
@@ -236,7 +234,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
             do
             {
                 mid = first + (last - first) / 2;
-                if (list[mid].CompareTo(searched) > 0)
+                int compareResult = list[mid].CompareTo(searched);
+                if (compareResult < 0)
                     first = mid + 1;
                 else
                     last = mid - 1;
@@ -245,7 +244,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             } while (first <= last);
 
             // Since we're searching closest lower value, return min of last and first.
-            return list[Math.Min(first, last)];
+            return VerifyUtils.safeGetItemFromList(list, Math.Min(first, last));
         }
 
         // Returns the closest previous value inside the list. The list
@@ -263,9 +262,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // If the searched value is already higher than last, return that first.
             // Or, if it's reversed, return the first element.
-            if (list[list.Count - 1].CompareTo(searched) < 0)
-                return default;
-            else if (list[0].CompareTo(searched) > 0)
+            if (list[0].CompareTo(searched) > 0)
                 return list[0];
 
             int first = 0;
@@ -274,7 +271,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
             do
             {
                 mid = first + (last - first) / 2;
-                if (list[mid].CompareTo(searched) > 0)
+                int compareResult = list[mid].CompareTo(searched);
+                if (compareResult < 0)
                     first = mid + 1;
                 else
                     last = mid - 1;
@@ -283,7 +281,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             } while (first <= last);
 
             // Since we're searching closest higher value, return max of last and first.
-            return list[Math.Max(first, last)];
+            return VerifyUtils.safeGetItemFromList(list, Math.Max(first, last));
         }
 
         public static bool IsFirstPointTimingPoint(List<TimingPoint> points)
