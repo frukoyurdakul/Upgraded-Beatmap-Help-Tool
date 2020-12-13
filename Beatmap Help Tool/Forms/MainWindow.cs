@@ -1300,7 +1300,36 @@ namespace Beatmap_Help_Tool
             {
                 ThreadUtils.executeOnBackground(() =>
                 {
-                    
+                    // Get the information for all diffs.
+                    SearchUtils.GetBeatmapPointsInMapset(beatmap, out Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap, out List<List<TimingPoint>> allPoints);
+
+                    // Create the html displayer.
+                    HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
+
+                    // Check if section is created. This becomes true once the section gets created to avoid duplicates in a loop.
+                    bool isSectionCreated = false;
+
+                    // The note shift margin, declared as 10 milliseconds. Anything else above 10 milliseconds
+                    // should be really visible to the eye.
+                    const double noteShiftMargin = 10d;
+
+                    // Loop through all beatmaps.
+                    foreach (KeyValuePair<Beatmap, List<TimingPoint>> pair in timingPointsPerBeatmap)
+                    {
+                        // Get barlines and hitobjects.
+                        SearchUtils.GetBarlines(pair.Value.FindAll(x => !x.IsInherited), pair.Key.HitObjects, out List<decimal> barlines, out List<decimal> dangerousBarlines);
+                        List<HitObject> hitObjects = pair.Key.HitObjects;
+
+                        // Now that we have all the hitobjects, check if any of them align with barlines and dangerous barlines.
+                        // The gap is between 1 to 10 milliseconds. If the difference is 0 milliseconds, consider the note
+                        // as snapped.
+                        hitObjects.FindAll(x =>
+                        {
+                            List<HitObject> objectsInternal = new List<HitObject>();
+                            decimal closestHigherBarline = SearchUtils.GetClosestHigherValue(barlines, (decimal)x.Offset);
+                            decimal closestLowerBarline = SearchUtils.GetClosestLowerValue(barlines, (decimal)x.Offset);
+                        });
+                    }
                 });
             }
         }

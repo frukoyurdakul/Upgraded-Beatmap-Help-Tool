@@ -210,6 +210,82 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 return -1;
         }
 
+        // Returns the closest previous value inside the list. The list
+        // should be sorted.
+        public static T GetClosestLowerValue<T>(List<T> list, T searched) where T: IComparable
+        {
+            // We know that this list should be sorted. That's why applying
+            // binary search is crucial here.
+
+            // If the list does not contain elements, throw an exception.
+            // If it contains one element, check for closest value.
+            // If it matches, return the value, otherwise return a default.
+            if (list.Count == 0)
+                throw new ArgumentException("The list passed does not contain values to search the closest value.");
+
+            // If the searched value is already higher than last, return that first.
+            // Or, if it's reversed, return the first element.
+            if (list[0].CompareTo(searched) < 0)
+                return default;
+            else if (list[list.Count - 1].CompareTo(searched) > 0)
+                return list[list.Count - 1];
+
+            int first = 0;
+            int last = list.Count - 1;
+            int mid;
+            do
+            {
+                mid = first + (last - first) / 2;
+                if (list[mid].CompareTo(searched) > 0)
+                    first = mid + 1;
+                else
+                    last = mid - 1;
+                if (list[mid].CompareTo(searched) == 0)
+                    return list[mid];
+            } while (first <= last);
+
+            // Since we're searching closest lower value, return min of last and first.
+            return list[Math.Min(first, last)];
+        }
+
+        // Returns the closest previous value inside the list. The list
+        // should be sorted.
+        public static T GetClosestHigherValue<T>(List<T> list, T searched) where T : IComparable
+        {
+            // We know that this list should be sorted. That's why applying
+            // binary search is crucial here.
+
+            // If the list does not contain elements, throw an exception.
+            // If it contains one element, check for closest value.
+            // If it matches, return the value, otherwise return a default.
+            if (list.Count == 0)
+                throw new ArgumentException("The list passed does not contain values to search the closest value.");
+
+            // If the searched value is already higher than last, return that first.
+            // Or, if it's reversed, return the first element.
+            if (list[list.Count - 1].CompareTo(searched) < 0)
+                return default;
+            else if (list[0].CompareTo(searched) > 0)
+                return list[0];
+
+            int first = 0;
+            int last = list.Count - 1;
+            int mid;
+            do
+            {
+                mid = first + (last - first) / 2;
+                if (list[mid].CompareTo(searched) > 0)
+                    first = mid + 1;
+                else
+                    last = mid - 1;
+                if (list[mid].CompareTo(searched) == 0)
+                    return list[mid];
+            } while (first <= last);
+
+            // Since we're searching closest higher value, return max of last and first.
+            return list[Math.Max(first, last)];
+        }
+
         public static bool IsFirstPointTimingPoint(List<TimingPoint> points)
         {
             return points.Count > 0 && !points[0].IsInherited;
