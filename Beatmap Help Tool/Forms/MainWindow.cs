@@ -947,7 +947,7 @@ namespace Beatmap_Help_Tool
 
                     // Create the list for barlines. Avoid doing this
                     // in the foreach loop and use clear instead.
-                    List<double> barlines = new List<double>();
+                    List<double> barlines;
 
                     // If any of them is calculated before, make this as true.
                     bool isAnyCalculated = false;
@@ -994,40 +994,12 @@ namespace Beatmap_Help_Tool
                         // This adjusts the double barline value.
                         const double closestBarlineGapMillis = 20d;
 
-                        // Clear the previous list.
-                        barlines.Clear();
+                        // Fetch the beatmap.
+                        Beatmap beatmap = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key;
 
-                        // Since these timing points are in order, use them in our advantage.
-                        TimingPoint point;
-
-                        for (int i = 0; i < redPoints.Count; i++)
-                        {
-                            point = redPoints[i];
-                            double nextOffset;
-                            if (i + 1 < redPoints.Count)
-                                nextOffset = redPoints[i + 1].Offset;
-                            else
-                            {
-                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
-                                nextOffset = objects[objects.Count - 1].Offset;
-                            }
-                            double currentOffset = point.Offset;
-                            double barlineValue = point.PointValue * point.Meter;
-
-                            // Starting from the first red point, add barlines.
-                            // Consider it as not omitted.
-                            if (!point.IsOmitted && nextOffset > currentOffset)
-                                barlines.Add(currentOffset);
-
-                            // Until the calculated offset is higher than 2nd point,
-                            // calculate it again and add the point.
-                            currentOffset += barlineValue;
-                            while (currentOffset < nextOffset)
-                            {
-                                barlines.Add(currentOffset);
-                                currentOffset += barlineValue;
-                            }
-                        }
+                        // Get all the necessary information we need.
+                        // In this case it's barlines only without getting dangerous barlines.
+                        SearchUtils.GetBarlines(redPoints, beatmap.HitObjects, out barlines);
 
                         // At this point, we know all the barlines. Now, get
                         // differences on all barlines after making the list distinct.
@@ -1050,9 +1022,6 @@ namespace Beatmap_Help_Tool
                             // value of closestBarlineGapMillis variable).
                             else if (secondBarline - firstBarline <= closestBarlineGapMillis)
                             {
-                                // Fetch the beatmap from the list we have.
-                                Beatmap key = timingPointsPerBeatmap.FirstOrDefault(pair => pair.Value == redPoints).Key;
-
                                 // If title is not written, then write it down.
                                 if (!isDoubleBarlineTitleWritten)
                                 {
@@ -1069,7 +1038,7 @@ namespace Beatmap_Help_Tool
                                     if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
                                         htmlDisplayer.addLineBreak();
                                     isFirstLineBreakAdded = true;
-                                    htmlDisplayer.addSubsection("Beatmap difficulty: " + key.DifficultyName);
+                                    htmlDisplayer.addSubsection("Beatmap difficulty: " + beatmap.DifficultyName);
                                     isBeatmapDifficultyWritten = true;
                                 }
                                 if (htmlDisplayer.containsElements() && !isFirstLineBreakAdded)
@@ -1158,11 +1127,11 @@ namespace Beatmap_Help_Tool
 
                     // Create the list for barlines. Avoid doing this
                     // in the foreach loop and use clear instead.
-                    List<decimal> barlines = new List<decimal>();
+                    List<decimal> barlines;
 
                     // Also create a double version of the list above.
                     // The flying barlines should be detected with this approach.
-                    List<double> barlinesDouble = new List<double>();
+                    List<double> barlinesDouble;
 
                     // There should be a margin for this approach. And, that is,
                     // to get the inherited point that is closest to the 1/36 snap.
@@ -1215,89 +1184,12 @@ namespace Beatmap_Help_Tool
                         // in a list. If any of them are close within each other less than 20 ms, then it is
                         // considered as a double barline.
 
-                        // Clear the previous lists.
-                        barlines.Clear();
-                        barlinesDouble.Clear();
+                        // Fetch the beatmap.
+                        Beatmap beatmap = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key;
 
-                        // Since these timing points are in order, use them in our advantage.
-                        TimingPoint point;
-
-                        // Calculate the barlines using decimal. The drawn
-                        // barlines are double, and the drawn ones in the
-                        // editor are calculated with decimal.
-                        for (int i = 0; i < redPoints.Count; i++)
-                        {
-                            point = redPoints[i];
-                            decimal nextOffset;
-                            if (i + 1 < redPoints.Count)
-                                nextOffset = (decimal)redPoints[i + 1].Offset;
-                            else
-                            {
-                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
-                                nextOffset = (decimal)objects[objects.Count - 1].Offset;
-                            }
-                            decimal currentOffset = (decimal)point.Offset;
-                            decimal barlineValue = (decimal)(point.PointValue * point.Meter);
-
-                            // Starting from the first red point, add barlines.
-                            // Consider it as not omitted.
-                            if (!point.IsOmitted && nextOffset > currentOffset)
-                                barlines.Add(currentOffset);
-
-                            // Until the calculated offset is higher than 2nd point,
-                            // calculate it again and add the point.
-                            currentOffset += barlineValue;
-                            while (currentOffset < nextOffset)
-                            {
-                                barlines.Add(currentOffset);
-                                currentOffset += barlineValue;
-                            }
-                        }
-
-                        // Now, calculate the same snappings and barlines using double
-                        // and calculate the rounding errors.
-                        for (int i = 0; i < redPoints.Count; i++)
-                        {
-                            point = redPoints[i];
-                            double nextOffset;
-                            if (i + 1 < redPoints.Count)
-                                nextOffset = redPoints[i + 1].Offset;
-                            else
-                            {
-                                List<HitObject> objects = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key.HitObjects;
-                                nextOffset = objects[objects.Count - 1].Offset;
-                            }
-                            double currentOffset = point.Offset;
-                            double barlineValue = point.PointValue * point.Meter;
-
-                            // Starting from the first red point, add barlines.
-                            // Consider it as not omitted.
-                            if (!point.IsOmitted && nextOffset > currentOffset)
-                                barlinesDouble.Add(currentOffset);
-
-                            // Until the calculated offset is higher than 2nd point,
-                            // calculate it again and add the point.
-                            currentOffset += barlineValue;
-                            while (currentOffset < nextOffset)
-                            {
-                                barlinesDouble.Add(currentOffset);
-                                currentOffset += barlineValue;
-                            }
-                        }
-
-                        // After that, find the dangerous barlines. They are 
-                        // basically barlines which have rounding errors on them.
-                        // If there are 0, that means there can't be flying
-                        // barlines on this map.
-                        List<decimal> dangerousBarlines = new List<decimal>();
-                        for (int i = 0; i < barlines.Count; i++)
-                        {
-                            double barlineDouble = barlinesDouble[i];
-                            decimal barlineDecimal = barlines[i];
-
-                            if ((int)barlineDecimal > (int)barlineDouble)
-                                dangerousBarlines.Add(barlineDecimal);
-                        }
+                        // Get all the necessary information we need.
+                        // In this case it's everything regarding to barlines.
+                        SearchUtils.GetBarlines(redPoints, beatmap.HitObjects, out barlinesDouble, out barlines, out List<decimal> dangerousBarlines);
 
                         if (dangerousBarlines.Count > 0)
                         {
@@ -1310,9 +1202,6 @@ namespace Beatmap_Help_Tool
                             // been put to change SV but failed to do so because
                             // of the gap.
                             List<TimingPoint> mistakenInheritedPoints = new List<TimingPoint>();
-
-                            // Fetch the beatmap.
-                            Beatmap beatmap = timingPointsPerBeatmap.FirstOrDefault(x => x.Value == redPoints).Key;
 
                             foreach (double offset in dangerousBarlines)
                             {

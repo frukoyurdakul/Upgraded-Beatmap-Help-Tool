@@ -22,7 +22,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                pairs = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText("data\\settings.txt"));
+                pairs = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(SETTINGS_FILE_PATH));
                 if (pairs == null)
                     pairs = new Dictionary<string, object>();
             }

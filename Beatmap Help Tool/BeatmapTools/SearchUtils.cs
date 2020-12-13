@@ -2,6 +2,8 @@
 using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
@@ -312,6 +314,138 @@ namespace Beatmap_Help_Tool.BeatmapTools
             {
                 points.Sort();
                 MarkSorted(points);
+            }
+        }
+
+        public static void GetBeatmapPointsInMapset(Beatmap beatmap, out Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap, out List<List<TimingPoint>> allPoints)
+        {
+            string folderPath = beatmap.FolderPath;
+            List<Beatmap> beatmapList = new List<Beatmap>();
+            foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+                beatmapList.Add(new Beatmap(file, false));
+
+            // First, check total of red points in all diffs. If they are inconsistent,
+            // it means the timing is wrong anyway. We should dump those first.
+            timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
+            foreach (Beatmap beatmapInner in beatmapList)
+                timingPointsPerBeatmap.Add(beatmapInner, beatmapInner.TimingPoints.FindAll(target => !target.IsInherited));
+
+            // Get the elements as list. Order is not important.
+            allPoints = timingPointsPerBeatmap.Values.ToList();
+        }
+
+        // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
+        public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<decimal> barlines)
+        {
+            // Since these timing points are in order, use them in our advantage.
+            TimingPoint point;
+
+            barlines = new List<decimal>();
+
+            // Calculate the barlines using decimal. The drawn
+            // barlines are double, and the drawn ones in the
+            // editor are calculated with decimal.
+            for (int i = 0; i < redPoints.Count; i++)
+            {
+                point = redPoints[i];
+                decimal nextOffset;
+                if (i + 1 < redPoints.Count)
+                    nextOffset = (decimal)redPoints[i + 1].Offset;
+                else
+                    nextOffset = (decimal)hitObjects[hitObjects.Count - 1].Offset;
+                decimal currentOffset = (decimal)point.Offset;
+                decimal barlineValue = (decimal)(point.PointValue * point.Meter);
+
+                // Starting from the first red point, add barlines.
+                // Consider it as not omitted.
+                if (!point.IsOmitted && nextOffset > currentOffset)
+                    barlines.Add(currentOffset);
+
+                // Until the calculated offset is higher than 2nd point,
+                // calculate it again and add the point.
+                currentOffset += barlineValue;
+                while (currentOffset < nextOffset)
+                {
+                    barlines.Add(currentOffset);
+                    currentOffset += barlineValue;
+                }
+            }
+        }
+
+        // Get barlines as double. This is a function where the barlines returned from this list
+        // may have rounding errors.
+        public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<double> barlines)
+        {
+            // Since these timing points are in order, use them in our advantage.
+            TimingPoint point;
+
+            barlines = new List<double>();
+
+            // Now, calculate the same snappings and barlines using double
+            // and calculate the rounding errors.
+            for (int i = 0; i < redPoints.Count; i++)
+            {
+                point = redPoints[i];
+                double nextOffset;
+                if (i + 1 < redPoints.Count)
+                    nextOffset = redPoints[i + 1].Offset;
+                else
+                    nextOffset = hitObjects[hitObjects.Count - 1].Offset;
+                double currentOffset = point.Offset;
+                double barlineValue = point.PointValue * point.Meter;
+
+                // Starting from the first red point, add barlines.
+                // Consider it as not omitted.
+                if (!point.IsOmitted && nextOffset > currentOffset)
+                    barlines.Add(currentOffset);
+
+                // Until the calculated offset is higher than 2nd point,
+                // calculate it again and add the point.
+                currentOffset += barlineValue;
+                while (currentOffset < nextOffset)
+                {
+                    barlines.Add(currentOffset);
+                    currentOffset += barlineValue;
+                }
+            }
+        }
+
+        // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
+        // This function also returns the dangerous barlines while having the actual barlines with
+        // double precision.
+        public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<decimal> barlines, out List<decimal> dangerousBarlines)
+        {
+            GetBarlines(redPoints, hitObjects, out _, out barlines, out dangerousBarlines);
+        }
+
+        // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
+        // This function also returns the dangerous barlines while having the actual barlines with
+        // double precision.
+        public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<double> barlines, out List<decimal> dangerousBarlines)
+        {
+            GetBarlines(redPoints, hitObjects, out barlines, out _, out dangerousBarlines);
+        }
+
+        // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
+        // This function also returns the dangerous barlines while having the actual barlines with
+        // double and decimal precision.
+        public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<double> barlinesDouble, out List<decimal> barlinesDecimal, out List<decimal> dangerousBarlines)
+        {
+            GetBarlines(redPoints, hitObjects, out barlinesDouble);
+            GetBarlines(redPoints, hitObjects, out barlinesDecimal);
+
+            // After that, find the dangerous barlines. They are 
+            // basically barlines which have rounding errors on them.
+            // If there are 0, that means there can't be flying
+            // barlines on this map.
+            dangerousBarlines = new List<decimal>();
+            for (int i = 0; i < barlinesDecimal.Count; i++)
+            {
+                double barlineDouble = barlinesDouble[i];
+                decimal barlineDecimal = barlinesDecimal[i];
+
+                if ((int)barlineDecimal > (int)barlineDouble)
+                    dangerousBarlines.Add(barlineDecimal);
             }
         }
 
