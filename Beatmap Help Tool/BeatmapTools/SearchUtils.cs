@@ -317,6 +317,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static int GetBeatmapCountInMapset(Beatmap beatmap)
+        {
+            string folderPath = beatmap.FolderPath;
+            string[] files = Directory.GetFiles(folderPath, "*.osu");
+            return files.Length;
+        }
+
         public static void GetBeatmapPointsInMapset(Beatmap beatmap, out Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap, out List<List<TimingPoint>> allPoints)
         {
             string folderPath = beatmap.FolderPath;

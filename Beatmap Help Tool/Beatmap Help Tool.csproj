@@ -123,6 +123,7 @@
     <Compile Include="TaikoPlayer\Keys\KeyProcessor.cs" />
     <Compile Include="TaikoPlayer\ShaderProcessor\Shader.cs" />
     <Compile Include="TaikoPlayer\TaikoPlayerWindow.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\HtmlUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />

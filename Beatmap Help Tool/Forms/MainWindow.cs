@@ -104,10 +104,7 @@ namespace Beatmap_Help_Tool
                 Filter = ".osu files|*.osu"
             };
             if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                ThreadUtils.executeOnBackground(new Action(() =>
-                    loadBeatmap(dialog.FileName, dialog.SafeFileName)));
-            }
+                ThreadUtils.executeOnBackground(() => loadBeatmap(dialog.FileName, dialog.SafeFileName));
         }
 
         private void loadBeatmap(string targetPath, string beatmapFileName)
@@ -115,12 +112,9 @@ namespace Beatmap_Help_Tool
             // At this point, file path has been found, load the beatmap and
             // set the data to datagridview.
             // First, invoke the running process label.
-            Invoke(new Action(() =>
-            {
-                runningProcessLabel.Text = beatmapFileName + " has been found, loading...";
-            }));
+            this.Invoke(() => runningProcessLabel.Text = beatmapFileName + " has been found, loading...");
             beatmap = new Beatmap(targetPath);
-            Invoke(new Action(() =>
+            this.Invoke(() =>
             {
                 string finalPath = Directory.GetParent(targetPath).FullName;
                 beatmap.fillMainDisplayView(mainDisplayView);
@@ -130,61 +124,49 @@ namespace Beatmap_Help_Tool
                 filePathTextBox.Text = finalPath;
                 SharedPreferences.edit().put(PreferencesKeys.LAST_BEATMAP_DIR_PATH, finalPath).apply();
                 tabControl1.SelectedIndex = 0;
-            }));
+            });
         }
 
         private void saveBeatmap(string action)
         {
             ThreadUtils.executeOnBackground(new Action(() =>
             {
-                Invoke(new Action(() =>
-                {
-                    runningProcessLabel.Text = "Saving beatmap...";
-                }));
+                this.Invoke(() => runningProcessLabel.Text = "Saving beatmap...");
                 beatmap.save(action);
-                Invoke(new Action(() =>
+                this.Invoke(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
-                    ThreadUtils.executeOnBackground(new Action(() =>
+                    ThreadUtils.executeOnBackground(() =>
                     {
                         beatmap.reload();
-                        Invoke(new Action(() =>
-                        {
-                            beatmap.fillMainDisplayView(mainDisplayView);
-                        }));
+                        this.Invoke(() => beatmap.fillMainDisplayView(mainDisplayView));
                         reloadBeatmapIfNecessary();
-                    }));
-                }));
+                    });
+                });
             }));
         }
 
         private void saveBeatmap(string action, string path)
         {
-            ThreadUtils.executeOnBackground(new Action(() =>
+            ThreadUtils.executeOnBackground(() =>
             {
-                Invoke(new Action(() =>
-                {
-                    runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName;
-                }));
+                this.Invoke(() => runningProcessLabel.Text = "Saving beatmap to path: " + path + "\\" + beatmap.FileName);
                 beatmap.save(action, path);
-                Invoke(new Action(() =>
+                this.Invoke(() =>
                 {
                     MessageBoxUtils.show("Beatmap has been saved.");
                     runningProcessLabel.Text = "Beatmap has been saved.";
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
-                }));
-                ThreadUtils.executeOnBackground(new Action(() =>
+                });
+                ThreadUtils.executeOnBackground(() =>
                 {
                     beatmap.reload();
-                    Invoke(new Action(() =>
-                    {
-                        beatmap.fillMainDisplayView(mainDisplayView);
-                    }));
+                    this.Invoke(() => beatmap.fillMainDisplayView(mainDisplayView));
                     reloadBeatmapIfNecessary();
-                }));
-            }));
+                });
+            });
         }
 
         private void reloadBeatmapIfNecessary()
@@ -406,7 +388,7 @@ namespace Beatmap_Help_Tool
         #region Form functions
         private void mainForm_Load(object sender, EventArgs e)
         {
-            ThreadUtils.executeOnBackground(new Action(() => determineInitialProcess()));
+            ThreadUtils.executeOnBackground(determineInitialProcess);
         }
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -446,27 +428,24 @@ namespace Beatmap_Help_Tool
             if (Beatmap.hasPreviousState())
             {
                 runningProcessLabel.Text = "Undoing...";
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
                     Beatmap beatmap = Beatmap.getPreviousSavedState();
                     if (beatmap != null)
                     {
                         this.beatmap = beatmap;
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             beatmap.fillMainDisplayView(mainDisplayView);
                             runningProcessLabel.Text = string.Format("Previous state loaded ({0})",
                                 Beatmap.getSavedStateAction());
-                        }));
+                        });
                     }
                     else
                     {
-                        Invoke(new Action(() =>
-                        {
-                            runningProcessLabel.Text = "An error occurred while fetching previous state.";
-                        }));
+                        this.Invoke(() => runningProcessLabel.Text = "An error occurred while fetching previous state.");
                     }
-                }));
+                });
             }
             else
                 runningProcessLabel.Text = "There are no other previous states.";
@@ -477,27 +456,24 @@ namespace Beatmap_Help_Tool
             if (Beatmap.hasNextState())
             {
                 runningProcessLabel.Text = "Redoing...";
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
                     Beatmap beatmap = Beatmap.getNextSavedState();
                     if (beatmap != null)
                     {
                         this.beatmap = beatmap;
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             beatmap.fillMainDisplayView(mainDisplayView);
-                            runningProcessLabel.Text = string.Format("Next state loaded ({0})", 
+                            runningProcessLabel.Text = string.Format("Next state loaded ({0})",
                                 Beatmap.getSavedStateAction());
-                        }));
+                        });
                     }
                     else
                     {
-                        Invoke(new Action(() =>
-                        {
-                            runningProcessLabel.Text = "An error occurred while fetching next state.";
-                        }));
+                        this.Invoke(() => runningProcessLabel.Text = "An error occurred while fetching next state.");
                     }
-                }));
+                });
             }
             else
                 runningProcessLabel.Text = "There are no other next states.";
@@ -540,12 +516,12 @@ namespace Beatmap_Help_Tool
         private void showMessageAndSaveBeatmap(string popupMessage, 
             string runningProcessLabelMessage, string saveBeatmapMessage)
         {
-            Invoke(new Action(() =>
+            this.Invoke(() =>
             {
                 MessageBoxUtils.show(popupMessage);
                 runningProcessLabel.Text = runningProcessLabelMessage;
                 saveBeatmap(saveBeatmapMessage);
-            }));
+            });
         }
 
         private void whistleToClapButton_Click(object sender, EventArgs e)
@@ -555,13 +531,13 @@ namespace Beatmap_Help_Tool
                 if (MessageBoxUtils.showQuestionYesNo("Are you sure?") == DialogResult.Yes)
                 {
                     runningProcessLabel.Text = "Converting all hitsounds to claps...";
-                    ThreadUtils.executeOnBackground(new Action(() =>
+                    ThreadUtils.executeOnBackground(() =>
                     {
                         NoteUtils.setAllWhistlesToClaps(beatmap);
                         showMessageAndSaveBeatmap("Converted all hitsounds to claps successfully.",
                                 "Converted all hitsounds to claps.",
                                 "Converted all hitsounds to claps");
-                    }));
+                    });
                 }
             }
         }
@@ -583,13 +559,13 @@ namespace Beatmap_Help_Tool
                             int[] katPositions = form.katPosition;
                             int[] donFinishPositions = form.donFinisherPosition;
                             int[] katFinishPositions = form.katFinisherPosition;
-                            ThreadUtils.executeOnBackground(new Action(() =>
+                            ThreadUtils.executeOnBackground(() =>
                             {
                                 NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
                                 showMessageAndSaveBeatmap("Re-positioned notes successfully.",
                                         "Re-positioned notes for Taiko mode successfully.",
                                         "Re-positioned notes for Taiko mode");
-                            }));
+                            });
                         }
                     }
                 }
@@ -637,14 +613,14 @@ namespace Beatmap_Help_Tool
             if (applied)
             {
                 // Start adding the SVs here.
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
                     InheritedPointUtils.AddSvChanges(this, beatmap, firstOffset, lastOffset, firstSv, lastSv,
                         targetBpm, gridSnap, svOffset, svIncreaseMode, count, svIncreaseMultiplier, putPointsByNotes);
                     showMessageAndSaveBeatmap("Added SV changes successfully.",
                             "Added SV changes successfully.",
                             "Added SV changes");
-                }));
+                });
             }
         }
 
@@ -680,38 +656,23 @@ namespace Beatmap_Help_Tool
         {
             if (checkBeatmapLoaded())
             {
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
-                    // Fetch all .osu files using the root folder path,
-                    // including the current open one.
-                    string folderPath = beatmap.FolderPath;
-                    List<Beatmap> beatmapList = new List<Beatmap>();
-                    foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
-                        beatmapList.Add(new Beatmap(file, false));
-
-                    if (beatmapList.Count == 1)
+                    // If we only have 1 beatmap, then bail. It's not necessary to parse and check for inconsistencies.
+                    if (SearchUtils.GetBeatmapCountInMapset(beatmap) == 1)
                     {
                         MessageBoxUtils.showWarning("This beatmapset only contains 1 beatmap. The function only works for beatmapsets which contains more than 2 maps. Aborting.");
                         return;
                     }
+
+                    // Fetch beatmaps with necessary information.
+                    SearchUtils.GetBeatmapPointsInMapset(beatmap, out Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap, out List<List<TimingPoint>> allPoints);
 
                     // Create the line list with colors. We need to display it in a text form
                     // in WebBrowser.
                     HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
 
                     // Then, start checking for timing and inherited points.
-
-                    // First, check total of red points in all diffs. If they are inconsistent,
-                    // it means the timing is wrong anyway. We should dump those first.
-                    Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
-                    foreach (Beatmap beatmap in beatmapList)
-                        timingPointsPerBeatmap.Add(beatmap, beatmap.TimingPoints.FindAll(target => !target.IsInherited));
-
-                    // Now that we have all the timing points, check sizes first. If sizes are not equal, we should
-                    // dump the timing point states by eliminating the differences.
-
-                    // Get the elements as list. Order is not important.
-                    List<List<TimingPoint>> allPoints = timingPointsPerBeatmap.Values.ToList();
 
                     // Now, we need to print inconsistent timing points. If the 
                     // specified offset exists in the point, we print it with black color.
@@ -788,7 +749,7 @@ namespace Beatmap_Help_Tool
                     // That problem is more important anyway.
                     if (inconsistentCountFound)
                     {
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
@@ -796,7 +757,7 @@ namespace Beatmap_Help_Tool
                                 form.ShowDialog();
                                 form.Dispose();
                             }
-                        }));
+                        });
                         return;
                     }
 
@@ -860,7 +821,7 @@ namespace Beatmap_Help_Tool
 
                                     // Find the default omit status.
                                     bool omitStatusDefault = omitStatusTrue >= omitStatusFalse;
-                                    
+
                                     // Reset the omit status to re-use.
                                     for (int k = 0; k < omitStatus.Length; k++) omitStatus[k] = false;
 
@@ -894,7 +855,7 @@ namespace Beatmap_Help_Tool
                     // Otherwise we need to show a success message box.
                     if (inconsistencyFound)
                     {
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
@@ -902,16 +863,13 @@ namespace Beatmap_Help_Tool
                                 form.ShowDialog();
                                 form.Dispose();
                             }
-                        }));
+                        });
                     }
                     else
                     {
-                        Invoke(new Action(() =>
-                        {
-                            MessageBoxUtils.show("No inconsistencies found in red points on this mapset.");
-                        }));
+                        this.Invoke(() => MessageBoxUtils.show("No inconsistencies found in red points on this mapset."));
                     }
-                }));
+                });
             }
         }
 
@@ -919,23 +877,11 @@ namespace Beatmap_Help_Tool
         {
             if (checkBeatmapLoaded())
             {
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
                     // Fetch all .osu files using the root folder path,
                     // including the current open one.
-                    string folderPath = beatmap.FolderPath;
-                    List<Beatmap> beatmapList = new List<Beatmap>();
-                    foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
-                        beatmapList.Add(new Beatmap(file, false));
-
-                    // First, check total of red points in all diffs. If they are inconsistent,
-                    // it means the timing is wrong anyway. We should dump those first.
-                    Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap = new Dictionary<Beatmap, List<TimingPoint>>();
-                    foreach (Beatmap beatmap in beatmapList)
-                        timingPointsPerBeatmap.Add(beatmap, beatmap.TimingPoints.FindAll(target => !target.IsInherited));
-
-                    // Get the elements as list. Order is not important.
-                    List<List<TimingPoint>> allPoints = timingPointsPerBeatmap.Values.ToList();
+                    SearchUtils.GetBeatmapPointsInMapset(beatmap, out Dictionary<Beatmap, List<TimingPoint>> timingPointsPerBeatmap, out List<List<TimingPoint>> allPoints);
 
                     // Now that we have all the timing points, we can start checking for double barlines.
                     // Target barlines will be found by starting from the first one, checking if they are omitted
@@ -1066,7 +1012,7 @@ namespace Beatmap_Help_Tool
                     // to the html displayer.
                     if (htmlDisplayer.containsElements())
                     {
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
@@ -1074,16 +1020,13 @@ namespace Beatmap_Help_Tool
                                 form.ShowDialog();
                                 form.Dispose();
                             }
-                        }));
+                        });
                     }
                     else
                     {
-                        Invoke(new Action(() =>
-                        {
-                            MessageBoxUtils.show("No double barlines found in this mapset.");
-                        }));
+                        this.Invoke(() => MessageBoxUtils.show("No double barlines found in this mapset."));
                     }
-                }));
+                });
             }
         }
 
@@ -1099,7 +1042,7 @@ namespace Beatmap_Help_Tool
         {
             if (checkBeatmapLoaded())
             {
-                ThreadUtils.executeOnBackground(new Action(() =>
+                ThreadUtils.executeOnBackground(() =>
                 {
                     // Fetch all .osu files using the root folder path,
                     // including the current open one.
@@ -1124,14 +1067,6 @@ namespace Beatmap_Help_Tool
 
                     // Create a html displayer.
                     HtmlDisplayer htmlDisplayer = newHtmlDisplayer();
-
-                    // Create the list for barlines. Avoid doing this
-                    // in the foreach loop and use clear instead.
-                    List<decimal> barlines;
-
-                    // Also create a double version of the list above.
-                    // The flying barlines should be detected with this approach.
-                    List<double> barlinesDouble;
 
                     // There should be a margin for this approach. And, that is,
                     // to get the inherited point that is closest to the 1/36 snap.
@@ -1189,7 +1124,7 @@ namespace Beatmap_Help_Tool
 
                         // Get all the necessary information we need.
                         // In this case it's everything regarding to barlines.
-                        SearchUtils.GetBarlines(redPoints, beatmap.HitObjects, out barlinesDouble, out barlines, out List<decimal> dangerousBarlines);
+                        SearchUtils.GetBarlines(redPoints, beatmap.HitObjects, out List<double> barlinesDouble, out List<decimal> barlines, out List<decimal> dangerousBarlines);
 
                         if (dangerousBarlines.Count > 0)
                         {
@@ -1206,7 +1141,7 @@ namespace Beatmap_Help_Tool
                             foreach (double offset in dangerousBarlines)
                             {
                                 // Get the offset as integer. The added lines are probably integers anyway.
-                                int offsetInt = (int) offset;
+                                int offsetInt = (int)offset;
 
                                 // Get the exact inherited point. It can be null.
                                 TimingPoint exactPoint = SearchUtils.GetExactInheritedPoint(beatmap.TimingPoints, offsetInt);
@@ -1336,7 +1271,7 @@ namespace Beatmap_Help_Tool
                     // to the html displayer.
                     if (htmlDisplayer.containsElements())
                     {
-                        Invoke(new Action(() =>
+                        this.Invoke(() =>
                         {
                             using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
                             {
@@ -1344,22 +1279,30 @@ namespace Beatmap_Help_Tool
                                 form.ShowDialog();
                                 form.Dispose();
                             }
-                        }));
+                        });
                     }
                     else
                     {
-                        Invoke(new Action(() =>
-                        {
-                            MessageBoxUtils.show("No flying barlines found in this mapset.");
-                        }));
+                        this.Invoke(() => showSuccessMessage("No flying barlines found in this mapset."));
                     }
-                }));
+                });
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void showSuccessMessage(string text)
         {
+            MessageBoxUtils.show(text);
+        }
 
+        private void unsnappedNoteBarlineButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ThreadUtils.executeOnBackground(() =>
+                {
+                    
+                });
+            }
         }
     }
 }
