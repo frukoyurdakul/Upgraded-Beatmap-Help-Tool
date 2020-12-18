@@ -40,49 +40,83 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel14 = new System.Windows.Forms.Panel();
+            this.loadCurrentBeatmapButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.playTaikoDiffsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel12 = new System.Windows.Forms.Panel();
+            this.snapGreenToRedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.whistleToClapButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.button10 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel18 = new System.Windows.Forms.Panel();
+            this.button9 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel17 = new System.Windows.Forms.Panel();
+            this.button36 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel16 = new System.Windows.Forms.Panel();
+            this.button37 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.button35 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.svFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button14 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel20 = new System.Windows.Forms.Panel();
+            this.button15 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel21 = new System.Windows.Forms.Panel();
+            this.button16 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel22 = new System.Windows.Forms.Panel();
+            this.equalizeSvForAllPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel23 = new System.Windows.Forms.Panel();
+            this.svChangerButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel24 = new System.Windows.Forms.Panel();
             this.panel25 = new System.Windows.Forms.Panel();
+            this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel26 = new System.Windows.Forms.Panel();
+            this.button20 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel27 = new System.Windows.Forms.Panel();
+            this.button21 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel28 = new System.Windows.Forms.Panel();
+            this.button22 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel29 = new System.Windows.Forms.Panel();
+            this.button23 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.bpmFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
+            this.button25 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel31 = new System.Windows.Forms.Panel();
+            this.button26 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel32 = new System.Windows.Forms.Panel();
+            this.button27 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel33 = new System.Windows.Forms.Panel();
+            this.button28 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel34 = new System.Windows.Forms.Panel();
             this.panel35 = new System.Windows.Forms.Panel();
+            this.button29 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel36 = new System.Windows.Forms.Panel();
+            this.button30 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel37 = new System.Windows.Forms.Panel();
+            this.button31 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel38 = new System.Windows.Forms.Panel();
+            this.button32 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel39 = new System.Windows.Forms.Panel();
+            this.button33 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.nominationFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.unsnappedNoteBarlineButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel46 = new System.Windows.Forms.Panel();
+            this.flyingBarlinesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel45 = new System.Windows.Forms.Panel();
+            this.checkDoubleBarlinesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel44 = new System.Windows.Forms.Panel();
+            this.timingInconsistenciesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel43 = new System.Windows.Forms.Panel();
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -101,46 +135,10 @@ namespace Beatmap_Help_Tool
             this.label3 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.browseButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.filePathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.loadCurrentBeatmapButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.playTaikoDiffsButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.snapGreenToRedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.positionAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.whistleToClapButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button10 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button9 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button36 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button37 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button35 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button14 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button15 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button16 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button17 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.svChangerButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button19 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button20 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button21 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button22 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button23 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button25 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button26 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button27 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button28 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button29 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button30 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button31 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button32 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.button33 = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.unsnappedNoteBarlineButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.flyingBarlinesButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.checkDoubleBarlinesButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.timingInconsistenciesButton = new Beatmap_Help_Tool.Views.MultilineButton();
-            this.browseButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.redoButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.saveButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.undoButton = new Beatmap_Help_Tool.Views.MultilineButton();
@@ -150,9 +148,11 @@ namespace Beatmap_Help_Tool
             this.meterColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.volumeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kiaiColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.inheritedPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.timingPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.allPointsButton = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.generalFunctionsPage.SuspendLayout();
@@ -199,6 +199,7 @@ namespace Beatmap_Help_Tool
             this.nominationFunctionsPage.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.panel9.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panel46.SuspendLayout();
             this.panel45.SuspendLayout();
             this.panel44.SuspendLayout();
@@ -210,9 +211,8 @@ namespace Beatmap_Help_Tool
             this.panel40.SuspendLayout();
             this.panel8.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).BeginInit();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -224,7 +224,7 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
@@ -244,7 +244,7 @@ namespace Beatmap_Help_Tool
             this.tabControl1.Controls.Add(this.settingsPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(2, 268);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 4;
             this.tabControl1.ShowToolTips = true;
@@ -255,9 +255,9 @@ namespace Beatmap_Help_Tool
             // 
             this.generalFunctionsPage.Controls.Add(this.tableLayoutPanel2);
             this.generalFunctionsPage.Location = new System.Drawing.Point(4, 4);
-            this.generalFunctionsPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.generalFunctionsPage.Margin = new System.Windows.Forms.Padding(2);
             this.generalFunctionsPage.Name = "generalFunctionsPage";
-            this.generalFunctionsPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.generalFunctionsPage.Padding = new System.Windows.Forms.Padding(2);
             this.generalFunctionsPage.Size = new System.Drawing.Size(571, 153);
             this.generalFunctionsPage.TabIndex = 0;
             this.generalFunctionsPage.Text = "General Functions";
@@ -273,7 +273,7 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel2.Controls.Add(this.panel2, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -290,7 +290,7 @@ namespace Beatmap_Help_Tool
             this.panel1.Controls.Add(this.panel10);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(279, 145);
             this.panel1.TabIndex = 0;
@@ -302,11 +302,28 @@ namespace Beatmap_Help_Tool
             this.panel14.Controls.Add(this.loadCurrentBeatmapButton);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel14.Location = new System.Drawing.Point(0, 129);
-            this.panel14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel14.Margin = new System.Windows.Forms.Padding(2);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel14.Size = new System.Drawing.Size(262, 31);
             this.panel14.TabIndex = 10;
+            // 
+            // loadCurrentBeatmapButton
+            // 
+            this.loadCurrentBeatmapButton.AutoSize = true;
+            this.loadCurrentBeatmapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.loadCurrentBeatmapButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.loadCurrentBeatmapButton.Location = new System.Drawing.Point(0, 8);
+            this.loadCurrentBeatmapButton.Margin = new System.Windows.Forms.Padding(0);
+            this.loadCurrentBeatmapButton.Name = "loadCurrentBeatmapButton";
+            this.loadCurrentBeatmapButton.Size = new System.Drawing.Size(262, 23);
+            this.loadCurrentBeatmapButton.TabIndex = 3;
+            this.loadCurrentBeatmapButton.TabStop = false;
+            this.loadCurrentBeatmapButton.Text = "Find current open beatmap in editor and load";
+            this.toolTip1.SetToolTip(this.loadCurrentBeatmapButton, "Loads the beatmap into the program if any\r\nmaps are open in the editor. If the sa" +
+        "me map\r\nis open, it will be re-loaded.");
+            this.loadCurrentBeatmapButton.UseVisualStyleBackColor = true;
+            this.loadCurrentBeatmapButton.Click += new System.EventHandler(this.loadCurrentBeatmapButton_Click);
             // 
             // panel13
             // 
@@ -314,11 +331,29 @@ namespace Beatmap_Help_Tool
             this.panel13.Controls.Add(this.playTaikoDiffsButton);
             this.panel13.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel13.Location = new System.Drawing.Point(0, 98);
-            this.panel13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel13.Margin = new System.Windows.Forms.Padding(2);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel13.Size = new System.Drawing.Size(262, 31);
             this.panel13.TabIndex = 9;
+            // 
+            // playTaikoDiffsButton
+            // 
+            this.playTaikoDiffsButton.AutoSize = true;
+            this.playTaikoDiffsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.playTaikoDiffsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.playTaikoDiffsButton.Location = new System.Drawing.Point(0, 8);
+            this.playTaikoDiffsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.playTaikoDiffsButton.Name = "playTaikoDiffsButton";
+            this.playTaikoDiffsButton.Size = new System.Drawing.Size(262, 23);
+            this.playTaikoDiffsButton.TabIndex = 3;
+            this.playTaikoDiffsButton.TabStop = false;
+            this.playTaikoDiffsButton.Text = "Play taiko diffs simultaneously";
+            this.toolTip1.SetToolTip(this.playTaikoDiffsButton, "Opens a window where you can view every diff\r\nsimultaneously while the music is p" +
+        "laying.\r\nCurrently it\'s really primitive but will be improved\r\nas I find the mot" +
+        "ivation.");
+            this.playTaikoDiffsButton.UseVisualStyleBackColor = true;
+            this.playTaikoDiffsButton.Click += new System.EventHandler(this.playTaikoDiffsButton_Click);
             // 
             // panel12
             // 
@@ -326,11 +361,27 @@ namespace Beatmap_Help_Tool
             this.panel12.Controls.Add(this.snapGreenToRedPointsButton);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 54);
-            this.panel12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel12.Margin = new System.Windows.Forms.Padding(2);
             this.panel12.Name = "panel12";
             this.panel12.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel12.Size = new System.Drawing.Size(262, 44);
             this.panel12.TabIndex = 8;
+            // 
+            // snapGreenToRedPointsButton
+            // 
+            this.snapGreenToRedPointsButton.AutoSize = true;
+            this.snapGreenToRedPointsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.snapGreenToRedPointsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.snapGreenToRedPointsButton.Location = new System.Drawing.Point(0, 8);
+            this.snapGreenToRedPointsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.snapGreenToRedPointsButton.Name = "snapGreenToRedPointsButton";
+            this.snapGreenToRedPointsButton.Size = new System.Drawing.Size(262, 36);
+            this.snapGreenToRedPointsButton.TabIndex = 3;
+            this.snapGreenToRedPointsButton.TabStop = false;
+            this.snapGreenToRedPointsButton.Text = "Snap green points onto red points in a\r\nspecific region";
+            this.toolTip1.SetToolTip(this.snapGreenToRedPointsButton, resources.GetString("snapGreenToRedPointsButton.ToolTip"));
+            this.snapGreenToRedPointsButton.UseVisualStyleBackColor = true;
+            this.snapGreenToRedPointsButton.Click += new System.EventHandler(this.snapGreenToRedPointsButton_Click);
             // 
             // panel11
             // 
@@ -338,11 +389,29 @@ namespace Beatmap_Help_Tool
             this.panel11.Controls.Add(this.positionAllNotesButton);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 23);
-            this.panel11.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel11.Margin = new System.Windows.Forms.Padding(2);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel11.Size = new System.Drawing.Size(262, 31);
             this.panel11.TabIndex = 7;
+            // 
+            // positionAllNotesButton
+            // 
+            this.positionAllNotesButton.AutoSize = true;
+            this.positionAllNotesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.positionAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.positionAllNotesButton.Location = new System.Drawing.Point(0, 8);
+            this.positionAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
+            this.positionAllNotesButton.Name = "positionAllNotesButton";
+            this.positionAllNotesButton.Size = new System.Drawing.Size(262, 23);
+            this.positionAllNotesButton.TabIndex = 3;
+            this.positionAllNotesButton.TabStop = false;
+            this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
+            this.toolTip1.SetToolTip(this.positionAllNotesButton, "Puts the notes by their type. By default, it puts dons are top-left, kats are top" +
+        "-right,\ndon finishers are bottom-left and kat finishers are bottom-right side.\nY" +
+        "ou can customize the positions, though.");
+            this.positionAllNotesButton.UseVisualStyleBackColor = true;
+            this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
             // 
             // panel10
             // 
@@ -350,10 +419,28 @@ namespace Beatmap_Help_Tool
             this.panel10.Controls.Add(this.whistleToClapButton);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 0);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel10.Margin = new System.Windows.Forms.Padding(2);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(262, 23);
             this.panel10.TabIndex = 0;
+            // 
+            // whistleToClapButton
+            // 
+            this.whistleToClapButton.AutoSize = true;
+            this.whistleToClapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.whistleToClapButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.whistleToClapButton.Location = new System.Drawing.Point(0, 0);
+            this.whistleToClapButton.Margin = new System.Windows.Forms.Padding(0);
+            this.whistleToClapButton.Name = "whistleToClapButton";
+            this.whistleToClapButton.Size = new System.Drawing.Size(262, 23);
+            this.whistleToClapButton.TabIndex = 2;
+            this.whistleToClapButton.TabStop = false;
+            this.whistleToClapButton.Text = "Set whistle sounds to claps";
+            this.toolTip1.SetToolTip(this.whistleToClapButton, "In the beatmap, sets all the whistle sounds to claps, including finishers. \r\nGood" +
+        " for mappers that hate whistle sounds while listening hitsounds in the editor :)" +
+        "");
+            this.whistleToClapButton.UseVisualStyleBackColor = true;
+            this.whistleToClapButton.Click += new System.EventHandler(this.whistleToClapButton_Click);
             // 
             // panel2
             // 
@@ -365,7 +452,7 @@ namespace Beatmap_Help_Tool
             this.panel2.Controls.Add(this.panel15);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(285, 2);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(280, 145);
             this.panel2.TabIndex = 1;
@@ -377,11 +464,25 @@ namespace Beatmap_Help_Tool
             this.panel19.Controls.Add(this.button10);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(0, 116);
-            this.panel19.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel19.Margin = new System.Windows.Forms.Padding(2);
             this.panel19.Name = "panel19";
             this.panel19.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel19.Size = new System.Drawing.Size(263, 31);
             this.panel19.TabIndex = 7;
+            // 
+            // button10
+            // 
+            this.button10.AutoSize = true;
+            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button10.Location = new System.Drawing.Point(0, 8);
+            this.button10.Margin = new System.Windows.Forms.Padding(0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(263, 23);
+            this.button10.TabIndex = 3;
+            this.button10.TabStop = false;
+            this.button10.Text = "button10";
+            this.button10.UseVisualStyleBackColor = true;
             // 
             // panel18
             // 
@@ -389,11 +490,25 @@ namespace Beatmap_Help_Tool
             this.panel18.Controls.Add(this.button9);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel18.Location = new System.Drawing.Point(0, 85);
-            this.panel18.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel18.Margin = new System.Windows.Forms.Padding(2);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel18.Size = new System.Drawing.Size(263, 31);
             this.panel18.TabIndex = 6;
+            // 
+            // button9
+            // 
+            this.button9.AutoSize = true;
+            this.button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button9.Location = new System.Drawing.Point(0, 8);
+            this.button9.Margin = new System.Windows.Forms.Padding(0);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(263, 23);
+            this.button9.TabIndex = 3;
+            this.button9.TabStop = false;
+            this.button9.Text = "button9";
+            this.button9.UseVisualStyleBackColor = true;
             // 
             // panel17
             // 
@@ -401,11 +516,26 @@ namespace Beatmap_Help_Tool
             this.panel17.Controls.Add(this.button36);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel17.Location = new System.Drawing.Point(0, 54);
-            this.panel17.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel17.Margin = new System.Windows.Forms.Padding(2);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel17.Size = new System.Drawing.Size(263, 31);
             this.panel17.TabIndex = 5;
+            // 
+            // button36
+            // 
+            this.button36.AutoSize = true;
+            this.button36.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button36.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button36.Location = new System.Drawing.Point(0, 8);
+            this.button36.Margin = new System.Windows.Forms.Padding(0);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(263, 23);
+            this.button36.TabIndex = 3;
+            this.button36.TabStop = false;
+            this.button36.Text = "button8";
+            this.toolTip1.SetToolTip(this.button36, resources.GetString("button36.ToolTip"));
+            this.button36.UseVisualStyleBackColor = true;
             // 
             // panel16
             // 
@@ -413,11 +543,27 @@ namespace Beatmap_Help_Tool
             this.panel16.Controls.Add(this.button37);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(0, 23);
-            this.panel16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
             this.panel16.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel16.Size = new System.Drawing.Size(263, 31);
             this.panel16.TabIndex = 4;
+            // 
+            // button37
+            // 
+            this.button37.AutoSize = true;
+            this.button37.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button37.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button37.Location = new System.Drawing.Point(0, 8);
+            this.button37.Margin = new System.Windows.Forms.Padding(0);
+            this.button37.Name = "button37";
+            this.button37.Size = new System.Drawing.Size(263, 23);
+            this.button37.TabIndex = 3;
+            this.button37.TabStop = false;
+            this.button37.Text = "button7";
+            this.toolTip1.SetToolTip(this.button37, "Loads the beatmap into the program if any\r\nmaps are open in the editor. If the sa" +
+        "me map\r\nis open, it will be re-loaded.");
+            this.button37.UseVisualStyleBackColor = true;
             // 
             // panel15
             // 
@@ -425,18 +571,33 @@ namespace Beatmap_Help_Tool
             this.panel15.Controls.Add(this.button35);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 0);
-            this.panel15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel15.Margin = new System.Windows.Forms.Padding(2);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(263, 23);
             this.panel15.TabIndex = 0;
+            // 
+            // button35
+            // 
+            this.button35.AutoSize = true;
+            this.button35.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button35.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button35.Location = new System.Drawing.Point(0, 0);
+            this.button35.Margin = new System.Windows.Forms.Padding(0);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(263, 23);
+            this.button35.TabIndex = 3;
+            this.button35.TabStop = false;
+            this.button35.Text = "button6";
+            this.toolTip1.SetToolTip(this.button35, resources.GetString("button35.ToolTip"));
+            this.button35.UseVisualStyleBackColor = true;
             // 
             // svFunctionsPage
             // 
             this.svFunctionsPage.Controls.Add(this.tableLayoutPanel3);
             this.svFunctionsPage.Location = new System.Drawing.Point(4, 4);
-            this.svFunctionsPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.svFunctionsPage.Margin = new System.Windows.Forms.Padding(2);
             this.svFunctionsPage.Name = "svFunctionsPage";
-            this.svFunctionsPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.svFunctionsPage.Padding = new System.Windows.Forms.Padding(2);
             this.svFunctionsPage.Size = new System.Drawing.Size(571, 153);
             this.svFunctionsPage.TabIndex = 1;
             this.svFunctionsPage.Text = "SV Functions";
@@ -453,7 +614,7 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel3.Controls.Add(this.panel24, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -470,7 +631,7 @@ namespace Beatmap_Help_Tool
             this.panel3.Controls.Add(this.panel23);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(2, 2);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(279, 145);
             this.panel3.TabIndex = 0;
@@ -482,11 +643,26 @@ namespace Beatmap_Help_Tool
             this.panel4.Controls.Add(this.button14);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 116);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel4.Size = new System.Drawing.Size(279, 29);
             this.panel4.TabIndex = 10;
+            // 
+            // button14
+            // 
+            this.button14.AutoSize = true;
+            this.button14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button14.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button14.Location = new System.Drawing.Point(0, 8);
+            this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(279, 23);
+            this.button14.TabIndex = 3;
+            this.button14.TabStop = false;
+            this.button14.Text = "button14";
+            this.button14.UseVisualStyleBackColor = true;
             // 
             // panel20
             // 
@@ -494,11 +670,26 @@ namespace Beatmap_Help_Tool
             this.panel20.Controls.Add(this.button15);
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 85);
-            this.panel20.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel20.Margin = new System.Windows.Forms.Padding(2);
             this.panel20.Name = "panel20";
             this.panel20.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel20.Size = new System.Drawing.Size(279, 31);
             this.panel20.TabIndex = 9;
+            // 
+            // button15
+            // 
+            this.button15.AutoSize = true;
+            this.button15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button15.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button15.Location = new System.Drawing.Point(0, 8);
+            this.button15.Margin = new System.Windows.Forms.Padding(0);
+            this.button15.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(279, 23);
+            this.button15.TabIndex = 3;
+            this.button15.TabStop = false;
+            this.button15.Text = "button15";
+            this.button15.UseVisualStyleBackColor = true;
             // 
             // panel21
             // 
@@ -506,23 +697,55 @@ namespace Beatmap_Help_Tool
             this.panel21.Controls.Add(this.button16);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel21.Location = new System.Drawing.Point(0, 54);
-            this.panel21.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel21.Margin = new System.Windows.Forms.Padding(2);
             this.panel21.Name = "panel21";
             this.panel21.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel21.Size = new System.Drawing.Size(279, 31);
             this.panel21.TabIndex = 8;
             // 
+            // button16
+            // 
+            this.button16.AutoSize = true;
+            this.button16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button16.Location = new System.Drawing.Point(0, 8);
+            this.button16.Margin = new System.Windows.Forms.Padding(0);
+            this.button16.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(279, 23);
+            this.button16.TabIndex = 3;
+            this.button16.TabStop = false;
+            this.button16.Text = "button16";
+            this.button16.UseVisualStyleBackColor = true;
+            // 
             // panel22
             // 
             this.panel22.AutoSize = true;
-            this.panel22.Controls.Add(this.button17);
+            this.panel22.Controls.Add(this.equalizeSvForAllPointsButton);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel22.Location = new System.Drawing.Point(0, 23);
-            this.panel22.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel22.Margin = new System.Windows.Forms.Padding(2);
             this.panel22.Name = "panel22";
             this.panel22.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel22.Size = new System.Drawing.Size(279, 31);
             this.panel22.TabIndex = 7;
+            // 
+            // equalizeSvForAllPointsButton
+            // 
+            this.equalizeSvForAllPointsButton.AutoSize = true;
+            this.equalizeSvForAllPointsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.equalizeSvForAllPointsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.equalizeSvForAllPointsButton.Location = new System.Drawing.Point(0, 8);
+            this.equalizeSvForAllPointsButton.Margin = new System.Windows.Forms.Padding(0);
+            this.equalizeSvForAllPointsButton.MinimumSize = new System.Drawing.Size(0, 19);
+            this.equalizeSvForAllPointsButton.Name = "equalizeSvForAllPointsButton";
+            this.equalizeSvForAllPointsButton.Size = new System.Drawing.Size(279, 23);
+            this.equalizeSvForAllPointsButton.TabIndex = 3;
+            this.equalizeSvForAllPointsButton.TabStop = false;
+            this.equalizeSvForAllPointsButton.Text = "Equalize SV for all points";
+            this.toolTip1.SetToolTip(this.equalizeSvForAllPointsButton, resources.GetString("equalizeSvForAllPointsButton.ToolTip"));
+            this.equalizeSvForAllPointsButton.UseVisualStyleBackColor = true;
+            this.equalizeSvForAllPointsButton.Click += new System.EventHandler(this.equalizeSvForAllPointsButton_Click);
             // 
             // panel23
             // 
@@ -531,10 +754,27 @@ namespace Beatmap_Help_Tool
             this.panel23.Controls.Add(this.svChangerButton);
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel23.Location = new System.Drawing.Point(0, 0);
-            this.panel23.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel23.Margin = new System.Windows.Forms.Padding(2);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(279, 23);
             this.panel23.TabIndex = 0;
+            // 
+            // svChangerButton
+            // 
+            this.svChangerButton.AutoSize = true;
+            this.svChangerButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.svChangerButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.svChangerButton.Location = new System.Drawing.Point(0, 0);
+            this.svChangerButton.Margin = new System.Windows.Forms.Padding(0);
+            this.svChangerButton.MinimumSize = new System.Drawing.Size(0, 19);
+            this.svChangerButton.Name = "svChangerButton";
+            this.svChangerButton.Size = new System.Drawing.Size(279, 23);
+            this.svChangerButton.TabIndex = 2;
+            this.svChangerButton.TabStop = false;
+            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
+            this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
+            this.svChangerButton.UseVisualStyleBackColor = true;
+            this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);
             // 
             // panel24
             // 
@@ -546,7 +786,7 @@ namespace Beatmap_Help_Tool
             this.panel24.Controls.Add(this.panel29);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel24.Location = new System.Drawing.Point(285, 2);
-            this.panel24.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel24.Margin = new System.Windows.Forms.Padding(2);
             this.panel24.Name = "panel24";
             this.panel24.Size = new System.Drawing.Size(280, 145);
             this.panel24.TabIndex = 1;
@@ -558,11 +798,26 @@ namespace Beatmap_Help_Tool
             this.panel25.Controls.Add(this.button19);
             this.panel25.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel25.Location = new System.Drawing.Point(0, 116);
-            this.panel25.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel25.Margin = new System.Windows.Forms.Padding(2);
             this.panel25.Name = "panel25";
             this.panel25.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel25.Size = new System.Drawing.Size(263, 31);
             this.panel25.TabIndex = 7;
+            // 
+            // button19
+            // 
+            this.button19.AutoSize = true;
+            this.button19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button19.Location = new System.Drawing.Point(0, 8);
+            this.button19.Margin = new System.Windows.Forms.Padding(0);
+            this.button19.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(263, 23);
+            this.button19.TabIndex = 3;
+            this.button19.TabStop = false;
+            this.button19.Text = "button19";
+            this.button19.UseVisualStyleBackColor = true;
             // 
             // panel26
             // 
@@ -570,11 +825,26 @@ namespace Beatmap_Help_Tool
             this.panel26.Controls.Add(this.button20);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel26.Location = new System.Drawing.Point(0, 85);
-            this.panel26.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel26.Margin = new System.Windows.Forms.Padding(2);
             this.panel26.Name = "panel26";
             this.panel26.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel26.Size = new System.Drawing.Size(263, 31);
             this.panel26.TabIndex = 6;
+            // 
+            // button20
+            // 
+            this.button20.AutoSize = true;
+            this.button20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button20.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button20.Location = new System.Drawing.Point(0, 8);
+            this.button20.Margin = new System.Windows.Forms.Padding(0);
+            this.button20.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(263, 23);
+            this.button20.TabIndex = 3;
+            this.button20.TabStop = false;
+            this.button20.Text = "button20";
+            this.button20.UseVisualStyleBackColor = true;
             // 
             // panel27
             // 
@@ -582,11 +852,26 @@ namespace Beatmap_Help_Tool
             this.panel27.Controls.Add(this.button21);
             this.panel27.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel27.Location = new System.Drawing.Point(0, 54);
-            this.panel27.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel27.Margin = new System.Windows.Forms.Padding(2);
             this.panel27.Name = "panel27";
             this.panel27.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel27.Size = new System.Drawing.Size(263, 31);
             this.panel27.TabIndex = 5;
+            // 
+            // button21
+            // 
+            this.button21.AutoSize = true;
+            this.button21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button21.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button21.Location = new System.Drawing.Point(0, 8);
+            this.button21.Margin = new System.Windows.Forms.Padding(0);
+            this.button21.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(263, 23);
+            this.button21.TabIndex = 3;
+            this.button21.TabStop = false;
+            this.button21.Text = "button21";
+            this.button21.UseVisualStyleBackColor = true;
             // 
             // panel28
             // 
@@ -594,11 +879,26 @@ namespace Beatmap_Help_Tool
             this.panel28.Controls.Add(this.button22);
             this.panel28.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel28.Location = new System.Drawing.Point(0, 23);
-            this.panel28.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel28.Margin = new System.Windows.Forms.Padding(2);
             this.panel28.Name = "panel28";
             this.panel28.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel28.Size = new System.Drawing.Size(263, 31);
             this.panel28.TabIndex = 4;
+            // 
+            // button22
+            // 
+            this.button22.AutoSize = true;
+            this.button22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button22.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button22.Location = new System.Drawing.Point(0, 8);
+            this.button22.Margin = new System.Windows.Forms.Padding(0);
+            this.button22.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(263, 23);
+            this.button22.TabIndex = 3;
+            this.button22.TabStop = false;
+            this.button22.Text = "button22";
+            this.button22.UseVisualStyleBackColor = true;
             // 
             // panel29
             // 
@@ -606,18 +906,33 @@ namespace Beatmap_Help_Tool
             this.panel29.Controls.Add(this.button23);
             this.panel29.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel29.Location = new System.Drawing.Point(0, 0);
-            this.panel29.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel29.Margin = new System.Windows.Forms.Padding(2);
             this.panel29.Name = "panel29";
             this.panel29.Size = new System.Drawing.Size(263, 23);
             this.panel29.TabIndex = 0;
+            // 
+            // button23
+            // 
+            this.button23.AutoSize = true;
+            this.button23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button23.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button23.Location = new System.Drawing.Point(0, 0);
+            this.button23.Margin = new System.Windows.Forms.Padding(0);
+            this.button23.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(263, 23);
+            this.button23.TabIndex = 3;
+            this.button23.TabStop = false;
+            this.button23.Text = "button23";
+            this.button23.UseVisualStyleBackColor = true;
             // 
             // bpmFunctionsPage
             // 
             this.bpmFunctionsPage.Controls.Add(this.tableLayoutPanel4);
             this.bpmFunctionsPage.Location = new System.Drawing.Point(4, 4);
-            this.bpmFunctionsPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bpmFunctionsPage.Margin = new System.Windows.Forms.Padding(2);
             this.bpmFunctionsPage.Name = "bpmFunctionsPage";
-            this.bpmFunctionsPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bpmFunctionsPage.Padding = new System.Windows.Forms.Padding(2);
             this.bpmFunctionsPage.Size = new System.Drawing.Size(571, 153);
             this.bpmFunctionsPage.TabIndex = 2;
             this.bpmFunctionsPage.Text = "BPM Functions";
@@ -634,7 +949,7 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel4.Controls.Add(this.panel34, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -650,7 +965,7 @@ namespace Beatmap_Help_Tool
             this.panel5.Controls.Add(this.panel33);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(2, 2);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(279, 145);
             this.panel5.TabIndex = 0;
@@ -662,11 +977,26 @@ namespace Beatmap_Help_Tool
             this.panel30.Controls.Add(this.button25);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel30.Location = new System.Drawing.Point(0, 85);
-            this.panel30.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel30.Margin = new System.Windows.Forms.Padding(2);
             this.panel30.Name = "panel30";
             this.panel30.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel30.Size = new System.Drawing.Size(279, 31);
             this.panel30.TabIndex = 9;
+            // 
+            // button25
+            // 
+            this.button25.AutoSize = true;
+            this.button25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button25.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button25.Location = new System.Drawing.Point(0, 8);
+            this.button25.Margin = new System.Windows.Forms.Padding(0);
+            this.button25.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(279, 23);
+            this.button25.TabIndex = 3;
+            this.button25.TabStop = false;
+            this.button25.Text = "button25";
+            this.button25.UseVisualStyleBackColor = true;
             // 
             // panel31
             // 
@@ -674,11 +1004,26 @@ namespace Beatmap_Help_Tool
             this.panel31.Controls.Add(this.button26);
             this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel31.Location = new System.Drawing.Point(0, 54);
-            this.panel31.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel31.Margin = new System.Windows.Forms.Padding(2);
             this.panel31.Name = "panel31";
             this.panel31.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel31.Size = new System.Drawing.Size(279, 31);
             this.panel31.TabIndex = 8;
+            // 
+            // button26
+            // 
+            this.button26.AutoSize = true;
+            this.button26.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button26.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button26.Location = new System.Drawing.Point(0, 8);
+            this.button26.Margin = new System.Windows.Forms.Padding(0);
+            this.button26.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(279, 23);
+            this.button26.TabIndex = 3;
+            this.button26.TabStop = false;
+            this.button26.Text = "button26";
+            this.button26.UseVisualStyleBackColor = true;
             // 
             // panel32
             // 
@@ -686,11 +1031,26 @@ namespace Beatmap_Help_Tool
             this.panel32.Controls.Add(this.button27);
             this.panel32.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel32.Location = new System.Drawing.Point(0, 23);
-            this.panel32.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel32.Margin = new System.Windows.Forms.Padding(2);
             this.panel32.Name = "panel32";
             this.panel32.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel32.Size = new System.Drawing.Size(279, 31);
             this.panel32.TabIndex = 7;
+            // 
+            // button27
+            // 
+            this.button27.AutoSize = true;
+            this.button27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button27.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button27.Location = new System.Drawing.Point(0, 8);
+            this.button27.Margin = new System.Windows.Forms.Padding(0);
+            this.button27.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(279, 23);
+            this.button27.TabIndex = 3;
+            this.button27.TabStop = false;
+            this.button27.Text = "button27";
+            this.button27.UseVisualStyleBackColor = true;
             // 
             // panel33
             // 
@@ -698,10 +1058,25 @@ namespace Beatmap_Help_Tool
             this.panel33.Controls.Add(this.button28);
             this.panel33.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel33.Location = new System.Drawing.Point(0, 0);
-            this.panel33.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel33.Margin = new System.Windows.Forms.Padding(2);
             this.panel33.Name = "panel33";
             this.panel33.Size = new System.Drawing.Size(279, 23);
             this.panel33.TabIndex = 0;
+            // 
+            // button28
+            // 
+            this.button28.AutoSize = true;
+            this.button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button28.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button28.Location = new System.Drawing.Point(0, 0);
+            this.button28.Margin = new System.Windows.Forms.Padding(0);
+            this.button28.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(279, 23);
+            this.button28.TabIndex = 2;
+            this.button28.TabStop = false;
+            this.button28.Text = "button28";
+            this.button28.UseVisualStyleBackColor = true;
             // 
             // panel34
             // 
@@ -713,7 +1088,7 @@ namespace Beatmap_Help_Tool
             this.panel34.Controls.Add(this.panel39);
             this.panel34.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel34.Location = new System.Drawing.Point(285, 2);
-            this.panel34.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel34.Margin = new System.Windows.Forms.Padding(2);
             this.panel34.Name = "panel34";
             this.panel34.Size = new System.Drawing.Size(280, 145);
             this.panel34.TabIndex = 1;
@@ -725,11 +1100,26 @@ namespace Beatmap_Help_Tool
             this.panel35.Controls.Add(this.button29);
             this.panel35.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel35.Location = new System.Drawing.Point(0, 116);
-            this.panel35.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel35.Margin = new System.Windows.Forms.Padding(2);
             this.panel35.Name = "panel35";
             this.panel35.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel35.Size = new System.Drawing.Size(263, 31);
             this.panel35.TabIndex = 7;
+            // 
+            // button29
+            // 
+            this.button29.AutoSize = true;
+            this.button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button29.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button29.Location = new System.Drawing.Point(0, 8);
+            this.button29.Margin = new System.Windows.Forms.Padding(0);
+            this.button29.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(263, 23);
+            this.button29.TabIndex = 3;
+            this.button29.TabStop = false;
+            this.button29.Text = "button29";
+            this.button29.UseVisualStyleBackColor = true;
             // 
             // panel36
             // 
@@ -737,11 +1127,26 @@ namespace Beatmap_Help_Tool
             this.panel36.Controls.Add(this.button30);
             this.panel36.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel36.Location = new System.Drawing.Point(0, 85);
-            this.panel36.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel36.Margin = new System.Windows.Forms.Padding(2);
             this.panel36.Name = "panel36";
             this.panel36.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel36.Size = new System.Drawing.Size(263, 31);
             this.panel36.TabIndex = 6;
+            // 
+            // button30
+            // 
+            this.button30.AutoSize = true;
+            this.button30.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button30.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button30.Location = new System.Drawing.Point(0, 8);
+            this.button30.Margin = new System.Windows.Forms.Padding(0);
+            this.button30.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(263, 23);
+            this.button30.TabIndex = 3;
+            this.button30.TabStop = false;
+            this.button30.Text = "button30";
+            this.button30.UseVisualStyleBackColor = true;
             // 
             // panel37
             // 
@@ -749,11 +1154,26 @@ namespace Beatmap_Help_Tool
             this.panel37.Controls.Add(this.button31);
             this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel37.Location = new System.Drawing.Point(0, 54);
-            this.panel37.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel37.Margin = new System.Windows.Forms.Padding(2);
             this.panel37.Name = "panel37";
             this.panel37.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel37.Size = new System.Drawing.Size(263, 31);
             this.panel37.TabIndex = 5;
+            // 
+            // button31
+            // 
+            this.button31.AutoSize = true;
+            this.button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button31.Location = new System.Drawing.Point(0, 8);
+            this.button31.Margin = new System.Windows.Forms.Padding(0);
+            this.button31.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(263, 23);
+            this.button31.TabIndex = 3;
+            this.button31.TabStop = false;
+            this.button31.Text = "button31";
+            this.button31.UseVisualStyleBackColor = true;
             // 
             // panel38
             // 
@@ -761,11 +1181,26 @@ namespace Beatmap_Help_Tool
             this.panel38.Controls.Add(this.button32);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel38.Location = new System.Drawing.Point(0, 23);
-            this.panel38.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel38.Margin = new System.Windows.Forms.Padding(2);
             this.panel38.Name = "panel38";
             this.panel38.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel38.Size = new System.Drawing.Size(263, 31);
             this.panel38.TabIndex = 4;
+            // 
+            // button32
+            // 
+            this.button32.AutoSize = true;
+            this.button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button32.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button32.Location = new System.Drawing.Point(0, 8);
+            this.button32.Margin = new System.Windows.Forms.Padding(0);
+            this.button32.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(263, 23);
+            this.button32.TabIndex = 3;
+            this.button32.TabStop = false;
+            this.button32.Text = "button32";
+            this.button32.UseVisualStyleBackColor = true;
             // 
             // panel39
             // 
@@ -773,10 +1208,25 @@ namespace Beatmap_Help_Tool
             this.panel39.Controls.Add(this.button33);
             this.panel39.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel39.Location = new System.Drawing.Point(0, 0);
-            this.panel39.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel39.Margin = new System.Windows.Forms.Padding(2);
             this.panel39.Name = "panel39";
             this.panel39.Size = new System.Drawing.Size(263, 23);
             this.panel39.TabIndex = 0;
+            // 
+            // button33
+            // 
+            this.button33.AutoSize = true;
+            this.button33.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button33.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button33.Location = new System.Drawing.Point(0, 0);
+            this.button33.Margin = new System.Windows.Forms.Padding(0);
+            this.button33.MinimumSize = new System.Drawing.Size(0, 19);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(263, 23);
+            this.button33.TabIndex = 3;
+            this.button33.TabStop = false;
+            this.button33.Text = "button33";
+            this.button33.UseVisualStyleBackColor = true;
             // 
             // nominationFunctionsPage
             // 
@@ -815,11 +1265,36 @@ namespace Beatmap_Help_Tool
             this.panel9.Controls.Add(this.panel44);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(2, 2);
-            this.panel9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel9.Margin = new System.Windows.Forms.Padding(2);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(281, 149);
             this.panel9.TabIndex = 0;
             this.panel9.MouseEnter += new System.EventHandler(this.processSender);
+            // 
+            // panel6
+            // 
+            this.panel6.AutoSize = true;
+            this.panel6.Controls.Add(this.unsnappedNoteBarlineButton);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel6.Location = new System.Drawing.Point(0, 111);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
+            this.panel6.Name = "panel6";
+            this.panel6.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
+            this.panel6.Size = new System.Drawing.Size(281, 31);
+            this.panel6.TabIndex = 3;
+            // 
+            // unsnappedNoteBarlineButton
+            // 
+            this.unsnappedNoteBarlineButton.AutoSize = true;
+            this.unsnappedNoteBarlineButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.unsnappedNoteBarlineButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.unsnappedNoteBarlineButton.Location = new System.Drawing.Point(0, 8);
+            this.unsnappedNoteBarlineButton.Name = "unsnappedNoteBarlineButton";
+            this.unsnappedNoteBarlineButton.Size = new System.Drawing.Size(281, 23);
+            this.unsnappedNoteBarlineButton.TabIndex = 0;
+            this.unsnappedNoteBarlineButton.Text = "Find notes that are off from barlines";
+            this.unsnappedNoteBarlineButton.UseVisualStyleBackColor = true;
+            this.unsnappedNoteBarlineButton.Click += new System.EventHandler(this.unsnappedNoteBarlineButton_Click);
             // 
             // panel46
             // 
@@ -828,11 +1303,27 @@ namespace Beatmap_Help_Tool
             this.panel46.Controls.Add(this.flyingBarlinesButton);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel46.Location = new System.Drawing.Point(0, 80);
-            this.panel46.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel46.Margin = new System.Windows.Forms.Padding(2);
             this.panel46.Name = "panel46";
             this.panel46.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel46.Size = new System.Drawing.Size(281, 31);
             this.panel46.TabIndex = 2;
+            // 
+            // flyingBarlinesButton
+            // 
+            this.flyingBarlinesButton.AutoSize = true;
+            this.flyingBarlinesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.flyingBarlinesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flyingBarlinesButton.Location = new System.Drawing.Point(0, 8);
+            this.flyingBarlinesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.flyingBarlinesButton.Name = "flyingBarlinesButton";
+            this.flyingBarlinesButton.Size = new System.Drawing.Size(281, 23);
+            this.flyingBarlinesButton.TabIndex = 0;
+            this.flyingBarlinesButton.TabStop = false;
+            this.flyingBarlinesButton.Text = "Find flying barlines in the mapset";
+            this.toolTip1.SetToolTip(this.flyingBarlinesButton, resources.GetString("flyingBarlinesButton.ToolTip"));
+            this.flyingBarlinesButton.UseVisualStyleBackColor = true;
+            this.flyingBarlinesButton.Click += new System.EventHandler(this.flyingBarlinesButton_Click);
             // 
             // panel45
             // 
@@ -840,11 +1331,26 @@ namespace Beatmap_Help_Tool
             this.panel45.Controls.Add(this.checkDoubleBarlinesButton);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel45.Location = new System.Drawing.Point(0, 36);
-            this.panel45.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel45.Margin = new System.Windows.Forms.Padding(2);
             this.panel45.Name = "panel45";
             this.panel45.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel45.Size = new System.Drawing.Size(281, 44);
             this.panel45.TabIndex = 1;
+            // 
+            // checkDoubleBarlinesButton
+            // 
+            this.checkDoubleBarlinesButton.AutoSize = true;
+            this.checkDoubleBarlinesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.checkDoubleBarlinesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.checkDoubleBarlinesButton.Location = new System.Drawing.Point(0, 8);
+            this.checkDoubleBarlinesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.checkDoubleBarlinesButton.Name = "checkDoubleBarlinesButton";
+            this.checkDoubleBarlinesButton.Size = new System.Drawing.Size(281, 36);
+            this.checkDoubleBarlinesButton.TabIndex = 0;
+            this.checkDoubleBarlinesButton.Text = "Check red points and double barlines for the\r\nentire mapset";
+            this.toolTip1.SetToolTip(this.checkDoubleBarlinesButton, resources.GetString("checkDoubleBarlinesButton.ToolTip"));
+            this.checkDoubleBarlinesButton.UseVisualStyleBackColor = true;
+            this.checkDoubleBarlinesButton.Click += new System.EventHandler(this.checkDoubleBarlinesButton_Click);
             // 
             // panel44
             // 
@@ -852,16 +1358,32 @@ namespace Beatmap_Help_Tool
             this.panel44.Controls.Add(this.timingInconsistenciesButton);
             this.panel44.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel44.Location = new System.Drawing.Point(0, 0);
-            this.panel44.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel44.Margin = new System.Windows.Forms.Padding(2);
             this.panel44.Name = "panel44";
             this.panel44.Size = new System.Drawing.Size(281, 36);
             this.panel44.TabIndex = 0;
+            // 
+            // timingInconsistenciesButton
+            // 
+            this.timingInconsistenciesButton.AutoSize = true;
+            this.timingInconsistenciesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.timingInconsistenciesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.timingInconsistenciesButton.Location = new System.Drawing.Point(0, 0);
+            this.timingInconsistenciesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.timingInconsistenciesButton.Name = "timingInconsistenciesButton";
+            this.timingInconsistenciesButton.Size = new System.Drawing.Size(281, 36);
+            this.timingInconsistenciesButton.TabIndex = 0;
+            this.timingInconsistenciesButton.Text = "Check red - green point inconsistencies on all\r\ndifficulties";
+            this.toolTip1.SetToolTip(this.timingInconsistenciesButton, "This function checks for volume, kiai and omitted\r\nbarline inconsistencies throug" +
+        "hout the entire\r\nmapset.");
+            this.timingInconsistenciesButton.UseVisualStyleBackColor = true;
+            this.timingInconsistenciesButton.Click += new System.EventHandler(this.timingInconsistenciesButton_Click);
             // 
             // panel43
             // 
             this.panel43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel43.Location = new System.Drawing.Point(287, 2);
-            this.panel43.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel43.Margin = new System.Windows.Forms.Padding(2);
             this.panel43.Name = "panel43";
             this.panel43.Size = new System.Drawing.Size(282, 149);
             this.panel43.TabIndex = 1;
@@ -870,7 +1392,7 @@ namespace Beatmap_Help_Tool
             // 
             this.settingsPage.Controls.Add(this.panel7);
             this.settingsPage.Location = new System.Drawing.Point(4, 4);
-            this.settingsPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.settingsPage.Margin = new System.Windows.Forms.Padding(2);
             this.settingsPage.Name = "settingsPage";
             this.settingsPage.Size = new System.Drawing.Size(571, 153);
             this.settingsPage.TabIndex = 3;
@@ -886,7 +1408,7 @@ namespace Beatmap_Help_Tool
             this.panel7.Controls.Add(this.tableLayoutPanel6);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(571, 153);
             this.panel7.TabIndex = 0;
@@ -903,7 +1425,7 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel7.Controls.Add(this.panel40, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 60);
-            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -1049,7 +1571,7 @@ namespace Beatmap_Help_Tool
             this.panel8.Controls.Add(this.label1);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(0, 27);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel8.Margin = new System.Windows.Forms.Padding(2);
             this.panel8.Name = "panel8";
             this.panel8.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
             this.panel8.Size = new System.Drawing.Size(571, 33);
@@ -1068,6 +1590,24 @@ namespace Beatmap_Help_Tool
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.loadCurrentBeatmapButton_Click);
             // 
+            // browseButton
+            // 
+            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.browseButton.AutoSize = true;
+            this.browseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.browseButton.Location = new System.Drawing.Point(384, 7);
+            this.browseButton.Margin = new System.Windows.Forms.Padding(2);
+            this.browseButton.MinimumSize = new System.Drawing.Size(0, 19);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(61, 23);
+            this.browseButton.TabIndex = 5;
+            this.browseButton.TabStop = false;
+            this.browseButton.Text = "Browse...";
+            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
+        "ise it will open the last folder.");
+            this.browseButton.UseVisualStyleBackColor = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
             // filePathTextBox
             // 
             this.filePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -1075,7 +1615,7 @@ namespace Beatmap_Help_Tool
             this.filePathTextBox.Enabled = false;
             this.filePathTextBox.ForeColor = System.Drawing.SystemColors.WindowText;
             this.filePathTextBox.Location = new System.Drawing.Point(67, 8);
-            this.filePathTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.filePathTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.filePathTextBox.Name = "filePathTextBox";
             this.filePathTextBox.ReadOnly = true;
             this.filePathTextBox.Size = new System.Drawing.Size(314, 20);
@@ -1104,576 +1644,12 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel6.Controls.Add(this.undoButton, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(571, 27);
             this.tableLayoutPanel6.TabIndex = 5;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 3;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
-            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
-            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(579, 37);
-            this.tableLayoutPanel5.TabIndex = 6;
-            // 
-            // toolTip1
-            // 
-            this.toolTip1.AutomaticDelay = 0;
-            this.toolTip1.AutoPopDelay = 32767;
-            this.toolTip1.InitialDelay = 500;
-            this.toolTip1.ReshowDelay = 100;
-            // 
-            // panel6
-            // 
-            this.panel6.AutoSize = true;
-            this.panel6.Controls.Add(this.unsnappedNoteBarlineButton);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(0, 111);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2);
-            this.panel6.Name = "panel6";
-            this.panel6.Padding = new System.Windows.Forms.Padding(0, 8, 0, 0);
-            this.panel6.Size = new System.Drawing.Size(281, 31);
-            this.panel6.TabIndex = 3;
-            // 
-            // loadCurrentBeatmapButton
-            // 
-            this.loadCurrentBeatmapButton.AutoSize = true;
-            this.loadCurrentBeatmapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.loadCurrentBeatmapButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.loadCurrentBeatmapButton.Location = new System.Drawing.Point(0, 8);
-            this.loadCurrentBeatmapButton.Margin = new System.Windows.Forms.Padding(0);
-            this.loadCurrentBeatmapButton.Name = "loadCurrentBeatmapButton";
-            this.loadCurrentBeatmapButton.Size = new System.Drawing.Size(262, 23);
-            this.loadCurrentBeatmapButton.TabIndex = 3;
-            this.loadCurrentBeatmapButton.TabStop = false;
-            this.loadCurrentBeatmapButton.Text = "Find current open beatmap in editor and load";
-            this.toolTip1.SetToolTip(this.loadCurrentBeatmapButton, "Loads the beatmap into the program if any\r\nmaps are open in the editor. If the sa" +
-        "me map\r\nis open, it will be re-loaded.");
-            this.loadCurrentBeatmapButton.UseVisualStyleBackColor = true;
-            this.loadCurrentBeatmapButton.Click += new System.EventHandler(this.loadCurrentBeatmapButton_Click);
-            // 
-            // playTaikoDiffsButton
-            // 
-            this.playTaikoDiffsButton.AutoSize = true;
-            this.playTaikoDiffsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.playTaikoDiffsButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.playTaikoDiffsButton.Location = new System.Drawing.Point(0, 8);
-            this.playTaikoDiffsButton.Margin = new System.Windows.Forms.Padding(0);
-            this.playTaikoDiffsButton.Name = "playTaikoDiffsButton";
-            this.playTaikoDiffsButton.Size = new System.Drawing.Size(262, 23);
-            this.playTaikoDiffsButton.TabIndex = 3;
-            this.playTaikoDiffsButton.TabStop = false;
-            this.playTaikoDiffsButton.Text = "Play taiko diffs simultaneously";
-            this.toolTip1.SetToolTip(this.playTaikoDiffsButton, "Opens a window where you can view every diff\r\nsimultaneously while the music is p" +
-        "laying.\r\nCurrently it\'s really primitive but will be improved\r\nas I find the mot" +
-        "ivation.");
-            this.playTaikoDiffsButton.UseVisualStyleBackColor = true;
-            this.playTaikoDiffsButton.Click += new System.EventHandler(this.playTaikoDiffsButton_Click);
-            // 
-            // snapGreenToRedPointsButton
-            // 
-            this.snapGreenToRedPointsButton.AutoSize = true;
-            this.snapGreenToRedPointsButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.snapGreenToRedPointsButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.snapGreenToRedPointsButton.Location = new System.Drawing.Point(0, 8);
-            this.snapGreenToRedPointsButton.Margin = new System.Windows.Forms.Padding(0);
-            this.snapGreenToRedPointsButton.Name = "snapGreenToRedPointsButton";
-            this.snapGreenToRedPointsButton.Size = new System.Drawing.Size(262, 36);
-            this.snapGreenToRedPointsButton.TabIndex = 3;
-            this.snapGreenToRedPointsButton.TabStop = false;
-            this.snapGreenToRedPointsButton.Text = "Snap green points onto red points in a\r\nspecific region";
-            this.toolTip1.SetToolTip(this.snapGreenToRedPointsButton, resources.GetString("snapGreenToRedPointsButton.ToolTip"));
-            this.snapGreenToRedPointsButton.UseVisualStyleBackColor = true;
-            this.snapGreenToRedPointsButton.Click += new System.EventHandler(this.snapGreenToRedPointsButton_Click);
-            // 
-            // positionAllNotesButton
-            // 
-            this.positionAllNotesButton.AutoSize = true;
-            this.positionAllNotesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.positionAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.positionAllNotesButton.Location = new System.Drawing.Point(0, 8);
-            this.positionAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
-            this.positionAllNotesButton.Name = "positionAllNotesButton";
-            this.positionAllNotesButton.Size = new System.Drawing.Size(262, 23);
-            this.positionAllNotesButton.TabIndex = 3;
-            this.positionAllNotesButton.TabStop = false;
-            this.positionAllNotesButton.Text = "Position all notes (Taiko mode)";
-            this.toolTip1.SetToolTip(this.positionAllNotesButton, "Puts the notes by their type. By default, it puts dons are top-left, kats are top" +
-        "-right,\ndon finishers are bottom-left and kat finishers are bottom-right side.\nY" +
-        "ou can customize the positions, though.");
-            this.positionAllNotesButton.UseVisualStyleBackColor = true;
-            this.positionAllNotesButton.Click += new System.EventHandler(this.positionAllNotesButton_Click);
-            // 
-            // whistleToClapButton
-            // 
-            this.whistleToClapButton.AutoSize = true;
-            this.whistleToClapButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.whistleToClapButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.whistleToClapButton.Location = new System.Drawing.Point(0, 0);
-            this.whistleToClapButton.Margin = new System.Windows.Forms.Padding(0);
-            this.whistleToClapButton.Name = "whistleToClapButton";
-            this.whistleToClapButton.Size = new System.Drawing.Size(262, 23);
-            this.whistleToClapButton.TabIndex = 2;
-            this.whistleToClapButton.TabStop = false;
-            this.whistleToClapButton.Text = "Set whistle sounds to claps";
-            this.toolTip1.SetToolTip(this.whistleToClapButton, "In the beatmap, sets all the whistle sounds to claps, including finishers. \r\nGood" +
-        " for mappers that hate whistle sounds while listening hitsounds in the editor :)" +
-        "");
-            this.whistleToClapButton.UseVisualStyleBackColor = true;
-            this.whistleToClapButton.Click += new System.EventHandler(this.whistleToClapButton_Click);
-            // 
-            // button10
-            // 
-            this.button10.AutoSize = true;
-            this.button10.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button10.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button10.Location = new System.Drawing.Point(0, 8);
-            this.button10.Margin = new System.Windows.Forms.Padding(0);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(263, 23);
-            this.button10.TabIndex = 3;
-            this.button10.TabStop = false;
-            this.button10.Text = "button10";
-            this.button10.UseVisualStyleBackColor = true;
-            // 
-            // button9
-            // 
-            this.button9.AutoSize = true;
-            this.button9.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button9.Location = new System.Drawing.Point(0, 8);
-            this.button9.Margin = new System.Windows.Forms.Padding(0);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(263, 23);
-            this.button9.TabIndex = 3;
-            this.button9.TabStop = false;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = true;
-            // 
-            // button36
-            // 
-            this.button36.AutoSize = true;
-            this.button36.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button36.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button36.Location = new System.Drawing.Point(0, 8);
-            this.button36.Margin = new System.Windows.Forms.Padding(0);
-            this.button36.Name = "button36";
-            this.button36.Size = new System.Drawing.Size(263, 23);
-            this.button36.TabIndex = 3;
-            this.button36.TabStop = false;
-            this.button36.Text = "button8";
-            this.toolTip1.SetToolTip(this.button36, resources.GetString("button36.ToolTip"));
-            this.button36.UseVisualStyleBackColor = true;
-            // 
-            // button37
-            // 
-            this.button37.AutoSize = true;
-            this.button37.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button37.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button37.Location = new System.Drawing.Point(0, 8);
-            this.button37.Margin = new System.Windows.Forms.Padding(0);
-            this.button37.Name = "button37";
-            this.button37.Size = new System.Drawing.Size(263, 23);
-            this.button37.TabIndex = 3;
-            this.button37.TabStop = false;
-            this.button37.Text = "button7";
-            this.toolTip1.SetToolTip(this.button37, "Loads the beatmap into the program if any\r\nmaps are open in the editor. If the sa" +
-        "me map\r\nis open, it will be re-loaded.");
-            this.button37.UseVisualStyleBackColor = true;
-            // 
-            // button35
-            // 
-            this.button35.AutoSize = true;
-            this.button35.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button35.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button35.Location = new System.Drawing.Point(0, 0);
-            this.button35.Margin = new System.Windows.Forms.Padding(0);
-            this.button35.Name = "button35";
-            this.button35.Size = new System.Drawing.Size(263, 23);
-            this.button35.TabIndex = 3;
-            this.button35.TabStop = false;
-            this.button35.Text = "button6";
-            this.toolTip1.SetToolTip(this.button35, resources.GetString("button35.ToolTip"));
-            this.button35.UseVisualStyleBackColor = true;
-            // 
-            // button14
-            // 
-            this.button14.AutoSize = true;
-            this.button14.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button14.Location = new System.Drawing.Point(0, 8);
-            this.button14.Margin = new System.Windows.Forms.Padding(0);
-            this.button14.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(279, 23);
-            this.button14.TabIndex = 3;
-            this.button14.TabStop = false;
-            this.button14.Text = "button14";
-            this.button14.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.AutoSize = true;
-            this.button15.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button15.Location = new System.Drawing.Point(0, 8);
-            this.button15.Margin = new System.Windows.Forms.Padding(0);
-            this.button15.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(279, 23);
-            this.button15.TabIndex = 3;
-            this.button15.TabStop = false;
-            this.button15.Text = "button15";
-            this.button15.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            this.button16.AutoSize = true;
-            this.button16.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button16.Location = new System.Drawing.Point(0, 8);
-            this.button16.Margin = new System.Windows.Forms.Padding(0);
-            this.button16.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(279, 23);
-            this.button16.TabIndex = 3;
-            this.button16.TabStop = false;
-            this.button16.Text = "button16";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // button17
-            // 
-            this.button17.AutoSize = true;
-            this.button17.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button17.Location = new System.Drawing.Point(0, 8);
-            this.button17.Margin = new System.Windows.Forms.Padding(0);
-            this.button17.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(279, 23);
-            this.button17.TabIndex = 3;
-            this.button17.TabStop = false;
-            this.button17.Text = "button17";
-            this.button17.UseVisualStyleBackColor = true;
-            // 
-            // svChangerButton
-            // 
-            this.svChangerButton.AutoSize = true;
-            this.svChangerButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.svChangerButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.svChangerButton.Location = new System.Drawing.Point(0, 0);
-            this.svChangerButton.Margin = new System.Windows.Forms.Padding(0);
-            this.svChangerButton.MinimumSize = new System.Drawing.Size(0, 19);
-            this.svChangerButton.Name = "svChangerButton";
-            this.svChangerButton.Size = new System.Drawing.Size(279, 23);
-            this.svChangerButton.TabIndex = 2;
-            this.svChangerButton.TabStop = false;
-            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
-            this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
-            this.svChangerButton.UseVisualStyleBackColor = true;
-            this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);
-            // 
-            // button19
-            // 
-            this.button19.AutoSize = true;
-            this.button19.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button19.Location = new System.Drawing.Point(0, 8);
-            this.button19.Margin = new System.Windows.Forms.Padding(0);
-            this.button19.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(263, 23);
-            this.button19.TabIndex = 3;
-            this.button19.TabStop = false;
-            this.button19.Text = "button19";
-            this.button19.UseVisualStyleBackColor = true;
-            // 
-            // button20
-            // 
-            this.button20.AutoSize = true;
-            this.button20.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button20.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button20.Location = new System.Drawing.Point(0, 8);
-            this.button20.Margin = new System.Windows.Forms.Padding(0);
-            this.button20.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(263, 23);
-            this.button20.TabIndex = 3;
-            this.button20.TabStop = false;
-            this.button20.Text = "button20";
-            this.button20.UseVisualStyleBackColor = true;
-            // 
-            // button21
-            // 
-            this.button21.AutoSize = true;
-            this.button21.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button21.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button21.Location = new System.Drawing.Point(0, 8);
-            this.button21.Margin = new System.Windows.Forms.Padding(0);
-            this.button21.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(263, 23);
-            this.button21.TabIndex = 3;
-            this.button21.TabStop = false;
-            this.button21.Text = "button21";
-            this.button21.UseVisualStyleBackColor = true;
-            // 
-            // button22
-            // 
-            this.button22.AutoSize = true;
-            this.button22.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button22.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button22.Location = new System.Drawing.Point(0, 8);
-            this.button22.Margin = new System.Windows.Forms.Padding(0);
-            this.button22.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(263, 23);
-            this.button22.TabIndex = 3;
-            this.button22.TabStop = false;
-            this.button22.Text = "button22";
-            this.button22.UseVisualStyleBackColor = true;
-            // 
-            // button23
-            // 
-            this.button23.AutoSize = true;
-            this.button23.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button23.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button23.Location = new System.Drawing.Point(0, 0);
-            this.button23.Margin = new System.Windows.Forms.Padding(0);
-            this.button23.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(263, 23);
-            this.button23.TabIndex = 3;
-            this.button23.TabStop = false;
-            this.button23.Text = "button23";
-            this.button23.UseVisualStyleBackColor = true;
-            // 
-            // button25
-            // 
-            this.button25.AutoSize = true;
-            this.button25.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button25.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button25.Location = new System.Drawing.Point(0, 8);
-            this.button25.Margin = new System.Windows.Forms.Padding(0);
-            this.button25.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(279, 23);
-            this.button25.TabIndex = 3;
-            this.button25.TabStop = false;
-            this.button25.Text = "button25";
-            this.button25.UseVisualStyleBackColor = true;
-            // 
-            // button26
-            // 
-            this.button26.AutoSize = true;
-            this.button26.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button26.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button26.Location = new System.Drawing.Point(0, 8);
-            this.button26.Margin = new System.Windows.Forms.Padding(0);
-            this.button26.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(279, 23);
-            this.button26.TabIndex = 3;
-            this.button26.TabStop = false;
-            this.button26.Text = "button26";
-            this.button26.UseVisualStyleBackColor = true;
-            // 
-            // button27
-            // 
-            this.button27.AutoSize = true;
-            this.button27.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button27.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button27.Location = new System.Drawing.Point(0, 8);
-            this.button27.Margin = new System.Windows.Forms.Padding(0);
-            this.button27.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(279, 23);
-            this.button27.TabIndex = 3;
-            this.button27.TabStop = false;
-            this.button27.Text = "button27";
-            this.button27.UseVisualStyleBackColor = true;
-            // 
-            // button28
-            // 
-            this.button28.AutoSize = true;
-            this.button28.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button28.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button28.Location = new System.Drawing.Point(0, 0);
-            this.button28.Margin = new System.Windows.Forms.Padding(0);
-            this.button28.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(279, 23);
-            this.button28.TabIndex = 2;
-            this.button28.TabStop = false;
-            this.button28.Text = "button28";
-            this.button28.UseVisualStyleBackColor = true;
-            // 
-            // button29
-            // 
-            this.button29.AutoSize = true;
-            this.button29.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button29.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button29.Location = new System.Drawing.Point(0, 8);
-            this.button29.Margin = new System.Windows.Forms.Padding(0);
-            this.button29.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(263, 23);
-            this.button29.TabIndex = 3;
-            this.button29.TabStop = false;
-            this.button29.Text = "button29";
-            this.button29.UseVisualStyleBackColor = true;
-            // 
-            // button30
-            // 
-            this.button30.AutoSize = true;
-            this.button30.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button30.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button30.Location = new System.Drawing.Point(0, 8);
-            this.button30.Margin = new System.Windows.Forms.Padding(0);
-            this.button30.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(263, 23);
-            this.button30.TabIndex = 3;
-            this.button30.TabStop = false;
-            this.button30.Text = "button30";
-            this.button30.UseVisualStyleBackColor = true;
-            // 
-            // button31
-            // 
-            this.button31.AutoSize = true;
-            this.button31.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button31.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button31.Location = new System.Drawing.Point(0, 8);
-            this.button31.Margin = new System.Windows.Forms.Padding(0);
-            this.button31.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(263, 23);
-            this.button31.TabIndex = 3;
-            this.button31.TabStop = false;
-            this.button31.Text = "button31";
-            this.button31.UseVisualStyleBackColor = true;
-            // 
-            // button32
-            // 
-            this.button32.AutoSize = true;
-            this.button32.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button32.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button32.Location = new System.Drawing.Point(0, 8);
-            this.button32.Margin = new System.Windows.Forms.Padding(0);
-            this.button32.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button32.Name = "button32";
-            this.button32.Size = new System.Drawing.Size(263, 23);
-            this.button32.TabIndex = 3;
-            this.button32.TabStop = false;
-            this.button32.Text = "button32";
-            this.button32.UseVisualStyleBackColor = true;
-            // 
-            // button33
-            // 
-            this.button33.AutoSize = true;
-            this.button33.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button33.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button33.Location = new System.Drawing.Point(0, 0);
-            this.button33.Margin = new System.Windows.Forms.Padding(0);
-            this.button33.MinimumSize = new System.Drawing.Size(0, 19);
-            this.button33.Name = "button33";
-            this.button33.Size = new System.Drawing.Size(263, 23);
-            this.button33.TabIndex = 3;
-            this.button33.TabStop = false;
-            this.button33.Text = "button33";
-            this.button33.UseVisualStyleBackColor = true;
-            // 
-            // unsnappedNoteBarlineButton
-            // 
-            this.unsnappedNoteBarlineButton.AutoSize = true;
-            this.unsnappedNoteBarlineButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.unsnappedNoteBarlineButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.unsnappedNoteBarlineButton.Location = new System.Drawing.Point(0, 8);
-            this.unsnappedNoteBarlineButton.Name = "unsnappedNoteBarlineButton";
-            this.unsnappedNoteBarlineButton.Size = new System.Drawing.Size(281, 23);
-            this.unsnappedNoteBarlineButton.TabIndex = 0;
-            this.unsnappedNoteBarlineButton.Text = "Find notes that are off from barlines";
-            this.unsnappedNoteBarlineButton.UseVisualStyleBackColor = true;
-            this.unsnappedNoteBarlineButton.Click += new System.EventHandler(this.unsnappedNoteBarlineButton_Click);
-            // 
-            // flyingBarlinesButton
-            // 
-            this.flyingBarlinesButton.AutoSize = true;
-            this.flyingBarlinesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.flyingBarlinesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flyingBarlinesButton.Location = new System.Drawing.Point(0, 8);
-            this.flyingBarlinesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.flyingBarlinesButton.Name = "flyingBarlinesButton";
-            this.flyingBarlinesButton.Size = new System.Drawing.Size(281, 23);
-            this.flyingBarlinesButton.TabIndex = 0;
-            this.flyingBarlinesButton.TabStop = false;
-            this.flyingBarlinesButton.Text = "Find flying barlines in the mapset";
-            this.toolTip1.SetToolTip(this.flyingBarlinesButton, resources.GetString("flyingBarlinesButton.ToolTip"));
-            this.flyingBarlinesButton.UseVisualStyleBackColor = true;
-            this.flyingBarlinesButton.Click += new System.EventHandler(this.flyingBarlinesButton_Click);
-            // 
-            // checkDoubleBarlinesButton
-            // 
-            this.checkDoubleBarlinesButton.AutoSize = true;
-            this.checkDoubleBarlinesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.checkDoubleBarlinesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.checkDoubleBarlinesButton.Location = new System.Drawing.Point(0, 8);
-            this.checkDoubleBarlinesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.checkDoubleBarlinesButton.Name = "checkDoubleBarlinesButton";
-            this.checkDoubleBarlinesButton.Size = new System.Drawing.Size(281, 36);
-            this.checkDoubleBarlinesButton.TabIndex = 0;
-            this.checkDoubleBarlinesButton.Text = "Check red points and double barlines for the\r\nentire mapset";
-            this.toolTip1.SetToolTip(this.checkDoubleBarlinesButton, resources.GetString("checkDoubleBarlinesButton.ToolTip"));
-            this.checkDoubleBarlinesButton.UseVisualStyleBackColor = true;
-            this.checkDoubleBarlinesButton.Click += new System.EventHandler(this.checkDoubleBarlinesButton_Click);
-            // 
-            // timingInconsistenciesButton
-            // 
-            this.timingInconsistenciesButton.AutoSize = true;
-            this.timingInconsistenciesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.timingInconsistenciesButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.timingInconsistenciesButton.Location = new System.Drawing.Point(0, 0);
-            this.timingInconsistenciesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.timingInconsistenciesButton.Name = "timingInconsistenciesButton";
-            this.timingInconsistenciesButton.Size = new System.Drawing.Size(281, 36);
-            this.timingInconsistenciesButton.TabIndex = 0;
-            this.timingInconsistenciesButton.Text = "Check red - green point inconsistencies on all\r\ndifficulties";
-            this.toolTip1.SetToolTip(this.timingInconsistenciesButton, "This function checks for volume, kiai and omitted\r\nbarline inconsistencies throug" +
-        "hout the entire\r\nmapset.");
-            this.timingInconsistenciesButton.UseVisualStyleBackColor = true;
-            this.timingInconsistenciesButton.Click += new System.EventHandler(this.timingInconsistenciesButton_Click);
-            // 
-            // browseButton
-            // 
-            this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.AutoSize = true;
-            this.browseButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.browseButton.Location = new System.Drawing.Point(384, 7);
-            this.browseButton.Margin = new System.Windows.Forms.Padding(2);
-            this.browseButton.MinimumSize = new System.Drawing.Size(0, 19);
-            this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(61, 23);
-            this.browseButton.TabIndex = 5;
-            this.browseButton.TabStop = false;
-            this.browseButton.Text = "Browse...";
-            this.toolTip1.SetToolTip(this.browseButton, "Browses a map. If osu! is running, it will open the songs folder directly, otherw" +
-        "ise it will open the last folder.");
-            this.browseButton.UseVisualStyleBackColor = true;
-            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
             // 
             // redoButton
             // 
@@ -1810,6 +1786,25 @@ namespace Beatmap_Help_Tool
             this.kiaiColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.kiaiColumn.ToolTipText = "Shows whether the point has a kiai or not.";
             // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 3;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
+            this.tableLayoutPanel5.Controls.Add(this.inheritedPointsButton, 2, 0);
+            this.tableLayoutPanel5.Controls.Add(this.timingPointsButton, 1, 0);
+            this.tableLayoutPanel5.Controls.Add(this.allPointsButton, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(2, 2);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(579, 37);
+            this.tableLayoutPanel5.TabIndex = 6;
+            // 
             // inheritedPointsButton
             // 
             this.inheritedPointsButton.AutoSize = true;
@@ -1860,13 +1855,20 @@ namespace Beatmap_Help_Tool
             this.allPointsButton.UseVisualStyleBackColor = true;
             this.allPointsButton.Click += new System.EventHandler(this.allPointsButton_Click);
             // 
+            // toolTip1
+            // 
+            this.toolTip1.AutomaticDelay = 0;
+            this.toolTip1.AutoPopDelay = 32767;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.ReshowDelay = 100;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(583, 449);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(483, 396);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -1955,6 +1957,8 @@ namespace Beatmap_Help_Tool
             this.tableLayoutPanel8.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.panel46.ResumeLayout(false);
             this.panel46.PerformLayout();
             this.panel45.ResumeLayout(false);
@@ -1974,11 +1978,9 @@ namespace Beatmap_Help_Tool
             this.panel8.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainDisplayView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2033,7 +2035,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel21;
         private MultilineButton button16;
         private System.Windows.Forms.Panel panel22;
-        private MultilineButton button17;
+        private MultilineButton equalizeSvForAllPointsButton;
         private System.Windows.Forms.Panel panel23;
         private MultilineButton svChangerButton;
         private System.Windows.Forms.Panel panel24;

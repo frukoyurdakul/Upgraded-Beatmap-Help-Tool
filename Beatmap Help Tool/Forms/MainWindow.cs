@@ -52,6 +52,28 @@ namespace Beatmap_Help_Tool
         }
 
         #region Util functions
+        private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
+        {
+            if (htmlDisplayer.containsElements())
+            {
+                this.Invoke(() =>
+                {
+                    using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                    {
+                        htmlDisplayer.recycle();
+                        form.ShowDialog();
+                        form.Dispose();
+                    }
+                });
+            }
+            else
+                this.Invoke(() => showSuccessMessage(successMessage));
+        }
+
+        private void showSuccessMessage(string text)
+        {
+            MessageBoxUtils.show(text);
+        }
 
         private void hideButtonsWithNoClickListeners(Control control)
         {
@@ -1255,29 +1277,6 @@ namespace Beatmap_Help_Tool
             }
         }
 
-        private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
-        {
-            if (htmlDisplayer.containsElements())
-            {
-                this.Invoke(() =>
-                {
-                    using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
-                    {
-                        htmlDisplayer.recycle();
-                        form.ShowDialog();
-                        form.Dispose();
-                    }
-                });
-            }
-            else
-                this.Invoke(() => showSuccessMessage(successMessage));
-        }
-
-        private void showSuccessMessage(string text)
-        {
-            MessageBoxUtils.show(text);
-        }
-
         private void unsnappedNoteBarlineButton_Click(object sender, EventArgs e)
         {
             if (checkBeatmapLoaded())
@@ -1367,6 +1366,23 @@ namespace Beatmap_Help_Tool
                     // If there is content in the displayer, show it or show the success message.
                     handleHtmlDisplayer(htmlDisplayer, "No unsnapped objects on barlines are found in this mapset.");
                 });
+            }
+        }
+        private void equalizeSvForAllPointsButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                if (!beatmap.isModeTaiko())
+                {
+                    if (MessageBoxUtils.showQuestionYesNo("You are about to open a map that is not osu!taiko. This function is specifically designed for osu!taiko maps." + Environment.NewLine + Environment.NewLine + "Are you sure you want to continue?") == DialogResult.No)
+                    {
+                        MessageBoxUtils.show("Process aborted.");
+                        return;
+                    }
+                }
+
+                // Now open the adjustment panel.
+
             }
         }
     }

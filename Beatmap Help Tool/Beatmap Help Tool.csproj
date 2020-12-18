@@ -81,6 +81,12 @@
     <Compile Include="BeatmapTools\InheritedPointUtils.cs" />
     <Compile Include="BeatmapTools\TimingPointUtils.cs" />
     <Compile Include="BeatmapTools\VerifyUtils.cs" />
+    <Compile Include="Forms\EqualizeSvForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EqualizeSvForm.Designer.cs">
+      <DependentUpon>EqualizeSvForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InconsistencyResultForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +147,9 @@
     <Compile Include="Views\PlaceHolderTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\EqualizeSvForm.resx">
+      <DependentUpon>EqualizeSvForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\InconsistencyResultForm.resx">
       <DependentUpon>InconsistencyResultForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -168,6 +177,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <Compile Include="Models\EqualizeSvData.cs" />
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest">

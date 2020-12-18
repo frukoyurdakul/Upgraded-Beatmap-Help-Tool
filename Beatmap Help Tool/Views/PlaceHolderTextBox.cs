@@ -31,10 +31,19 @@ namespace Beatmap_Help_Tool.Views
             }
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            if (DesignMode)
+                base.Text = "";
+            else
+                setPlaceholder();
+        }
+
         //when the control loses focus, the placeholder is shown
         private void setPlaceholder()
         {
-            if (string.IsNullOrEmpty(base.Text))
+            if (IsHandleCreated && string.IsNullOrEmpty(base.Text))
             {
                 base.Text = PlaceHolderText;
                 ForeColor = Color.FromArgb(80, 80, 80);
@@ -54,6 +63,15 @@ namespace Beatmap_Help_Tool.Views
                 isPlaceHolder = false;
             }
         }
+
+        private Form findFormParent()
+        {
+            Control control = this;
+            while (!(control.Parent is Form))
+                control = control.Parent;
+            return (Form)control;
+        }
+
         public PlaceHolderTextBox()
         {
             GotFocus += removePlaceHolder;

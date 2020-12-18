@@ -77,7 +77,7 @@ namespace Beatmap_Help_Tool.Forms
             this.activateTimeModeCheckBox.Checked = true;
             this.activateTimeModeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.activateTimeModeCheckBox.Location = new System.Drawing.Point(89, 88);
-            this.activateTimeModeCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.activateTimeModeCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.activateTimeModeCheckBox.Name = "activateTimeModeCheckBox";
             this.activateTimeModeCheckBox.Size = new System.Drawing.Size(160, 17);
             this.activateTimeModeCheckBox.TabIndex = 1;
@@ -91,7 +91,7 @@ namespace Beatmap_Help_Tool.Forms
             this.rememberCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.rememberCheckBox.AutoSize = true;
             this.rememberCheckBox.Location = new System.Drawing.Point(46, 113);
-            this.rememberCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rememberCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.rememberCheckBox.Name = "rememberCheckBox";
             this.rememberCheckBox.Size = new System.Drawing.Size(246, 17);
             this.rememberCheckBox.TabIndex = 2;
@@ -175,7 +175,7 @@ namespace Beatmap_Help_Tool.Forms
             this.putPointsByNotesCheckBox.Checked = true;
             this.putPointsByNotesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.putPointsByNotesCheckBox.Location = new System.Drawing.Point(103, 354);
-            this.putPointsByNotesCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.putPointsByNotesCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.putPointsByNotesCheckBox.Name = "putPointsByNotesCheckBox";
             this.putPointsByNotesCheckBox.Size = new System.Drawing.Size(142, 17);
             this.putPointsByNotesCheckBox.TabIndex = 15;
@@ -195,7 +195,7 @@ namespace Beatmap_Help_Tool.Forms
             "Exponential",
             "Logarithmic"});
             this.increaseModeComboBox.Location = new System.Drawing.Point(115, 142);
-            this.increaseModeComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.increaseModeComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.increaseModeComboBox.Name = "increaseModeComboBox";
             this.increaseModeComboBox.Size = new System.Drawing.Size(222, 21);
             this.increaseModeComboBox.TabIndex = 16;
@@ -217,7 +217,7 @@ namespace Beatmap_Help_Tool.Forms
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.applyButton.Location = new System.Drawing.Point(93, 395);
-            this.applyButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.applyButton.Margin = new System.Windows.Forms.Padding(2);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(160, 24);
             this.applyButton.TabIndex = 18;
@@ -262,10 +262,10 @@ namespace Beatmap_Help_Tool.Forms
             this.increaseMultiplierTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.increaseMultiplierTextBox.Enabled = false;
-            this.increaseMultiplierTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.increaseMultiplierTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.increaseMultiplierTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.increaseMultiplierTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.increaseMultiplierTextBox.Location = new System.Drawing.Point(115, 167);
-            this.increaseMultiplierTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.increaseMultiplierTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.increaseMultiplierTextBox.Name = "increaseMultiplierTextBox";
             this.increaseMultiplierTextBox.PlaceHolderText = "Defines the exponential increase rate. Go higher value for steeper results.";
             this.increaseMultiplierTextBox.Size = new System.Drawing.Size(222, 19);
@@ -275,10 +275,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.lastTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lastTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.lastTimeTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.lastTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.lastTimeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.lastTimeTextBox.Location = new System.Drawing.Point(115, 257);
-            this.lastTimeTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lastTimeTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.lastTimeTextBox.Name = "lastTimeTextBox";
             this.lastTimeTextBox.PlaceHolderText = "Copy the last point offset.";
             this.lastTimeTextBox.Size = new System.Drawing.Size(222, 19);
@@ -288,10 +288,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.lastSvTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lastSvTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.lastSvTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.lastSvTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.lastSvTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.lastSvTextBox.Location = new System.Drawing.Point(115, 235);
-            this.lastSvTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lastSvTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.lastSvTextBox.Name = "lastSvTextBox";
             this.lastSvTextBox.PlaceHolderText = "Set last SV value. Has to be above 0.";
             this.lastSvTextBox.Size = new System.Drawing.Size(222, 19);
@@ -301,10 +301,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.firstSvTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.firstSvTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.firstSvTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.firstSvTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.firstSvTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.firstSvTextBox.Location = new System.Drawing.Point(115, 212);
-            this.firstSvTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstSvTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.firstSvTextBox.Name = "firstSvTextBox";
             this.firstSvTextBox.PlaceHolderText = "Set first SV value. Has to be above 0.";
             this.firstSvTextBox.Size = new System.Drawing.Size(222, 19);
@@ -314,10 +314,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.firstTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.firstTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.firstTimeTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.firstTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.firstTimeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.firstTimeTextBox.Location = new System.Drawing.Point(115, 189);
-            this.firstTimeTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.firstTimeTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.firstTimeTextBox.Name = "firstTimeTextBox";
             this.firstTimeTextBox.PlaceHolderText = "Copy the time of the SV change start.";
             this.firstTimeTextBox.Size = new System.Drawing.Size(222, 19);
@@ -327,10 +327,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.svOffsetTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.svOffsetTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.svOffsetTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.svOffsetTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.svOffsetTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.svOffsetTextBox.Location = new System.Drawing.Point(115, 323);
-            this.svOffsetTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.svOffsetTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.svOffsetTextBox.Name = "svOffsetTextBox";
             this.svOffsetTextBox.PlaceHolderText = "e.g. 1/4. All snaps are supported.";
             this.svOffsetTextBox.Size = new System.Drawing.Size(222, 19);
@@ -342,10 +342,10 @@ namespace Beatmap_Help_Tool.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridSnapTextBox.BackColor = System.Drawing.SystemColors.Window;
             this.gridSnapTextBox.Enabled = false;
-            this.gridSnapTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.gridSnapTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.gridSnapTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.gridSnapTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.gridSnapTextBox.Location = new System.Drawing.Point(115, 301);
-            this.gridSnapTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gridSnapTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.gridSnapTextBox.Name = "gridSnapTextBox";
             this.gridSnapTextBox.PlaceHolderText = "(Optional) e.g. 1/4. All snaps are supported.";
             this.gridSnapTextBox.Size = new System.Drawing.Size(222, 19);
@@ -355,10 +355,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.targetBpmTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.targetBpmTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic);
-            this.targetBpmTextBox.ForeColor = System.Drawing.Color.Gray;
+            this.targetBpmTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.targetBpmTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
             this.targetBpmTextBox.Location = new System.Drawing.Point(115, 278);
-            this.targetBpmTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.targetBpmTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.targetBpmTextBox.Name = "targetBpmTextBox";
             this.targetBpmTextBox.PlaceHolderText = "Optional, current BPM is first.";
             this.targetBpmTextBox.Size = new System.Drawing.Size(222, 19);
@@ -392,7 +392,7 @@ namespace Beatmap_Help_Tool.Forms
             this.Controls.Add(this.rememberCheckBox);
             this.Controls.Add(this.activateTimeModeCheckBox);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(362, 455);
             this.Name = "SvChanger";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

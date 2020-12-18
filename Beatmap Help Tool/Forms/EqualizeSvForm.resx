@@ -120,84 +120,76 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="snapGreenToRedPointsButton.ToolTip" xml:space="preserve">
-    <value>If the green points are supposed to be snapped on 
-red points and they are not in the map, this function
-chooses the closest red point for the green point,
-and applies it to every green point in the selected
-region.</value>
-  </data>
-  <data name="button36.ToolTip" xml:space="preserve">
-    <value>Detects the flying barlines due to rounding
-errors and shows them in a display if any
-of them are detected. A flying barline
-occasionally occurs if there is a SV change
-on a barline with rounding error on it.</value>
-  </data>
-  <data name="button35.ToolTip" xml:space="preserve">
-    <value>This function checks the red points across the 
-mapset, by checking their count, rankable
-values (offset, meter, BPM) and also
-checks double barlines. If inconsistencies
-are detected, it will be shown in a separate
-window, otherwise it means this function
-did not detect anything regarding to its
-function.</value>
-  </data>
-  <data name="equalizeSvForAllPointsButton.ToolTip" xml:space="preserve">
-    <value>Equalizes SV for all timing points based on the
-BPM input and base SV multiplier.
-If no input is specified, it takes the closest
-timing point and 1.00x SV as their default
-values.
+  <data name="label4.ToolTip" xml:space="preserve">
+    <value>The target BPM allows you to adjust the
+final BPM with the SV multiplier below.
+If nothing is entered, it takes the
+first point as its base value.
 
-Difference between the old one is that
-this one doesn't require the removal of
-existing green points and it will apply
-the multiplier changes to green points
-that have been already added, where the
-values will be inherited from current or
-closest from the left one.</value>
-  </data>
-  <data name="svChangerButton.ToolTip" xml:space="preserve">
-    <value>Adds or edits the green points at the given range.
-Points are preserved on the section, however if a timing point is
-already effecting one, this function will create duplicates and
-probably override them.
+Basically it's like this:
 
-You can put an offset to the points, where they can be added 
-before the note instead of on the note itself.</value>
+Current BPM: 130
+Target BPM: 195
+
+SV Multiplier: 1.00
+
+Actual result: 1.50x on the point.</value>
   </data>
-  <data name="flyingBarlinesButton.ToolTip" xml:space="preserve">
-    <value>Detects the flying barlines due to rounding
-errors and shows them in a display if any
-of them are detected. A flying barline
-occasionally occurs if there is a SV change
-on a barline with rounding error on it.</value>
+  <data name="label5.ToolTip" xml:space="preserve">
+    <value>Defines the base SV multiplier. If nothing
+is entered it gets the base value which
+is 1.00x. However if you enter something,
+it multiplies with target BPM and gives a 
+final multiplication result. Check 
+target BPM for calculation information.</value>
   </data>
-  <data name="checkDoubleBarlinesButton.ToolTip" xml:space="preserve">
-    <value>This function checks the red points across the 
-mapset, by checking their count, rankable
-values (offset, meter, BPM) and also
-checks double barlines. If inconsistencies
-are detected, it will be shown in a separate
-window, otherwise it means this function
-did not detect anything regarding to its
-function.</value>
+  <data name="svMultiplierTextBox.ToolTip" xml:space="preserve">
+    <value>Defines the base SV multiplier. If nothing
+is entered it gets the base value which
+is 1.00x. However if you enter something,
+it multiplies with target BPM and gives a 
+final multiplication result. Check 
+target BPM for calculation information.</value>
   </data>
-  <metadata name="timeColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="bpmColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="meterColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="volumeColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="kiaiColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
+  <data name="targetBpmTextBox.ToolTip" xml:space="preserve">
+    <value>The target BPM allows you to adjust the
+final BPM with the SV multiplier below.
+If nothing is entered, it takes the
+first point as its base value.
+
+Basically it's like this:
+
+Current BPM: 130
+Target BPM: 195
+
+SV Multiplier: 1.00
+
+Actual result: 1.50x on the point.</value>
+  </data>
+  <data name="useRelativeSvCheckBox.ToolTip" xml:space="preserve">
+    <value>Allows you to keep the original SVs on the
+ones that you've defined already, and
+multiplies the values with the multiplication
+result that is found for the specific point.
+
+For example:
+
+SV on green point: 1.30x
+Base BPM: 130
+Target BPM: 195
+New SV on that green point: 1.95x</value>
+  </data>
+  <data name="rememberCheckBox.ToolTip" xml:space="preserve">
+    <value>Allows you to keep the original SVs on the
+ones that you've defined already, and
+multiplies the values with the multiplication
+result that is found for the specific point.
+
+For example:
+
+SV on green point: 1.30x
+Base BPM: 130
+Target BPM: 195
+New SV on that green point: 1.95x</value>
+  </data>
 </root>
