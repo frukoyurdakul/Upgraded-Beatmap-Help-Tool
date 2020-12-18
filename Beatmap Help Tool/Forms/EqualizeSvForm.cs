@@ -40,6 +40,7 @@ namespace Beatmap_Help_Tool.Forms
                 svMultiplierTextBox.Text = model.SvMultiplier;
                 equalizeAllCheckBox.Checked = model.EqualizeAll;
                 useRelativeSvCheckBox.Checked = model.RelativeUse;
+                rememberCheckBox.Checked = model.RememberOptions;
             }
         }
 
@@ -88,6 +89,8 @@ namespace Beatmap_Help_Tool.Forms
             else
                 SvMultiplier = value;
 
+            EqualizeAll = equalizeAllCheckBox.Checked;
+            UseRelativeSv = useRelativeSvCheckBox.Checked;
             return true;
         }
     }

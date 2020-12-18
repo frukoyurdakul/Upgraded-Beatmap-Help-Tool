@@ -39,12 +39,12 @@ namespace Beatmap_Help_Tool.Forms
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.useRelativeSvCheckBox = new System.Windows.Forms.CheckBox();
+            this.rememberCheckBox = new System.Windows.Forms.CheckBox();
             this.svMultiplierTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.targetBpmTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.endTimeTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
             this.startTimeTextBox = new Beatmap_Help_Tool.Views.PlaceHolderTextBox();
-            this.useRelativeSvCheckBox = new System.Windows.Forms.CheckBox();
-            this.rememberCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -127,6 +127,26 @@ namespace Beatmap_Help_Tool.Forms
             this.label5.Text = "SV Multiplier:";
             this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
+            // useRelativeSvCheckBox
+            // 
+            this.useRelativeSvCheckBox.Location = new System.Drawing.Point(16, 82);
+            this.useRelativeSvCheckBox.Name = "useRelativeSvCheckBox";
+            this.useRelativeSvCheckBox.Size = new System.Drawing.Size(245, 24);
+            this.useRelativeSvCheckBox.TabIndex = 11;
+            this.useRelativeSvCheckBox.Text = "Use relative SV based on existing green points";
+            this.toolTip1.SetToolTip(this.useRelativeSvCheckBox, resources.GetString("useRelativeSvCheckBox.ToolTip"));
+            this.useRelativeSvCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // rememberCheckBox
+            // 
+            this.rememberCheckBox.Location = new System.Drawing.Point(16, 112);
+            this.rememberCheckBox.Name = "rememberCheckBox";
+            this.rememberCheckBox.Size = new System.Drawing.Size(171, 24);
+            this.rememberCheckBox.TabIndex = 12;
+            this.rememberCheckBox.Text = "Remember values and options";
+            this.toolTip1.SetToolTip(this.rememberCheckBox, resources.GetString("rememberCheckBox.ToolTip"));
+            this.rememberCheckBox.UseVisualStyleBackColor = true;
+            // 
             // svMultiplierTextBox
             // 
             this.svMultiplierTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -180,28 +200,6 @@ namespace Beatmap_Help_Tool.Forms
             this.startTimeTextBox.PlaceHolderText = "Copy time as in 00:00:000 -";
             this.startTimeTextBox.Size = new System.Drawing.Size(178, 20);
             this.startTimeTextBox.TabIndex = 4;
-            // 
-            // useRelativeSvCheckBox
-            // 
-            this.useRelativeSvCheckBox.Checked = true;
-            this.useRelativeSvCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useRelativeSvCheckBox.Location = new System.Drawing.Point(16, 82);
-            this.useRelativeSvCheckBox.Name = "useRelativeSvCheckBox";
-            this.useRelativeSvCheckBox.Size = new System.Drawing.Size(245, 24);
-            this.useRelativeSvCheckBox.TabIndex = 11;
-            this.useRelativeSvCheckBox.Text = "Use relative SV based on existing green points";
-            this.toolTip1.SetToolTip(this.useRelativeSvCheckBox, resources.GetString("useRelativeSvCheckBox.ToolTip"));
-            this.useRelativeSvCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // rememberCheckBox
-            // 
-            this.rememberCheckBox.Location = new System.Drawing.Point(16, 112);
-            this.rememberCheckBox.Name = "rememberCheckBox";
-            this.rememberCheckBox.Size = new System.Drawing.Size(171, 24);
-            this.rememberCheckBox.TabIndex = 12;
-            this.rememberCheckBox.Text = "Remember values and options";
-            this.toolTip1.SetToolTip(this.rememberCheckBox, resources.GetString("rememberCheckBox.ToolTip"));
-            this.rememberCheckBox.UseVisualStyleBackColor = true;
             // 
             // EqualizeSvForm
             // 

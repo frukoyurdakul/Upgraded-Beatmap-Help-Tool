@@ -609,7 +609,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             for (int i = 0; i < points.Count; i++)
             {
                 point = points[i];
-                dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValue(),
+                dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValueString(),
                     point.getDisplayMeter(), point.getDisplayVolume(), point.getDisplayKiai());
             }
         }

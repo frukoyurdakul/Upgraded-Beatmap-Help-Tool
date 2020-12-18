@@ -28,5 +28,15 @@ namespace Beatmap_Help_Tool.Utils
                 text += Environment.NewLine;
             return text;
         }
+
+        public static T Last<T>(this List<T> list)
+        {
+            return list[list.Count - 1];
+        }
+
+        public static T First<T>(this List<T> list)
+        {
+            return list[0];
+        }
     }
 }

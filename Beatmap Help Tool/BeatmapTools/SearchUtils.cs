@@ -150,9 +150,31 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 else
                     last = mid - 1;
                 if (points[mid].Offset == offset)
-                    return mid;
+                {
+                    if (points[mid].IsInherited == isInherited)
+                        return mid;
+                    else
+                    {
+                        // If target is not inherited and we've found an inherited one, the previous
+                        // point has to be the same spot timing point.
+                        if (!isInherited)
+                            return mid - 1;
+                        else
+                        {
+                            // We need to check for an existing inherited point.
+                            // We will definitely have a timing point, but
+                            // we may not have an inherited point next.
+                            mid += 1;
+                            if (mid < points.Count && points[mid].Offset == offset && points[mid].IsInherited == isInherited)
+                                return mid;
+                            else
+                                return -1;
+                        }
+                    }
+                }
             } while (first <= last);
 
+            // This is basically the default.
             return -1;
         }
 

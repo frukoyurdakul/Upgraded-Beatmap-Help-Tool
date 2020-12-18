@@ -307,6 +307,26 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return true;
         }
 
+        public static void applyMultiplierToPoint(Dictionary<TimingPoint, double> originalInheritedPointValues, TimingPoint point, double multiplier, bool scaleWithExisting)
+        {
+            if (point.IsInherited)
+            {
+                double targetValue;
+                if (scaleWithExisting)
+                {
+                    if (!originalInheritedPointValues.ContainsKey(point))
+                        originalInheritedPointValues[point] = point.getDisplayValue();
+                    targetValue = originalInheritedPointValues[point];
+                }
+                else
+                    targetValue = 1;
+                double pointValue = targetValue * multiplier;
+                point.PointValue = -100d / pointValue;
+            }
+            else
+                throw new ArgumentException("Passed parameter was not an inherited point: " + point.GetSaveFormat());
+        }
+
         private static void showErrorMessageInMainThread(Form form, string message)
         {
             form.Invoke(new Action(() =>

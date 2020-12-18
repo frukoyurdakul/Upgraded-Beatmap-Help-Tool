@@ -68,7 +68,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 htmlDisplayer.addLineWithBreak("Difficulty: " + previousPair.Key.DifficultyName);
 
                 htmlDisplayer.addLine("Offset: " + firstPoint.getDisplayOffset(), firstPoint.Offset != secondPoint.Offset);
-                htmlDisplayer.addLine("Point value: " + firstPoint.getDisplayValue(), firstPoint.PointValue != secondPoint.PointValue);
+                htmlDisplayer.addLine("Point value: " + firstPoint.getDisplayValueString(), firstPoint.PointValue != secondPoint.PointValue);
                 htmlDisplayer.addLine("Measure: " + firstPoint.getDisplayMeter(), firstPoint.Meter != secondPoint.Meter);
                 htmlDisplayer.addLine("Inherited: " + firstPoint.IsInherited, firstPoint.IsInherited != secondPoint.IsInherited);
 
@@ -78,7 +78,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 htmlDisplayer.addLineWithBreak("Point at " + secondPoint.GetOffsetWithLink() + ":");
 
                 htmlDisplayer.addLine("Offset: " + secondPoint.getDisplayOffset(), firstPoint.Offset != secondPoint.Offset);
-                htmlDisplayer.addLine("Point value: " + secondPoint.getDisplayValue(), firstPoint.PointValue != secondPoint.PointValue);
+                htmlDisplayer.addLine("Point value: " + secondPoint.getDisplayValueString(), firstPoint.PointValue != secondPoint.PointValue);
                 htmlDisplayer.addLine("Measure: " + secondPoint.getDisplayMeter(), firstPoint.Meter != secondPoint.Meter);
                 htmlDisplayer.addLine("Inherited: " + secondPoint.IsInherited, firstPoint.IsInherited != secondPoint.IsInherited);
 

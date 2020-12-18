@@ -88,12 +88,26 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
-        public string getDisplayValue()
+        public string getDisplayValueString()
         {
             if (IsInherited)
                 return (-100d / PointValue).ToString("0.000") + "X";
             else
                 return (60000 / PointValue).ToString();
+        }
+
+        public double getDisplayValue()
+        {
+            if (IsInherited)
+            {
+                decimal val = -100M / (decimal)PointValue;
+                return (double)val;
+            }
+            else
+            {
+                decimal val = 60000M / (decimal)PointValue;
+                return (double)val;
+            }
         }
 
         public string getDisplayOffset()
@@ -144,8 +158,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         public override string GetSaveFormat()
         {
+            int effects = IsKiaiOpen ? 0x00000001 : 0x00000000;
+            effects |= IsOmitted ? 0x00000008 : 0x00000000;
             return string.Join(",", Offset, PointValue, Meter, SampleSet, SampleIndex, 
-                Volume, (IsInherited ? 0 : 1).ToString(), (IsKiaiOpen ? 1 : 0).ToString());
+                Volume, (IsInherited ? 0 : 1).ToString(), effects.ToString());
         }
 
         public override int GetTypeInt()

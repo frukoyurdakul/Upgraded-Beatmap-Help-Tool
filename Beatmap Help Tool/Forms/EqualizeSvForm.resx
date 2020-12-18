@@ -143,6 +143,44 @@ it multiplies with target BPM and gives a
 final multiplication result. Check 
 target BPM for calculation information.</value>
   </data>
+  <data name="useRelativeSvCheckBox.ToolTip" xml:space="preserve">
+    <value>Allows you to keep the original SVs on the
+ones that you've defined already, and
+multiplies the values with the multiplication
+result that is found for the specific point.
+
+If this is not checked, then the existing SV
+values will be replaced with the equalized
+ones, depending on Target BPM and
+SV Multiplier inputs.
+
+If it is checked, use the tool sparingly,
+as it does not remember actions that
+happened before and it might scale
+from the previously scaled value
+from this tool, completely busting
+the initial SVs out.
+
+For example:
+
+SV on green point: 1.30x
+Base BPM: 130
+Target BPM: 195
+New SV on that green point: 1.95x</value>
+  </data>
+  <data name="rememberCheckBox.ToolTip" xml:space="preserve">
+    <value>Allows you to keep the original SVs on the
+ones that you've defined already, and
+multiplies the values with the multiplication
+result that is found for the specific point.
+
+For example:
+
+SV on green point: 1.30x
+Base BPM: 130
+Target BPM: 195
+New SV on that green point: 1.95x</value>
+  </data>
   <data name="svMultiplierTextBox.ToolTip" xml:space="preserve">
     <value>Defines the base SV multiplier. If nothing
 is entered it gets the base value which
@@ -165,31 +203,5 @@ Target BPM: 195
 SV Multiplier: 1.00
 
 Actual result: 1.50x on the point.</value>
-  </data>
-  <data name="useRelativeSvCheckBox.ToolTip" xml:space="preserve">
-    <value>Allows you to keep the original SVs on the
-ones that you've defined already, and
-multiplies the values with the multiplication
-result that is found for the specific point.
-
-For example:
-
-SV on green point: 1.30x
-Base BPM: 130
-Target BPM: 195
-New SV on that green point: 1.95x</value>
-  </data>
-  <data name="rememberCheckBox.ToolTip" xml:space="preserve">
-    <value>Allows you to keep the original SVs on the
-ones that you've defined already, and
-multiplies the values with the multiplication
-result that is found for the specific point.
-
-For example:
-
-SV on green point: 1.30x
-Base BPM: 130
-Target BPM: 195
-New SV on that green point: 1.95x</value>
   </data>
 </root>
