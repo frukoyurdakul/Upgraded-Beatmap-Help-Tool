@@ -206,7 +206,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return true;
         }
 
-        public static bool verifyDividedText(string message, string text, out double value)
+        public static bool verifyGridSnap(string message, string text, out double value)
         {
             message = Regex.Replace(text, @"\s+", "");
             string[] dividedArray = text.Split('/');
@@ -237,6 +237,21 @@ namespace Beatmap_Help_Tool.BeatmapTools
             try
             {
                 value = int.Parse(text);
+                return true;
+            }
+            catch (FormatException)
+            {
+                value = -1;
+                showErrorMessage(message);
+                return false;
+            }
+        }
+
+        public static bool verifyDouble(string message, string text, out double value)
+        {
+            try
+            {
+                value = ParseUtils.GetDouble(text);
                 return true;
             }
             catch (FormatException)

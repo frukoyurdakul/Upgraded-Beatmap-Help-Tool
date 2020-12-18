@@ -75,6 +75,19 @@ namespace Beatmap_Help_Tool.Forms
                 StartOffset = startOffset;
                 EndOffset = endOffset;
             }
+
+            double value = 0;
+            if (!string.IsNullOrEmpty(targetBpmTextBox.Text) && !VerifyUtils.verifyDouble("Target BPM format is wrong.", targetBpmTextBox.Text, out value))
+                return false;
+            else
+                TargetBpm = value;
+
+            value = 0;
+            if (!string.IsNullOrEmpty(svMultiplierTextBox.Text) && !VerifyUtils.verifyDouble("SV Multiplier format is wrong.", svMultiplierTextBox.Text, out value))
+                return false;
+            else
+                SvMultiplier = value;
+
             return true;
         }
     }

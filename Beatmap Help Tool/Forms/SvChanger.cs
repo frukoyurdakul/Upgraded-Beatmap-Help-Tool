@@ -150,7 +150,7 @@ namespace Beatmap_Help_Tool.Forms
             }
             else
             {
-                check = VerifyUtils.verifyDividedText("Grid snap value is wrong. Example: 1/4", 
+                check = VerifyUtils.verifyGridSnap("Grid snap value is wrong. Example: 1/4", 
                     gridSnapTextBox.Text, out GridSnap);
 
                 if (!check)
