@@ -365,6 +365,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Bookmarks = new List<Bookmark>();
             TimingPoints = new List<TimingPoint>();
             HitObjects = new List<HitObject>();
+            Events = "";
             load(FilePath, true);
             mainDisplayView.Invoke(() =>
             {
