@@ -19,10 +19,11 @@ using System.Threading;
 using System.Windows.Forms;
 using WindowsInput;
 using static Beatmap_Help_Tool.Utils.HtmlUtils;
+using static Beatmap_Help_Tool.Utils.SaveHotkeyCapturer;
 
 namespace Beatmap_Help_Tool
 {
-    public partial class MainWindow : Form
+    public partial class MainWindow : Form, ISaveHotkeyListener
     {
         public static string lastAction = "";
         private readonly InputSimulator inputSimulator = new InputSimulator();
@@ -31,6 +32,8 @@ namespace Beatmap_Help_Tool
 
         [DllImport("User32.dll")]
         static extern int SetForegroundWindow(IntPtr point);
+
+        private SaveHotkeyCapturer capturer;
 
         public MainWindow()
         {
@@ -52,6 +55,14 @@ namespace Beatmap_Help_Tool
         }
 
         #region Util functions
+
+        // Save hotkey function
+        public void onSaveHotkey()
+        {
+            if (isSelectedBeatmapOpenInOsuEditor())
+                beatmap.reload();
+        }
+
         private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
         {
             if (htmlDisplayer.containsElements())
@@ -438,12 +449,20 @@ namespace Beatmap_Help_Tool
         #region Form functions
         private void mainForm_Load(object sender, EventArgs e)
         {
+            capturer = new SaveHotkeyCapturer(this, this);
             ThreadUtils.executeOnBackground(determineInitialProcess);
         }
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             ThreadUtils.exitLooperThread();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            if (capturer != null)
+                capturer.WndProc(ref m);
         }
 
         private void browseButton_Click(object sender, EventArgs e)

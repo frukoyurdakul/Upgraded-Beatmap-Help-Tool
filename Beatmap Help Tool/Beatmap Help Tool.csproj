@@ -65,6 +65,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsInput, Version=1.0.6.0, Culture=neutral, PublicKeyToken=de2685b4776e9c2e, processorArchitecture=MSIL">
       <HintPath>..\packages\InputSimulatorPlus.1.0.7\lib\net20\WindowsInput.dll</HintPath>
     </Reference>
@@ -134,6 +137,7 @@
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />
+    <Compile Include="Utils\SaveHotkeyCapturer.cs" />
     <Compile Include="Utils\SharedPreferences.cs" />
     <Compile Include="Utils\ThreadUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
