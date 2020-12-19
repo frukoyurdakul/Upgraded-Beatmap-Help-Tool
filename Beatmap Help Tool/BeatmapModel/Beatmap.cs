@@ -360,12 +360,16 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 addSavedState("First load", this);
         }
         
-        public void reload()
+        public void reload(DataGridView mainDisplayView)
         {
             Bookmarks = new List<Bookmark>();
             TimingPoints = new List<TimingPoint>();
             HitObjects = new List<HitObject>();
             load(FilePath, true);
+            mainDisplayView.Invoke(() =>
+            {
+                fillMainDisplayView(mainDisplayView);
+            });
         }
         public bool isModeTaiko()
         {

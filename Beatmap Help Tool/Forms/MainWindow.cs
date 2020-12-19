@@ -19,11 +19,10 @@ using System.Threading;
 using System.Windows.Forms;
 using WindowsInput;
 using static Beatmap_Help_Tool.Utils.HtmlUtils;
-using static Beatmap_Help_Tool.Utils.SaveHotkeyCapturer;
 
 namespace Beatmap_Help_Tool
 {
-    public partial class MainWindow : Form, ISaveHotkeyListener
+    public partial class MainWindow : Form
     {
         public static string lastAction = "";
         private readonly InputSimulator inputSimulator = new InputSimulator();
@@ -32,8 +31,6 @@ namespace Beatmap_Help_Tool
 
         [DllImport("User32.dll")]
         static extern int SetForegroundWindow(IntPtr point);
-
-        private SaveHotkeyCapturer capturer;
 
         public MainWindow()
         {
@@ -59,8 +56,12 @@ namespace Beatmap_Help_Tool
         // Save hotkey function
         public void onSaveHotkey()
         {
-            if (isSelectedBeatmapOpenInOsuEditor())
-                beatmap.reload();
+            ThreadUtils.executeOnBackground(() =>
+            {
+                Thread.Sleep(100);
+                if (isSelectedBeatmapOpenInOsuEditor())
+                    beatmap.reload(mainDisplayView);
+            });
         }
 
         private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
@@ -199,7 +200,7 @@ namespace Beatmap_Help_Tool
                     lastSaveTimeLabel.Text = DateTime.Now.ToLongTimeString();
                     ThreadUtils.executeOnBackground(() =>
                     {
-                        beatmap.reload();
+                        beatmap.reload(mainDisplayView);
                         this.Invoke(() => beatmap.fillMainDisplayView(mainDisplayView));
                         reloadBeatmapIfNecessary();
                     });
@@ -221,7 +222,7 @@ namespace Beatmap_Help_Tool
                 });
                 ThreadUtils.executeOnBackground(() =>
                 {
-                    beatmap.reload();
+                    beatmap.reload(mainDisplayView);
                     this.Invoke(() => beatmap.fillMainDisplayView(mainDisplayView));
                     reloadBeatmapIfNecessary();
                 });
@@ -449,20 +450,12 @@ namespace Beatmap_Help_Tool
         #region Form functions
         private void mainForm_Load(object sender, EventArgs e)
         {
-            capturer = new SaveHotkeyCapturer(this, this);
             ThreadUtils.executeOnBackground(determineInitialProcess);
         }
 
         private void mainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             ThreadUtils.exitLooperThread();
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-            if (capturer != null)
-                capturer.WndProc(ref m);
         }
 
         private void browseButton_Click(object sender, EventArgs e)

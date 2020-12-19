@@ -771,7 +771,7 @@ namespace Beatmap_Help_Tool
             this.svChangerButton.Size = new System.Drawing.Size(279, 23);
             this.svChangerButton.TabIndex = 2;
             this.svChangerButton.TabStop = false;
-            this.svChangerButton.Text = "Add inhetired points to change SV smoothly";
+            this.svChangerButton.Text = "Add inherited points to change SV smoothly";
             this.toolTip1.SetToolTip(this.svChangerButton, resources.GetString("svChangerButton.ToolTip"));
             this.svChangerButton.UseVisualStyleBackColor = true;
             this.svChangerButton.Click += new System.EventHandler(this.svChangerButton_Click);

@@ -137,7 +137,6 @@
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />
-    <Compile Include="Utils\SaveHotkeyCapturer.cs" />
     <Compile Include="Utils\SharedPreferences.cs" />
     <Compile Include="Utils\ThreadUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />

@@ -332,7 +332,7 @@ namespace Beatmap_Help_Tool.Forms
             this.svOffsetTextBox.Location = new System.Drawing.Point(115, 323);
             this.svOffsetTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.svOffsetTextBox.Name = "svOffsetTextBox";
-            this.svOffsetTextBox.PlaceHolderText = "e.g. 1/4. All snaps are supported.";
+            this.svOffsetTextBox.PlaceHolderText = "Moves the SV by this amount of offset.";
             this.svOffsetTextBox.Size = new System.Drawing.Size(222, 19);
             this.svOffsetTextBox.TabIndex = 20;
             // 
