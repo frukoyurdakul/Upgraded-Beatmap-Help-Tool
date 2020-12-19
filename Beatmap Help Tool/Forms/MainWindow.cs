@@ -644,12 +644,59 @@ namespace Beatmap_Help_Tool
                 // Start adding the SVs here.
                 ThreadUtils.executeOnBackground(() =>
                 {
-                    InheritedPointUtils.AddSvChanges(this, beatmap, firstOffset, lastOffset, firstSv, lastSv,
+                    bool result = InheritedPointUtils.AddSvChanges(this, beatmap, firstOffset, lastOffset, firstSv, lastSv,
                         targetBpm, gridSnap, svOffset, svIncreaseMode, count, svIncreaseMultiplier, putPointsByNotes);
-                    showMessageAndSaveBeatmap("Added SV changes successfully.",
+                    if (result)
+                    {
+                        showMessageAndSaveBeatmap("Added SV changes successfully.",
                             "Added SV changes successfully.",
                             "Added SV changes");
+                    }
                 });
+            }
+        }
+
+        private void equalizeSvForAllPointsButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                if (!beatmap.isModeTaiko())
+                {
+                    if (MessageBoxUtils.showQuestionYesNo("You are about to open a map that is not osu!taiko. This function is specifically designed for osu!taiko maps." + Environment.NewLine + Environment.NewLine + "Are you sure you want to continue?") == DialogResult.No)
+                    {
+                        MessageBoxUtils.show("Process aborted.");
+                        return;
+                    }
+                }
+
+                // Now open the adjustment panel.
+                using (EqualizeSvForm form = new EqualizeSvForm())
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        // We should have all the values here.
+                        // Gather the starting and ending point of the objects and equalize SV
+                        // based on the settings.
+
+                        // Check for verifications first.
+                        if (beatmap.TimingPoints.Count == 0)
+                        {
+                            MessageBoxUtils.showError("No timing points or inherited points found on this map. Aborting.");
+                            return;
+                        }
+
+                        // Switch to background thread.
+                        ThreadUtils.executeOnBackground(() =>
+                        {
+                            // Check if the equalization attempt is successful.
+                            bool result = InheritedPointUtils.EqualizeSvInArea(form, beatmap);
+
+                            // At this point, we have the changes. Save the beatmap.
+                            if (result)
+                                showMessageAndSaveBeatmap("The specified range has been equalized.", "Equalize SV function", "EqualizeSvFunction");
+                        });
+                    }
+                }
             }
         }
 
@@ -1364,166 +1411,6 @@ namespace Beatmap_Help_Tool
                     // If there is content in the displayer, show it or show the success message.
                     handleHtmlDisplayer(htmlDisplayer, "No unsnapped objects on barlines are found in this mapset.");
                 });
-            }
-        }
-        private void equalizeSvForAllPointsButton_Click(object sender, EventArgs e)
-        {
-            if (checkBeatmapLoaded())
-            {
-                if (!beatmap.isModeTaiko())
-                {
-                    if (MessageBoxUtils.showQuestionYesNo("You are about to open a map that is not osu!taiko. This function is specifically designed for osu!taiko maps." + Environment.NewLine + Environment.NewLine + "Are you sure you want to continue?") == DialogResult.No)
-                    {
-                        MessageBoxUtils.show("Process aborted.");
-                        return;
-                    }
-                }
-
-                // Now open the adjustment panel.
-                using (EqualizeSvForm form = new EqualizeSvForm())
-                {
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        // We should have all the values here.
-                        // Gather the starting and ending point of the objects and equalize SV
-                        // based on the settings.
-
-                        // Check for verifications first.
-                        if (beatmap.TimingPoints.Count == 0)
-                        {
-                            MessageBoxUtils.showError("No timing points or inherited points found on this map. Aborting.");
-                            return;
-                        }
-
-                        // Switch to background thread.
-                        ThreadUtils.executeOnBackground(() =>
-                        {
-                            // Parse the start and end offsets.
-                            double startOffset;
-                            double endOffset;
-                            if (form.EqualizeAll)
-                            {
-                                SearchUtils.SortBeatmapElements(beatmap.TimingPoints);
-                                SearchUtils.SortBeatmapElements(beatmap.HitObjects);
-
-                                if (beatmap.HitObjects.Count > 0)
-                                    startOffset = Math.Min(beatmap.TimingPoints.First().Offset, beatmap.HitObjects.First().Offset);
-                                else
-                                    startOffset = beatmap.TimingPoints[0].Offset;
-
-                                if (beatmap.HitObjects.Count > 0)
-                                    endOffset = Math.Max(beatmap.TimingPoints.Last().Offset, beatmap.HitObjects.Last().Offset);
-                                else
-                                    endOffset = beatmap.TimingPoints.Last().Offset;
-                            }
-                            else
-                            {
-                                startOffset = form.StartOffset;
-                                endOffset = form.EndOffset;
-                            }
-
-                            // Get the multiplier and target BPM.
-                            double targetBpm = form.TargetBpm;
-                            double svMultiplier = form.SvMultiplier == 0 ? 1 : form.SvMultiplier;
-
-                            // Fetch objects in between this area.
-                            // Hold the previous one as well to keep reference to add points from.
-                            TimingPoint current = null;
-                            TimingPoint closestRedPoint = null;
-                            List<TimingPoint> points;
-
-                            bool originalRef = form.EqualizeAll;
-                            bool scaleWithExistingPoints = form.UseRelativeSv;
-
-                            if (form.EqualizeAll)
-                                points = beatmap.TimingPoints;
-                            else
-                                SearchUtils.GetObjectsInBetween(beatmap, startOffset, endOffset, out points);
-
-                            int startIndex = points.Count > 0 ? beatmap.TimingPoints.IndexOf(points[0]) : -1;
-                            int removeCount = points.Count;
-                            Dictionary<TimingPoint, double> originalInheritedPointValues = new Dictionary<TimingPoint, double>();
-
-                            for (int i = 0; i < points.Count; i++)
-                            {
-                                current = points[i];
-                                double offset = current.Offset;
-
-                                closestRedPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, offset);
-                                if (targetBpm == 0)
-                                    targetBpm = closestRedPoint.getDisplayValue();
-
-                                double baseMultiplier = targetBpm / closestRedPoint.getDisplayValue();
-                                double finalMultiplier = baseMultiplier * svMultiplier;
-
-                                // If this point is an inherited point, it's no problem. Just apply the SV and continue.
-                                if (current.IsInherited)
-                                    InheritedPointUtils.applyMultiplierToPoint(originalInheritedPointValues, current, finalMultiplier, scaleWithExistingPoints);
-                                else
-                                {
-                                    // For timing points, we need to check the exact spot. If there is not an
-                                    // inherited point with the exact offset, then we need to add it.
-                                    TimingPoint exactInheritedPoint = SearchUtils.GetExactInheritedPoint(points, offset);
-                                    if (exactInheritedPoint != null)
-                                    {
-                                        // We've found the current inherited point. Change the value and continue.
-                                        InheritedPointUtils.applyMultiplierToPoint(originalInheritedPointValues, exactInheritedPoint, finalMultiplier, scaleWithExistingPoints);
-
-                                        // If the index of this element is only 1 greater than current
-                                        // index, increase the index as well since we do not
-                                        // need to process this point again.
-                                        int originalIndex = points.IndexOf(exactInheritedPoint);
-                                        if (originalIndex == i + 1)
-                                            i++;
-                                    }
-                                    else
-                                    {
-                                        // We need to add an inherited point here. Derive from the closest
-                                        // timing point with the base values.
-                                        TimingPoint newPoint = new TimingPoint(closestRedPoint, beatmap.TimingPoints)
-                                        {
-                                            IsInherited = true
-                                        };
-
-                                        // Apply the multiplier.
-                                        InheritedPointUtils.applyMultiplierToPoint(originalInheritedPointValues, newPoint, finalMultiplier, scaleWithExistingPoints);
-                                        if (i + 1 == points.Count)
-                                            points.Add(newPoint);
-                                        else
-                                            points.Insert(i + 1, newPoint);
-
-                                        // Since we added this to the list, increase the index once.
-                                        // We do not need to process this again.
-                                        i++;
-                                    }
-                                }
-                            }
-
-                            // At the end of the process, we need to replace original values
-                            // of the beatmap.TimingPoints list in this range. If the changes
-                            // made are in a copy list, we must do this. If the whole
-                            // range is changed, it means we have the original list.
-                            if (!originalRef)
-                            {
-                                beatmap.TimingPoints.RemoveRange(startIndex, removeCount);
-                                if (startIndex + 1 == beatmap.TimingPoints.Count)
-                                    beatmap.TimingPoints.AddRange(points);
-                                else
-                                    beatmap.TimingPoints.InsertRange(startIndex + 1, points);
-                            }
-
-                            // Sort the elements again.
-                            SearchUtils.MarkChangeMade(beatmap.TimingPoints);
-                            SearchUtils.SortBeatmapElements(beatmap.TimingPoints);
-
-                            // At this point, we have the changes. Save the beatmap.
-                            this.Invoke(() =>
-                            {
-                                showMessageAndSaveBeatmap("The specified range has been equalized.", "Equalize SV function", "EqualizeSvFunction");
-                            });
-                        });
-                    }
-                }
             }
         }
     }

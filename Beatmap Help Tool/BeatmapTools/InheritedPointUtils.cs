@@ -1,4 +1,5 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
+using Beatmap_Help_Tool.Forms;
 using Beatmap_Help_Tool.Utils;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
             double svIncreaseMultiplier, bool putPointsByNotes)
         {
             List<TimingPoint> actualPoints = beatmap.TimingPoints;
-            List<HitObject> actualObjects = beatmap.HitObjects;
 
             if (count > 0 && lastOffset <= firstOffset)
             {
@@ -31,7 +31,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 {
                     if (gridSnap == 0)
                     {
-                        showErrorMessageInMainThread(form, "End offset was not defined and grid snap and count values are\n also not defined, hence the end offset\ncould not be calculated. Aborting.");
+                        showErrorMessageInMainThread(form, "End offset was not defined and grid snap and count values are" + Environment.NewLine + "also not defined, hence the end offset could not be calculated. Aborting.");
                         return false;
                     }
                     lastOffset = SnapUtils.calculateEndOffset(beatmap, firstOffset, gridSnap, count);
@@ -39,7 +39,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
             else if (lastOffset <= firstOffset)
             {
-                showErrorMessageInMainThread(form, "End offset could not be calculated,\nnecessary values are missing.");
+                showErrorMessageInMainThread(form, "End offset could not be calculated, necessary values are missing.");
                 return false;
             }
 
@@ -94,7 +94,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // happening in the SV Changer form itself, but it still is checked.
             if (pow == 0)
             {
-                showErrorMessageInMainThread(form, "The sv increase mode and sv increase multiplier has\nresulted in the power value being 0. Aborting.");
+                showErrorMessageInMainThread(form, "The sv increase mode and sv increase multiplier has" + Environment.NewLine + "resulted in the power value being 0. Aborting.");
                 return false;
             }
 
@@ -117,12 +117,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // Now that we have set already in place, let's calculate the SVs and
             // add or edit them.
-
-            // Get the total SV difference.
-            double totalSvDifference = lastSv - firstSv;
-
-            // Get the total offset difference.
-            double totalOffsetDifference = lastOffset - firstOffset;
 
             // The temp value to use on additional SVs.
             double targetSv;
@@ -220,7 +214,19 @@ namespace Beatmap_Help_Tool.BeatmapTools
                                 PointValue = targetSvValue
                             };
                             copy.PointValue = targetSvValue;
-                            actualPoints.Insert(SearchUtils.GetAdditionIndex(actualPoints, copy2), copy2);
+
+                            // Now, there is a trick here. If the actual inherited point
+                            // exists with the edited offset, we need to edit that, not
+                            // add a duplicate one and force an exception.
+                            // Just set "exact" values of "copy" into this.
+                            TimingPoint exact = SearchUtils.GetExactInheritedPoint(actualPoints, actualTargetOffset);
+                            if (exact != null)
+                                exact.setTo(copy);
+                            else
+                            {
+                                // We haven't found an exact timing point so this is fine.
+                                actualPoints.Insert(SearchUtils.GetAdditionIndex(actualPoints, copy2), copy2);
+                            }
                         }
                         else
                         {
@@ -231,6 +237,39 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     }
                     else
                     {
+                        // If there is an offset change (a.k.a actualTargetOffset not
+                        // equal to targetOffset) we need to add a point and change
+                        // this one as well.
+                        if (actualTargetOffset != targetOffset)
+                        {
+                            // This time, do not change the kiai.
+                            TimingPoint copy2 = new TimingPoint(copy, actualPoints)
+                            {
+                                Offset = actualTargetOffset,
+                                PointValue = targetSvValue
+                            };
+                            copy.PointValue = targetSvValue;
+
+                            // Now, there is a trick here. If the actual inherited point
+                            // exists with the edited offset, we need to edit that, not
+                            // add a duplicate one and force an exception.
+                            // Just set "exact" values of "copy" into this.
+                            TimingPoint exact = SearchUtils.GetExactInheritedPoint(actualPoints, actualTargetOffset);
+                            if (exact != null)
+                                exact.setTo(copy);
+                            else
+                            {
+                                // We haven't found an exact timing point so this is fine.
+                                actualPoints.Insert(SearchUtils.GetAdditionIndex(actualPoints, copy2), copy2);
+                            }
+                        }
+                        else
+                        {
+                            copy.PointValue = targetSvValue;
+                            copy.Offset = actualTargetOffset;
+                            SearchUtils.MarkChangeMade(actualPoints);
+                        }
+
                         copy.PointValue = targetSvValue;
                         copy.Offset = actualTargetOffset;
                         SearchUtils.MarkChangeMade(actualPoints);
@@ -240,7 +279,19 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 {
                     copy.PointValue = targetSvValue;
                     copy.Offset = actualTargetOffset;
-                    actualPoints.Insert(SearchUtils.GetAdditionIndex(actualPoints, copy), copy);
+
+                    // Now, there is a trick here. If the actual inherited point
+                    // exists with the edited offset, we need to edit that, not
+                    // add a duplicate one and force an exception.
+                    // Just set "exact" values of "copy" into this.
+                    TimingPoint exact = SearchUtils.GetExactInheritedPoint(actualPoints, actualTargetOffset);
+                    if (exact != null)
+                        exact.setTo(copy);
+                    else
+                    {
+                        // We haven't found an exact timing point so this is fine.
+                        actualPoints.Insert(SearchUtils.GetAdditionIndex(actualPoints, copy), copy);
+                    }
                 }
 
                 // At the bottom, calculate the next offset
@@ -259,6 +310,128 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // and return true.
             actualPoints.Sort();
             SearchUtils.MarkSorted(actualPoints);
+            return true;
+        }
+
+        public static bool EqualizeSvInArea(EqualizeSvForm form, Beatmap beatmap)
+        {
+            // Parse the start and end offsets.
+            double startOffset;
+            double endOffset;
+            if (form.EqualizeAll)
+            {
+                SearchUtils.SortBeatmapElements(beatmap.TimingPoints);
+                SearchUtils.SortBeatmapElements(beatmap.HitObjects);
+
+                if (beatmap.HitObjects.Count > 0)
+                    startOffset = Math.Min(beatmap.TimingPoints.First().Offset, beatmap.HitObjects.First().Offset);
+                else
+                    startOffset = beatmap.TimingPoints[0].Offset;
+
+                if (beatmap.HitObjects.Count > 0)
+                    endOffset = Math.Max(beatmap.TimingPoints.Last().Offset, beatmap.HitObjects.Last().Offset);
+                else
+                    endOffset = beatmap.TimingPoints.Last().Offset;
+            }
+            else
+            {
+                startOffset = form.StartOffset;
+                endOffset = form.EndOffset;
+            }
+
+            // Get the multiplier and target BPM.
+            double targetBpm = form.TargetBpm;
+            double svMultiplier = form.SvMultiplier == 0 ? 1 : form.SvMultiplier;
+
+            // Fetch objects in between this area.
+            // Hold the previous one as well to keep reference to add points from.
+            TimingPoint current;
+            TimingPoint closestRedPoint;
+            List<TimingPoint> points;
+
+            bool originalRef = form.EqualizeAll;
+            bool scaleWithExistingPoints = form.UseRelativeSv;
+
+            if (form.EqualizeAll)
+                points = beatmap.TimingPoints;
+            else
+                SearchUtils.GetObjectsInBetween(beatmap, startOffset, endOffset, out points);
+
+            int startIndex = points.Count > 0 ? beatmap.TimingPoints.IndexOf(points[0]) : -1;
+            int removeCount = points.Count;
+            Dictionary<TimingPoint, double> originalInheritedPointValues = new Dictionary<TimingPoint, double>();
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                current = points[i];
+                double offset = current.Offset;
+
+                closestRedPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, offset);
+                if (targetBpm == 0)
+                    targetBpm = closestRedPoint.getDisplayValue();
+
+                double baseMultiplier = targetBpm / closestRedPoint.getDisplayValue();
+                double finalMultiplier = baseMultiplier * svMultiplier;
+
+                // If this point is an inherited point, it's no problem. Just apply the SV and continue.
+                if (current.IsInherited)
+                    applyMultiplierToPoint(originalInheritedPointValues, current, finalMultiplier, scaleWithExistingPoints);
+                else
+                {
+                    // For timing points, we need to check the exact spot. If there is not an
+                    // inherited point with the exact offset, then we need to add it.
+                    TimingPoint exactInheritedPoint = SearchUtils.GetExactInheritedPoint(points, offset);
+                    if (exactInheritedPoint != null)
+                    {
+                        // We've found the current inherited point. Change the value and continue.
+                        applyMultiplierToPoint(originalInheritedPointValues, exactInheritedPoint, finalMultiplier, scaleWithExistingPoints);
+
+                        // If the index of this element is only 1 greater than current
+                        // index, increase the index as well since we do not
+                        // need to process this point again.
+                        int originalIndex = points.IndexOf(exactInheritedPoint);
+                        if (originalIndex == i + 1)
+                            i++;
+                    }
+                    else
+                    {
+                        // We need to add an inherited point here. Derive from the closest
+                        // timing point with the base values.
+                        TimingPoint newPoint = new TimingPoint(closestRedPoint, beatmap.TimingPoints)
+                        {
+                            IsInherited = true
+                        };
+
+                        // Apply the multiplier.
+                        applyMultiplierToPoint(originalInheritedPointValues, newPoint, finalMultiplier, scaleWithExistingPoints);
+                        if (i + 1 == points.Count)
+                            points.Add(newPoint);
+                        else
+                            points.Insert(i + 1, newPoint);
+
+                        // Since we added this to the list, increase the index once.
+                        // We do not need to process this again.
+                        i++;
+                    }
+                }
+            }
+
+            // At the end of the process, we need to replace original values
+            // of the beatmap.TimingPoints list in this range. If the changes
+            // made are in a copy list, we must do this. If the whole
+            // range is changed, it means we have the original list.
+            if (!originalRef)
+            {
+                beatmap.TimingPoints.RemoveRange(startIndex, removeCount);
+                if (startIndex + 1 == beatmap.TimingPoints.Count)
+                    beatmap.TimingPoints.AddRange(points);
+                else
+                    beatmap.TimingPoints.InsertRange(startIndex + 1, points);
+            }
+
+            // Sort the elements again.
+            SearchUtils.MarkChangeMade(beatmap.TimingPoints);
+            SearchUtils.SortBeatmapElements(beatmap.TimingPoints);
             return true;
         }
 

@@ -53,6 +53,20 @@ namespace Beatmap_Help_Tool.BeatmapModel
             Offset = offset;
         }
 
+        public void setTo(TimingPoint from)
+        {
+            PointValue = from.PointValue;
+            Meter = from.Meter;
+            SampleSet = from.SampleSet;
+            SampleIndex = from.SampleIndex;
+            Volume = from.Volume;
+            IsInherited = from.IsInherited;
+            IsKiaiOpen = from.IsKiaiOpen;
+            offset = from.offset;
+            requiresSnapDetection = from.requiresSnapDetection;
+            snap = from.snap;
+        }
+
         public static TimingPoint ParseLine(List<TimingPoint> points, string line)
         {
             string[] splitted = line.Trim().Split(',');
