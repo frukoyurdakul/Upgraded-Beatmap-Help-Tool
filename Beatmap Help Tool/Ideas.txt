@@ -1,0 +1,3 @@
+﻿1) Add a function to resnap all notes. With the new 1/5 1/7 1/9 support it becomes impossible to resnap all notes with full reliability.
+2) Add a function to both add or edit existing inherited points volumes with step-by-step approach.
+3) Add the function to raise or lower selected points' volumes.
