@@ -42,6 +42,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
             return closestSnap;
         }
 
+        /// <summary>
+        /// Adds a snap value to the snap and closest snap 
+        /// paramaters. Usually setOffset method is called
+        /// after this.
+        /// </summary>
+        /// <param name="delta">the value between old snap and new snap</param>
+        public void AddSnap(double delta)
+        {
+            snap += delta;
+            closestSnap += delta;
+        }
+
+        /// <summary>
+        /// Sets the offset but does not detect snaps. Usually used
+        /// with resnapping tool.
+        /// </summary>
+        /// <param name="offset">the new offset</param>
+        public void SetOffset(double offset)
+        {
+            this.offset = offset;
+        }
+
         private void detectSnapsIfNecessary()
         {
             if (requiresSnapDetection)

@@ -17,6 +17,8 @@ namespace Beatmap_Help_Tool.Utils
         {
             private StringBuilder builder;
             private bool hasElements = false;
+            private bool hasSections = false;
+            private bool hasSubsections = false;
 
             internal HtmlDisplayer()
             {
@@ -27,6 +29,16 @@ namespace Beatmap_Help_Tool.Utils
             public bool containsElements()
             {
                 return hasElements;
+            }
+
+            public bool containsSections()
+            {
+                return hasSections;
+            }
+
+            public bool containsSubsections()
+            {
+                return hasSubsections;
             }
 
             public void addLineBreak()
@@ -73,6 +85,7 @@ namespace Beatmap_Help_Tool.Utils
             public void addSection(string line)
             {
                 hasElements = true;
+                hasSections = true;
                 builder.Append("<p class=\"section\">").Append(line).Append("</p>");
                 addLineBreak();
             }
@@ -80,6 +93,7 @@ namespace Beatmap_Help_Tool.Utils
             public void addSubsection(string line)
             {
                 hasElements = true;
+                hasSubsections = true;
                 builder.Append("<p class=\"subsection\">").Append(line).Append("</p>");
             }
 

@@ -1,13 +1,75 @@
 ﻿using Beatmap_Help_Tool.BeatmapModel;
 using Beatmap_Help_Tool.Utils;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class SnapUtils
     {
-        private const double BEAT_SNAP_DIVISOR = 48;
+        private const double BEAT_SNAP_DIVISOR = 5040;
+
+        private const double _5 = BEAT_SNAP_DIVISOR / 5d;
+        private const double _7 = BEAT_SNAP_DIVISOR / 7d;
+        private const double _9 = BEAT_SNAP_DIVISOR / 9d;
+        private const double _12 = BEAT_SNAP_DIVISOR / 12d;
+        private const double _16 = BEAT_SNAP_DIVISOR / 16d;
+
+        private static SortedSet<double> snaps = new SortedSet<double>();
+        private static readonly Dictionary<double, int> snapMapping = new Dictionary<double, double>();
+        private static readonly double[] snapsArray;
+
+        static SnapUtils()
+        {
+            // Generic value.
+            snaps.Add(0);
+            snaps.Add(5400);
+            snapMapping[0] = 0;
+            snapMapping[5400] = 5400; 
+
+            // 1/5
+            addSnaps(new KeyValuePair<double[], int>(getKeys(_5), 5));
+
+            // 1/7
+            addSnaps(new KeyValuePair<double[], int>(getKeys(_7), 7));
+
+            // 1/9
+            addSnaps(new KeyValuePair<double[], int>(getKeys(_9), 9));
+
+            // 1/12
+            addSnaps(new KeyValuePair<double[], int>(getKeys(_12), 12));
+
+            // 1/16
+            addSnaps(new KeyValuePair<double[], int>(getKeys(_16), 16));
+
+            snapsArray = new double[snaps.Count + 2];
+            snapsArray[0] = 0;
+            snapsArray[snaps.Count - 1] = 5400;
+            List<double> snapsList = snaps.ToList();
+            for (int i = 1; i < snaps.Count - 1; i++)
+                snapsArray[i] = snapsList[i - 1];
+            snaps.Clear();
+        }
+
+        private static void addSnaps(KeyValuePair<double[], int> pair)
+        {
+            foreach (double value in pair.Key)
+            {
+                snaps.Add(value);
+                snapMapping[value] = pair.Value;
+            }
+        }
+
+        private static double[] getKeys(double snapValue)
+        {
+            int count = (int)(BEAT_SNAP_DIVISOR / snapValue);
+            double[] array = new double[count - 1];
+            for (int i = 0; i < count; i++)
+                array[i] = snapValue * (i + 1);
+            return array;
+        }
 
         public static double[] getRelativeSnap(List<TimingPoint> timingPoints, BeatmapElement target)
         {
@@ -32,8 +94,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 }
             }
 
-            // Now, the BEAT_SNAP_DIVISOR divides a beat in 48 
-            // equal snaps, which covers both 1/12 and 1/16 snaps.
+            // Now, the BEAT_SNAP_DIVISOR divides a beat in 5040 
+            // equal snaps, which covers all snaps supported by osu!
+            // editor at the moment.
             // Depending on the division, if the division is integer,
             // or if the division difference is below 0.1 or the actual snap
             // we target for is off smaller than 1 milliseconds which can be
@@ -179,7 +242,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             int snapInt = Convert.ToInt32(snap);
             double fluctuation = Math.Abs(snap - snapInt);
             double targetOffset = target1.Offset + (snapInt / BEAT_SNAP_DIVISOR * beatDuration);
-            if (fluctuation < 0.1d || Math.Abs(target2.Offset - targetOffset) < 1)
+            if (fluctuation < 10.5d || Math.Abs(target2.Offset - targetOffset) < 1)
             {
                 // We can consider this note as snapped in the end.
                 // TODO Determine the behavior here: let the object unsnapped
@@ -196,6 +259,96 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     "and offset " + target1.Offset);
                 return -1;
             }
+        }
+
+        private static void setOffsetOfElementToNewSnap(TimingPoint closestRedPoint, BeatmapElement element)
+        {
+            decimal snap = (decimal)element.GetSnap();
+            decimal pointValue = (decimal)closestRedPoint.PointValue;
+            decimal finalResult = (decimal)closestRedPoint.Offset + (pointValue / (decimal)BEAT_SNAP_DIVISOR * snap);
+            element.SetOffset((double)finalResult);
+        }
+
+        private static double getClosestSnapValue(double rawSnap, out int closestSnap)
+        {
+            // Gets the closest snap value in the beat. If multiple snaps
+            // are found, then we also return a closestSnapIndex with 
+            // a value different than -1, in which case the note's snap
+            // does not change and instead gets presented into the user.
+            double closestValue = -1;
+            closestSnap = -1;
+            double closest = double.MaxValue;
+            for (int i = 0; i < snapsArray.Length; i++)
+            {
+                double snapValue = snapsArray[i];
+                double diff = Math.Abs(rawSnap - snapValue);
+
+                // Diff 0 means this note is exactly snapped
+                // and no changes are required.
+                if (diff == 0)
+                    return 0;
+
+                // Otherwise, continue getting the closest snap value.
+                else if (closest < diff)
+                {
+                    if (closest == diff)
+                        closestSnap = snapMapping[snapValue];
+                    closest = diff;
+                    closestValue = i;
+                }
+            }
+            return closestValue;
+        }
+
+        public static bool resnapAllNotes(List<Beatmap> beatmaps, onFailure<Beatmap, BeatmapElement, int> listener)
+        {
+            // Loop through all beatmaps.
+            // Ask for confirmation first. Users might select a location
+            // to save backups first.
+            bool shouldCreateBackup = false;
+            string customPath = "";
+            if (MessageBoxUtils.showQuestionYesNo("This action will edit your entire taiko beatmapsets, so you might want to get a backup for this since this function is still under development.".AddLines(2) + "Do you want to save backups?") == System.Windows.Forms.DialogResult.Yes)
+            {
+                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                dialog.Title = "Please select backup folder.";
+                dialog.IsFolderPicker = true;
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    shouldCreateBackup = true;
+                    customPath = dialog.FileName;
+                }
+                dialog.Dispose();
+            }
+            foreach (Beatmap beatmap in beatmaps)
+            {
+                if (shouldCreateBackup)
+                    beatmap.save(customPath + "//" + beatmap.FileName);
+                List<HitObject> hitObjects = beatmap.HitObjects;
+                foreach (HitObject hitObject in hitObjects)
+                {
+                    double actualSnap = hitObject.GetSnap();
+                    double rawSnapInBeat = actualSnap % BEAT_SNAP_DIVISOR;
+                    double closestSnapInBeat = getClosestSnapValue(rawSnapInBeat, out int closestSnapValue);
+                    if (closestSnapValue != -1)
+                    {
+                        // We have a note that is equal distance to defined snaps
+                        // in the editor. Present this to the user.
+                        listener.Invoke(beatmap, hitObject, closestSnapValue);
+                    }
+                    else if (closestSnapInBeat != 0)
+                    {
+                        // The note is not snapped. We need to snap the note with
+                        // new snap value which is closestSnapInBeat + closestSnapValue.
+                        // Then the offset requires a recalculation.
+                        double delta = actualSnap - closestSnapInBeat;
+                        hitObject.AddSnap(delta);
+                        setOffsetOfElementToNewSnap(SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, hitObject.Offset), hitObject);
+                    }
+                }
+                beatmap.overwrite();
+            }
+            return true;
         }
     }
 }

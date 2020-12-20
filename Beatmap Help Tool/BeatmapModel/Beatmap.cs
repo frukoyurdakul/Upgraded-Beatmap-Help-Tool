@@ -518,6 +518,15 @@ namespace Beatmap_Help_Tool.BeatmapModel
             insertPoints(mainDisplayView, TimingPoints);
         }
 
+        /// <summary>
+        /// Saves the beatmap to the current file with overwriting it.
+        /// This does not create a copy so use sparingly.
+        /// </summary>
+        public void overwrite()
+        {
+            saveBeatmapToPath(FilePath);
+        }
+
         // Save the beatmap. Uses the beatmap's original file path.
         // To use another path, use save(string path) instead.
         public void save(string action)
@@ -525,17 +534,28 @@ namespace Beatmap_Help_Tool.BeatmapModel
             save(action, FilePath);
         }
 
-        // Save the beatmap with the current content.
-        // Save is handled in background so let the worker thread do
-        // the saving and let the foreground thread do the label processing etc...
-        // It is better to call this on the background thread.
+        /// <summary>
+        /// Save the beatmap with the current content.
+        /// Save is handled in background so let the worker thread do
+        /// the saving and let the foreground thread do the label processing etc...
+        /// It is better to call this on the background thread.
+        /// </summary>
+        /// <param name="action">the action string</param>
+        /// <param name="path">the save path</param>
         public void save(string action, string path)
         {
-            string actualSavePath = FilePath;
-
             // If we are saving, we must create a copy first.
             addSavedState(action, new Beatmap(this));
-            using (StreamWriter writer = new StreamWriter(new FileStream(actualSavePath, FileMode.Create)))
+            saveBeatmapToPath(path);
+        }
+
+        /// <summary>
+        /// Saves the beatmap to the specified path. 
+        /// </summary>
+        /// <param name="path"></param>
+        public void saveBeatmapToPath(string path)
+        {
+            using (StreamWriter writer = new StreamWriter(new FileStream(path, FileMode.Create)))
             {
                 writer.WriteLine(FileFormat);
                 writer.WriteLine();

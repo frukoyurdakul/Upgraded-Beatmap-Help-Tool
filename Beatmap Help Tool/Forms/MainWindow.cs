@@ -64,7 +64,7 @@ namespace Beatmap_Help_Tool
             });
         }
 
-        private void handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
+        private bool handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage)
         {
             if (htmlDisplayer.containsElements())
             {
@@ -77,14 +77,44 @@ namespace Beatmap_Help_Tool
                         form.Dispose();
                     }
                 });
+                return true;
             }
             else
+            {
                 this.Invoke(() => showSuccessMessage(successMessage));
+                return false;
+            }
+        }
+
+        private bool handleHtmlDisplayer(HtmlDisplayer htmlDisplayer, string successMessage, onPreActionCallback callback)
+        {
+            if (htmlDisplayer.containsElements())
+            {
+                if (callback != null)
+                    callback.Invoke();
+
+                this.Invoke(() =>
+                {
+                    using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                    {
+                        htmlDisplayer.recycle();
+                        form.ShowDialog();
+                        form.Dispose();
+                    }
+                });
+                return true;
+            }
+            else
+            {
+                this.Invoke(() => showSuccessMessage(successMessage));
+                return false;
+            }
         }
 
         private void showSuccessMessage(string text)
         {
-            MessageBoxUtils.show(text);
+            if (!string.IsNullOrWhiteSpace(text))
+                MessageBoxUtils.show(text);
         }
 
         private void hideButtonsWithNoClickListeners(Control control)
@@ -1422,6 +1452,73 @@ namespace Beatmap_Help_Tool
 
                     // If there is content in the displayer, show it or show the success message.
                     handleHtmlDisplayer(htmlDisplayer, "No unsnapped objects on barlines are found in this mapset.");
+                });
+            }
+        }
+
+        private void resnapAllNotesButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ThreadUtils.executeOnBackground(() =>
+                {
+                    // Get all maps.
+                    SearchUtils.GetBeatmapset(beatmap, out List<Beatmap> beatmaps);
+
+                    // Extract taiko diffs in this beatmapset.
+                    beatmaps = beatmaps.Where(x => x.isModeTaiko()).ToList();
+
+                    // If taiko diffs size is 0 (which is unlikely)
+                    // print an error and return.
+                    if (beatmaps.Count == 0)
+                    {
+                        showFailureMessage("No taiko difficulties are found. If this is an error, please contact the developer.");
+                        return;
+                    }
+
+                    // Create the HTML displayer in case we find stuff
+                    // that should be shown.
+                    HtmlDisplayer displayer = new HtmlDisplayer();
+
+                    // Check if we had a section for the beatmap
+                    // that the error is. Do it by using a dictionary.
+                    Dictionary<Beatmap, bool> sectionCreated = new Dictionary<Beatmap, bool>();
+
+                    // Check if the initial section is created.
+                    bool initialSectionCreated = false;
+
+                    // Loop through every beatmap to see if there are
+                    // unsnapped notes based on our calculations,
+                    // fix the possible ones and add undetermined
+                    // ones in the displayer.
+                    //
+                    // Errors are triggered with the delagate in 2nd parameter.
+                    SnapUtils.resnapAllNotes(beatmaps, (beatmap, beatmapElement, value) =>
+                    {
+                        if (!initialSectionCreated)
+                        {
+                            displayer.addSection("Undetermined possible snaps detected.");
+                            initialSectionCreated = true;
+                        }
+
+                        if (!sectionCreated[beatmap])
+                        {
+                            if (displayer.containsSubsections())
+                                displayer.addLineBreak();
+                            displayer.addSection("Difficulty: " + beatmap.DifficultyName);
+                            sectionCreated[beatmap] = true;
+                        }
+
+                        displayer.addLine("Close at 1/" + value + ": " + beatmapElement.GetOffsetWithLink());
+                    });
+
+                    // If we have found elements, then warn the user about it with a message. Then, open the panel.
+                    // At this point, the user should reload the beatmap in editor.
+                    if (!handleHtmlDisplayer(displayer, null, () => MessageBoxUtils.showWarning("Some undetermined snaps are found in the beatmapset. A window that lets you navigatate to them will open."
+                            .AddLines(2, "The changed snaps are saved but you might need to fix these manually.".AddLines(2, "Remember to reload the beatmap in the editor first.")))))
+                    {
+                        showMessageAndSaveBeatmap("All notes are resnapped in the beatmapset.", "Resnapped all notes in beatmapset.", "ResnapBeatmapsetNotes");
+                    }
                 });
             }
         }

@@ -134,15 +134,18 @@ of them are detected. A flying barline
 occasionally occurs if there is a SV change
 on a barline with rounding error on it.</value>
   </data>
-  <data name="button35.ToolTip" xml:space="preserve">
-    <value>This function checks the red points across the 
-mapset, by checking their count, rankable
-values (offset, meter, BPM) and also
-checks double barlines. If inconsistencies
-are detected, it will be shown in a separate
-window, otherwise it means this function
-did not detect anything regarding to its
-function.</value>
+  <data name="resnapAllNotesButton.ToolTip" xml:space="preserve">
+    <value>Resnaps all notes in the beatmapset
+that are in taiko mode. Yes, this function
+is applied to all taiko difficulties.
+
+It supports resnapping of all notes with
+new osu! editor snaps such as 1/5, 1/7 and
+1/9 as well. Undetermined snaps (for example
+if a note is in equal distance between 1/9
+snap and 1/12 snap) will be displayed in 
+another window after rest of them are snapped
+and saved.</value>
   </data>
   <data name="equalizeSvForAllPointsButton.ToolTip" xml:space="preserve">
     <value>Equalizes SV for all timing points based on the

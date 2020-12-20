@@ -59,7 +59,7 @@ namespace Beatmap_Help_Tool
             this.panel16 = new System.Windows.Forms.Panel();
             this.button37 = new Beatmap_Help_Tool.Views.MultilineButton();
             this.panel15 = new System.Windows.Forms.Panel();
-            this.button35 = new Beatmap_Help_Tool.Views.MultilineButton();
+            this.resnapAllNotesButton = new Beatmap_Help_Tool.Views.MultilineButton();
             this.svFunctionsPage = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -568,7 +568,7 @@ namespace Beatmap_Help_Tool
             // panel15
             // 
             this.panel15.AutoSize = true;
-            this.panel15.Controls.Add(this.button35);
+            this.panel15.Controls.Add(this.resnapAllNotesButton);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel15.Location = new System.Drawing.Point(0, 0);
             this.panel15.Margin = new System.Windows.Forms.Padding(2);
@@ -576,20 +576,21 @@ namespace Beatmap_Help_Tool
             this.panel15.Size = new System.Drawing.Size(263, 23);
             this.panel15.TabIndex = 0;
             // 
-            // button35
+            // resnapAllNotesButton
             // 
-            this.button35.AutoSize = true;
-            this.button35.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button35.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button35.Location = new System.Drawing.Point(0, 0);
-            this.button35.Margin = new System.Windows.Forms.Padding(0);
-            this.button35.Name = "button35";
-            this.button35.Size = new System.Drawing.Size(263, 23);
-            this.button35.TabIndex = 3;
-            this.button35.TabStop = false;
-            this.button35.Text = "button6";
-            this.toolTip1.SetToolTip(this.button35, resources.GetString("button35.ToolTip"));
-            this.button35.UseVisualStyleBackColor = true;
+            this.resnapAllNotesButton.AutoSize = true;
+            this.resnapAllNotesButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.resnapAllNotesButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.resnapAllNotesButton.Location = new System.Drawing.Point(0, 0);
+            this.resnapAllNotesButton.Margin = new System.Windows.Forms.Padding(0);
+            this.resnapAllNotesButton.Name = "resnapAllNotesButton";
+            this.resnapAllNotesButton.Size = new System.Drawing.Size(263, 23);
+            this.resnapAllNotesButton.TabIndex = 3;
+            this.resnapAllNotesButton.TabStop = false;
+            this.resnapAllNotesButton.Text = "Resnap all notes";
+            this.toolTip1.SetToolTip(this.resnapAllNotesButton, resources.GetString("resnapAllNotesButton.ToolTip"));
+            this.resnapAllNotesButton.UseVisualStyleBackColor = true;
+            this.resnapAllNotesButton.Click += new System.EventHandler(this.resnapAllNotesButton_Click);
             // 
             // svFunctionsPage
             // 
@@ -2001,7 +2002,7 @@ namespace Beatmap_Help_Tool
         private System.Windows.Forms.Panel panel16;
         private MultilineButton button37;
         private System.Windows.Forms.Panel panel15;
-        private MultilineButton button35;
+        private MultilineButton resnapAllNotesButton;
         private System.Windows.Forms.TabPage svFunctionsPage;
         private System.Windows.Forms.TabPage bpmFunctionsPage;
         private System.Windows.Forms.TabPage settingsPage;

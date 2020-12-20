@@ -29,6 +29,13 @@ namespace Beatmap_Help_Tool.Utils
             return text;
         }
 
+        public static string AddLines(this string text, int lines, string append)
+        {
+            for (int i = 0; i < lines; i++)
+                text += Environment.NewLine;
+            return text + append;
+        }
+
         public static T Last<T>(this List<T> list)
         {
             return list[list.Count - 1];

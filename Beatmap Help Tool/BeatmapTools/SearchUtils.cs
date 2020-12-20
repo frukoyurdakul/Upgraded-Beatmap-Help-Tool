@@ -437,6 +437,14 @@ namespace Beatmap_Help_Tool.BeatmapTools
             allPoints = timingPointsPerBeatmap.Values.ToList();
         }
 
+        public static void GetBeatmapset(Beatmap beatmap, out List<Beatmap> beatmaps)
+        {
+            string folderPath = beatmap.FolderPath;
+            beatmaps = new List<Beatmap>();
+            foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+                beatmaps.Add(new Beatmap(file, false));
+        }
+
         // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
         public static void GetBarlines(List<TimingPoint> redPoints, List<HitObject> hitObjects, out List<decimal> barlines)
         {
