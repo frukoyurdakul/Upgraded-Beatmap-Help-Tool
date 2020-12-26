@@ -9,7 +9,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class SnapUtils
     {
-        private const double BEAT_SNAP_DIVISOR = 5040;
+        private const double BEAT_SNAP_DIVISOR = 48;
 
         private const double _5 = BEAT_SNAP_DIVISOR / 5d;
         private const double _7 = BEAT_SNAP_DIVISOR / 7d;
@@ -18,7 +18,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private const double _16 = BEAT_SNAP_DIVISOR / 16d;
 
         private static SortedSet<double> snaps = new SortedSet<double>();
-        private static readonly Dictionary<double, int> snapMapping = new Dictionary<double, double>();
+        private static readonly Dictionary<double, int> snapMapping = new Dictionary<double, int>();
         private static readonly double[] snapsArray;
 
         static SnapUtils()
@@ -44,12 +44,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // 1/16
             addSnaps(new KeyValuePair<double[], int>(getKeys(_16), 16));
 
-            snapsArray = new double[snaps.Count + 2];
-            snapsArray[0] = 0;
-            snapsArray[snaps.Count - 1] = 5400;
+            snapsArray = new double[snaps.Count];
             List<double> snapsList = snaps.ToList();
-            for (int i = 1; i < snaps.Count - 1; i++)
-                snapsArray[i] = snapsList[i - 1];
+            for (int i = 0; i < snaps.Count; i++)
+                snapsArray[i] = snapsList[i];
             snaps.Clear();
         }
 
