@@ -25,9 +25,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
         {
             // Generic value.
             snaps.Add(0);
-            snaps.Add(5400);
+            snaps.Add(BEAT_SNAP_DIVISOR);
             snapMapping[0] = 0;
-            snapMapping[5400] = 5400; 
+            snapMapping[BEAT_SNAP_DIVISOR] = BEAT_SNAP_DIVISOR; 
 
             // 1/5
             addSnaps(new KeyValuePair<double[], int>(getKeys(_5), 5));
@@ -92,9 +92,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 }
             }
 
-            // Now, the BEAT_SNAP_DIVISOR divides a beat in 5040 
+            // Now, the BEAT_SNAP_DIVISOR divides a beat in 48 
             // equal snaps, which covers all snaps supported by osu!
-            // editor at the moment.
+            // editor at the moment. (It basically does not but it's still
+            // better for us to use 48 because 5040 is too high.)
             // Depending on the division, if the division is integer,
             // or if the division difference is below 0.1 or the actual snap
             // we target for is off smaller than 1 milliseconds which can be
@@ -273,29 +274,39 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // are found, then we also return a closestSnapIndex with 
             // a value different than -1, in which case the note's snap
             // does not change and instead gets presented into the user.
-            double closestValue = -1;
+            double result = snapsArray.BinarySearchClosest(rawSnap);
+            double diff = Math.Abs(rawSnap - result);
             closestSnap = -1;
-            double closest = double.MaxValue;
-            for (int i = 0; i < snapsArray.Length; i++)
+
+            // Diff = 0 means this note is exactly snapped.
+            if (diff == 0)
+                return 0;
+
+            foreach (double value in snapsArray)
             {
-                double snapValue = snapsArray[i];
-                double diff = Math.Abs(rawSnap - snapValue);
+                if (result == value)
+                    continue;
 
-                // Diff 0 means this note is exactly snapped
-                // and no changes are required.
-                if (diff == 0)
-                    return 0;
-
-                // Otherwise, continue getting the closest snap value.
-                else if (closest < diff)
+                double diffInternal = Math.Abs(value - rawSnap);
+                if (diffInternal <= diff)
                 {
-                    if (closest == diff)
-                        closestSnap = snapMapping[snapValue];
-                    closest = diff;
-                    closestValue = i;
+                    if (diffInternal == diff)
+                    {
+                        closestSnap = snapMapping[value];
+                        return -1;
+                    }
+                    else
+                    {
+                        // I don't know how this is possible but just put this and
+                        // return it anyways.
+                        if (diffInternal == 0)
+                            return 0;
+                        else
+                            return diffInternal;
+                    }
                 }
             }
-            return closestValue;
+            return result;
         }
 
         public static bool resnapAllNotes(List<Beatmap> beatmaps, onFailure<Beatmap, BeatmapElement, int> listener)
