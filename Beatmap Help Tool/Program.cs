@@ -27,7 +27,7 @@ namespace Beatmap_Help_Tool
         [STAThread]
         static void Main()
         {
-            _hookID = SetHook(_proc);
+            // _hookID = SetHook(_proc);
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
 
             // ***this line is added***
@@ -39,7 +39,7 @@ namespace Beatmap_Help_Tool
 
             mainWindow = new MainWindow();
             Application.Run(mainWindow);
-            UnhookWindowsHookEx(_hookID);
+            // UnhookWindowsHookEx(_hookID);
         }
 
         // ***also dllimport of that function***

@@ -632,10 +632,32 @@ namespace Beatmap_Help_Tool
                             int[] katFinishPositions = form.katFinisherPosition;
                             ThreadUtils.executeOnBackground(() =>
                             {
-                                NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
-                                showMessageAndSaveBeatmap("Re-positioned notes successfully.",
-                                        "Re-positioned notes for Taiko mode successfully.",
-                                        "Re-positioned notes for Taiko mode");
+                                if (form.applyToAllDiffs)
+                                {
+                                    SearchUtils.GetAllBeatmaps(beatmap, out List<Beatmap> allMaps);
+                                    allMaps = allMaps.Where(x => x.isModeTaiko()).ToList();
+                                    foreach (Beatmap beatmap in allMaps)
+                                    {
+                                        NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
+                                        beatmap.overwrite();
+                                    }
+                                    this.Invoke(() =>
+                                    {
+                                        MessageBoxUtils.show("Re-positioned all notes on all taiko difficulties in this beatmapset.");
+                                        ThreadUtils.executeOnBackground(() =>
+                                        {
+                                            beatmap.reload(mainDisplayView);
+                                            reloadBeatmapIfNecessary();
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    NoteUtils.positionAllNotesForTaiko(beatmap, donPositions, katPositions, donFinishPositions, katFinishPositions);
+                                    showMessageAndSaveBeatmap("Re-positioned notes successfully.",
+                                            "Re-positioned notes for Taiko mode successfully.",
+                                            "Re-positioned notes for Taiko mode");
+                                }
                             });
                         }
                     }
@@ -1460,10 +1482,25 @@ namespace Beatmap_Help_Tool
         {
             if (checkBeatmapLoaded())
             {
+                bool shouldCreateBackup = false;
+                string customPath = "";
+                if (MessageBoxUtils.showQuestionYesNo("This action will edit your entire taiko beatmapsets, so you might want to get a backup for this since this function is still under development.".AddLines(2) + "Do you want to save backups?") == System.Windows.Forms.DialogResult.Yes)
+                {
+                    CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                    dialog.Title = "Please select backup folder.";
+                    dialog.IsFolderPicker = true;
+                    dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                    {
+                        shouldCreateBackup = true;
+                        customPath = dialog.FileName;
+                    }
+                    dialog.Dispose();
+                }
                 ThreadUtils.executeOnBackground(() =>
                 {
                     // Get all maps.
-                    SearchUtils.GetBeatmapset(beatmap, out List<Beatmap> beatmaps);
+                    SearchUtils.GetAllBeatmaps(beatmap, out List<Beatmap> beatmaps);
 
                     // Extract taiko diffs in this beatmapset.
                     beatmaps = beatmaps.Where(x => x.isModeTaiko()).ToList();
@@ -1493,7 +1530,7 @@ namespace Beatmap_Help_Tool
                     // ones in the displayer.
                     //
                     // Errors are triggered with the delagate in 2nd parameter.
-                    SnapUtils.resnapAllNotes(beatmaps, (beatmap, beatmapElement, value) =>
+                    SnapUtils.resnapAllNotes(beatmaps, customPath, shouldCreateBackup, (beatmap, beatmapElement, value) =>
                     {
                         if (!initialSectionCreated)
                         {

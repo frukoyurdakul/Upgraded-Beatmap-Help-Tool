@@ -18,6 +18,7 @@ namespace Beatmap_Help_Tool.Forms
         public int[] katPosition { get; internal set; } = new int[2];
         public int[] donFinisherPosition { get; internal set; } = new int[2];
         public int[] katFinisherPosition { get; internal set; } = new int[2];
+        public bool applyToAllDiffs { get; internal set; } = true;
 
         public PositionNotesForm()
         {

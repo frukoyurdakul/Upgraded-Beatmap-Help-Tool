@@ -63,7 +63,7 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             } while (first <= last);
 
-            if (mid > first + 1 && mid < last - 1)
+            if (mid > 0 && mid < list.Count - 1)
             {
                 diff1 = Math.Abs(searched - list[mid - 1]);
                 diff2 = Math.Abs(searched - list[mid]);
@@ -78,7 +78,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                if (mid > first + 1)
+                if (mid > 0)
                 {
                     diff1 = Math.Abs(searched - list[mid - 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -88,7 +88,7 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
-                else
+                else if (mid < list.Count - 1)
                 {
                     diff1 = Math.Abs(searched - list[mid + 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -98,6 +98,8 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
+                else
+                    return list[mid];
             }
         }
 
@@ -118,7 +120,7 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             } while (first <= last);
 
-            if (mid > first + 1 && mid < last - 1)
+            if (mid > 0 && mid < list.Count - 1)
             {
                 diff1 = Math.Abs(searched - list[mid - 1]);
                 diff2 = Math.Abs(searched - list[mid]);
@@ -133,7 +135,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                if (mid > first + 1)
+                if (mid > 0)
                 {
                     diff1 = Math.Abs(searched - list[mid - 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -143,7 +145,7 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
-                else
+                else if (mid < list.Count - 1)
                 {
                     diff1 = Math.Abs(searched - list[mid + 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -153,6 +155,8 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
+                else
+                    return list[mid];
             }
         }
 
@@ -173,7 +177,7 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             } while (first <= last);
 
-            if (mid > first + 1 && mid < last - 1)
+            if (mid > 0 && mid < list.Count - 1)
             {
                 diff1 = Math.Abs(searched - list[mid - 1]);
                 diff2 = Math.Abs(searched - list[mid]);
@@ -188,7 +192,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                if (mid > first + 1)
+                if (mid > 0)
                 {
                     diff1 = Math.Abs(searched - list[mid - 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -198,7 +202,7 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
-                else
+                else if (mid < list.Count - 1)
                 {
                     diff1 = Math.Abs(searched - list[mid + 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -208,6 +212,8 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
+                else
+                    return list[mid];
             }
         }
 
@@ -228,7 +234,7 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             } while (first <= last);
 
-            if (mid > first + 1 && mid < last - 1)
+            if (mid > 0 && mid < list.Count - 1)
             {
                 diff1 = Math.Abs(searched - list[mid - 1]);
                 diff2 = Math.Abs(searched - list[mid]);
@@ -243,7 +249,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                if (mid > first + 1)
+                if (mid > 0)
                 {
                     diff1 = Math.Abs(searched - list[mid - 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -253,7 +259,7 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
-                else
+                else if (mid < list.Count - 1)
                 {
                     diff1 = Math.Abs(searched - list[mid + 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -263,6 +269,8 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
+                else
+                    return list[mid];
             }
         }
 
@@ -283,7 +291,7 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             } while (first <= last);
 
-            if (mid > first + 1 && mid < last - 1)
+            if (mid > 0 && mid < list.Count - 1)
             {
                 diff1 = Math.Abs(searched - list[mid - 1]);
                 diff2 = Math.Abs(searched - list[mid]);
@@ -298,7 +306,7 @@ namespace Beatmap_Help_Tool.Utils
             }
             else
             {
-                if (mid > first + 1)
+                if (mid > 0)
                 {
                     diff1 = Math.Abs(searched - list[mid - 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -308,7 +316,7 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
-                else
+                else if (mid < list.Count - 1)
                 {
                     diff1 = Math.Abs(searched - list[mid + 1]);
                     diff2 = Math.Abs(searched - list[mid]);
@@ -318,6 +326,8 @@ namespace Beatmap_Help_Tool.Utils
                     else
                         return list[mid];
                 }
+                else
+                    return list[mid];
             }
         }
     }

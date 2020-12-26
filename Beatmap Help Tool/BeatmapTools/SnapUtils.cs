@@ -9,160 +9,104 @@ namespace Beatmap_Help_Tool.BeatmapTools
 {
     public static class SnapUtils
     {
-        private const double BEAT_SNAP_DIVISOR = 48;
+        private const double BEAT_SNAP_DIVISOR = 5040;
+        private const decimal BEAT_SNAP_DIVISOR_2 = 5040m;
 
-        private const double _5 = BEAT_SNAP_DIVISOR / 5d;
-        private const double _7 = BEAT_SNAP_DIVISOR / 7d;
-        private const double _9 = BEAT_SNAP_DIVISOR / 9d;
-        private const double _12 = BEAT_SNAP_DIVISOR / 12d;
-        private const double _16 = BEAT_SNAP_DIVISOR / 16d;
+        private const decimal _5 = BEAT_SNAP_DIVISOR_2 / 5m;
+        private const decimal _7 = BEAT_SNAP_DIVISOR_2 / 7m;
+        private const decimal _9 = BEAT_SNAP_DIVISOR_2 / 9m;
+        private const decimal _12 = BEAT_SNAP_DIVISOR_2 / 12m;
+        private const decimal _16 = BEAT_SNAP_DIVISOR_2 / 16m;
 
-        private static SortedSet<double> snaps = new SortedSet<double>();
-        private static readonly Dictionary<double, int> snapMapping = new Dictionary<double, int>();
-        private static readonly double[] snapsArray;
+        private static SortedSet<decimal> snaps = new SortedSet<decimal>();
+        private static readonly Dictionary<decimal, int> snapMapping = new Dictionary<decimal, int>();
+        private static readonly decimal[] snapsArray;
 
         static SnapUtils()
         {
             // Generic value.
             snaps.Add(0);
-            snaps.Add(BEAT_SNAP_DIVISOR);
+            snaps.Add(BEAT_SNAP_DIVISOR_2);
             snapMapping[0] = 0;
-            snapMapping[BEAT_SNAP_DIVISOR] = BEAT_SNAP_DIVISOR; 
+            snapMapping[BEAT_SNAP_DIVISOR_2] = Convert.ToInt32(BEAT_SNAP_DIVISOR); 
 
             // 1/5
-            addSnaps(new KeyValuePair<double[], int>(getKeys(_5), 5));
+            addSnaps(new KeyValuePair<decimal[], int>(getKeys(_5), 5));
 
             // 1/7
-            addSnaps(new KeyValuePair<double[], int>(getKeys(_7), 7));
+            addSnaps(new KeyValuePair<decimal[], int>(getKeys(_7), 7));
 
             // 1/9
-            addSnaps(new KeyValuePair<double[], int>(getKeys(_9), 9));
+            addSnaps(new KeyValuePair<decimal[], int>(getKeys(_9), 9));
 
             // 1/12
-            addSnaps(new KeyValuePair<double[], int>(getKeys(_12), 12));
+            addSnaps(new KeyValuePair<decimal[], int>(getKeys(_12), 12));
 
             // 1/16
-            addSnaps(new KeyValuePair<double[], int>(getKeys(_16), 16));
+            addSnaps(new KeyValuePair<decimal[], int>(getKeys(_16), 16));
 
-            snapsArray = new double[snaps.Count];
-            List<double> snapsList = snaps.ToList();
+            snapsArray = new decimal[snaps.Count];
+            List<decimal> snapsList = snaps.ToList();
             for (int i = 0; i < snaps.Count; i++)
                 snapsArray[i] = snapsList[i];
             snaps.Clear();
         }
 
-        private static void addSnaps(KeyValuePair<double[], int> pair)
+        private static void addSnaps(KeyValuePair<decimal[], int> pair)
         {
-            foreach (double value in pair.Key)
+            foreach (decimal value in pair.Key)
             {
                 snaps.Add(value);
                 snapMapping[value] = pair.Value;
             }
         }
 
-        private static double[] getKeys(double snapValue)
+        private static decimal[] getKeys(decimal snapValue)
         {
-            int count = (int)(BEAT_SNAP_DIVISOR / snapValue);
-            double[] array = new double[count - 1];
-            for (int i = 0; i < count; i++)
+            int count = (int)(BEAT_SNAP_DIVISOR_2 / snapValue);
+            decimal[] array = new decimal[count - 1];
+            for (int i = 0; i < array.Length; i++)
                 array[i] = snapValue * (i + 1);
             return array;
         }
 
         public static double[] getRelativeSnap(List<TimingPoint> timingPoints, BeatmapElement target)
         {
+            // First holds the true snap which is from the first point,
+            // second holds the snap value from the closest timing point.
             double[] result = new double[2] {0, 0};
-            List<TimingPoint> redPoints = new List<TimingPoint>();
-            List<TimingPoint> excludedRedPoints = new List<TimingPoint>();
 
-            if (timingPoints.Count == 0)
+            // If this is the first timing point or the element is snapped on the first timing point,
+            // its actual and relative snaps should always equal to 0. Check the condition
+            // and return it immediately.
+            if (timingPoints.Count == 0 || (target.Offset == timingPoints[0].Offset && !timingPoints[0].IsInherited))
                 return result;
 
-            // Extract all inherited points since they don't mean anything
-            // while we are searching for the snap value.
-            TimingPoint point;
-            for (int i = 0; i < timingPoints.Count; i++)
-            {
-                point = timingPoints[i];
-                if (!point.IsInherited)
-                {
-                    redPoints.Add(point);
-                    if (target != point)
-                        excludedRedPoints.Add(point);
-                }
-            }
+            // Get the closest timing point to this target.
+            TimingPoint closestPoint = SearchUtils.GetClosestTimingPoint(timingPoints, target.Offset);
 
-            // Now, the BEAT_SNAP_DIVISOR divides a beat in 48 
-            // equal snaps, which covers all snaps supported by osu!
-            // editor at the moment. (It basically does not but it's still
-            // better for us to use 48 because 5040 is too high.)
-            // Depending on the division, if the division is integer,
-            // or if the division difference is below 0.1 or the actual snap
-            // we target for is off smaller than 1 milliseconds which can be
-            // caused by rounding errors in the end,
-            // we can consider that note as snapped.
-            if (redPoints.Count >= 1 && redPoints[0].Offset == target.Offset)
-                return result;
+            // Now, the beat snap divisor divides the beat to specific parts, and
+            // we need to calculate both relative and actual snaps.
+            // Actual snap would be closestPoint + relativeSnap while
+            // relative snap is calculated by closest red point's point
+            // value (a.k.a millis value between 2 beats, 60000 / BPM).
 
-            TimingPoint closestTimingPoint = SearchUtils.GetClosestTimingPoint(excludedRedPoints, target.Offset);
-            int zeroSnapPointIndex = SearchUtils.GetClosestZeroSnapPointIndex(excludedRedPoints);
-            if (closestTimingPoint != null)
-            {
-                TimingPoint timingPoint1, timingPoint2;
-                BeatmapElement itemInternal;
-                double beatDuration;
-                double finalSnap = 0d, completeSnap = 0d;
-                double snapInBetween;
-                bool checkedActualTarget = false;
-                int redPointsCount = redPoints.Count;
-                for (int i = zeroSnapPointIndex; i < redPointsCount - 1; i++)
-                {
-                    timingPoint1 = redPoints[i];
-                    timingPoint2 = redPoints[i + 1];
-                    beatDuration = timingPoint1.PointValue;
-                    if (timingPoint1 == closestTimingPoint)
-                    {
-                        checkedActualTarget = true;
-                        itemInternal = target;
-                    }
-                    else
-                        itemInternal = timingPoint2;
+            // Diff of objects in millis calculated as decimal
+            // for maximum precision.
+            decimal diff = Convert.ToDecimal(target.Offset - closestPoint.Offset);
 
-                    snapInBetween = getSnapInBetween(timingPoint1, itemInternal, beatDuration);
-                    if (snapInBetween >= 0)
-                        finalSnap += snapInBetween;
-                    else
-                        finalSnap = 0d;
-                    completeSnap += snapInBetween;
-                    if (checkedActualTarget)
-                        break;
-                }
+            // Relative snap value based on BEAT_SNAP_DIVISOR.
+            decimal relativeSnap = diff * BEAT_SNAP_DIVISOR_2 / Convert.ToDecimal(closestPoint.PointValue);
 
-                // If we did not check the actual target here, that is because the 
-                // object we seek is after the last timing point, which only requires
-                // the computation of the final snap adding to the target and last point.
-                if (!checkedActualTarget  && redPoints[redPointsCount - 1] == closestTimingPoint)
-                {
-                    point = redPoints[redPointsCount - 1];
-                    snapInBetween = getSnapInBetween(point, target, point.PointValue);
-                    if (snapInBetween >= 0)
-                        finalSnap += snapInBetween;
-                    else
-                        finalSnap = 0d;
-                    completeSnap += snapInBetween;
-                }
-                result[0] = finalSnap;
-                result[1] = completeSnap;
-                return result;
-            }
-            else
-            {
-                MessageBoxUtils.showError("Error while determining snap value for the object that is instance of " +
-                    target.GetType() + "with the offset at " + target.Offset.ToString());
-                result[0] = -1;
-                result[1] = -1;
-                return result;
-            }
+            // Actual snap value.
+            decimal actualSnap = Convert.ToDecimal(closestPoint.GetSnap()) + relativeSnap;
+
+            // Set the results and return. First is actual snap
+            // from the start of the map, second is relative
+            // snap from the closest red point.
+            result[0] = Convert.ToDouble(actualSnap);
+            result[1] = Convert.ToDouble(relativeSnap);
+            return result;
         }
 
         public static void getEndOffsetFromObjectsByCount(Beatmap beatmap, double startOffset,
@@ -241,7 +185,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             int snapInt = Convert.ToInt32(snap);
             double fluctuation = Math.Abs(snap - snapInt);
             double targetOffset = target1.Offset + (snapInt / BEAT_SNAP_DIVISOR * beatDuration);
-            if (fluctuation < 10.5d || Math.Abs(target2.Offset - targetOffset) < 1)
+            if (fluctuation < 0.1d || Math.Abs(target2.Offset - targetOffset) < 1)
             {
                 // We can consider this note as snapped in the end.
                 // TODO Determine the behavior here: let the object unsnapped
@@ -268,67 +212,41 @@ namespace Beatmap_Help_Tool.BeatmapTools
             element.SetOffset((double)finalResult);
         }
 
-        private static double getClosestSnapValue(double rawSnap, out int closestSnap)
+        private static int getClosestSnappedOffset(BeatmapElement element, TimingPoint closestPoint, out int closestSnapDivisor)
         {
             // Gets the closest snap value in the beat. If multiple snaps
             // are found, then we also return a closestSnapIndex with 
             // a value different than -1, in which case the note's snap
             // does not change and instead gets presented into the user.
-            double result = snapsArray.BinarySearchClosest(rawSnap);
-            double diff = Math.Abs(rawSnap - result);
-            closestSnap = -1;
+            decimal snap = Convert.ToDecimal(element.GetClosestSnap());
+            decimal rawSnap = snap % BEAT_SNAP_DIVISOR_2;
+            decimal snapDiff = snap - rawSnap;
+            decimal result = snapsArray.BinarySearchClosest(rawSnap);
+            decimal diff = Math.Abs(rawSnap - result);
+            closestSnapDivisor = -1;
 
-            // Diff = 0 means this note is exactly snapped.
-            if (diff == 0)
+            // Diff = 0 or equal offsets means this element is exactly snapped.
+            if (diff == 0 || closestPoint.Offset == element.Offset)
                 return 0;
 
-            foreach (double value in snapsArray)
-            {
-                if (result == value)
-                    continue;
+            // If we calculate that this object's new snap result
+            // causes the offset not to be shifted, consider
+            // it as snapped.
+            decimal targetSnap = snapDiff + result;
 
-                double diffInternal = Math.Abs(value - rawSnap);
-                if (diffInternal <= diff)
-                {
-                    if (diffInternal == diff)
-                    {
-                        closestSnap = snapMapping[value];
-                        return -1;
-                    }
-                    else
-                    {
-                        // I don't know how this is possible but just put this and
-                        // return it anyways.
-                        if (diffInternal == 0)
-                            return 0;
-                        else
-                            return diffInternal;
-                    }
-                }
-            }
-            return result;
+            // Make the calculation by casting it to integer. If the offset are equal, these are snapped.
+            int targetOffset = (int)(Convert.ToDecimal(closestPoint.Offset) + (targetSnap / BEAT_SNAP_DIVISOR_2 * Convert.ToDecimal(closestPoint.PointValue)));
+            if ((int)element.Offset == targetOffset)
+                return 0;
+
+            return targetOffset;
         }
 
-        public static bool resnapAllNotes(List<Beatmap> beatmaps, onFailure<Beatmap, BeatmapElement, int> listener)
+        public static bool resnapAllNotes(List<Beatmap> beatmaps, string customPath, bool shouldCreateBackup, onFailure<Beatmap, BeatmapElement, int> listener)
         {
             // Loop through all beatmaps.
             // Ask for confirmation first. Users might select a location
             // to save backups first.
-            bool shouldCreateBackup = false;
-            string customPath = "";
-            if (MessageBoxUtils.showQuestionYesNo("This action will edit your entire taiko beatmapsets, so you might want to get a backup for this since this function is still under development.".AddLines(2) + "Do you want to save backups?") == System.Windows.Forms.DialogResult.Yes)
-            {
-                CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-                dialog.Title = "Please select backup folder.";
-                dialog.IsFolderPicker = true;
-                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    shouldCreateBackup = true;
-                    customPath = dialog.FileName;
-                }
-                dialog.Dispose();
-            }
             foreach (Beatmap beatmap in beatmaps)
             {
                 if (shouldCreateBackup)
@@ -336,23 +254,20 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 List<HitObject> hitObjects = beatmap.HitObjects;
                 foreach (HitObject hitObject in hitObjects)
                 {
-                    double actualSnap = hitObject.GetSnap();
-                    double rawSnapInBeat = actualSnap % BEAT_SNAP_DIVISOR;
-                    double closestSnapInBeat = getClosestSnapValue(rawSnapInBeat, out int closestSnapValue);
+                    TimingPoint closestPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, hitObject.Offset);
+                    int closestSnappedOffset = getClosestSnappedOffset(hitObject, closestPoint, out int closestSnapValue);
                     if (closestSnapValue != -1)
                     {
                         // We have a note that is equal distance to defined snaps
                         // in the editor. Present this to the user.
                         listener.Invoke(beatmap, hitObject, closestSnapValue);
                     }
-                    else if (closestSnapInBeat != 0)
+                    else if (closestSnappedOffset != 0)
                     {
                         // The note is not snapped. We need to snap the note with
                         // new snap value which is closestSnapInBeat + closestSnapValue.
                         // Then the offset requires a recalculation.
-                        double delta = actualSnap - closestSnapInBeat;
-                        hitObject.AddSnap(delta);
-                        setOffsetOfElementToNewSnap(SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, hitObject.Offset), hitObject);
+                        hitObject.Offset = closestSnappedOffset;
                     }
                 }
                 beatmap.overwrite();

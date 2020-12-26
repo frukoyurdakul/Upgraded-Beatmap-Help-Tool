@@ -40,6 +40,7 @@
             this.katFinisherPositionTextBox = new System.Windows.Forms.TextBox();
             this.arrangeNotesButton = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.allTaikoDiffsCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -146,8 +147,8 @@
             // 
             // arrangeNotesButton
             // 
-            this.arrangeNotesButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.arrangeNotesButton.Location = new System.Drawing.Point(76, 264);
+            this.arrangeNotesButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.arrangeNotesButton.Location = new System.Drawing.Point(73, 311);
             this.arrangeNotesButton.Name = "arrangeNotesButton";
             this.arrangeNotesButton.Size = new System.Drawing.Size(162, 28);
             this.arrangeNotesButton.TabIndex = 10;
@@ -166,11 +167,25 @@
             this.label6.Text = "Positions the notes in editor for Taiko mode. The maximum allowed range is from 3" +
     "2, 32 to 512, 384 where x, y is specified.";
             // 
+            // allTaikoDiffsCheckBox
+            // 
+            this.allTaikoDiffsCheckBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.allTaikoDiffsCheckBox.AutoSize = true;
+            this.allTaikoDiffsCheckBox.Checked = true;
+            this.allTaikoDiffsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allTaikoDiffsCheckBox.Location = new System.Drawing.Point(52, 270);
+            this.allTaikoDiffsCheckBox.Name = "allTaikoDiffsCheckBox";
+            this.allTaikoDiffsCheckBox.Size = new System.Drawing.Size(204, 21);
+            this.allTaikoDiffsCheckBox.TabIndex = 12;
+            this.allTaikoDiffsCheckBox.Text = "Apply to all Taiko difficulties";
+            this.allTaikoDiffsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // PositionNotesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(308, 302);
+            this.ClientSize = new System.Drawing.Size(308, 351);
+            this.Controls.Add(this.allTaikoDiffsCheckBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.arrangeNotesButton);
             this.Controls.Add(this.katFinisherPositionTextBox);
@@ -206,5 +221,6 @@
         private System.Windows.Forms.TextBox katFinisherPositionTextBox;
         private System.Windows.Forms.Button arrangeNotesButton;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox allTaikoDiffsCheckBox;
     }
 }

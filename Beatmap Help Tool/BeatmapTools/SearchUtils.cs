@@ -437,7 +437,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             allPoints = timingPointsPerBeatmap.Values.ToList();
         }
 
-        public static void GetBeatmapset(Beatmap beatmap, out List<Beatmap> beatmaps)
+        public static void GetAllBeatmaps(Beatmap beatmap, out List<Beatmap> beatmaps)
         {
             string folderPath = beatmap.FolderPath;
             beatmaps = new List<Beatmap>();
