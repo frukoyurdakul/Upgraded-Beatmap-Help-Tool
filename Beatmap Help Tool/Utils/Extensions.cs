@@ -74,7 +74,7 @@ namespace Beatmap_Help_Tool.Utils
                 else if (diff3 < diff1 && diff3 < diff2)
                     return list[mid + 1];
                 else
-                    return mid;
+                    return list[mid];
             }
             else
             {
@@ -129,7 +129,7 @@ namespace Beatmap_Help_Tool.Utils
                 else if (diff3 < diff1 && diff3 < diff2)
                     return list[mid + 1];
                 else
-                    return mid;
+                    return list[mid];
             }
             else
             {
@@ -184,7 +184,7 @@ namespace Beatmap_Help_Tool.Utils
                 else if (diff3 < diff1 && diff3 < diff2)
                     return list[mid + 1];
                 else
-                    return mid;
+                    return list[mid];
             }
             else
             {
@@ -239,7 +239,7 @@ namespace Beatmap_Help_Tool.Utils
                 else if (diff3 < diff1 && diff3 < diff2)
                     return list[mid + 1];
                 else
-                    return mid;
+                    return list[mid];
             }
             else
             {
@@ -294,7 +294,7 @@ namespace Beatmap_Help_Tool.Utils
                 else if (diff3 < diff1 && diff3 < diff2)
                     return list[mid + 1];
                 else
-                    return mid;
+                    return list[mid];
             }
             else
             {
