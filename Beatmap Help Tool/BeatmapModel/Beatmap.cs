@@ -154,9 +154,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
         // Difficulty
         private double HPDrainRate = 0;
-        private double CircleSize = 0;
+        public double CircleSize { get; set; } = 0;
         private double OverallDifficulty = 0;
-        private double ApproachRate = 10;
+        public double ApproachRate { get; set; } = 10;
         public double SliderMultiplier { get; internal set; }
         private double SliderTickRate = 1;
 

@@ -28,6 +28,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
         public static void positionAllNotesForTaiko(Beatmap beatmap, int[] donCoordinates,
             int[] katCoordinates, int[] donFinishCoordinates, int[] katFinishCoordinates) 
         {
+            beatmap.ApproachRate = 10;
+            beatmap.CircleSize = 2;
             List<HitObject> objects = beatmap.HitObjects;
             HitObject hitObject;
             for (int i = 0; i < objects.Count; i++)
