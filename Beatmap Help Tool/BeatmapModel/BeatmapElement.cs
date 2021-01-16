@@ -9,11 +9,18 @@ namespace Beatmap_Help_Tool.BeatmapModel
     {
         protected double offset = 0, snap = 0, closestSnap = 0;
         protected bool requiresSnapDetection = true;
+        protected Beatmap beatmap;
         protected List<TimingPoint> timingPoints;
 
-        public BeatmapElement(List<TimingPoint> timingPoints)
+        public BeatmapElement(Beatmap beatmap)
         {
-            this.timingPoints = timingPoints;
+            this.beatmap = beatmap;
+            timingPoints = beatmap.TimingPoints;
+        }
+
+        public Beatmap GetBeatmap()
+        {
+            return beatmap;
         }
 
         public double Offset

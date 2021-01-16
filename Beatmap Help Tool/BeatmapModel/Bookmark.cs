@@ -8,12 +8,12 @@ namespace Beatmap_Help_Tool.BeatmapModel
 {
     public class Bookmark : BeatmapElement
     {
-        public Bookmark(List<TimingPoint> timingPoints, double offset) : base(timingPoints)
+        public Bookmark(Beatmap beatmap, double offset) : base(beatmap)
         {
             Offset = offset;
         }
 
-        public Bookmark(Bookmark from) : base(from.timingPoints) { }
+        public Bookmark(Bookmark from) : base(from.beatmap) { }
 
         public override string GetSaveFormat()
         {

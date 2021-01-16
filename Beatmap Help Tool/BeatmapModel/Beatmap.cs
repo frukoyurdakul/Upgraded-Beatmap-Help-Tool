@@ -235,7 +235,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             List<TimingPoint> sourceTimingPoints = source.TimingPoints;
             int sourceTimingPointsCount = sourceTimingPoints.Count;
             for (int i = 0; i < sourceTimingPointsCount; i++)
-                TimingPoints.Add(new TimingPoint(sourceTimingPoints[i], TimingPoints));
+                TimingPoints.Add(new TimingPoint(sourceTimingPoints[i]));
             List<HitObject> sourceHitObjects = source.HitObjects;
             int sourceHitObjectsCount = sourceHitObjects.Count;
             for (int i = 0; i < sourceHitObjectsCount; i++)
@@ -316,7 +316,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             TimingPoint point;
             for (; !IsSection(lines[index]) && index < lines.Count; index++)
             {
-                point = TimingPoint.ParseLine(TimingPoints, lines[index]);
+                point = TimingPoint.ParseLine(this, lines[index]);
                 TimingPoints.Add(point);
                 if (TimingPoints[TimingPoints.Count - 1] == null)
                 {
@@ -330,7 +330,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 string[] bookmarksSplitted = bookmarksString.Trim().Split(',');
                 foreach (string offset in bookmarksSplitted)
-                    Bookmarks.Add(new Bookmark(TimingPoints, Convert.ToInt32(offset)));
+                    Bookmarks.Add(new Bookmark(this, Convert.ToInt32(offset)));
             }
 
             // Check if beatmap has the property "colors". If it does,

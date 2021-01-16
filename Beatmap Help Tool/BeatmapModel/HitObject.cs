@@ -68,9 +68,9 @@ namespace Beatmap_Help_Tool.BeatmapModel
             return (Hitsound & flag) == flag;
         }
 
-        public HitObject(List<TimingPoint> points) : base(points) { }
+        public HitObject(Beatmap beatmap) : base(beatmap) { }
 
-        public HitObject(HitObject from) : base(from.timingPoints)
+        public HitObject(HitObject from) : base(from.beatmap)
         {
             X = from.X;
             Y = from.Y;
@@ -102,7 +102,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             {
                 // Do a type check first.
                 if (elements.Length == 6)
-                    return new HitCircle(beatmap.TimingPoints, Convert.ToInt32(elements[0]),
+                    return new HitCircle(beatmap, Convert.ToInt32(elements[0]),
                         Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]), 0d,
                         Convert.ToInt32(elements[3]), Convert.ToInt32(elements[4]),
                         elements[5]);
@@ -140,7 +140,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                         List<int> edgeHitsounds = new List<int>();
                         for (int i = 0; i < hitsoundStrings.Length; i++)
                             edgeHitsounds.Add(Convert.ToInt32(hitsoundStrings[i]));
-                        return new HitSlider(beatmap.TimingPoints, Convert.ToInt32(elements[0]),
+                        return new HitSlider(beatmap, Convert.ToInt32(elements[0]),
                             Convert.ToInt32(elements[1]), Convert.ToDouble(elements[2]),
                             duration, type, Convert.ToInt32(elements[4]),
                             string.Join(",", elements[5], elements[6], elements[7]),
@@ -159,7 +159,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 if (elements.Length == 7)
                 {
                     double duration = Convert.ToDouble(elements[5]) - Convert.ToDouble(elements[2]);
-                    return new HitSpinner(beatmap.TimingPoints, Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
+                    return new HitSpinner(beatmap, Convert.ToInt32(elements[0]), Convert.ToInt32(elements[1]),
                         Convert.ToDouble(elements[2]), duration, type, Convert.ToInt32(elements[4]),
                         elements[6]);
                 }
@@ -199,8 +199,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
     class HitCircle : HitObject
     {
-        public HitCircle(List<TimingPoint> points,
-            int x, int y, double offset, double duration, int type, int hitsound, string extras) : base(points)
+        public HitCircle(Beatmap beatmap,
+            int x, int y, double offset, double duration, int type, int hitsound, string extras) : base(beatmap)
         {
             X = x;
             Y = y;
@@ -229,8 +229,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
         private readonly string SliderInfo;
         private readonly List<int> EdgeHitsounds;
 
-        public HitSlider(List<TimingPoint> points, int x, int y, double offset, double duration, int type, int hitsound, 
-            string sliderInfo, List<int> edgeHitsounds, string extras) : base(points)
+        public HitSlider(Beatmap beatmap, int x, int y, double offset, double duration, int type, int hitsound, 
+            string sliderInfo, List<int> edgeHitsounds, string extras) : base(beatmap)
         {
             X = x;
             Y = y;
@@ -263,8 +263,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
 
     class HitSpinner : HitObject
     { 
-        public HitSpinner(List<TimingPoint> points, int x, int y, double offset, double duration, 
-            int type, int hitsound, string extras) : base(points)
+        public HitSpinner(Beatmap beatmap, int x, int y, double offset, double duration, 
+            int type, int hitsound, string extras) : base(beatmap)
         {
             X = x;
             Y = y;

@@ -174,7 +174,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 }
                 else
                 {
-                    copy = new TimingPoint(closestPoint, actualPoints)
+                    copy = new TimingPoint(closestPoint)
                     {
                         // Make sure the copy one is inherited.
                         IsInherited = true
@@ -207,7 +207,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         // this one as well.
                         if (actualTargetOffset != targetOffset)
                         {
-                            TimingPoint copy2 = new TimingPoint(copy, actualPoints)
+                            TimingPoint copy2 = new TimingPoint(copy)
                             {
                                 Offset = actualTargetOffset,
                                 IsKiaiOpen = !copy.IsKiaiOpen,
@@ -243,7 +243,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         if (actualTargetOffset != targetOffset)
                         {
                             // This time, do not change the kiai.
-                            TimingPoint copy2 = new TimingPoint(copy, actualPoints)
+                            TimingPoint copy2 = new TimingPoint(copy)
                             {
                                 Offset = actualTargetOffset,
                                 PointValue = targetSvValue
@@ -397,7 +397,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     {
                         // We need to add an inherited point here. Derive from the closest
                         // timing point with the base values.
-                        TimingPoint newPoint = new TimingPoint(closestRedPoint, beatmap.TimingPoints)
+                        TimingPoint newPoint = new TimingPoint(closestRedPoint)
                         {
                             IsInherited = true
                         };

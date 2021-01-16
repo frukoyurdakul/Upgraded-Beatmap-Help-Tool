@@ -1459,9 +1459,14 @@ namespace Beatmap_Help_Tool
                                 isSectionCreated = true;
                             }
 
-                            htmlDisplayer.addSubsection("Beatmap difficulty: " + beatmap.DifficultyName);
+                            bool added = false;
                             hitObjectBarlineDifferences.ForEach((key, value) =>
                             {
+                                if (!added)
+                                {
+                                    htmlDisplayer.addSubsection("Beatmap difficulty: " + key.GetBeatmap().DifficultyName);
+                                    added = true;
+                                }
                                 string text = key.GetOffsetWithLink() + " - " + value + " ms.";
                                 if (value >= noteShiftMarginMinimum)
                                     htmlDisplayer.addWarning(text);

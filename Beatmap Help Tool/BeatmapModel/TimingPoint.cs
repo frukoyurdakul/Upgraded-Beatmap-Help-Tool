@@ -23,7 +23,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public bool IsKiaiOpen { get; set; }
         public bool IsOmitted { get; set; }
 
-        public TimingPoint(TimingPoint from, List<TimingPoint> points) : base(points)
+        public TimingPoint(TimingPoint from) : base(from.beatmap)
         {
             PointValue = from.PointValue;
             Meter = from.Meter;
@@ -37,8 +37,8 @@ namespace Beatmap_Help_Tool.BeatmapModel
             snap = from.snap;
         }
 
-        public TimingPoint(List<TimingPoint> points, double offset, double pointValue, int meter, int sampleSet, 
-            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen, bool isOmitted) : base(points)
+        public TimingPoint(Beatmap beatmap, double offset, double pointValue, int meter, int sampleSet, 
+            int sampleIndex, int volume, bool isInherited, bool isKiaiOpen, bool isOmitted) : base(beatmap)
         {
             PointValue = pointValue;
             Meter = meter;
@@ -67,14 +67,14 @@ namespace Beatmap_Help_Tool.BeatmapModel
             snap = from.snap;
         }
 
-        public static TimingPoint ParseLine(List<TimingPoint> points, string line)
+        public static TimingPoint ParseLine(Beatmap beatmap, string line)
         {
             string[] splitted = line.Trim().Split(',');
             if (splitted.Length == 8)
             {
                 double pointValue = Convert.ToDouble(splitted[1]);
                 int kiaiValue = Convert.ToInt32(splitted[7]);
-                return new TimingPoint(points, Convert.ToDouble(splitted[0]),
+                return new TimingPoint(beatmap, Convert.ToDouble(splitted[0]),
                     pointValue, Convert.ToInt32(splitted[2]), Convert.ToInt32(splitted[3]),
                     Convert.ToInt32(splitted[4]), Convert.ToInt32(splitted[5]), splitted[6] == "0",
                     ((kiaiValue & KIAI_BIT) == KIAI_BIT), ((kiaiValue & OMIT_BIT) == OMIT_BIT));
