@@ -481,6 +481,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     currentOffset += barlineValue;
                 }
             }
+
+            decimal minimalFraction = 0.0000000001m;
+            for (int i = 0; i < barlines.Count - 1; i++)
+            {
+                if (Math.Abs(barlines[i] - barlines[i + 1]) < minimalFraction && Math.Truncate(barlines[i + 1]) == barlines[i + 1])
+                    barlines.RemoveAt(i--);
+            }
         }
 
         // Get barlines as double. This is a function where the barlines returned from this list
@@ -518,6 +525,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     barlines.Add(currentOffset);
                     currentOffset += barlineValue;
                 }
+            }
+
+            double minimalFraction = 0.0000000000005d;
+            for (int i = 0; i < barlines.Count - 1; i++)
+            {
+                if (Math.Abs(barlines[i] - barlines[i + 1]) < minimalFraction && Math.Abs(barlines[i + 1]) <= (double.Epsilon * 100))
+                    barlines.RemoveAt(i--);
             }
         }
 

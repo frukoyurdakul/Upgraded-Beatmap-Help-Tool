@@ -168,7 +168,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
         public List<TimingPoint> TimingPoints = new List<TimingPoint>();
 
         // Colors
-        private string Colors = "";
+        private string Colours = "";
 
         // Hit objects
         public List<HitObject> HitObjects = new List<HitObject>();
@@ -205,7 +205,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
             BeatmapSetID = source.BeatmapSetID;
             bookmarksString = source.bookmarksString;
             CircleSize = source.CircleSize;
-            Colors = source.Colors;
+            Colours = source.Colours;
             Countdown = source.Countdown;
             Creator = source.Creator;
             displayMode = source.displayMode;
@@ -340,7 +340,7 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 // Welp, beatmap has colors. Add them to the colors.
                 index++;
                 for (; !IsSection(lines[index]) && index < lines.Count; index++)
-                    Colors += lines[index];
+                    Colours += lines[index] + Environment.NewLine;
             }
 
             // It will break after finding a section, so raise index again.
@@ -609,10 +609,11 @@ namespace Beatmap_Help_Tool.BeatmapModel
                 for (int i = 0; i < count; i++)
                     writer.WriteLine(TimingPoints[i]);
                 writer.WriteLine();
-                if (!string.IsNullOrWhiteSpace(Colors))
+                if (!string.IsNullOrWhiteSpace(Colours))
                 {
-                    writer.WriteLine("[Colors]");
-                    writer.WriteLine(Colors);
+                    // Damn you English
+                    writer.WriteLine("[Colours]");
+                    writer.WriteLine(Colours);
                 }
                 writer.WriteLine();
                 writer.WriteLine("[HitObjects]");

@@ -1559,7 +1559,15 @@ namespace Beatmap_Help_Tool
                     if (!handleHtmlDisplayer(displayer, null, () => MessageBoxUtils.showWarning("Some undetermined snaps are found in the beatmapset. A window that lets you navigatate to them will open."
                             .AddLines(2, "The changed snaps are saved but you might need to fix these manually.".AddLines(2, "Remember to reload the beatmap in the editor first.")))))
                     {
-                        showMessageAndSaveBeatmap("All notes are resnapped in the beatmapset.", "Resnapped all notes in beatmapset.", "ResnapBeatmapsetNotes");
+                        this.Invoke(() =>
+                        {
+                            MessageBoxUtils.show("All notes are resnapped in the beatmapset.");
+                            ThreadUtils.executeOnBackground(() =>
+                            {
+                                beatmap.reload(mainDisplayView);
+                                reloadBeatmapIfNecessary();
+                            });
+                        });
                     }
                 });
             }
