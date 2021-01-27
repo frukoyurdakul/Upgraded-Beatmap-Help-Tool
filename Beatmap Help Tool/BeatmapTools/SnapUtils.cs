@@ -27,8 +27,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // Generic value.
             snaps.Add(0);
             snaps.Add(BEAT_SNAP_DIVISOR_2);
+            snaps.Add(-BEAT_SNAP_DIVISOR_2);
             snapMapping[0] = 0;
-            snapMapping[BEAT_SNAP_DIVISOR_2] = Convert.ToInt32(BEAT_SNAP_DIVISOR); 
+            snapMapping[BEAT_SNAP_DIVISOR_2] = Convert.ToInt32(BEAT_SNAP_DIVISOR);
+            snapMapping[-BEAT_SNAP_DIVISOR_2] = Convert.ToInt32(BEAT_SNAP_DIVISOR);
 
             // 1/5
             addSnaps(new KeyValuePair<decimal[], int>(getKeys(_5), 5));
@@ -58,6 +60,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
             {
                 snaps.Add(value);
                 snapMapping[value] = pair.Value;
+                snaps.Add(-value);
+                snapMapping[-value] = -pair.Value;
             }
         }
 
@@ -75,6 +79,12 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // First holds the true snap which is from the first point,
             // second holds the snap value from the closest timing point.
             double[] result = new double[2] {0, 0};
+
+            if (target is HitCircle)
+            {
+                int x = 0;
+                x++;
+            }
 
             // If this is the first timing point or the element is snapped on the first timing point,
             // its actual and relative snaps should always equal to 0. Check the condition
@@ -251,28 +261,36 @@ namespace Beatmap_Help_Tool.BeatmapTools
             {
                 if (shouldCreateBackup)
                     beatmap.save(customPath + "//" + beatmap.FileName);
-                List<HitObject> hitObjects = beatmap.HitObjects;
-                foreach (HitObject hitObject in hitObjects)
-                {
-                    TimingPoint closestPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, hitObject.Offset);
-                    int closestSnappedOffset = getClosestSnappedOffset(hitObject, closestPoint, out int closestSnapValue);
-                    if (closestSnapValue != -1)
-                    {
-                        // We have a note that is equal distance to defined snaps
-                        // in the editor. Present this to the user.
-                        listener.Invoke(beatmap, hitObject, closestSnapValue);
-                    }
-                    else if (closestSnappedOffset != 0)
-                    {
-                        // The note is not snapped. We need to snap the note with
-                        // new snap value which is closestSnapInBeat + closestSnapValue.
-                        // Then the offset requires a recalculation.
-                        hitObject.Offset = closestSnappedOffset;
-                    }
-                }
+                resnapElements(beatmap.HitObjects, beatmap, listener, x => true);
+                resnapElements(beatmap.TimingPoints, beatmap, listener, x => ((TimingPoint)x).IsInherited);
                 beatmap.overwrite();
             }
             return true;
+        }
+
+        private static void resnapElements(IEnumerable<BeatmapElement> elements, Beatmap beatmap, onFailure<Beatmap, BeatmapElement, int> listener, shouldChange<BeatmapElement> condition)
+        {
+            foreach (BeatmapElement hitObject in elements)
+            {
+                if (!condition.Invoke(hitObject))
+                    continue;
+
+                TimingPoint closestPoint = SearchUtils.GetClosestTimingPoint(beatmap.TimingPoints, hitObject.Offset);
+                int closestSnappedOffset = getClosestSnappedOffset(hitObject, closestPoint, out int closestSnapValue);
+                if (closestSnapValue != -1)
+                {
+                    // We have a note that is equal distance to defined snaps
+                    // in the editor. Present this to the user.
+                    listener.Invoke(beatmap, hitObject, closestSnapValue);
+                }
+                else if (closestSnappedOffset != 0)
+                {
+                    // The note is not snapped. We need to snap the note with
+                    // new snap value which is closestSnapInBeat + closestSnapValue.
+                    // Then the offset requires a recalculation.
+                    hitObject.Offset = closestSnappedOffset;
+                }
+            }
         }
     }
 }
