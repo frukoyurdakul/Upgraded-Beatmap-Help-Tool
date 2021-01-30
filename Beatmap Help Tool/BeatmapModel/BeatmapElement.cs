@@ -75,10 +75,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
         {
             if (requiresSnapDetection)
             {
+                requiresSnapDetection = false;
                 double[] result = SnapUtils.getRelativeSnap(timingPoints, this);
                 snap = result[0];
                 closestSnap = result[1];
-                requiresSnapDetection = false;
             }
         }
 

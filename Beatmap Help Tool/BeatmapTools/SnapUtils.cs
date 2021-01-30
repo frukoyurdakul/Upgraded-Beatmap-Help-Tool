@@ -80,12 +80,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // second holds the snap value from the closest timing point.
             double[] result = new double[2] {0, 0};
 
-            if (target is HitCircle)
-            {
-                int x = 0;
-                x++;
-            }
-
             // If this is the first timing point or the element is snapped on the first timing point,
             // its actual and relative snaps should always equal to 0. Check the condition
             // and return it immediately.
@@ -186,6 +180,38 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // And, at the end of the day, return the target offset.
             return (int) targetOffset;
+        }
+
+        public static int calculateEndOffsetFromBpmValue(double startOffset, decimal snapDifference, decimal timingPointValue)
+        {
+            decimal offsetDifference = snapDifference / BEAT_SNAP_DIVISOR_2 * timingPointValue;
+            decimal endOffset = Convert.ToDecimal(startOffset) + offsetDifference;
+            return (int) Convert.ToDouble(endOffset);
+        }
+
+        public static void shiftAllElementsByNewPointValue(Beatmap beatmap, TimingPoint sourcePoint, double startOffset, decimal newPointValue, params IEnumerable<BeatmapElement>[] values)
+        {
+            foreach (IEnumerable<BeatmapElement> item in values)
+            {
+                foreach (BeatmapElement element in item)
+                {
+                    int newOffset = calculateEndOffsetFromBpmValue(startOffset, 
+                        Convert.ToDecimal(element.GetClosestSnap()), newPointValue);
+                    element.Offset = newOffset;
+                    int targetOffset = getClosestSnappedOffset(element, sourcePoint, out int _);
+                    if (targetOffset != 0)
+                        element.Offset = targetOffset;
+                }
+            }
+        }
+
+        public static void shiftAllElementsByOffset(double offset, params IEnumerable<BeatmapElement>[] values)
+        {
+            foreach (IEnumerable<BeatmapElement> item in values)
+            {
+                foreach (BeatmapElement element in item)
+                    element.Offset += offset;
+            }
         }
 
         private static int getSnapInBetween(BeatmapElement target1, BeatmapElement target2, double beatDuration)

@@ -21,6 +21,14 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return default(T);
         }
 
+        public static List<T> createSafeSublist<T>(List<T> items, int startIndex, int endIndex)
+        {
+            if (startIndex >= 0 && endIndex < items.Count)
+                return new SubList<T>(items, startIndex, endIndex);
+            else
+                return new List<T>();
+        }
+
         public static bool verifyTextBoxes(string message, params TextBox[] textBoxes)
         {
             foreach (TextBox textBox in textBoxes)

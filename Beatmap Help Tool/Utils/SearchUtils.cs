@@ -599,7 +599,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                 i++;
             }
 
-            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
+            points = VerifyUtils.createSafeSublist(beatmap.TimingPoints, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
@@ -618,9 +618,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
 
-            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
+            objects = VerifyUtils.createSafeSublist(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
@@ -640,8 +641,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
-            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
+            points = VerifyUtils.createSafeSublist(beatmap.TimingPoints, startIndex, endIndex);
 
             startIndex = -1;
             endIndex = -1;
@@ -654,8 +656,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
-            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
+            objects = VerifyUtils.createSafeSublist(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
@@ -676,8 +679,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
-            bookmarks = new SubList<Bookmark>(beatmap.Bookmarks, startIndex, endIndex);
+            bookmarks = VerifyUtils.createSafeSublist(beatmap.Bookmarks, startIndex, endIndex);
 
             startIndex = -1;
             endIndex = -1;
@@ -690,8 +694,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
-            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
+            points = VerifyUtils.createSafeSublist(beatmap.TimingPoints, startIndex, endIndex);
 
             startIndex = -1;
             endIndex = -1;
@@ -704,8 +709,9 @@ namespace Beatmap_Help_Tool.BeatmapTools
                         startIndex = i;
                     endIndex = i;
                 }
+                i++;
             }
-            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
+            objects = VerifyUtils.createSafeSublist(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)

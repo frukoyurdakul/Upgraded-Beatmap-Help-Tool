@@ -96,6 +96,10 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
+        // The mapping that contains timing points and inherited points for
+        // displayed points to give an easy access if seeked.
+        private readonly Dictionary<int, TimingPoint> timingPointIndexes = new Dictionary<int, TimingPoint>();
+
         // Constant integers that helps defining the beatmap mode.
         private const int MODE_STANDARD = 0;
         private const int MODE_TAIKO = 1;
@@ -511,6 +515,17 @@ namespace Beatmap_Help_Tool.BeatmapModel
             }
         }
 
+        public List<TimingPoint> getSelectedRangePoints(DataGridView mainDisplayView)
+        {
+            HashSet<int> selectedCells = new HashSet<int>();
+            for (int i = 0; i < mainDisplayView.SelectedCells.Count; i++)
+                selectedCells.Add(mainDisplayView.SelectedCells[i].RowIndex);
+            List<TimingPoint> points = new List<TimingPoint>();
+            foreach (int index in selectedCells)
+                points.Add(timingPointIndexes[index]);
+            return points;
+        }
+
         // Fills the data grid view with related data. Has to be called
         // from GUI thread otherwise it will throw an exception.
         public void fillMainDisplayView(DataGridView mainDisplayView)
@@ -631,10 +646,13 @@ namespace Beatmap_Help_Tool.BeatmapModel
             displayMode = DISPLAY_MODE_ALL;
             if (dataGridView.Rows.Count > 0)
                 dataGridView.Rows.Clear();
+            if (timingPointIndexes.Count > 0)
+                timingPointIndexes.Clear();
             TimingPoint point;
             for (int i = 0; i < points.Count; i++)
             {
                 point = points[i];
+                timingPointIndexes.Add(i, point);
                 dataGridView.Rows.Add(point.getDisplayOffset(), point.getDisplayValueString(),
                     point.getDisplayMeter(), point.getDisplayVolume(), point.getDisplayKiai());
             }

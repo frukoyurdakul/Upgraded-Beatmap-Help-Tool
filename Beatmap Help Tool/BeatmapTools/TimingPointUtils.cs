@@ -67,6 +67,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
             if (saveBackups)
                 beatmap.save(customPath + "//" + beatmap.FileName);
 
+            decimal newValueDecimal = Convert.ToDecimal(newValue);
+
             // We need to extract the objects between the selected offset and the next timing point.
             List<TimingPoint> originalPoints = beatmap.TimingPoints;
 
@@ -92,6 +94,37 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // Since the snaps are already calculated, it should be easy to calculate the next offsets
             // after changing the BPM.
+
+            // Remove the next timing point offset from all lists.
+            if (nextPoint != null)
+            {
+                ((SubList<Bookmark>)bookmarks).TrimEnd(x => x.Offset == nextPoint.Offset);
+                ((SubList<TimingPoint>)timingPoints).TrimEnd(x => x.Offset == nextPoint.Offset);
+                ((SubList<HitObject>)hitObjects).TrimEnd(x => x.Offset == nextPoint.Offset);
+            }
+
+            // Next point's snap is important to determine the offset difference for rest of the objects,
+            // if shifting is enabled.
+            if (shiftRestOfBeatmap && nextPoint != null)
+            {
+                // This means there is a next point and it should be included in timingPoints list.
+                // Check the snap differences between them and shift them all first.
+                decimal snapDifference = Convert.ToDecimal(nextPoint.GetSnap()) - Convert.ToDecimal(sourcePoint.GetSnap());
+                int offsetDifference = SnapUtils.calculateEndOffsetFromBpmValue(offset, snapDifference, newValueDecimal);
+
+                // Shift all the objects starting from the last object offset.
+                SearchUtils.GetObjectsInBetween(beatmap, offset, nextPoint.Offset,
+                    out List<Bookmark> bookmarks2, out List<TimingPoint> timingPoints2, out List<HitObject> hitObjects2);
+                SnapUtils.shiftAllElementsByOffset(offsetDifference, hitObjects2, timingPoints2, bookmarks2);
+            }
+
+            // After this, now start calculating the end offsets from the relative snaps of the elements.
+            sourcePoint.PointValue = newValue;
+
+            // Use the newValueDecimal to adjust everything.
+            SnapUtils.shiftAllElementsByNewPointValue(beatmap, sourcePoint, offset, newValueDecimal, hitObjects, timingPoints, bookmarks);
+
+            // And the process should be complete.
         }
 
         private static void checkAndPrintContent(HtmlDisplayer htmlDisplayer, KeyValuePair<Beatmap, List<TimingPoint>> previousPair, KeyValuePair<Beatmap, List<TimingPoint>> pair, TimingPoint firstPoint, TimingPoint secondPoint)

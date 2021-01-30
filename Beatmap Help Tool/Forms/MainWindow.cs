@@ -1577,6 +1577,22 @@ namespace Beatmap_Help_Tool
         {
             if (checkBeatmapLoaded())
             {
+                List<TimingPoint> points = beatmap.getSelectedRangePoints(mainDisplayView);
+                List<TimingPoint> targets = null;
+                if (points.Count == 0 || (targets = points.FindAll(x => !x.IsInherited)) == null)
+                {
+                    showFailureMessage("At least one timing point is required.");
+                    return;
+                }
+
+                TimingPoint target = null;
+                if (targets.Count > 1)
+                {
+                    if (MessageBoxUtils.showQuestionYesNo("More than one timing point is selected for the process, but only singular BPM change is supported.\r\nDo you want to continue with the first selected timing point?") != DialogResult.Yes)
+                        return;
+                }
+
+                target = targets[0];
                 bool allTaikoDiffs = false;
                 bool shiftRestOfBeatmap = false;
                 bool proceed = false;
@@ -1589,7 +1605,7 @@ namespace Beatmap_Help_Tool
                     {
                         allTaikoDiffs = form.valueAllTaikoDiffs;
                         shiftRestOfBeatmap = form.valueExtraOption;
-                        newBpmValue = form.valueDouble;
+                        newBpmValue = 60000d / form.valueDouble;
                         proceed = true;
                     }
                 }
@@ -1612,6 +1628,74 @@ namespace Beatmap_Help_Tool
                         }
                         dialog.Dispose();
                     }
+
+                    ThreadUtils.executeOnBackground(() =>
+                    {
+                        // Create the html displayer.
+                        HtmlDisplayer htmlDisplayer = new HtmlDisplayer();
+
+                        // Get all beatmaps.
+                        SearchUtils.GetAllBeatmaps(beatmap, out List<Beatmap> beatmaps);
+
+                        // Filter taiko beatmaps.
+                        beatmaps = beatmaps.FindAll(x => x.isModeTaiko());
+
+                        // Change all snaps for the section per beatmap.
+                        foreach (Beatmap beatmap in beatmaps)
+                        {
+                            TimingPointUtils.changeBpmOfTimingPoint(beatmap, htmlDisplayer, target.Offset, newBpmValue,
+                                shiftRestOfBeatmap, shouldCreateBackup, customPath);
+                            beatmap.overwrite();
+                        }
+
+                        // If something went wrong for any map in the mapset, show it here.
+                        this.Invoke(() =>
+                        {
+                            if (htmlDisplayer.containsElements())
+                            {
+                                using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                                {
+                                    form.ShowDialog();
+                                }
+
+                                MessageBoxUtils.show("Inconsistentices are shown, but the changes are still applied.");
+                                reloadBeatmapIfNecessary();
+                            }
+                            else
+                            {
+                                MessageBoxUtils.show("The BPM value changed for the selected timing point for all taiko beatmaps.");
+                                reloadBeatmapIfNecessary();
+                            }
+                        });
+                    });
+                }
+                else
+                {
+                    ThreadUtils.executeOnBackground(() =>
+                    {
+                        // Create the html displayer.
+                        HtmlDisplayer htmlDisplayer = new HtmlDisplayer();
+
+                        TimingPointUtils.changeBpmOfTimingPoint(beatmap, htmlDisplayer, target.Offset, newBpmValue,
+                                shiftRestOfBeatmap, shouldCreateBackup, customPath);
+
+                        this.Invoke(() =>
+                        {
+                            if (htmlDisplayer.containsElements())
+                            {
+                                using (InconsistencyResultForm form = new InconsistencyResultForm(htmlDisplayer.ToString()))
+                                {
+                                    form.ShowDialog();
+                                }
+
+                                showMessageAndSaveBeatmap("Inconsistentices are shown, but the BPM changes are still applied. The backup is saved in the program until it\'s closed.", "BPM change performed.", "BPMChange");
+                            }
+                            else
+                            {
+                                showMessageAndSaveBeatmap("The BPM value changed for the selected timing point.", "BPM change performed.", "BPMChange");
+                            }
+                        });
+                    });
                 }
             }
         }
