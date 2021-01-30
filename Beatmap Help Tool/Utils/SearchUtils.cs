@@ -442,7 +442,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
             string folderPath = beatmap.FolderPath;
             beatmaps = new List<Beatmap>();
             foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
-                beatmaps.Add(new Beatmap(file, false));
+            {
+                Beatmap copy = new Beatmap(file, false);
+                if (copy.FileName.Equals(beatmap.FileName))
+                    beatmaps.Add(beatmap);
+                else
+                    beatmaps.Add(copy);
+            }
         }
 
         // Get barlines as decimal. These won't have rounding errors since decimals are more precise.
@@ -577,89 +583,129 @@ namespace Beatmap_Help_Tool.BeatmapTools
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<TimingPoint> points)
         {
-            List<TimingPoint> pointsInternal = new List<TimingPoint>();
-
             SortBeatmapElements(beatmap.TimingPoints);
 
+            int startIndex = -1;
+            int endIndex = -1;
+            int i = 0;
             foreach (TimingPoint element in beatmap.TimingPoints)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    pointsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
+                i++;
             }
 
-            points = pointsInternal;
+            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<HitObject> objects)
         {
-            List<HitObject> objectsInternal = new List<HitObject>();
-
             SortBeatmapElements(beatmap.HitObjects);
 
+            int startIndex = -1;
+            int endIndex = -1;
+            int i = 0;
             foreach (HitObject element in beatmap.HitObjects)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    objectsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
 
-            objects = objectsInternal;
+            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<TimingPoint> points, out List<HitObject> objects)
         {
-            List<TimingPoint> pointsInternal = new List<TimingPoint>();
-            List<HitObject> objectsInternal = new List<HitObject>();
-
             SortBeatmapElements(beatmap.TimingPoints);
             SortBeatmapElements(beatmap.HitObjects);
 
+            int startIndex = -1;
+            int endIndex = -1;
+            int i = 0;
             foreach (TimingPoint element in beatmap.TimingPoints)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    pointsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
+            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
+
+            startIndex = -1;
+            endIndex = -1;
+            i = 0;
             foreach (HitObject element in beatmap.HitObjects)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    objectsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
-
-            points = pointsInternal;
-            objects = objectsInternal;
+            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
             out List<Bookmark> bookmarks, out List<TimingPoint> points, out List<HitObject> objects)
         {
-            List<Bookmark> bookmarksInternal = new List<Bookmark>();
-            List<TimingPoint> pointsInternal = new List<TimingPoint>();
-            List<HitObject> objectsInternal = new List<HitObject>();
-
             SortBeatmapElements(beatmap.Bookmarks);
             SortBeatmapElements(beatmap.TimingPoints);
             SortBeatmapElements(beatmap.HitObjects);
 
+            int startIndex = -1;
+            int endIndex = -1;
+            int i = 0;
             foreach (Bookmark element in beatmap.Bookmarks)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    bookmarksInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
+            bookmarks = new SubList<Bookmark>(beatmap.Bookmarks, startIndex, endIndex);
+
+            startIndex = -1;
+            endIndex = -1;
+            i = 0;
             foreach (TimingPoint element in beatmap.TimingPoints)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    pointsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
+            points = new SubList<TimingPoint>(beatmap.TimingPoints, startIndex, endIndex);
+
+            startIndex = -1;
+            endIndex = -1;
+            i = 0;
             foreach (HitObject element in beatmap.HitObjects)
             {
                 if (VerifyUtils.verifyRange(startOffset, endOffset, element.Offset))
-                    objectsInternal.Add(element);
+                {
+                    if (startIndex == -1)
+                        startIndex = i;
+                    endIndex = i;
+                }
             }
-
-            bookmarks = bookmarksInternal;
-            points = pointsInternal;
-            objects = objectsInternal;
+            objects = new SubList<HitObject>(beatmap.HitObjects, startIndex, endIndex);
         }
 
         public static int GetClosestZeroSnapPointIndex(List<TimingPoint> points)

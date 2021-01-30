@@ -60,6 +60,40 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
+        public static void changeBpmOfTimingPoint(Beatmap beatmap, HtmlDisplayer htmlDisplayer,
+                                                  double offset, double newValue, bool shiftRestOfBeatmap,
+                                                  bool saveBackups, string customPath)
+        {
+            if (saveBackups)
+                beatmap.save(customPath + "//" + beatmap.FileName);
+
+            // We need to extract the objects between the selected offset and the next timing point.
+            List<TimingPoint> originalPoints = beatmap.TimingPoints;
+
+            // Get exact and next timing points. Exact timing point cannot be null. If it is null, throw
+            // a message and bail out.
+            TimingPoint sourcePoint = SearchUtils.GetExactTimingPoint(originalPoints, offset);
+            TimingPoint nextPoint = SearchUtils.GetClosestNextTimingPoint(originalPoints, sourcePoint);
+
+            if (sourcePoint == null)
+            {
+                if (!htmlDisplayer.containsSections())
+                    htmlDisplayer.addSection("Starting uninherited timing point not found in one or more difficulties.");
+                else
+                    htmlDisplayer.addLineBreak();
+                htmlDisplayer.addSubsection("Beatmap difficulty: " + beatmap.DifficultyName);
+                htmlDisplayer.addWarning(StringUtils.GetOffsetWithLink(offset) + " does not exist.");
+                return;
+            }
+
+            // Get the objects we require.
+            SearchUtils.GetObjectsInBetween(beatmap, offset, nextPoint != null ? nextPoint.Offset : double.MaxValue,
+                out List<Bookmark> bookmarks, out List<TimingPoint> timingPoints, out List<HitObject> hitObjects);
+
+            // Since the snaps are already calculated, it should be easy to calculate the next offsets
+            // after changing the BPM.
+        }
+
         private static void checkAndPrintContent(HtmlDisplayer htmlDisplayer, KeyValuePair<Beatmap, List<TimingPoint>> previousPair, KeyValuePair<Beatmap, List<TimingPoint>> pair, TimingPoint firstPoint, TimingPoint secondPoint)
         {
             if (!firstPoint.ContentEquals(secondPoint))

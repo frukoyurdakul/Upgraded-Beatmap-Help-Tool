@@ -1572,5 +1572,48 @@ namespace Beatmap_Help_Tool
                 });
             }
         }
+
+        private void bpmChangerButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                bool allTaikoDiffs = false;
+                bool shiftRestOfBeatmap = false;
+                bool proceed = false;
+                bool shouldCreateBackup = false;
+                double newBpmValue = 0;
+                string customPath = "";
+                using (ChangerForm form = new ChangerForm(ValueChangerRules.ValueChanger.BPM))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        allTaikoDiffs = form.valueAllTaikoDiffs;
+                        shiftRestOfBeatmap = form.valueExtraOption;
+                        newBpmValue = form.valueDouble;
+                        proceed = true;
+                    }
+                }
+
+                if (!proceed)
+                    return;
+
+                if (allTaikoDiffs)
+                {
+                    if (MessageBoxUtils.showQuestionYesNo("This action will edit your entire taiko beatmapsets, so you might want to get a backup for this since this function is still under development.".AddLines(2) + "Do you want to save backups?") == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                        dialog.Title = "Please select backup folder.";
+                        dialog.IsFolderPicker = true;
+                        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                        {
+                            shouldCreateBackup = true;
+                            customPath = dialog.FileName;
+                        }
+                        dialog.Dispose();
+                    }
+                }
+            }
+        }
     }
 }

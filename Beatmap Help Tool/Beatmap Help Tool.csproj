@@ -82,11 +82,17 @@
     <Compile Include="BeatmapModel\BeatmapElement.cs" />
     <Compile Include="BeatmapModel\TimingPoint.cs" />
     <Compile Include="BeatmapTools\NoteUtils.cs" />
-    <Compile Include="BeatmapTools\SearchUtils.cs" />
+    <Compile Include="Utils\SearchUtils.cs" />
     <Compile Include="BeatmapTools\SnapUtils.cs" />
     <Compile Include="BeatmapTools\InheritedPointUtils.cs" />
     <Compile Include="BeatmapTools\TimingPointUtils.cs" />
-    <Compile Include="BeatmapTools\VerifyUtils.cs" />
+    <Compile Include="Utils\VerifyUtils.cs" />
+    <Compile Include="Forms\ChangerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangerForm.Designer.cs">
+      <DependentUpon>ChangerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EqualizeSvForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,9 +148,11 @@
     <Compile Include="Utils\OsuProcessUtils.cs" />
     <Compile Include="Utils\PreferencesKeys.cs" />
     <Compile Include="Utils\SharedPreferences.cs" />
+    <Compile Include="Utils\SubList.cs" />
     <Compile Include="Utils\ThreadUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Utils\MessageBoxUtils.cs" />
+    <Compile Include="ValueChangerRules\ValueChanger.cs" />
     <Compile Include="Views\DoubleBufferGridView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -154,6 +162,9 @@
     <Compile Include="Views\PlaceHolderTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Forms\ChangerForm.resx">
+      <DependentUpon>ChangerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EqualizeSvForm.resx">
       <DependentUpon>EqualizeSvForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -330,5 +330,10 @@ namespace Beatmap_Help_Tool.Utils
                     return list[mid];
             }
         }
+
+        public static List<T> SubList<T>(this List<T> source, int startIndex)
+        {
+            return new SubList<T>(source, startIndex);
+        }
     }
 }

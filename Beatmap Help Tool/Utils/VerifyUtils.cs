@@ -150,6 +150,18 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return false;
         }
 
+        public static void verifyListRangeOrThrow<T>(IList<T> list, int startIndex, int endIndex)
+        {
+            if (startIndex < 0)
+                throw new ArgumentException("startIndex cannot be lower than 0.");
+            else if (startIndex > list.Count - 1)
+                throw new ArgumentException("startIndex cannot be higher than or equal to list count. startIndex: " + startIndex + ", list count: " + list.Count);
+            else if (endIndex > list.Count - 1)
+                throw new ArgumentException("endIndex cannot be higher than or equal to list count. startIndex: " + startIndex + ", list count: " + list.Count);
+            else if (endIndex < startIndex)
+                throw new ArgumentException("endIndex cannot be higher than or equal to startIndex. startIndex: " + startIndex + ", endIndex: " + endIndex);
+        }
+
         public static int getValueInRangeBetween(int min, int max, params int[] values)
         {
             foreach (int value in values)
