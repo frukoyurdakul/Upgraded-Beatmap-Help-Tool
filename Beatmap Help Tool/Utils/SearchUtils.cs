@@ -66,7 +66,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
-        public static TimingPoint GetClosestTimingPoint(List<TimingPoint> points, double offset)
+        public static TimingPoint GetClosestTimingPoint(IList<TimingPoint> points, double offset)
         {
             int i = GetClosestPointIndex(points, offset);
             if (i >= 0)
@@ -119,22 +119,22 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
         }
 
-        public static TimingPoint GetExactTimingPoint(List<TimingPoint> points, double offset)
+        public static TimingPoint GetExactTimingPoint(IList<TimingPoint> points, double offset)
         {
             return VerifyUtils.safeGetItemFromList(points, GetExactPointIndex(points, offset, false));
         }
 
-        public static TimingPoint GetExactInheritedPoint(List<TimingPoint> points, double offset)
+        public static TimingPoint GetExactInheritedPoint(IList<TimingPoint> points, double offset)
         {
             return VerifyUtils.safeGetItemFromList(points, GetExactPointIndex(points, offset, true));
         }
 
-        public static HitObject GetExactHitObject(List<HitObject> hitObjects, double offset)
+        public static HitObject GetExactHitObject(IList<HitObject> hitObjects, double offset)
         {
             return VerifyUtils.safeGetItemFromList(hitObjects, GetExactNoteIndex(hitObjects, offset));
         }
 
-        public static int GetExactPointIndex(List<TimingPoint> points, double offset, bool isInherited)
+        public static int GetExactPointIndex(IList<TimingPoint> points, double offset, bool isInherited)
         {
             // Perform a direct binary search.
             SortBeatmapElements(points);
@@ -178,7 +178,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return -1;
         }
 
-        public static int GetExactNoteIndex(List<HitObject> hitObjects, double offset)
+        public static int GetExactNoteIndex(IList<HitObject> hitObjects, double offset)
         {
             // Perform a direct binary search.
             SortBeatmapElements(hitObjects);
@@ -212,7 +212,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         // Returns the original bpm value in milliseconds.
         // Example, If the BPM is 200, this returns 300.
-        public static double GetBpmValueInOffset(List<TimingPoint> points, double offset)
+        public static double GetBpmValueInOffset(IList<TimingPoint> points, double offset)
         {
             TimingPoint point = GetClosestTimingPoint(points, offset);
             if (point != null)
@@ -306,12 +306,12 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return VerifyUtils.safeGetItemFromList(list, Math.Max(first, last));
         }
 
-        public static bool IsFirstPointTimingPoint(List<TimingPoint> points)
+        public static bool IsFirstPointTimingPoint(IList<TimingPoint> points)
         {
             return points.Count > 0 && !points[0].IsInherited;
         }
 
-        public static bool ContainsTimingPoint(List<TimingPoint> points)
+        public static bool ContainsTimingPoint(IList<TimingPoint> points)
         {
             foreach (TimingPoint point in points)
                 if (!point.IsInherited)
@@ -377,40 +377,46 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return isKiaiOpen != referencePoint.IsKiaiOpen;
         }
 
-        public static void SortBeatmapElements(List<TimingPoint> points)
+        public static void SortBeatmapElements(IList<TimingPoint> points)
         {
             if (!AreTimingsSorted(points))
             {
-                points.Sort();
+                SortListIfType(points);
                 MarkSorted(points);
             }
         }
 
-        public static void SortBeatmapElements(List<HitObject> points)
+        public static void SortBeatmapElements(IList<HitObject> points)
         {
             if (!AreTimingsSorted(points))
             {
-                points.Sort();
+                SortListIfType(points);
                 MarkSorted(points);
             }
         }
 
-        public static void SortBeatmapElements(List<Bookmark> points)
+        public static void SortBeatmapElements(IList<Bookmark> points)
         {
             if (!AreTimingsSorted(points))
             {
-                points.Sort();
+                SortListIfType(points);
                 MarkSorted(points);
             }
         }
 
-        public static void SortBeatmapElements(List<BeatmapElement> points)
+        public static void SortBeatmapElements(IList<BeatmapElement> points)
         {
             if (!AreTimingsSorted(points))
             {
-                points.Sort();
+                SortListIfType(points);
                 MarkSorted(points);
             }
+        }
+
+        private static void SortListIfType<T>(IList<T> list)
+        {
+            if (list is List<T>)
+                ((List<T>)list).Sort();
         }
 
         public static int GetBeatmapCountInMapset(Beatmap beatmap)
@@ -581,7 +587,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
-            out List<TimingPoint> points)
+            out IList<TimingPoint> points)
         {
             SortBeatmapElements(beatmap.TimingPoints);
 
@@ -603,7 +609,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
-            out List<HitObject> objects)
+            out IList<HitObject> objects)
         {
             SortBeatmapElements(beatmap.HitObjects);
 
@@ -625,7 +631,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
-            out List<TimingPoint> points, out List<HitObject> objects)
+            out IList<TimingPoint> points, out IList<HitObject> objects)
         {
             SortBeatmapElements(beatmap.TimingPoints);
             SortBeatmapElements(beatmap.HitObjects);
@@ -662,7 +668,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         }
 
         public static void GetObjectsInBetween(Beatmap beatmap, double startOffset, double endOffset,
-            out List<Bookmark> bookmarks, out List<TimingPoint> points, out List<HitObject> objects)
+            out IList<Bookmark> bookmarks, out IList<TimingPoint> points, out IList<HitObject> objects)
         {
             SortBeatmapElements(beatmap.Bookmarks);
             SortBeatmapElements(beatmap.TimingPoints);
@@ -776,7 +782,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return 0;
         }
 
-        private static int GetClosestPointIndex(List<TimingPoint> points, double offset)
+        private static int GetClosestPointIndex(IList<TimingPoint> points, double offset)
         {
             SortBeatmapElements(points);
 

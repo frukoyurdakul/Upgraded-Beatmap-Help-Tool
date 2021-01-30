@@ -14,14 +14,14 @@ namespace Beatmap_Help_Tool.BeatmapTools
         private const string TIMING_REGEX_STRING = @"(\d{1}[:])?\d{2}[:]\d{2}[:]\d{3}";
         private static readonly Regex timingRegex = new Regex(TIMING_REGEX_STRING, RegexOptions.Compiled);
 
-        public static T safeGetItemFromList<T> (List<T> items, int index)
+        public static T safeGetItemFromList<T> (IList<T> items, int index)
         {
             if (items != null && index >= 0 && index < items.Count)
                 return items[index];
             return default(T);
         }
 
-        public static List<T> createSafeSublist<T>(List<T> items, int startIndex, int endIndex)
+        public static IList<T> createSafeSublist<T>(List<T> items, int startIndex, int endIndex)
         {
             if (startIndex >= 0 && endIndex < items.Count)
                 return new SubList<T>(items, startIndex, endIndex);

@@ -44,7 +44,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             }
 
             SearchUtils.GetObjectsInBetween(beatmap, firstOffset, lastOffset,
-                out List<TimingPoint> points, out List<HitObject> objects);
+                out IList<TimingPoint> points, out IList<HitObject> objects);
     
             // If "putPointsByNotes" is selected and no objects are found, throw an error
             // and return false.
@@ -347,7 +347,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // Hold the previous one as well to keep reference to add points from.
             TimingPoint current;
             TimingPoint closestRedPoint;
-            List<TimingPoint> points;
+            IList<TimingPoint> points;
 
             bool originalRef = form.EqualizeAll;
             bool scaleWithExistingPoints = form.UseRelativeSv;
@@ -385,13 +385,6 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     {
                         // We've found the current inherited point. Change the value and continue.
                         applyMultiplierToPoint(originalInheritedPointValues, exactInheritedPoint, finalMultiplier, scaleWithExistingPoints);
-
-                        // If the index of this element is only 1 greater than current
-                        // index, increase the index as well since we do not
-                        // need to process this point again.
-                        int originalIndex = points.IndexOf(exactInheritedPoint);
-                        if (originalIndex == i + 1)
-                            i++;
                     }
                     else
                     {
@@ -408,25 +401,8 @@ namespace Beatmap_Help_Tool.BeatmapTools
                             points.Add(newPoint);
                         else
                             points.Insert(i + 1, newPoint);
-
-                        // Since we added this to the list, increase the index once.
-                        // We do not need to process this again.
-                        i++;
                     }
                 }
-            }
-
-            // At the end of the process, we need to replace original values
-            // of the beatmap.TimingPoints list in this range. If the changes
-            // made are in a copy list, we must do this. If the whole
-            // range is changed, it means we have the original list.
-            if (!originalRef)
-            {
-                beatmap.TimingPoints.RemoveRange(startIndex, removeCount);
-                if (startIndex + 1 == beatmap.TimingPoints.Count)
-                    beatmap.TimingPoints.AddRange(points);
-                else
-                    beatmap.TimingPoints.InsertRange(startIndex + 1, points);
             }
 
             // Sort the elements again.
@@ -439,7 +415,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             double firstOffset, double lastOffset)
         {
             SearchUtils.GetObjectsInBetween(beatmap, firstOffset, lastOffset,
-                out List<TimingPoint> points);
+                out IList<TimingPoint> points);
 
             Dictionary<TimingPoint, double> newOffsets = new Dictionary<TimingPoint, double>();
             bool isHighRangeDetectedAndVerified = false;

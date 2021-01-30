@@ -51,9 +51,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(17, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(255, 30);
+            this.label1.Size = new System.Drawing.Size(340, 37);
             this.label1.TabIndex = 0;
             this.label1.Text = "Adjust the settings to equalize SV here. Hover over to the items to get detailed " +
     "info.";
@@ -62,9 +63,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.equalizeAllCheckBox.Checked = true;
             this.equalizeAllCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.equalizeAllCheckBox.Location = new System.Drawing.Point(16, 52);
+            this.equalizeAllCheckBox.Location = new System.Drawing.Point(21, 64);
+            this.equalizeAllCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.equalizeAllCheckBox.Name = "equalizeAllCheckBox";
-            this.equalizeAllCheckBox.Size = new System.Drawing.Size(174, 24);
+            this.equalizeAllCheckBox.Size = new System.Drawing.Size(232, 30);
             this.equalizeAllCheckBox.TabIndex = 1;
             this.equalizeAllCheckBox.Text = "Equalize the entirety of the map";
             this.toolTip1.SetToolTip(this.equalizeAllCheckBox, "Applies the equalize SV method to the entire\r\nmap if this is checked. Unchecking " +
@@ -75,27 +77,30 @@ namespace Beatmap_Help_Tool.Forms
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 152);
+            this.label2.Location = new System.Drawing.Point(21, 187);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.Size = new System.Drawing.Size(72, 17);
             this.label2.TabIndex = 2;
             this.label2.Text = "Start time:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 178);
+            this.label3.Location = new System.Drawing.Point(21, 219);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.Size = new System.Drawing.Size(67, 17);
             this.label3.TabIndex = 3;
             this.label3.Text = "End time:";
             // 
             // applyButton
             // 
             this.applyButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.applyButton.Location = new System.Drawing.Point(89, 256);
+            this.applyButton.Location = new System.Drawing.Point(119, 315);
+            this.applyButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(103, 23);
+            this.applyButton.Size = new System.Drawing.Size(137, 28);
             this.applyButton.TabIndex = 6;
             this.applyButton.Text = "Apply!";
             this.applyButton.UseVisualStyleBackColor = true;
@@ -110,9 +115,10 @@ namespace Beatmap_Help_Tool.Forms
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 204);
+            this.label4.Location = new System.Drawing.Point(21, 251);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 13);
+            this.label4.Size = new System.Drawing.Size(87, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Target BPM:";
             this.toolTip1.SetToolTip(this.label4, resources.GetString("label4.ToolTip"));
@@ -120,18 +126,20 @@ namespace Beatmap_Help_Tool.Forms
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 230);
+            this.label5.Location = new System.Drawing.Point(21, 283);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(68, 13);
+            this.label5.Size = new System.Drawing.Size(90, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "SV Multiplier:";
             this.toolTip1.SetToolTip(this.label5, resources.GetString("label5.ToolTip"));
             // 
             // useRelativeSvCheckBox
             // 
-            this.useRelativeSvCheckBox.Location = new System.Drawing.Point(16, 82);
+            this.useRelativeSvCheckBox.Location = new System.Drawing.Point(21, 101);
+            this.useRelativeSvCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.useRelativeSvCheckBox.Name = "useRelativeSvCheckBox";
-            this.useRelativeSvCheckBox.Size = new System.Drawing.Size(245, 24);
+            this.useRelativeSvCheckBox.Size = new System.Drawing.Size(327, 30);
             this.useRelativeSvCheckBox.TabIndex = 11;
             this.useRelativeSvCheckBox.Text = "Use relative SV based on existing green points";
             this.toolTip1.SetToolTip(this.useRelativeSvCheckBox, resources.GetString("useRelativeSvCheckBox.ToolTip"));
@@ -139,9 +147,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             // rememberCheckBox
             // 
-            this.rememberCheckBox.Location = new System.Drawing.Point(16, 112);
+            this.rememberCheckBox.Location = new System.Drawing.Point(21, 138);
+            this.rememberCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.rememberCheckBox.Name = "rememberCheckBox";
-            this.rememberCheckBox.Size = new System.Drawing.Size(171, 24);
+            this.rememberCheckBox.Size = new System.Drawing.Size(228, 30);
             this.rememberCheckBox.TabIndex = 12;
             this.rememberCheckBox.Text = "Remember values and options";
             this.toolTip1.SetToolTip(this.rememberCheckBox, resources.GetString("rememberCheckBox.ToolTip"));
@@ -151,13 +160,13 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.svMultiplierTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.svMultiplierTextBox.Enabled = false;
             this.svMultiplierTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.svMultiplierTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.svMultiplierTextBox.Location = new System.Drawing.Point(90, 227);
+            this.svMultiplierTextBox.Location = new System.Drawing.Point(120, 279);
+            this.svMultiplierTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.svMultiplierTextBox.Name = "svMultiplierTextBox";
             this.svMultiplierTextBox.PlaceHolderText = "Base SV multiplier in format of 1.10 or 1";
-            this.svMultiplierTextBox.Size = new System.Drawing.Size(178, 20);
+            this.svMultiplierTextBox.Size = new System.Drawing.Size(236, 23);
             this.svMultiplierTextBox.TabIndex = 10;
             this.toolTip1.SetToolTip(this.svMultiplierTextBox, resources.GetString("svMultiplierTextBox.ToolTip"));
             // 
@@ -165,13 +174,13 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.targetBpmTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.targetBpmTextBox.Enabled = false;
             this.targetBpmTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.targetBpmTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.targetBpmTextBox.Location = new System.Drawing.Point(90, 201);
+            this.targetBpmTextBox.Location = new System.Drawing.Point(120, 247);
+            this.targetBpmTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.targetBpmTextBox.Name = "targetBpmTextBox";
             this.targetBpmTextBox.PlaceHolderText = "Optional, current BPM is first.";
-            this.targetBpmTextBox.Size = new System.Drawing.Size(178, 20);
+            this.targetBpmTextBox.Size = new System.Drawing.Size(236, 23);
             this.targetBpmTextBox.TabIndex = 8;
             this.toolTip1.SetToolTip(this.targetBpmTextBox, resources.GetString("targetBpmTextBox.ToolTip"));
             // 
@@ -182,10 +191,11 @@ namespace Beatmap_Help_Tool.Forms
             this.endTimeTextBox.Enabled = false;
             this.endTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.endTimeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.endTimeTextBox.Location = new System.Drawing.Point(90, 175);
+            this.endTimeTextBox.Location = new System.Drawing.Point(120, 215);
+            this.endTimeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.endTimeTextBox.Name = "endTimeTextBox";
             this.endTimeTextBox.PlaceHolderText = "Copy time as in 00:00:000 -";
-            this.endTimeTextBox.Size = new System.Drawing.Size(178, 20);
+            this.endTimeTextBox.Size = new System.Drawing.Size(236, 23);
             this.endTimeTextBox.TabIndex = 5;
             // 
             // startTimeTextBox
@@ -195,17 +205,18 @@ namespace Beatmap_Help_Tool.Forms
             this.startTimeTextBox.Enabled = false;
             this.startTimeTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.startTimeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
-            this.startTimeTextBox.Location = new System.Drawing.Point(90, 149);
+            this.startTimeTextBox.Location = new System.Drawing.Point(120, 183);
+            this.startTimeTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.startTimeTextBox.Name = "startTimeTextBox";
             this.startTimeTextBox.PlaceHolderText = "Copy time as in 00:00:000 -";
-            this.startTimeTextBox.Size = new System.Drawing.Size(178, 20);
+            this.startTimeTextBox.Size = new System.Drawing.Size(236, 23);
             this.startTimeTextBox.TabIndex = 4;
             // 
             // EqualizeSvForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(280, 291);
+            this.ClientSize = new System.Drawing.Size(373, 358);
             this.Controls.Add(this.rememberCheckBox);
             this.Controls.Add(this.useRelativeSvCheckBox);
             this.Controls.Add(this.svMultiplierTextBox);
@@ -219,7 +230,8 @@ namespace Beatmap_Help_Tool.Forms
             this.Controls.Add(this.label2);
             this.Controls.Add(this.equalizeAllCheckBox);
             this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(296, 330);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(389, 395);
             this.Name = "EqualizeSvForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EqualizeSvForm";

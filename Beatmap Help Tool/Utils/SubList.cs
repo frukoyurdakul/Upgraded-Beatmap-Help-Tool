@@ -50,13 +50,13 @@ namespace Beatmap_Help_Tool.Utils
 
         public new void Add(T item)
         {
-            originalList.Insert(startIndex, item);
+            originalList.Insert(endIndex, item);
             endIndex++;
         }
 
         public new void AddRange(IEnumerable<T> collection)
         {
-            originalList.InsertRange(startIndex, collection);
+            originalList.InsertRange(endIndex, collection);
             endIndex += collection.Count();
         }
 
@@ -191,10 +191,12 @@ namespace Beatmap_Help_Tool.Utils
         public new void Insert(int index, T item)
         {
             originalList.Insert(startIndex + index, item);
+            endIndex++;
         }
         public new void InsertRange(int index, IEnumerable<T> collection)
         {
             originalList.InsertRange(startIndex + index, collection);
+            endIndex += collection.Count();
         }
         public new int LastIndexOf(T item)
         {

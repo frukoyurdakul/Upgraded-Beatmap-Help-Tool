@@ -90,7 +90,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
             // Get the objects we require.
             SearchUtils.GetObjectsInBetween(beatmap, offset, nextPoint != null ? nextPoint.Offset : double.MaxValue,
-                out List<Bookmark> bookmarks, out List<TimingPoint> timingPoints, out List<HitObject> hitObjects);
+                out IList<Bookmark> bookmarks, out IList<TimingPoint> timingPoints, out IList<HitObject> hitObjects);
 
             // Since the snaps are already calculated, it should be easy to calculate the next offsets
             // after changing the BPM.
@@ -114,7 +114,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
                 // Shift all the objects starting from the last object offset.
                 SearchUtils.GetObjectsInBetween(beatmap, offset, nextPoint.Offset,
-                    out List<Bookmark> bookmarks2, out List<TimingPoint> timingPoints2, out List<HitObject> hitObjects2);
+                    out IList<Bookmark> bookmarks2, out IList<TimingPoint> timingPoints2, out IList<HitObject> hitObjects2);
                 SnapUtils.shiftAllElementsByOffset(offsetDifference, hitObjects2, timingPoints2, bookmarks2);
             }
 
