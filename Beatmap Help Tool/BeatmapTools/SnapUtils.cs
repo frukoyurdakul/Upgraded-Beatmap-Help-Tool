@@ -278,7 +278,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return targetOffset;
         }
 
-        public static bool resnapAllNotes(List<Beatmap> beatmaps, string customPath, bool shouldCreateBackup, onFailure<Beatmap, BeatmapElement, int> listener)
+        public static bool resnapAllNotes(List<Beatmap> beatmaps, string customPath, bool shouldCreateBackup, bool snapInheritedPoints, onFailure<Beatmap, BeatmapElement, int> listener)
         {
             // Loop through all beatmaps.
             // Ask for confirmation first. Users might select a location
@@ -286,9 +286,10 @@ namespace Beatmap_Help_Tool.BeatmapTools
             foreach (Beatmap beatmap in beatmaps)
             {
                 if (shouldCreateBackup)
-                    beatmap.save(customPath + "//" + beatmap.FileName);
+                    beatmap.save("resnap all notes", customPath + "//" + beatmap.FileName);
                 resnapElements(beatmap.HitObjects, beatmap, listener, x => true);
-                resnapElements(beatmap.TimingPoints, beatmap, listener, x => ((TimingPoint)x).IsInherited);
+                if (snapInheritedPoints)
+                    resnapElements(beatmap.TimingPoints, beatmap, listener, x => ((TimingPoint)x).IsInherited);
                 beatmap.overwrite();
             }
             return true;

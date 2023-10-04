@@ -1502,6 +1502,12 @@ namespace Beatmap_Help_Tool
                     }
                     dialog.Dispose();
                 }
+
+                DialogResult inheritedResult = MessageBoxUtils.showQuestionYesNoCancel("Do you want to snap inherited points as well?");
+                if (inheritedResult == DialogResult.Cancel)
+                    return;
+
+                bool shouldSnapInheritedPoints = inheritedResult == DialogResult.Yes;
                 ThreadUtils.executeOnBackground(() =>
                 {
                     // Get all maps.
@@ -1535,7 +1541,7 @@ namespace Beatmap_Help_Tool
                     // ones in the displayer.
                     //
                     // Errors are triggered with the delagate in 2nd parameter.
-                    SnapUtils.resnapAllNotes(beatmaps, customPath, shouldCreateBackup, (beatmap, beatmapElement, value) =>
+                    SnapUtils.resnapAllNotes(beatmaps, customPath, shouldCreateBackup, shouldSnapInheritedPoints, (beatmap, beatmapElement, value) =>
                     {
                         if (!initialSectionCreated)
                         {
@@ -1696,6 +1702,76 @@ namespace Beatmap_Help_Tool
                             }
                         });
                     });
+                }
+            }
+        }
+
+        private void shiftOffsetsOfGreenPointsSvButton_Click(object sender, EventArgs e)
+        {
+            if (checkBeatmapLoaded())
+            {
+                ChangerForm changerForm = new ChangerForm(ValueChangerRules.ValueChanger.SV_OFFSET_CHANGE);
+                DialogResult result = changerForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    bool isAllTaikoDiffs = changerForm.valueAllTaikoDiffs;
+                    int change = changerForm.valueInt;
+                    string backupLocation = "";
+
+                    List<Beatmap> allMaps = new List<Beatmap>();
+
+                    if (isAllTaikoDiffs)
+                        SearchUtils.GetAllBeatmaps(beatmap, allMaps);
+                    else
+                        allMaps.Add(beatmap);
+
+                    if (MessageBoxUtils.showQuestionYesNo("This action will edit your entire taiko beatmapsets, so you might want to get a backup for this since this function is still under development.".AddLines(2) + "Do you want to save backups?") == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+                        dialog.Title = "Please select backup folder.";
+                        dialog.IsFolderPicker = true;
+                        dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                        if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                        {
+                            backupLocation = dialog.FileName;
+                        }
+                        dialog.Dispose();
+                    }
+                    if (!string.IsNullOrEmpty(backupLocation))
+                    {
+                        foreach (Beatmap diff in allMaps)
+                        {
+                            diff.saveBeatmapToPath(backupLocation + "//" + diff.FileName);
+                        }
+                    }
+
+                    foreach (Beatmap diff in allMaps)
+                    {
+                        List<TimingPoint> allowedPoints = new List<TimingPoint>();
+                        List<TimingPoint> points = diff.TimingPoints;
+                        List<HitObject> hitObjects = diff.HitObjects;
+                        foreach (TimingPoint point in points)
+                        {
+                            if (SearchUtils.ChangesSvOnly(points, hitObjects, point))
+                            {
+                                allowedPoints.Add(point);
+                            }
+                        }
+
+                        if (allowedPoints.Count > 0)
+                        {
+                            foreach (TimingPoint point in allowedPoints)
+                            {
+                                // Perform an "add" operation since the "change" is a
+                                // negative value.
+                                point.Offset += change;
+                            }
+                            diff.overwrite();
+                        }
+                    }
+
+                    MessageBoxUtils.show("The SV offsets are shifted with the given value.");
+                    reloadBeatmapIfNecessary();
                 }
             }
         }

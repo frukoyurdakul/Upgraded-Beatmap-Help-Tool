@@ -65,7 +65,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                                                   bool saveBackups, string customPath)
         {
             if (saveBackups)
-                beatmap.save(customPath + "//" + beatmap.FileName);
+                beatmap.save("change bpm of timing point", customPath + "//" + beatmap.FileName);
 
             decimal newValueDecimal = Convert.ToDecimal(newValue);
 

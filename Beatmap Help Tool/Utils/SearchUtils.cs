@@ -377,6 +377,63 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return isKiaiOpen != referencePoint.IsKiaiOpen;
         }
 
+        // Returns true if:
+        // This is a green point and,
+        // This point changes SV and,
+        // The point is not toggling kiai and,
+        // The point is not on a red point as well.
+        public static bool ChangesSvOnly(List<TimingPoint> points, List<HitObject> hitObjects, TimingPoint currentPoint)
+        {
+            // Shortcut: Return false if the point is not a green point.
+            if (!currentPoint.IsInherited)
+                return false;
+
+            // Always sort the elements.
+            SortBeatmapElements(points);
+
+            // Assign the offset value.
+            double currentOffset = currentPoint.Offset;
+
+            // Now, here we need to get all points before that offset.
+            // Depending on the conditions of the function, check one by one.
+            TimingPoint closestTimingPoint = GetClosestPoint(points, currentOffset, false);
+            TimingPoint closestInheritedPoint = GetClosestPoint(points, currentOffset - 1, true);
+
+            // The inherited point can still be a timing point. In that case,
+            // assume its value is 1.00x and determine whether this point
+            // has an SV change. Otherwise, compare point values directly.
+            double inheritedValue = closestInheritedPoint.IsInherited ? closestInheritedPoint.PointValue : -100d;
+            if (currentPoint.PointValue != inheritedValue)
+            {
+                // That means this point is changing SV.
+                // Check the final conditions: the kiai change and the timing point.
+                if (closestTimingPoint.Offset == currentOffset)
+                {
+                    // The inherited point is on a timing point, do not move.
+                    return false;
+                }
+                else if (TogglesKiai(points, currentPoint))
+                {
+                    // The inherited point toggles kiai in some way, it should
+                    // not be moved.
+                    return false;
+                }
+                else if (GetExactNoteIndex(hitObjects, currentOffset) < 0)
+                {
+                    // This SV is not on a note, it should not be moved.
+                    return false;
+                }
+
+                // This point is allowed to be moved.
+                return true;
+            }
+            else
+            {
+                // This point is not changing SV, do not touch.
+                return false;
+            }
+        }
+
         public static void SortBeatmapElements(IList<TimingPoint> points)
         {
             if (!AreTimingsSorted(points))
@@ -443,6 +500,22 @@ namespace Beatmap_Help_Tool.BeatmapTools
             allPoints = timingPointsPerBeatmap.Values.ToList();
         }
 
+        public static void GetAllBeatmaps(Beatmap beatmap, List<Beatmap> beatmaps)
+        {
+            string folderPath = beatmap.FolderPath;
+            foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
+            {
+                Beatmap copy = new Beatmap(file, false);
+                if (copy.isModeTaiko())
+                {
+                    if (copy.FileName.Equals(beatmap.FileName))
+                        beatmaps.Add(beatmap);
+                    else
+                        beatmaps.Add(copy);
+                }
+            }
+        }
+
         public static void GetAllBeatmaps(Beatmap beatmap, out List<Beatmap> beatmaps)
         {
             string folderPath = beatmap.FolderPath;
@@ -450,10 +523,13 @@ namespace Beatmap_Help_Tool.BeatmapTools
             foreach (string file in Directory.GetFiles(folderPath, "*.osu"))
             {
                 Beatmap copy = new Beatmap(file, false);
-                if (copy.FileName.Equals(beatmap.FileName))
-                    beatmaps.Add(beatmap);
-                else
-                    beatmaps.Add(copy);
+                if (copy.isModeTaiko())
+                {
+                    if (copy.FileName.Equals(beatmap.FileName))
+                        beatmaps.Add(beatmap);
+                    else
+                        beatmaps.Add(copy);
+                }
             }
         }
 
@@ -796,7 +872,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
             // If not, start the binary search. Totally copied from StackOverflow.
             int first = 0;
             int last = points.Count - 1;
-            int mid = 0;
+            int mid;
             do
             {
                 mid = first + (last - first) / 2;
