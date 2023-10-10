@@ -1715,6 +1715,7 @@ namespace Beatmap_Help_Tool
                 if (result == DialogResult.OK)
                 {
                     bool isAllTaikoDiffs = changerForm.valueAllTaikoDiffs;
+                    bool movePointsInBetween = changerForm.valueExtraOption;
                     int change = changerForm.valueInt;
                     string backupLocation = "";
 
@@ -1752,7 +1753,7 @@ namespace Beatmap_Help_Tool
                         List<HitObject> hitObjects = diff.HitObjects;
                         foreach (TimingPoint point in points)
                         {
-                            if (SearchUtils.ChangesSvOnly(points, hitObjects, point))
+                            if (SearchUtils.CanMoveSvSafelyFromClosestNote(points, hitObjects, point, change, movePointsInBetween))
                             {
                                 allowedPoints.Add(point);
                             }

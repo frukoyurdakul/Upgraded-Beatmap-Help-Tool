@@ -44,9 +44,10 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(10, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(276, 75);
+            this.label1.Size = new System.Drawing.Size(207, 61);
             this.label1.TabIndex = 0;
             this.label1.Text = "Helps to change the value of item(s). Hover over to \"Type change\" to learn how th" +
     "e value will be changed.";
@@ -55,18 +56,20 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.typeChangeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.typeChangeLabel.Location = new System.Drawing.Point(13, 88);
+            this.typeChangeLabel.Location = new System.Drawing.Point(10, 72);
+            this.typeChangeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.typeChangeLabel.Name = "typeChangeLabel";
-            this.typeChangeLabel.Size = new System.Drawing.Size(276, 23);
+            this.typeChangeLabel.Size = new System.Drawing.Size(207, 19);
             this.typeChangeLabel.TabIndex = 1;
             this.typeChangeLabel.Text = "Type change: ";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 117);
+            this.label3.Location = new System.Drawing.Point(10, 95);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 17);
+            this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Value: ";
             // 
@@ -74,17 +77,19 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.valueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.valueTextBox.Location = new System.Drawing.Point(100, 114);
+            this.valueTextBox.Location = new System.Drawing.Point(75, 93);
+            this.valueTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.valueTextBox.Name = "valueTextBox";
-            this.valueTextBox.Size = new System.Drawing.Size(189, 22);
+            this.valueTextBox.Size = new System.Drawing.Size(143, 20);
             this.valueTextBox.TabIndex = 3;
             // 
             // applyButton
             // 
             this.applyButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.applyButton.Location = new System.Drawing.Point(86, 297);
+            this.applyButton.Location = new System.Drawing.Point(64, 241);
+            this.applyButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(128, 29);
+            this.applyButton.Size = new System.Drawing.Size(96, 24);
             this.applyButton.TabIndex = 4;
             this.applyButton.Text = "Apply!";
             this.applyButton.UseVisualStyleBackColor = true;
@@ -96,9 +101,10 @@ namespace Beatmap_Help_Tool.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.extraOptionCheckBox.CheckAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.extraOptionCheckBox.Location = new System.Drawing.Point(16, 197);
+            this.extraOptionCheckBox.Location = new System.Drawing.Point(12, 160);
+            this.extraOptionCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.extraOptionCheckBox.Name = "extraOptionCheckBox";
-            this.extraOptionCheckBox.Size = new System.Drawing.Size(276, 74);
+            this.extraOptionCheckBox.Size = new System.Drawing.Size(207, 60);
             this.extraOptionCheckBox.TabIndex = 5;
             this.extraOptionCheckBox.Text = "checkBox1";
             this.extraOptionCheckBox.TextAlign = System.Drawing.ContentAlignment.TopLeft;
@@ -115,18 +121,19 @@ namespace Beatmap_Help_Tool.Forms
             // 
             this.allTaikoDiffsCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.allTaikoDiffsCheckBox.Location = new System.Drawing.Point(16, 159);
+            this.allTaikoDiffsCheckBox.Location = new System.Drawing.Point(12, 129);
+            this.allTaikoDiffsCheckBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.allTaikoDiffsCheckBox.Name = "allTaikoDiffsCheckBox";
-            this.allTaikoDiffsCheckBox.Size = new System.Drawing.Size(273, 21);
+            this.allTaikoDiffsCheckBox.Size = new System.Drawing.Size(205, 17);
             this.allTaikoDiffsCheckBox.TabIndex = 6;
             this.allTaikoDiffsCheckBox.Text = "Apply to all Taiko difficulties";
             this.allTaikoDiffsCheckBox.UseVisualStyleBackColor = true;
             // 
             // ChangerForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 338);
+            this.ClientSize = new System.Drawing.Size(227, 275);
             this.Controls.Add(this.allTaikoDiffsCheckBox);
             this.Controls.Add(this.extraOptionCheckBox);
             this.Controls.Add(this.applyButton);
@@ -134,7 +141,8 @@ namespace Beatmap_Help_Tool.Forms
             this.Controls.Add(this.label3);
             this.Controls.Add(this.typeChangeLabel);
             this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(319, 321);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.MinimumSize = new System.Drawing.Size(243, 268);
             this.Name = "ChangerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ChangerForm";

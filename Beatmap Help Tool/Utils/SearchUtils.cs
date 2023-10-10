@@ -134,6 +134,16 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return VerifyUtils.safeGetItemFromList(hitObjects, GetExactNoteIndex(hitObjects, offset));
         }
 
+        public static HitObject GetPreviousHitObject(IList<HitObject> hitObjects, double offset)
+        {
+            return VerifyUtils.safeGetItemFromList(hitObjects, GetClosestPreviousNoteIndex(hitObjects, offset));
+        }
+
+        public static HitObject GetNextHitObject(IList<HitObject> hitObjects, double offset)
+        {
+            return VerifyUtils.safeGetItemFromList(hitObjects, GetClosestNextNoteIndex(hitObjects, offset));
+        }
+
         public static int GetExactPointIndex(IList<TimingPoint> points, double offset, bool isInherited)
         {
             // Perform a direct binary search.
@@ -180,12 +190,79 @@ namespace Beatmap_Help_Tool.BeatmapTools
 
         public static int GetExactNoteIndex(IList<HitObject> hitObjects, double offset)
         {
+            int index = GetClosestNoteIndex(hitObjects, offset);
+            if (index >= 0 && index < hitObjects.Count && hitObjects[index].Offset == offset)
+                return index;
+
+            return -1;
+        }
+
+        public static int GetClosestPreviousNoteIndex(IList<HitObject> hitObjects, double offset)
+        {
+            int index = GetClosestNoteIndex(hitObjects, offset);
+            if (index >= 0 && index < hitObjects.Count)
+            {
+                HitObject hitObject = hitObjects[index];
+                if (hitObject.Offset < offset)
+                {
+                    int previousIndex = index;
+                    for (int i = index; i < hitObjects.Count; i++)
+                    {
+                        if (hitObjects[i].Offset >= offset)
+                            return previousIndex;
+                        previousIndex = i;
+                    }
+                }
+                else
+                {
+                    for (int i = index; i >= 0; i--)
+                    {
+                        if (hitObjects[i].Offset < offset)
+                            return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        public static int GetClosestNextNoteIndex(IList<HitObject> hitObjects, double offset)
+        {
+            int index = GetClosestNoteIndex(hitObjects, offset);
+            if (index >= 0 && index < hitObjects.Count)
+            {
+                HitObject hitObject = hitObjects[index];
+                if (hitObject.Offset > offset)
+                {
+                    int previousIndex = index;
+                    for (int i = index; i >= 0; i--)
+                    {
+                        if (hitObjects[i].Offset <= offset)
+                            return previousIndex;
+                        previousIndex = i;
+                    }
+                }
+                else
+                {
+                    for (int i = index; i < hitObjects.Count; i++)
+                    {
+                        if (hitObjects[i].Offset > offset)
+                            return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        private static int GetClosestNoteIndex(IList<HitObject> hitObjects, double offset)
+        {
             // Perform a direct binary search.
             SortBeatmapElements(hitObjects);
 
             int first = 0;
             int last = hitObjects.Count - 1;
-            int mid = 0;
+            int mid;
             do
             {
                 mid = first + (last - first) / 2;
@@ -197,7 +274,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     return mid;
             } while (first <= last);
 
-            return -1;
+            return mid;
         }
 
         public static TimingPoint GetClosestNextTimingPoint(List<TimingPoint> points, TimingPoint point)
@@ -377,15 +454,37 @@ namespace Beatmap_Help_Tool.BeatmapTools
             return isKiaiOpen != referencePoint.IsKiaiOpen;
         }
 
-        // Returns true if:
-        // This is a green point and,
-        // This point changes SV and,
-        // The point is not toggling kiai and,
-        // The point is not on a red point as well.
-        public static bool ChangesSvOnly(List<TimingPoint> points, List<HitObject> hitObjects, TimingPoint currentPoint)
+        /// <summary>
+        /// Returns true if:
+        /// This is a green point and,
+        /// This point changes SV and,
+        /// This point is exactly on a note (check movePointsEvenIfNotAtExactNotes for config),
+        /// The point is not toggling kiai and,
+        /// The point is not on a red point as well.
+        /// </summary>
+        /// <param name="points">All points of the current diff.</param>
+        /// <param name="hitObjects">All hitobjects of the current diff.</param>
+        /// <param name="currentPoint">The current point to check its status.</param>
+        /// <param name="offsetChangeValueNegative">The offset value for it to be changed. Checks for safety where
+        /// the point can be moved and it will still affect the same note & not land on another note.</param>
+        /// <param name="movePointsInBetween">Allows points for them to be moved as long as the offsetValue
+        /// changes the SV where it affects the same note. If false, the points that are not
+        /// exactly on a note will not be moved.</param>
+        /// <returns>true if the conditions are applied in the documentation.</returns>
+        // 
+        public static bool CanMoveSvSafelyFromClosestNote(List<TimingPoint> points,
+                                                          List<HitObject> hitObjects,
+                                                          TimingPoint currentPoint,
+                                                          int offsetChangeValueNegative,
+                                                          bool movePointsInBetween)
         {
             // Shortcut: Return false if the point is not a green point.
             if (!currentPoint.IsInherited)
+                return false;
+
+            // Shortcut 2: If the value change will affect the offset to be negative,
+            // then do not move at all.
+            if (currentPoint.Offset + offsetChangeValueNegative < 0)
                 return false;
 
             // Always sort the elements.
@@ -418,14 +517,43 @@ namespace Beatmap_Help_Tool.BeatmapTools
                     // not be moved.
                     return false;
                 }
-                else if (GetExactNoteIndex(hitObjects, currentOffset) < 0)
+                else
                 {
-                    // This SV is not on a note, it should not be moved.
-                    return false;
-                }
+                    HitObject currentNote = GetExactHitObject(hitObjects, currentOffset);
+                    if (!movePointsInBetween && currentNote == null)
+                    {
+                        // This SV is not on a note, it should not be moved.
+                        return false;
+                    }
 
-                // This point is allowed to be moved.
-                return true;
+                    // Fetch the previous and next note. If null, then the SV can be moved.
+                    HitObject previousNote = GetPreviousHitObject(hitObjects, currentOffset);
+
+                    // Check if the map has a previous note related to the current point
+                    // and the offset value will not affect that after changing.
+                    if (previousNote != null && previousNote.Offset >= currentOffset + offsetChangeValueNegative)
+                    {
+                        // The change would affect the target note. This SV should not
+                        // be moved.
+                        return false;
+                    }
+
+                    // The condition is false if the current point is on an exact note.
+                    // If not, make an additional check.
+                    if (currentNote == null)
+                    {
+                        // Check if the map has a next note related to the current point
+                        // and it is already far away enough. If it is far away,
+                        // do not move.
+                        // The threshold for moving the SV is 15 milliseconds.
+                        HitObject nextNote = GetNextHitObject(hitObjects, currentOffset);
+                        if (nextNote != null && nextNote.Offset - currentOffset > 15)
+                            return false;
+                    }
+
+                    // This point is allowed to be moved.
+                    return true;
+                }
             }
             else
             {

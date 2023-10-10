@@ -18,7 +18,7 @@ namespace Beatmap_Help_Tool.BeatmapTools
         {
             if (items != null && index >= 0 && index < items.Count)
                 return items[index];
-            return default(T);
+            return default;
         }
 
         public static IList<T> createSafeSublist<T>(List<T> items, int startIndex, int endIndex)

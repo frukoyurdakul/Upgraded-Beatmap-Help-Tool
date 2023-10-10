@@ -68,8 +68,8 @@ namespace Beatmap_Help_Tool.ValueChangerRules
                 case ValueChanger.SV_OFFSET_CHANGE:
                     form.typeChangeLabel.Text += "SV Offset change";
                     form.label3.Text = "Difference: ";
-                    form.Height -= form.extraOptionCheckBox.Height;
-                    form.extraOptionCheckBox.Visible = false;
+                    form.extraOptionCheckBox.Visible = true;
+                    form.extraOptionCheckBox.Text = "Allow points to be moved even if they are not at exact notes";
                     form.toolTip1.SetToolTip(form.typeChangeLabel, "Changes the SV offsets where a green point affects SV and is snapped onto a note, unless the point toggles kiai or is on a red point.".AddLines(2) 
                         + "Accepted values are between -1 and -10.");
                     break;
